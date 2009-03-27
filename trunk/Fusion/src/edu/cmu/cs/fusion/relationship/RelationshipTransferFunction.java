@@ -1,4 +1,4 @@
-package edu.cmu.cs.crystal.analysis.relationship;
+package edu.cmu.cs.fusion.relationship;
 
 import java.util.List;
 import java.util.Set;
@@ -11,6 +11,9 @@ import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.fusion.FusionAnalysis;
+import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.ThreeValue;
 
 
 public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTransferFunction<RelationshipContext> {
@@ -33,7 +36,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		return new RelationshipLatticeOperations();
 	}
 
-
+/*
 	public IResult<RelationshipContext> transfer(MethodCallInstruction instr,
 			List<ILabel> labels, RelationshipContext value) {
 		IMethodBinding binding = instr.resolveBinding();
