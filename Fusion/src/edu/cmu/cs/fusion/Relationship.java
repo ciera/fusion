@@ -13,9 +13,9 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 public class Relationship {
 	private ObjectLabel[] parameters;
 	
-	private RelationshipType type;
+	private Relation type;
 	
-	public Relationship(RelationshipType type, ObjectLabel[] params) {
+	public Relationship(Relation type, ObjectLabel[] params) {
 		this.type = type;
 		this.parameters = params;
 	}

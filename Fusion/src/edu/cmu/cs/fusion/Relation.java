@@ -1,10 +1,10 @@
 package edu.cmu.cs.fusion;
 
-public class RelationshipType {
+public class Relation {
 	private String name;
 	private String[] fullyQualifiedTypes;
 	
-	public RelationshipType(String name, String[] fullyQualifiedTypes) {
+	public Relation(String name, String[] fullyQualifiedTypes) {
 		this.name = name;
 		this.fullyQualifiedTypes = fullyQualifiedTypes;
 	}
