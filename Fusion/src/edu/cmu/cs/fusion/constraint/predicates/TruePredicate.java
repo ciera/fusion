@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion.constraint.predicates;
 
+import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -13,8 +14,7 @@ public class TruePredicate implements Predicate {
 		return new FreeVars();
 	}
 
-	public ThreeValue getTruth(RelationshipContext context,
-			InferenceEnvironment rules, Substitution sub) {
+	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		return ThreeValue.TRUE;
 	}
 

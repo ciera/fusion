@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion.constraint.predicates;
 
+import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
@@ -18,9 +19,8 @@ public class NegativeRelationship implements Predicate {
 		return rel.getFreeVariables();
 	}
 
-	public ThreeValue getTruth(RelationshipContext context,
-			InferenceEnvironment rules, Substitution sub) {
-		ThreeValue tv = rel.getTruth(context, rules, sub);
+	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
+		ThreeValue tv = rel.getTruth(env, sub);
 		if (tv == ThreeValue.TRUE)
 			return ThreeValue.FALSE;
 		else if (tv == ThreeValue.FALSE)

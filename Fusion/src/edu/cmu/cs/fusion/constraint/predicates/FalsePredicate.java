@@ -1,11 +1,11 @@
 package edu.cmu.cs.fusion.constraint.predicates;
 
+import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.Substitution;
-import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 public class FalsePredicate implements Predicate {
 
@@ -13,8 +13,7 @@ public class FalsePredicate implements Predicate {
 		return new FreeVars();
 	}
 
-	public ThreeValue getTruth(RelationshipContext context,
-			InferenceEnvironment rules, Substitution sub) {
+	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		return ThreeValue.FALSE;
 	}
 
