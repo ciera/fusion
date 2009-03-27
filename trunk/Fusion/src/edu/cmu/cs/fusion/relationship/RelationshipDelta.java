@@ -74,16 +74,24 @@ public class RelationshipDelta {
 	
 	
 	private void join(RelationshipDelta other, boolean isEquality) {
-		for (Entry<Relationship, ThreeValue> entry : other.rels.entrySet()) {
-			ThreeValue myVal = rels.get(entry.getKey());
-			if (myVal == null) {
-				rels.put(entry.getKey(), isEquality ? ThreeValue.UNKNOWN : entry.getValue());
+		Set<Relationship> combinedRels = new HashSet(rels.keySet());
+		combinedRels.addAll(other.rels.keySet());
+		
+		for (Relationship rel : combinedRels) {
+			ThreeValue myVal = rels.get(rel);
+			ThreeValue otherVal = other.rels.get(rel);
+			if (myVal == null && otherVal != null) {
+				rels.put(rel, isEquality ? ThreeValue.UNKNOWN : otherVal);
 			}
-			else if (myVal != entry.getValue()) {
-				rels.put(entry.getKey(), ThreeValue.UNKNOWN);
+			else if (myVal != null && otherVal == null) {
+				if (isEquality)
+					rels.put(rel, ThreeValue.UNKNOWN);
+			}
+			else if (myVal != otherVal) {
+				rels.put(rel, ThreeValue.UNKNOWN);
 			}
 			else {
-				//if vals are equal, then leave it be
+				//if vals are equal then leave it be
 			}
 		}
 	}
