@@ -53,33 +53,18 @@ public class RelationshipContext {
 	}
 	
 	public boolean isMorePreciseOrEqualTo(RelationshipContext reference) {
-		for (Relationship rel : falseRels) {
-			if (reference.trueRels.contains(rel))
-				return false;
-		}
-		for (Relationship rel : trueRels) {
-			if (reference.falseRels.contains(rel))
-				return false;
-		}
+
+		if (!trueRels.containsAll(reference.trueRels))
+			return false;
+		if (!falseRels.containsAll(reference.falseRels))
+			return false;
 		return true;
 	}
 	
 	public boolean isStrictlyMorePrecise(RelationshipContext reference) {
-		boolean isEqual = true;
-		
-		for (Relationship rel : falseRels) {
-			if (reference.trueRels.contains(rel))
-				return false;
-			if (isEqual && !reference.falseRels.contains(rel))
-				isEqual = false;
-		}
-		for (Relationship rel : trueRels) {
-			if (reference.falseRels.contains(rel))
-				return false;
-			if (isEqual && !reference.trueRels.contains(rel))
-				isEqual = false;
-		}
-		return !isEqual;
+		return isMorePreciseOrEqualTo(reference) &&
+		 (trueRels.size() != reference.trueRels.size() ||
+		 falseRels.size() != reference.falseRels.size());
 	}
 
 	public RelationshipContext join(RelationshipContext other) {
