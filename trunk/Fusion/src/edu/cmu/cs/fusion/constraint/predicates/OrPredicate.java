@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion.constraint.predicates;
 
+import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Predicate;
@@ -12,13 +13,12 @@ public class OrPredicate extends BinaryPredicate {
 		super(left, right);
 	}
 
-	public ThreeValue getTruth(RelationshipContext context,
-			InferenceEnvironment rules, Substitution sub) {
-		ThreeValue lTV = lhs.getTruth(context, rules, sub);
+	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
+		ThreeValue lTV = lhs.getTruth(env, sub);
 		
 		if (lTV == ThreeValue.TRUE)
 			return ThreeValue.TRUE;
 		else
-			return  rhs.getTruth(context, rules, sub);
+			return  rhs.getTruth(env, sub);
 	}
 }
