@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.RelationshipType;
+import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.relationship.FourPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
@@ -20,19 +20,19 @@ public class DeltaTest {
 	static RelationshipDelta d1, d2, d3, d4;
 	static RelationshipContext c1;
 	
-	static RelationshipType tA, tB;
+	static Relation tA, tB;
 	
 	static ObjectLabel w, x, y, z;
 
 	@BeforeClass
 	static public void testRelationships() {
-		tA = new RelationshipType("A", new String[] {"Foo", "Bar"});
-		tB = new RelationshipType("B", new String[] {"Bar", "Bar"});
+		tA = new Relation("A", new String[] {"Foo", "Bar"});
+		tB = new Relation("B", new String[] {"Bar", "Bar"});
 		
-		w = new AbstractObjectLabel();
-		x = new AbstractObjectLabel();
-		y = new AbstractObjectLabel();
-		z = new AbstractObjectLabel();
+		w = new AbstractObjectLabel("w");
+		x = new AbstractObjectLabel("x");
+		y = new AbstractObjectLabel("y");
+		z = new AbstractObjectLabel("z");
 
 		d1 = new RelationshipDelta();
 		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FourPointLattice.TRU);
