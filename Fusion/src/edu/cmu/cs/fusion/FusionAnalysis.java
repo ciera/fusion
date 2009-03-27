@@ -1,4 +1,4 @@
-package edu.cmu.cs.crystal.analysis.relationship;
+package edu.cmu.cs.fusion;
 
 import java.util.Set;
 
@@ -18,6 +18,9 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.constant.ConstantAnalysis;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
+import edu.cmu.cs.fusion.relationship.RelationshipContext;
+import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {

@@ -1,8 +1,10 @@
-package edu.cmu.cs.crystal.analysis.relationship;
+package edu.cmu.cs.fusion.relationship;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
+import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.ThreeValue;
 
 public class RelationshipLatticeOperations implements
 		ILatticeOperations<RelationshipContext> {
@@ -10,15 +12,12 @@ public class RelationshipLatticeOperations implements
 
 	public boolean atLeastAsPrecise(RelationshipContext info,
 			RelationshipContext reference, ASTNode node) {
-		for (Relationship rel : info.getFalseRels()) {
-			if (reference.getTrueRels().contains(rel))
-				return false;
-		}
-		for (Relationship rel : info.getTrueRels()) {
-			if (reference.getFalseRels().contains(rel))
-				return false;
-		}
-		return true;
+		if (info == BOT)
+			return true;
+		else if (reference == BOT)
+			return false;
+		else
+			return info.isMorePreciseOrEqualTo(reference);
 	}
 
 	public RelationshipContext bottom() {
@@ -36,19 +35,7 @@ public class RelationshipLatticeOperations implements
 			return otherInfo;
 		else if (otherInfo == BOT)
 			return someInfo;
-		else {
-		
-			RelationshipContext join = new RelationshipContext();
-			
-			for (Relationship rel : someInfo.getFalseRels()) {
-				if (otherInfo.getFalseRels().contains(rel))
-					join.setRelationship(rel, ThreeValue.FALSE);
-			}
-			for (Relationship rel : someInfo.getTrueRels()) {
-				if (otherInfo.getTrueRels().contains(rel))
-					join.setRelationship(rel, ThreeValue.TRUE);
-			}
-			return join;
-		}
+		else
+			return someInfo.join(otherInfo);
 	}
 }
