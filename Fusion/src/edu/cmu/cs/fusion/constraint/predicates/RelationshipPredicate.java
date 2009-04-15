@@ -12,7 +12,7 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 
-public class RelationshipPredicate implements Predicate {
+public class RelationshipPredicate implements NegatablePredicate {
 	private SpecVar[] vars;
 	private Relation type;
 	
@@ -29,7 +29,7 @@ public class RelationshipPredicate implements Predicate {
 		ObjectLabel[] objLabels = new ObjectLabel[vars.length];
 		
 		for (int ndx = 0; ndx < vars.length; ndx++) {
-			objLabels[ndx] = sub.getSubstitution(vars[ndx]);
+			objLabels[ndx] = sub.getSub(vars[ndx]);
 		}
 		
 		Relationship rel = new Relationship(type, objLabels);
