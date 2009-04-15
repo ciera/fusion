@@ -16,6 +16,6 @@ public abstract class BinaryPredicate implements Predicate {
 		rhs = right;
 	}
 	public FreeVars getFreeVariables() {
-		return lhs.getFreeVariables().join(rhs.getFreeVariables());
+		return lhs.getFreeVariables().union(rhs.getFreeVariables());
 	}
 }

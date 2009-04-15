@@ -12,8 +12,8 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 
-public class NegativeRelationship implements Predicate {
-	private RelationshipPredicate rel;
+public class NotPredicate implements Predicate {
+	private NegatablePredicate rel;
 	
 	public FreeVars getFreeVariables() {
 		return rel.getFreeVariables();

@@ -7,7 +7,7 @@ import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 
-public class TestPredicate implements Predicate {
+public class TestPredicate implements NegatablePredicate {
 	private RelationshipPredicate inner;
 	private SpecVar test;
 	
@@ -20,11 +20,11 @@ public class TestPredicate implements Predicate {
 		FreeVars fv = new FreeVars();
 		fv.addVar(test, "boolean");
 		
-		return inner.getFreeVariables().join(fv);
+		return inner.getFreeVariables().union(fv);
 	}
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
-		ThreeValue testVal = env.getBooleanValue(sub.getSubstitution(test));
+		ThreeValue testVal = env.getBooleanValue(sub.getSub(test));
 		
 		if (testVal == ThreeValue.UNKNOWN)
 			return ThreeValue.UNKNOWN;
