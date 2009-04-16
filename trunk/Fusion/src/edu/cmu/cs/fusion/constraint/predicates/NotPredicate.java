@@ -15,6 +15,10 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 public class NotPredicate implements Predicate {
 	private NegatablePredicate rel;
 	
+	public NotPredicate(NegatablePredicate rel) {
+		this.rel = rel;
+	}
+
 	public FreeVars getFreeVariables() {
 		return rel.getFreeVariables();
 	}
