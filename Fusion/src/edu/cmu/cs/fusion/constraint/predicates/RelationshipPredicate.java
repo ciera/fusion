@@ -16,12 +16,14 @@ public class RelationshipPredicate implements NegatablePredicate {
 	private SpecVar[] vars;
 	private Relation type;
 	
+	
+	public RelationshipPredicate(Relation type, SpecVar[] vars) { 
+		this.vars = vars;
+		this.type = type;
+	}
+
 	public FreeVars getFreeVariables() {
-		FreeVars fv = new FreeVars();
-		for (int ndx = 0; ndx < vars.length; ndx++) {
-			fv.addVar(vars[ndx], type.getFullyQualifiedTypes()[ndx]);
-		}
-		return fv;
+		return new FreeVars().addVars(vars, type.getFullyQualifiedTypes());
 	}
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {

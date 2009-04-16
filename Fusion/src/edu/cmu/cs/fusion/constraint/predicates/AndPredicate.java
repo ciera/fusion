@@ -19,7 +19,7 @@ public class AndPredicate extends BinaryPredicate {
 		if (lTV == ThreeValue.FALSE)
 			return ThreeValue.FALSE;
 		else if (lTV == ThreeValue.UNKNOWN)
-			return ThreeValue.UNKNOWN;
+			return rhs.getTruth(env, sub) == ThreeValue.FALSE ? ThreeValue.FALSE : ThreeValue.UNKNOWN;
 		else
 			return  rhs.getTruth(env, sub);
 

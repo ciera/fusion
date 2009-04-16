@@ -40,6 +40,14 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 		return newVars;
 	}
 
+	public FreeVars addVars(SpecVar[] vars, String[] types) {
+		assert vars.length == types.length;
+		FreeVars newVars = (FreeVars)clone();
+		for (int ndx = 0; ndx < vars.length; ndx++)
+			newVars.vars.put(vars[ndx], types[ndx]);
+		return newVars;
+	}
+
 	public FreeVars addVar(SpecVar var, String type) {
 		FreeVars newVars = (FreeVars) clone();
 		newVars.vars.put(var, type);
