@@ -1,5 +1,9 @@
 package edu.cmu.cs.fusion.constraint;
 
-public class Effect {
+import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
+public interface Effect {
+	public RelationshipDelta makeEffects(FusionEnvironment env, Substitution subs);
+    public FreeVars getFreeVariables();
 }

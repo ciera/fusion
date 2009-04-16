@@ -6,22 +6,22 @@ import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
 
+/**
+ * The operations used by the static analysis on the RelationshipContext lattice.
+ * These operations just call through to the lattice.
+ * @author ciera
+ *
+ */
 public class RelationshipLatticeOperations implements
 		ILatticeOperations<RelationshipContext> {
-	private static final RelationshipContext BOT = new RelationshipContext();
 
 	public boolean atLeastAsPrecise(RelationshipContext info,
 			RelationshipContext reference, ASTNode node) {
-		if (info == BOT)
-			return true;
-		else if (reference == BOT)
-			return false;
-		else
-			return info.isMorePreciseOrEqualTo(reference);
+		return info.isMorePreciseOrEqualTo(reference);
 	}
 
 	public RelationshipContext bottom() {
-		return BOT;
+		return new RelationshipContext(true);
 	}
 
 	public RelationshipContext copy(RelationshipContext original) {
@@ -30,12 +30,6 @@ public class RelationshipLatticeOperations implements
 
 	public RelationshipContext join(RelationshipContext someInfo,
 			RelationshipContext otherInfo, ASTNode node) {
-		
-		if (someInfo == BOT)
-			return otherInfo;
-		else if (otherInfo == BOT)
-			return someInfo;
-		else
-			return someInfo.join(otherInfo);
+		return someInfo.join(otherInfo);
 	}
 }
