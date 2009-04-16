@@ -26,7 +26,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	}
 
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
-		return new RelationshipContext();
+		return new RelationshipContext(false);
 	}
 
 
@@ -110,7 +110,6 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		else
 			return LabeledSingleResult.createResult(value, labels);
 	}
-*/
 
 	static final private void setAllLEs(Relationship rel, ThreeValue tv, boolean hasLabels, RelationshipContext defVal, RelationshipContext trueVal, RelationshipContext falseVal) {
 		defVal.setRelationship(rel, tv);
@@ -119,7 +118,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			falseVal.setRelationship(rel, tv);			
 		}
 	}
-		
+*/		
 	/**
 	 * Get all the relationships we can create given the bound variables. This means we get a relationship for
 	 * every proper combination. So:

@@ -65,14 +65,6 @@ public class DeltaTest {
 		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FourPointLattice.BOT);
 		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FourPointLattice.BOT);
 		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FourPointLattice.BOT);
-		
-		c1 = new RelationshipContext();
-		c1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), ThreeValue.TRUE);
-		c1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), ThreeValue.FALSE);
-		c1.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), ThreeValue.TRUE);
-		c1.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), ThreeValue.FALSE);
-		c1.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), ThreeValue.TRUE);
-		c1.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), ThreeValue.UNKNOWN);
 	}
 
 	@Test
@@ -175,41 +167,5 @@ public class DeltaTest {
 		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FourPointLattice.UNK);
 	}
 	
-	@Test
-	public void testApplyChangesToContext() {
-		RelationshipContext applied;
-		
-		applied = d1.applyChangesToContext(c1);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, y})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, z})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, y})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, z})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {y, z})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {z, y})) == ThreeValue.UNKNOWN);
-	
-		applied = d2.applyChangesToContext(c1);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, y})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, z})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, y})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, z})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {y, z})) == ThreeValue.UNKNOWN);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {z, y})) == ThreeValue.UNKNOWN);
-
-		applied = d3.applyChangesToContext(c1);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, y})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, z})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, y})) == ThreeValue.UNKNOWN);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, z})) == ThreeValue.UNKNOWN);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {y, z})) == ThreeValue.UNKNOWN);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {z, y})) == ThreeValue.UNKNOWN);
-
-		applied = d4.applyChangesToContext(c1);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, y})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {w, z})) == ThreeValue.UNKNOWN);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, y})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tA, new ObjectLabel[] {x, z})) == ThreeValue.FALSE);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {y, z})) == ThreeValue.TRUE);
-		assertTrue(applied.getRelationship(new Relationship(tB, new ObjectLabel[] {z, y})) == ThreeValue.UNKNOWN);
-	}
 
 }

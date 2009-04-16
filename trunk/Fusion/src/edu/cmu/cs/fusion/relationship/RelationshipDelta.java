@@ -14,14 +14,23 @@ import edu.cmu.cs.fusion.ThreeValue;
 /**
  * Represents the delta lattice. These are the changes to make to the final lattice.
  * A bottom value signifies no change.
+ * 
+ * Notice that this is a mutable class!
  * @author ciera
  *
  */
-public class RelationshipDelta {
+public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValue>> {
 	private Map<Relationship, ThreeValue> rels;
 	
+	/**
+	 * Creates a new delta where everything maps to bottom.
+	 */
 	public RelationshipDelta() {
 		rels = new HashMap<Relationship, ThreeValue>();
+	}
+	
+	public boolean hasChanges() {
+		return !rels.isEmpty();
 	}
 	
 	public FourPointLattice getValue(Relationship rel) {
@@ -39,6 +48,14 @@ public class RelationshipDelta {
 			rels.remove(rel);
 	}
 	
+	/**
+	 * Polarizing function.
+	 * 
+	 * B | B 
+	 * T | U 
+	 * F | U 
+	 * U | U 
+	 */
 	public RelationshipDelta polarize() {
 		RelationshipDelta polar = new RelationshipDelta();
 		
@@ -46,17 +63,16 @@ public class RelationshipDelta {
 			polar.setRelationship(rel, FourPointLattice.UNK);
 		return polar;
 	}
-	
-	public RelationshipContext applyChangesToContext(RelationshipContext context) {
-		RelationshipContext changed = new RelationshipContext(context);
-		
-		for (Entry<Relationship, ThreeValue> entry : rels.entrySet())
-			changed.setRelationship(entry.getKey(), entry.getValue());
-		
-		return changed;
-	}
 
-
+	/**
+	 * Joins together a list of deltas into a single delta.
+	 *    
+	 *   __B_T_F_U_ 
+	 * B | B T F U
+	 * T | T T U U
+	 * F | F U F U
+	 * U | U U U U
+	 */
 	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();
@@ -96,6 +112,15 @@ public class RelationshipDelta {
 		}
 	}
 
+	/**
+	 * Equality joins a list of deltas. The equality join maps any differences to unknown. 
+	 * 
+	 *   __B_T_F_U_ 
+	 * B | B U U U
+	 * T | U T U U
+	 * F | U U F U
+	 * U | U U U U
+	 */
 	static public RelationshipDelta equalityJoin(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();
@@ -148,6 +173,10 @@ public class RelationshipDelta {
 		str += ">";
 		
 		return str;
+	}
+
+	public Iterator<Entry<Relationship, ThreeValue>> iterator() {
+		return rels.entrySet().iterator();
 	}
 
 }
