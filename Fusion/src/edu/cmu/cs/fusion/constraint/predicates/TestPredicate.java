@@ -18,7 +18,7 @@ public class TestPredicate implements NegatablePredicate {
 	
 	public FreeVars getFreeVariables() {
 		FreeVars fv = new FreeVars();
-		fv.addVar(test, "boolean");
+		fv = fv.addVar(test, "boolean");
 		
 		return inner.getFreeVariables().union(fv);
 	}
