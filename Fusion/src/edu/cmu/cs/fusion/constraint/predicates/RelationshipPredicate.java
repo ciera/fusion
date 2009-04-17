@@ -23,7 +23,7 @@ public class RelationshipPredicate implements NegatablePredicate {
 	}
 
 	public FreeVars getFreeVariables() {
-		return new FreeVars().addVars(vars, type.getFullyQualifiedTypes());
+		return new FreeVars(vars, type.getFullyQualifiedTypes());
 	}
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {

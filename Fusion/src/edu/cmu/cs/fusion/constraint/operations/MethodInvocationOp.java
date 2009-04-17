@@ -16,24 +16,24 @@ import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
 
-public class MethodInvocation implements Operation {
-	public String thisType;
-	public String[] paramTypes;
-	public SpecVar[] params;
-	public String name;
-	public SpecVar thisVar;
-	public SpecVar retVar;
-	public String retType;
+public class MethodInvocationOp implements Operation {
+	private String thisType;
+	private String[] paramTypes;
+	private SpecVar[] params;
+	private String name;
+	private SpecVar thisVar;
+	private SpecVar retVar;
+	private String retType;
 
-	public MethodInvocation(String thisBindingKey, String methodName, String[] paramNames,
-		    String[] paramBindingKeys) {
+	public MethodInvocationOp(String methodName, String thisType, SpecVar[] paramNames,
+		    String[] paramTypes, String returnType) {
 			thisVar = new SpecVar(Constraint.TARGET);
 			retVar = new SpecVar(Constraint.RESULT);
-			params = new SpecVar[paramNames.length];
-
-			for (int ndx = 0; ndx < paramNames.length; ndx++)
-				params[ndx] = (new SpecVar(paramNames[ndx]));
-
+			this.params = paramNames;
+			this.paramTypes = paramTypes;
+			this.retType = returnType;
+			this.thisType = thisType;
+			name = methodName;
 		}
 
 	public FreeVars getFreeVariables() {
@@ -45,10 +45,12 @@ public class MethodInvocation implements Operation {
 			return null;
 
 		MethodCallInstruction invoke = (MethodCallInstruction) instr;
-		IMethodBinding method = invoke.resolveBinding();
 
-		if (!name.equals(method.getName()))
+		//first, check to see if the instr is right for this op
+		if (!name.equals(invoke.getMethodName()))
 			return null;
+
+		IMethodBinding method = invoke.resolveBinding();
 
 		if (!Utils.isSubtypeCompatible(thisType, method.getDeclaringClass().getQualifiedName()))
 			return null;
@@ -57,8 +59,7 @@ public class MethodInvocation implements Operation {
 			return null;
 
 		for (int ndx = 0; ndx < paramTypes.length; ndx++)
-			if (!Utils.isSubtypeCompatible(paramTypes[ndx], method.getParameterTypes()[ndx]
-			    .getKey()))
+			if (!Utils.isSubtypeCompatible(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
 		Map<SpecVar, Variable> map = new HashMap<SpecVar, Variable>();

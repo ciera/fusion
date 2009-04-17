@@ -22,7 +22,7 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 
 	public FreeVars(SpecVar[] params, String[] paramTypes) {
 		assert(params.length == paramTypes.length);
-		
+		vars = new HashMap<SpecVar, String>();
 		for (int ndx = 0; ndx < params.length; ndx++)
 			vars.put(params[ndx], paramTypes[ndx]);
 	}
