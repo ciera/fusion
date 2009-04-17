@@ -18,6 +18,8 @@ public class OrPredicate extends BinaryPredicate {
 		
 		if (lTV == ThreeValue.TRUE)
 			return ThreeValue.TRUE;
+		else if (lTV == ThreeValue.UNKNOWN)
+			return rhs.getTruth(env, sub) == ThreeValue.TRUE ? ThreeValue.TRUE : ThreeValue.UNKNOWN;
 		else
 			return  rhs.getTruth(env, sub);
 	}
