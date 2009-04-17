@@ -11,7 +11,7 @@ import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.predicates.OrPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
-import edu.cmu.cs.fusion.test.RelsOnlyTestEnvironment;
+import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
 
 public class TestOrPred {
@@ -49,7 +49,7 @@ public class TestOrPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		OrPredicate pred = new OrPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -61,7 +61,7 @@ public class TestOrPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		OrPredicate pred = new OrPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -73,7 +73,7 @@ public class TestOrPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
 		OrPredicate pred = new OrPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -85,7 +85,7 @@ public class TestOrPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
 		OrPredicate pred = new OrPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -97,7 +97,7 @@ public class TestOrPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
 		OrPredicate pred = new OrPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -109,7 +109,7 @@ public class TestOrPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(3), utils.getVar(2)});
 		OrPredicate pred = new OrPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(1));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(1));
 		
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
 	}

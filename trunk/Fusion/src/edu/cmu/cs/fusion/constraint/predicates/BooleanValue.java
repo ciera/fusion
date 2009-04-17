@@ -9,6 +9,10 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 public class BooleanValue implements NegatablePredicate {
 	private SpecVar value;
 	
+	public BooleanValue(SpecVar var) {
+		value = var;
+	}
+
 	public FreeVars getFreeVariables() {
 		return new FreeVars().addVar(value, FreeVars.BOOL_TYPE);
 	}

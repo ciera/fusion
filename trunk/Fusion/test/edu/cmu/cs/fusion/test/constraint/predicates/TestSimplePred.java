@@ -14,7 +14,7 @@ import edu.cmu.cs.fusion.constraint.predicates.FalsePredicate;
 import edu.cmu.cs.fusion.constraint.predicates.NotPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
-import edu.cmu.cs.fusion.test.RelsOnlyTestEnvironment;
+import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
 
 public class TestSimplePred {
@@ -49,7 +49,7 @@ public class TestSimplePred {
 	@Test
 	public void testTruthFalse() {
 		Predicate fPred = new FalsePredicate();
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(fPred.getTruth(env, utils.getSub(0)), ThreeValue.FALSE);
 	}
@@ -57,7 +57,7 @@ public class TestSimplePred {
 	@Test
 	public void testTruthTrue() {
 		Predicate tPred = new TruePredicate();
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(tPred.getTruth(env, utils.getSub(0)), ThreeValue.TRUE);
 	}

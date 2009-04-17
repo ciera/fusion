@@ -11,7 +11,7 @@ import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.predicates.ImpliesPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
-import edu.cmu.cs.fusion.test.RelsOnlyTestEnvironment;
+import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
 
 public class TestImpliesPred {
@@ -49,7 +49,7 @@ public class TestImpliesPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		ImpliesPredicate pred = new ImpliesPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -61,7 +61,7 @@ public class TestImpliesPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
 		ImpliesPredicate pred = new ImpliesPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -73,7 +73,7 @@ public class TestImpliesPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
 		ImpliesPredicate pred = new ImpliesPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -86,7 +86,7 @@ public class TestImpliesPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(2), utils.getVar(3)});
 		ImpliesPredicate pred = new ImpliesPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -98,7 +98,7 @@ public class TestImpliesPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
 		ImpliesPredicate pred = new ImpliesPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
 	}
@@ -110,7 +110,7 @@ public class TestImpliesPred {
 		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(3), utils.getVar(2)});
 		ImpliesPredicate pred = new ImpliesPredicate(lP, rP);
 
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(1));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(1));
 		
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
 	}

@@ -10,7 +10,7 @@ import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
-import edu.cmu.cs.fusion.test.RelsOnlyTestEnvironment;
+import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
 
 public class TestRelPred {
@@ -42,7 +42,7 @@ public class TestRelPred {
 	@Test
 	public void testTruthFalse() {
 		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(pred.getTruth(env, utils.getSub(0)), ThreeValue.FALSE);
 	}
@@ -50,7 +50,7 @@ public class TestRelPred {
 	@Test
 	public void testTruthTrue() {
 		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(pred.getTruth(env, utils.getSub(0)), ThreeValue.TRUE);
 	}
@@ -58,7 +58,7 @@ public class TestRelPred {
 	@Test
 	public void testTruthUnknownNoInference() {
 		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(2), utils.getVar(1)});
-		FusionEnvironment env = new RelsOnlyTestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		assertEquals(pred.getTruth(env, utils.getSub(0)), ThreeValue.UNKNOWN);
 	}
