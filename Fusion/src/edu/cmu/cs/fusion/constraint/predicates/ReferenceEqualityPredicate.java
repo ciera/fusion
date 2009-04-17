@@ -10,6 +10,11 @@ public class ReferenceEqualityPredicate implements NegatablePredicate {
 	private SpecVar left;
 	private SpecVar right;
 	
+	public ReferenceEqualityPredicate(SpecVar left, SpecVar right) {
+		this.left = left;
+		this.right = right;
+	}
+
 	public FreeVars getFreeVariables() {
 		return new FreeVars().addVar(left, FreeVars.OBJECT_TYPE).addVar(right, FreeVars.OBJECT_TYPE);
 	}

@@ -17,6 +17,7 @@ import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 public class TestEnvironment extends FusionEnvironment {
 	Map<ObjectLabel, ThreeValue> bools;
+	Map<ObjectLabel, String> types;
 	
 	public TestEnvironment(RelationshipContext relLattice) {
 		super(null, relLattice, null);
@@ -28,6 +29,12 @@ public class TestEnvironment extends FusionEnvironment {
 		this.bools = bools;
 	}
 
+
+	public TestEnvironment(RelationshipContext context, Map<ObjectLabel, ThreeValue> bools,
+	 Map<ObjectLabel, String> types) {
+		super(null, context, null);
+		this.types = types;
+	}
 
 	@Override
 	public SubPair allValidSubs(Substitution subs, FreeVars fv) {
@@ -48,8 +55,7 @@ public class TestEnvironment extends FusionEnvironment {
 
 	@Override
 	public String getType(ObjectLabel obj) {
-		assert false;
-		return null;
+		return types.get(obj);
 	}
 
 }

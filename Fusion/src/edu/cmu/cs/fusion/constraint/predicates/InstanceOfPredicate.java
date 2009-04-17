@@ -12,8 +12,13 @@ public class InstanceOfPredicate implements NegatablePredicate {
 	private String type;
 	private SpecVar variable;
 	
+	public InstanceOfPredicate(SpecVar var, String fullyQualifiedType) {
+		variable = var;
+		type = fullyQualifiedType;
+	}
+
 	public FreeVars getFreeVariables() {
-		return new FreeVars().addVar(variable, type);
+		return new FreeVars().addVar(variable, FreeVars.OBJECT_TYPE);
 	}
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
