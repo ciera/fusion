@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion.constraint;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -10,11 +11,19 @@ public class SubPair {
 	private List<Substitution> definiteSubstitutions;
 	private List<Substitution> possibleSubstitutions;
 	
-	public List<Substitution> getDefiniteSubstitutions() {
-		return definiteSubstitutions;
+	public void addDefiniteSub(Substitution sub) {
+		definiteSubstitutions.add(sub);
+	}
+
+	public void addPossibleSub(Substitution sub) {
+		possibleSubstitutions.add(sub);
+	}
+
+	public Iterator<Substitution> getDefiniteSubstitutions() {
+		return definiteSubstitutions.iterator();
 	}
 	
-	public List<Substitution> getPossibleSubstitutions() {
-		return possibleSubstitutions;
+	public Iterator<Substitution> getPossibleSubstitutions() {
+		return possibleSubstitutions.iterator();
 	}
 }

@@ -10,8 +10,7 @@ import edu.cmu.cs.crystal.util.Pair;
 /**
  * Represents a single substitution from spec variables to object labels.
  * 
- * While this class is mutable, it uses an immutable datastructure internally in
- * order to save on space.
+ * This is an immutable class.
  * @author ciera
  *
  */
@@ -21,14 +20,18 @@ public class Substitution {
 	public Substitution() {
 		subs = ConsList.empty();
 	}
+	
+	private Substitution(ConsList<Pair<SpecVar, ObjectLabel>> subs) {
+		this.subs = subs;
+	}
 
 	/**
 	 * Assumes that var does not already exist in subs
 	 * @param var
 	 * @param label
 	 */
-	public void addSub(SpecVar var, ObjectLabel label) {
-		subs = ConsList.cons(new Pair<SpecVar, ObjectLabel>(var, label), subs);
+	public Substitution addSub(SpecVar var, ObjectLabel label) {
+		return new Substitution(ConsList.cons(new Pair<SpecVar, ObjectLabel>(var, label), subs));
 	}
 	
 	/**
@@ -36,8 +39,8 @@ public class Substitution {
 	 * @param var
 	 * @param label
 	 */
-	public void addSeveralSub(ConsList<Pair<SpecVar, ObjectLabel>> vars) {
-		subs = ConsList.concat(vars, subs);
+	public Substitution addSeveralSub(ConsList<Pair<SpecVar, ObjectLabel>> vars) {
+		return new Substitution(ConsList.concat(vars, subs));
 	}
 
 	public ObjectLabel getSub(SpecVar var) {

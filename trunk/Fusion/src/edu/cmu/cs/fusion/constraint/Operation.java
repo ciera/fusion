@@ -4,6 +4,8 @@ import java.util.Map;
 
 import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
 
 public interface Operation {
 	/**
@@ -16,7 +18,7 @@ public interface Operation {
 	 * may point to the same variable if that is what the instruction
 	 * maps them too.
 	 */
-	public Map<SpecVar, Variable> matches(TACInstruction instr);
+	public ConsList<Pair<SpecVar, Variable>> matches(TACInstruction instr);
 	
 	/**
 	 * Return the free variables and types

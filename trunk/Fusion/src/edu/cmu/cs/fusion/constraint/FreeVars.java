@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
+
+
 /**
  * Represents the types of spec variables. Currently does not consider subtyping,
  * but should support this in the future.
@@ -25,6 +29,12 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 		vars = new HashMap<SpecVar, String>();
 		for (int ndx = 0; ndx < params.length; ndx++)
 			vars.put(params[ndx], paramTypes[ndx]);
+	}
+	
+	public ConsList<Pair<SpecVar, String>> convertToConsList() {
+		ConsList<Pair<SpecVar, String>> list = ConsList.empty();
+		
+		return list;
 	}
 
 	public FreeVars union(FreeVars other) {
