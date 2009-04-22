@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.IMethodBinding;
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Utils;
 import edu.cmu.cs.fusion.constraint.Constraint;
@@ -40,7 +42,7 @@ public class MethodInvocationOp implements Operation {
 		return new FreeVars(params, paramTypes).addVar(thisVar, thisType).addVar(retVar, retType);
 	}
 
-	public Map<SpecVar, Variable> matches(TACInstruction instr) {
+	public ConsList<Pair<SpecVar, Variable>> matches(TACInstruction instr) {
 		if (!(instr instanceof MethodCallInstruction))
 			return null;
 
@@ -62,14 +64,14 @@ public class MethodInvocationOp implements Operation {
 			if (!Utils.isSubtypeCompatible(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
-		Map<SpecVar, Variable> map = new HashMap<SpecVar, Variable>();
+		ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
 		
-		map.put(thisVar, invoke.getTarget());
-		map.put(retVar, invoke.getReceiverOperand());
+		vars = ConsList.cons(new Pair<SpecVar, Variable>(thisVar, invoke.getTarget()), vars);
+		vars = ConsList.cons(new Pair<SpecVar, Variable>(retVar, invoke.getReceiverOperand()), vars);
 		
 		for (int ndx = 0; ndx < params.length; ndx++)
-			map.put(params[ndx], invoke.getArgOperands().get(ndx));
+			vars = ConsList.cons(new Pair<SpecVar, Variable>(params[ndx], invoke.getArgOperands().get(ndx)), vars);
 
-		return map;
+		return vars;
 	}
 }

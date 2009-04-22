@@ -67,11 +67,11 @@ public class TestUtils {
 		vars[4] = new SpecVar();
 		
 		subs[0] = new Substitution();
-		subs[0].addSub(vars[0], labels[0]);
-		subs[0].addSub(vars[1], labels[2]);
-		subs[0].addSub(vars[2], labels[3]);
-		subs[0].addSub(vars[3], labels[2]);
-		subs[0].addSub(vars[4], labels[1]);
+		subs[0] = subs[0].addSub(vars[0], labels[0]);
+		subs[0] = subs[0].addSub(vars[1], labels[2]);
+		subs[0] = subs[0].addSub(vars[2], labels[3]);
+		subs[0] = subs[0].addSub(vars[3], labels[2]);
+		subs[0] = subs[0].addSub(vars[4], labels[1]);
 
 		delta = new RelationshipDelta();
 		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FourPointLattice.TRU);

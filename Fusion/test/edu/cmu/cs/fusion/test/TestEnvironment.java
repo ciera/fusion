@@ -2,7 +2,8 @@ package edu.cmu.cs.fusion.test;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.analysis.alias.Aliasing;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
@@ -43,7 +44,7 @@ public class TestEnvironment extends FusionEnvironment {
 	}
 
 	@Override
-	public SubPair findLabels(Map<SpecVar, Variable> variables, FreeVars fv) {
+	public SubPair findLabels(ConsList<Pair<SpecVar, Variable>> variables, FreeVars fv) {
 		assert false;
 		return null;
 	}
