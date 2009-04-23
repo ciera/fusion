@@ -6,10 +6,12 @@ import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.TypeHierarchy;
 
 public interface Operation {
 	/**
 	 *Attempts to match an instruction to an operation.
+	 * @param types
 	 * @param instr
 	 * @return null if no match is possible. If there is a match,
 	 * returns a mapping from the spec variables in the operation to
@@ -18,7 +20,7 @@ public interface Operation {
 	 * may point to the same variable if that is what the instruction
 	 * maps them too.
 	 */
-	public ConsList<Pair<SpecVar, Variable>> matches(TACInstruction instr);
+	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr);
 	
 	/**
 	 * Return the free variables and types

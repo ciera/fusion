@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.constraint;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,11 @@ import edu.cmu.cs.crystal.tac.Variable;
 public class SubPair {
 	private List<Substitution> definiteSubstitutions;
 	private List<Substitution> possibleSubstitutions;
+	
+	public SubPair() {
+		definiteSubstitutions = new LinkedList<Substitution>();
+		possibleSubstitutions = new LinkedList();
+	}
 	
 	public void addDefiniteSub(Substitution sub) {
 		definiteSubstitutions.add(sub);

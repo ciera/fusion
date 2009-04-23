@@ -52,4 +52,8 @@ public class Substitution {
 		return null;
 	}
 
+	public int size() {
+		return subs.size();
+	}
+
 }

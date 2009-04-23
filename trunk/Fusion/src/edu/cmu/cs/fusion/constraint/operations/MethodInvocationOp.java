@@ -11,12 +11,13 @@ import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.FusionEnvironment;
-import edu.cmu.cs.fusion.Utils;
+import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
+import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 
 public class MethodInvocationOp implements Operation {
 	private String thisType;
@@ -42,7 +43,7 @@ public class MethodInvocationOp implements Operation {
 		return new FreeVars(params, paramTypes).addVar(thisVar, thisType).addVar(retVar, retType);
 	}
 
-	public ConsList<Pair<SpecVar, Variable>> matches(TACInstruction instr) {
+	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr) {
 		if (!(instr instanceof MethodCallInstruction))
 			return null;
 
@@ -54,14 +55,14 @@ public class MethodInvocationOp implements Operation {
 
 		IMethodBinding method = invoke.resolveBinding();
 
-		if (!Utils.isSubtypeCompatible(thisType, method.getDeclaringClass().getQualifiedName()))
+		if (!types.isSubtypeCompatible(thisType, method.getDeclaringClass().getQualifiedName()))
 			return null;
 
 		if (method.getParameterTypes().length != paramTypes.length)
 			return null;
 
 		for (int ndx = 0; ndx < paramTypes.length; ndx++)
-			if (!Utils.isSubtypeCompatible(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
+			if (!types.isSubtypeCompatible(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
 		ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
