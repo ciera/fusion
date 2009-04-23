@@ -34,6 +34,9 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 	public ConsList<Pair<SpecVar, String>> convertToConsList() {
 		ConsList<Pair<SpecVar, String>> list = ConsList.empty();
 		
+		for (Map.Entry<SpecVar, String> entry : vars.entrySet())
+			list = ConsList.cons(new Pair<SpecVar, String>(entry.getKey(), entry.getValue()), list);
+		
 		return list;
 	}
 
@@ -80,5 +83,9 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 
 	public boolean isEmpty() {
 		return vars.isEmpty();
+	}
+	
+	public String toString() {
+		return vars.toString();
 	}
 }

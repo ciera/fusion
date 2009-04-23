@@ -32,6 +32,12 @@ public class FusionEnvironment {
 		tHierarchy = types;
 	}
 	
+	/**
+	 * Find the potential substitutions for some bound specification variables.
+	 * @param variables The bound variables which we must produce aliasing substitutions for
+	 * @param fv The types of the specfication variables
+	 * @return A pair of all potential substitutitions
+	 */
 	public SubPair findLabels(ConsList<Pair<SpecVar, Variable>> variables, FreeVars fv) {
 		SubPair baseCase = new SubPair();
 		baseCase.addDefiniteSub(new Substitution());
@@ -51,16 +57,16 @@ public class FusionEnvironment {
 			
 
 	/**
-	 * 
-	 * @param subs
-	 * @param fv
-	 * @return
+	 * Find all possible substitutions for the specification variables in fv, with the starting substitutions given
+	 * @param subs The existing substitutions, which must correspond to the free variables passed in
+	 * @param fv The free variables to get substitutions for
+	 * @return A SubPair of possible substutitions, where each sub contains existing and the domain of the sub is equal to the domain of freevars
 	 */
 	public SubPair allValidSubs(Substitution existing, FreeVars fv) {
 		FreeVars actualFreeVars = new FreeVars();
 		
 		for (SpecVar spec : fv) {
-			if (existing.getSub(spec) != null) {
+			if (existing.getSub(spec) == null) {
 				actualFreeVars = actualFreeVars.addVar(spec, fv.getType(spec));
 			}
 		}
