@@ -20,6 +20,7 @@ import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
+import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 import edu.cmu.cs.fusion.test.TestUtils;
 
 public class TestMethodInvocationOp {
@@ -63,7 +64,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(instr);
+		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 	}
@@ -79,7 +80,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo2", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(instr);
+		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 	}
@@ -95,7 +96,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz2"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> map = op.matches(instr);
+		ConsList<Pair<SpecVar,Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);	
 	}
@@ -112,7 +113,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz", "blah"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> map = op.matches(instr);
+		ConsList<Pair<SpecVar,Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 		
@@ -135,7 +136,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(instr);
+		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
 		assertTrue(list.contains(new Pair<SpecVar, Variable>(new SpecVar(Constraint.RESULT), rVar)));
@@ -159,7 +160,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(instr);
+		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
 		assertTrue(list.contains(new Pair<SpecVar, Variable>(new SpecVar(Constraint.RESULT), rVar)));

@@ -21,19 +21,19 @@ public class TestEnvironment extends FusionEnvironment {
 	Map<ObjectLabel, String> types;
 	
 	public TestEnvironment(RelationshipContext relLattice) {
-		super(null, relLattice, null);
+		super(null, relLattice, null, new EqualityOnlyTypeHierarchy());
 		bools = new HashMap<ObjectLabel, ThreeValue>();
 	}
 
 	public TestEnvironment(RelationshipContext relLattice, Map<ObjectLabel, ThreeValue> bools) {
-		super(null, relLattice, null);
+		super(null, relLattice, null, new EqualityOnlyTypeHierarchy());
 		this.bools = bools;
 	}
 
 
 	public TestEnvironment(RelationshipContext context, Map<ObjectLabel, ThreeValue> bools,
 	 Map<ObjectLabel, String> types) {
-		super(null, context, null);
+		super(null, context, null, new EqualityOnlyTypeHierarchy());
 		this.types = types;
 	}
 

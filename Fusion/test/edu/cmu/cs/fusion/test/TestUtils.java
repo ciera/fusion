@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -18,6 +19,7 @@ public class TestUtils {
 	ObjectLabel[] labels;
 	SpecVar[] vars;
 	Substitution[] subs;
+	AliasContext[] aliases;
 
 	public RelationshipDelta getDelta(int i) {
 		return deltas[i];
@@ -43,6 +45,10 @@ public class TestUtils {
 		return subs[i];
 	}
 	
+	public AliasContext getAliases(int i) {
+		return aliases[i];
+	}
+	
 	public TestUtils() {
 		deltas = new RelationshipDelta[4];
 		contexts = new RelationshipContext[4];
@@ -50,8 +56,11 @@ public class TestUtils {
 		labels = new ObjectLabel[4];
 		vars = new SpecVar[5];
 		subs = new Substitution[2];
+		aliases = new TestAliasContext[2];
 		
 		RelationshipDelta delta;
+		TestAliasContext aliasContext;
+		
 		relations[0] = new Relation("A", new String[] {"Foo", "Bar"});
 		relations[1] = new Relation("B", new String[] {"Bar", "Bar"});
 		
@@ -145,5 +154,12 @@ public class TestUtils {
 		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FourPointLattice.BOT);
 		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FourPointLattice.BOT);
 		deltas[3] = delta;
+		
+		aliasContext = new TestAliasContext();
+		aliases[0] = aliasContext;
+		
+		aliasContext = new TestAliasContext();
+		aliases[1] = aliasContext;
 	}
+
 }

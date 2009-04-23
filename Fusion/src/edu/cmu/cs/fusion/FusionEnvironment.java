@@ -24,10 +24,12 @@ public class FusionEnvironment {
 
 	RelationshipContext context;
 	AliasContext alias;
+	TypeHierarchy tHierarchy;
 	
-	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanConstantLE boolLattice) {
+	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanConstantLE boolLattice, TypeHierarchy types) {
 		context = relLattice;
 		alias = aliasLattice;
+		tHierarchy = types;
 	}
 	
 	public SubPair findLabels(ConsList<Pair<SpecVar, Variable>> variables, FreeVars fv) {
@@ -109,10 +111,10 @@ public class FusionEnvironment {
 	}
 		
 	private MatchType checkTypes(ObjectLabel label, String type) {
-		if (Utils.isSubtypeCompatible(label.getType().getQualifiedName(), type)) {
+		if (tHierarchy.isSubtypeCompatible(label.getType().getQualifiedName(), type)) {
 			return MatchType.DEF;
 		}
-		else if (Utils.existsCommonSubtype(label.getType().getQualifiedName(), type)) {
+		else if (tHierarchy.existsCommonSubtype(label.getType().getQualifiedName(), type)) {
 			return MatchType.POS;
 		}
 		else
@@ -130,5 +132,9 @@ public class FusionEnvironment {
 
 	public String getType(ObjectLabel obj) {
 		return null;
+	}
+
+	public boolean isSubtypeCompatible(String subType, String superType) {
+		return tHierarchy.isSubtypeCompatible(subType, superType);
 	}
 }
