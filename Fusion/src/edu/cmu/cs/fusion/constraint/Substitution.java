@@ -48,7 +48,6 @@ public class Substitution {
 			if (pair.fst().equals(var))
 				return pair.snd();
 		}
-		assert false : "asked for a spec variable that didn't exist in this substution";
 		return null;
 	}
 

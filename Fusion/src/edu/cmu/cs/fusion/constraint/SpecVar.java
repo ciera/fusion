@@ -52,4 +52,7 @@ public class SpecVar {
 		return true;
 	}
 	
+	public String toString() {
+		return var;
+	}
 }
