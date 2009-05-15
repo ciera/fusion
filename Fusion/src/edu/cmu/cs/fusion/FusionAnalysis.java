@@ -83,8 +83,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return aliases;
 	}
 
-	public Object getBooleanAnalysis() {
-		// TODO Auto-generated method stub
-		return null;
+	public ConstantAnalysis getBooleanAnalysis() {
+		return constants;
 	}
 }
