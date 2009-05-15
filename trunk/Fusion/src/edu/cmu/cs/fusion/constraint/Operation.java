@@ -1,7 +1,5 @@
 package edu.cmu.cs.fusion.constraint;
 
-import java.util.Map;
-
 import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.util.ConsList;

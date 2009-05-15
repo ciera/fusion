@@ -1,12 +1,9 @@
 package edu.cmu.cs.fusion;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
-import edu.cmu.cs.crystal.analysis.alias.Aliasing;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
@@ -23,26 +20,30 @@ public class FusionEnvironment {
 	}
 
 	RelationshipContext context;
+	BooleanContext bools;
 	AliasContext alias;
 	TypeHierarchy tHierarchy;
 	
-	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanConstantLE boolLattice, TypeHierarchy types) {
+	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types) {
 		context = relLattice;
 		alias = aliasLattice;
+		bools = boolLattice;
 		tHierarchy = types;
 	}
 	
 	/**
 	 * Find the potential substitutions for some bound specification variables.
 	 * @param variables The bound variables which we must produce aliasing substitutions for
-	 * @param fv The types of the specfication variables
-	 * @return A pair of all potential substitutitions
+	 * @param fv The types of the specification variables
+	 * @return A pair of all potential substitutions
 	 */
 	public SubPair findLabels(ConsList<Pair<SpecVar, Variable>> variables, FreeVars fv) {
 		SubPair baseCase = new SubPair();
 		baseCase.addDefiniteSub(new Substitution());
 			
-		return variables.foldl(findLabelsLambda, new Pair<SubPair, FreeVars>(baseCase, fv)).fst();
+		SubPair pair = variables.foldl(findLabelsLambda, new Pair<SubPair, FreeVars>(baseCase, fv)).fst();
+		assert(pair.numberOfSubstitutions() != 0);
+		return pair;
 	}
 
 	private Lambda2<Pair<SpecVar, Variable>, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>> findLabelsLambda =
@@ -133,11 +134,7 @@ public class FusionEnvironment {
 	}
 	
 	public ThreeValue getBooleanValue(ObjectLabel label) {
-		return null;
-	}
-
-	public String getType(ObjectLabel obj) {
-		return null;
+		return bools.getBooleanValue(label);
 	}
 
 	public boolean isSubtypeCompatible(String subType, String superType) {

@@ -4,6 +4,7 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.FourPointLattice;
@@ -52,7 +53,7 @@ public class TestUtils {
 	public TestUtils() {
 		deltas = new RelationshipDelta[4];
 		contexts = new RelationshipContext[4];
-		relations = new Relation[2];
+		relations = new Relation[3];
 		labels = new ObjectLabel[4];
 		vars = new SpecVar[5];
 		subs = new Substitution[2];
@@ -63,10 +64,11 @@ public class TestUtils {
 		
 		relations[0] = new Relation("A", new String[] {"Foo", "Bar"});
 		relations[1] = new Relation("B", new String[] {"Bar", "Bar"});
-		
-		labels[0] = new AbstractObjectLabel("w");
+		relations[2] = new Relation("C", new String[] {"Bar", "Bazar"});
+	
+		labels[0] = new AbstractObjectLabel("w", "Bar");
 		labels[1] = new AbstractObjectLabel("x");
-		labels[2] = new AbstractObjectLabel("y");
+		labels[2] = new AbstractObjectLabel("y", "Foo");
 		labels[3] = new AbstractObjectLabel("z");
 		
 		vars[0] = new SpecVar();
@@ -82,6 +84,13 @@ public class TestUtils {
 		subs[0] = subs[0].addSub(vars[3], labels[2]);
 		subs[0] = subs[0].addSub(vars[4], labels[1]);
 
+		subs[1] = new Substitution();
+		subs[1] = subs[1].addSub(vars[0], labels[0]);
+		subs[1] = subs[1].addSub(vars[1], labels[2]);
+		subs[1] = subs[1].addSub(vars[2], labels[3]);
+		subs[1] = subs[1].addSub(new SpecVar(Constraint.RESULT), labels[2]);
+		subs[1] = subs[1].addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		
 		delta = new RelationshipDelta();
 		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FourPointLattice.TRU);
 		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FourPointLattice.FAL);

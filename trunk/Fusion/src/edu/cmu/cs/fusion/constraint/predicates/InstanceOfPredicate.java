@@ -6,7 +6,6 @@ import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
-import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 
 public class InstanceOfPredicate implements NegatablePredicate {
 	private String type;
@@ -23,7 +22,7 @@ public class InstanceOfPredicate implements NegatablePredicate {
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		ObjectLabel obj = sub.getSub(variable);
-		if (env.isSubtypeCompatible(env.getType(obj), type))
+		if (env.isSubtypeCompatible(obj.getType().getQualifiedName(), type))
 			return ThreeValue.TRUE;
 		else
 			return ThreeValue.FALSE;

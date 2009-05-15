@@ -1,8 +1,5 @@
 package edu.cmu.cs.fusion.constraint.operations;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.jdt.core.dom.IMethodBinding;
 
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
@@ -10,14 +7,11 @@ import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
-import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
-import edu.cmu.cs.fusion.constraint.SubPair;
-import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 
 public class MethodInvocationOp implements Operation {
 	private String thisType;

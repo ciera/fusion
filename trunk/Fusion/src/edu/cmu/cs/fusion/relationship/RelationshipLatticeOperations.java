@@ -3,8 +3,6 @@ package edu.cmu.cs.fusion.relationship;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
-import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.ThreeValue;
 
 /**
  * The operations used by the static analysis on the RelationshipContext lattice.

@@ -1,18 +1,15 @@
 package edu.cmu.cs.fusion.test.constraint.predicates;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
-import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Predicate;
-import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.predicates.FalsePredicate;
-import edu.cmu.cs.fusion.constraint.predicates.NotPredicate;
-import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
@@ -27,23 +24,11 @@ public class TestSimplePred {
 	
 	@Test
 	public void testFreeVars() {
-		FreeVars fv;
 		Predicate tPred = new TruePredicate();
 		Predicate fPred = new FalsePredicate();
-		String[] types = utils.getRelation(0).getFullyQualifiedTypes();
-		int size = 0;
 		
-		fv = tPred.getFreeVariables();
-		size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(size, 0);
-		
-		fv = fPred.getFreeVariables();
-		size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(size, 0);
+		assertTrue(tPred.getFreeVariables().isEmpty());
+		assertTrue(fPred.getFreeVariables().isEmpty());
 	}
 	
 	@Test

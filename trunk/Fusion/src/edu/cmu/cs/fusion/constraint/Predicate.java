@@ -2,7 +2,6 @@ package edu.cmu.cs.fusion.constraint;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
-import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 public interface Predicate {
 	/**

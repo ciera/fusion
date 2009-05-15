@@ -1,234 +1,259 @@
 package edu.cmu.cs.fusion.relationship;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.BooleanLabel;
+import edu.cmu.cs.crystal.ILabel;
+import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
+import edu.cmu.cs.crystal.flow.IResult;
+import edu.cmu.cs.crystal.flow.LabeledResult;
+import edu.cmu.cs.crystal.flow.LabeledSingleResult;
+import edu.cmu.cs.crystal.flow.SingleResult;
+import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
+import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.AliasContext;
+import edu.cmu.cs.fusion.BooleanConstantWrapper;
+import edu.cmu.cs.fusion.BooleanContext;
 import edu.cmu.cs.fusion.FusionAnalysis;
-import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.MayAliasWrapper;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.TypeHierarchy;
+import edu.cmu.cs.fusion.constraint.Constraint;
+import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
+import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.SpecVar;
+import edu.cmu.cs.fusion.constraint.SubPair;
+import edu.cmu.cs.fusion.constraint.Substitution;
+import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 
 
 public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTransferFunction<RelationshipContext> {
 
 	private FusionAnalysis mainAnalysis;
-
-
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis) {
+	private ConstraintEnvironment constraints;
+	private TypeHierarchy types;
+	private Variant variant;
+	
+	public enum Variant {
+		SOUND, COMPLETE, PRAGMATIC
+	}
+	
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, Variant variant) {
 		mainAnalysis = relAnalysis;
+		this.constraints = constraints;
+		types = new EqualityOnlyTypeHierarchy();
+		this.variant = variant;
 	}
 
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
 		return new RelationshipContext(false);
 	}
 
-
-
 	public ILatticeOperations<RelationshipContext> createLatticeOperations(
 			MethodDeclaration method) {
 		return new RelationshipLatticeOperations();
 	}
 
-/*
+	@Override
 	public IResult<RelationshipContext> transfer(MethodCallInstruction instr,
 			List<ILabel> labels, RelationshipContext value) {
-		IMethodBinding binding = instr.resolveBinding();
-		AnnotationSummary sum = annoDB.getSummaryForMethod(binding);
-		RelationshipContext tValue = null, fValue = null;
-		boolean hasBoolLabels;
-		
-		if (sum == null)
-			return LabeledSingleResult.createResult(value, labels);
+		//some options:
+		//pass in two alias contexts: 1 for before/result, 1 for effects?
+		//no, I should be able to just use the after values. The receiver should not have been
+		//anywhere else in the expression in a TAC system....right? Can I do x = x.foo()? What about x = y.bar(a, a) (though that has no affect...)
+		//if not, use the after value.
+		//		However, consider how this might affect reference equality predicates. I suppose since result shouldn't be used
+		//		in trigger or predicate, this won't be an issue. Doing that would be dirty.
+		//if so: 
+		//what if we let the freevars decide this? Upon getting free vars, also state whether it is a "before" or "after"  variable.
+		//trig and req produce before. effect produces afters for * and result, but before otherwise?
+		//op produces before for everything except result?
+		//
+		//For now, I'm just going to assume that we use the after value, and result isn't allowed in the trigger or requires preds.
 
-		value = value.copy();
 		
-		hasBoolLabels = labels.contains(BooleanLabel.getBooleanLabel(true)) &&
-		  labels.contains(BooleanLabel.getBooleanLabel(false));
 		
-		if (hasBoolLabels) {
-			tValue = value.copy();
-			fValue = value.copy();			
-		}
+		//run twice: once assuming return is false, and again assuming return is true.
+		AliasContext aContext = new MayAliasWrapper(instr, mainAnalysis.getAliasAnalysis());
+		if (labels.contains(BooleanLabel.getBooleanLabel(true)) && labels.contains(BooleanLabel.getBooleanLabel(false))) {
+			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), true);
+			FusionEnvironment tEnv = new FusionEnvironment(aContext, value, null, types);
+			RelationshipContext tNewContext = genericFlowFunction(tEnv, instr);
 			
-		
-		for (ICrystalAnnotation anno : sum.getReturn()) {
-			if (anno instanceof RelationshipAnnotation) {
-				RelationshipAnnotation relAnno = (RelationshipAnnotation)anno;
-				Variable[] boundVars = getVariables(instr, relAnno, sum.getParameterNames());
-				boolean isDistinctOrWild = isDistinctOrWild(boundVars, instr.getNode());
-				Set<Relationship> relationships = new HashSet();
-				
-				createAllRelationships(relationships, new ArrayList(), boundVars, 0,
-				  relAnno.getRelationshipName(), instr);
-				
-				for (Relationship rel : relationships) {
-					//we have relevant aliases, so we can't assume anything at all.
-					if (!isDistinctOrWild)
-						setAllLEs(rel, ThreeValue.UNKNOWN, hasBoolLabels, value, tValue, fValue);
-					//add the relationship
-					else if (relAnno.isAdd())
-						setAllLEs(rel, ThreeValue.TRUE, hasBoolLabels, value, tValue, fValue);
-					//remove the relationship
-					else if (relAnno.isRemove())
-						setAllLEs(rel, ThreeValue.FALSE, hasBoolLabels, value, tValue, fValue);
-					//must set the relationship based on another value
-					else {
-						String setString = relAnno.getSetVar();
-						Variable setVar = getVariable(setString, instr, sum.getParameterNames());
-						
-						//split on the return value, IF we have true/false labels
-						if (setVar == instr.getTarget()) {
-							value.setRelationship(rel, ThreeValue.UNKNOWN);
-							if (hasBoolLabels) {
-								tValue.setRelationship(rel, ThreeValue.TRUE);
-								fValue.setRelationship(rel, ThreeValue.FALSE);
-							}
-						}
-						//use the boolean constants analysis to get the value
-						else {
-							ThreeValue boolInfo = mainAnalysis.getBoolInfo(setVar, instr.getNode());
-							setAllLEs(rel, boolInfo, hasBoolLabels, value, tValue, fValue);
-						}
-					}
-				}
-			}
-		}
-		
-		if (hasBoolLabels) {
-			LabeledResult<RelationshipContext> result = new LabeledResult<RelationshipContext>(value);
-			result.put(BooleanLabel.getBooleanLabel(true), tValue);
-			result.put(BooleanLabel.getBooleanLabel(false), fValue);
+			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), false);
+			FusionEnvironment fEnv = new FusionEnvironment(aContext, value, null, types);
+			RelationshipContext fNewContext = genericFlowFunction(fEnv, instr);
+			
+			LabeledResult<RelationshipContext> result = new LabeledResult<RelationshipContext>(labels, new RelationshipContext(false));
+			result.put(BooleanLabel.getBooleanLabel(true), fNewContext);
+			result.put(BooleanLabel.getBooleanLabel(false), fNewContext);
 			return result;
 		}
-		else
-			return LabeledSingleResult.createResult(value, labels);
-	}
-
-	static final private void setAllLEs(Relationship rel, ThreeValue tv, boolean hasLabels, RelationshipContext defVal, RelationshipContext trueVal, RelationshipContext falseVal) {
-		defVal.setRelationship(rel, tv);
-		if (hasLabels) {
-			trueVal.setRelationship(rel, tv);
-			falseVal.setRelationship(rel, tv);			
+		else {
+			FusionEnvironment env = new FusionEnvironment(aContext, value, null, types);
+			RelationshipContext newContext = genericFlowFunction(env, instr);
+			
+			return LabeledSingleResult.createResult(newContext);
 		}
 	}
-*/		
+
 	/**
-	 * Get all the relationships we can create given the bound variables. This means we get a relationship for
-	 * every proper combination. So:
-	 * v1 : a, b
-	 * v2: c
-	 * v3: a, d
-	 * gets us (a, c, a), (b, c, a), (a, c, d), (b, c, d).
-	 * Eventually, we should also add typing here too.
-	 * Also, this does not currently handle wildcards.
-	 * @param rels relationship set (output parameter)
-	 * @param prevLabels For recursive purposes, send in an empty list
-	 * @param vars The bound variables
-	 * @param ndx For recursive purposes, send in 0
-	 * @param name The name of the relationship
-	 * @param instr The method call that started this damn thing.
+	 * Run the flow function for each constraint. Join the results from each constraint together and adjust the lattice
+	 * @param env
+	 * @param instr
+	 * @return The new relationship lattice.
 	 */
-/*	private void createAllRelationships(Set<Relationship> rels, List<ObjectLabel> prevLabels, Variable[] vars, int ndx, String name, MethodCallInstruction instr) {
-		if (ndx == vars.length) {
-			ObjectLabel[] arr = new ObjectLabel[prevLabels.size()];
-			int lndx = 0;
-			for (ObjectLabel label : prevLabels) {
-				arr[lndx] = label;
-				lndx++;
+	protected RelationshipContext genericFlowFunction(FusionEnvironment env, TACInstruction instr) {
+		List<RelationshipDelta> consDeltas = new LinkedList<RelationshipDelta>();
+		RelationshipDelta delta;
+		
+		for (Constraint cons : constraints) {
+			delta = checkSingleConstraint(env, cons, instr);
+			consDeltas.add(delta);
+		}
+		
+		delta = RelationshipDelta.join(consDeltas);
+		return env.getContext().applyChangesFromDelta(delta);
+	}
+
+	/**
+	 * @param env The alias and relation lattices
+	 * @param cons The constraint to check
+	 * @param instr The instruction we are checking the constraint on
+	 * @return a relationship delta for all possible aliasing configurations, assuming the constraint
+	 * triggers.
+	 */
+	protected RelationshipDelta checkSingleConstraint(FusionEnvironment env,
+			Constraint cons, TACInstruction instr) {
+		ConsList<Pair<SpecVar, Variable>> boundVars = cons.getOp().matches(types, instr);
+		List<RelationshipDelta> deltas = new LinkedList<RelationshipDelta>();
+		RelationshipDelta delta;
+		
+		if (boundVars == null)
+			return new RelationshipDelta();
+		
+		SubPair pairs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
+		Iterator<Substitution> itr;
+		
+		itr = pairs.getDefiniteSubstitutions();
+		while (itr.hasNext()) {
+			delta = checkPartialBound(env, itr.next(), cons, instr);
+			deltas.add(delta);
+		}
+
+		itr = pairs.getPossibleSubstitutions();
+		while (itr.hasNext()) {
+			delta = checkPartialBound(env, itr.next(), cons, instr);
+			deltas.add(delta.polarize());
+		}
+		
+		return RelationshipDelta.equalityJoin(deltas);
+	}
+
+	protected RelationshipDelta checkPartialBound(FusionEnvironment env,
+			Substitution boundSubs, Constraint cons, TACInstruction instr) {
+		
+		List<RelationshipDelta> deltas = new LinkedList<RelationshipDelta>();
+		RelationshipDelta delta;
+		SubPair pair = env.allValidSubs(boundSubs, cons.getFreeVarsExceptReqs());
+
+		Iterator<Substitution> itr;
+		
+		itr = pair.getDefiniteSubstitutions();
+		while (itr.hasNext()) {
+			delta = checkFullyBound(env, itr.next(), cons, instr);
+			deltas.add(delta);
+		}
+
+		itr = pair.getPossibleSubstitutions();
+		while (itr.hasNext()) {
+			delta = checkFullyBound(env, itr.next(), cons, instr);
+			deltas.add(delta.polarize());
+		}
+		
+		return RelationshipDelta.equalityJoin(deltas);
+	}
+
+	/**
+	 * Check a constraint with the fully bound substitutions
+	 * @param env The stating lattices
+	 * @param partialSubs The substitutions for FV(cons) - FV(req)
+	 * @param cons The constraint to check
+	 * @param instr The instruction to report errors on
+	 * @return Any change effects
+	 */
+	protected RelationshipDelta checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons, TACInstruction instr) {	
+		RelationshipDelta delta;
+		boolean causedAnError = true;
+		
+		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
+
+		//check for errors
+		if (trigger == ThreeValue.FALSE) { //F-SND, F-PRG, F-CMP
+			causedAnError = false;
+		}
+		else if (trigger == ThreeValue.UNKNOWN && variant != Variant.SOUND) { //U-PRG, U-CMP
+			causedAnError = false;
+		}
+		else if (trigger == ThreeValue.TRUE && variant == Variant.COMPLETE) { //T-CMP
+			SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
+			
+			Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
+			while (itr.hasNext()) {
+				Substitution fullSub = itr.next();
+				ThreeValue value = cons.getRequires().getTruth(env, fullSub);
+				if (value != ThreeValue.FALSE)
+					causedAnError = false;
 			}
-			rels.add(new Relationship(name, arr));
+			itr = pair.getPossibleSubstitutions();
+			while (itr.hasNext()) {
+				Substitution fullSub = itr.next();
+				ThreeValue value = cons.getRequires().getTruth(env, fullSub);
+				if (value != ThreeValue.FALSE)
+					causedAnError = false;
+			}	
+		}
+		else {  //T-SND, U-SND, T-PRG
+			SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
+			
+			Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
+			while (itr.hasNext()) {
+				Substitution fullSub = itr.next();
+				ThreeValue value = cons.getRequires().getTruth(env, fullSub);
+				if (value == ThreeValue.TRUE)
+					causedAnError = false;
+			}	
+		}
+		
+		//report errors
+		if (causedAnError) {
+			mainAnalysis.reportError(variant, cons, instr);
+		}
+		
+		//make any effects
+		if (trigger == ThreeValue.FALSE) {
+			delta = new RelationshipDelta();
 		}
 		else {
-			Set<ObjectLabel> newLabels;
-
-			if (vars[ndx] != null)
-				newLabels = mainAnalysis.getLabels(vars[ndx], instr.getNode());
-			else 
-				newLabels = mainAnalysis.getLabels(name, vars.length, ndx, instr.getNode());
-				
-			for (ObjectLabel label : newLabels) {
-				prevLabels.add(label);
-				createAllRelationships(rels, prevLabels, vars, ndx + 1, name, instr);
-				prevLabels.remove(label);
-			}
+			List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
+			for (Effect effect : cons.getEffects())
+				eDeltas.add(effect.makeEffects(env, partialSubs));
+			delta = RelationshipDelta.join(eDeltas);
+			if (trigger == ThreeValue.UNKNOWN)
+				delta = delta.polarize();
 		}
-	}
-*/
-	/**
-	 * Determine whether there are relevant aliases for the bound variables,
-	 * where a relevant alias is one which will affect whether the relationship
-	 * can be set to a definite value. In particular, wildcard aliases do not affect us since
-	 * we apply the relationship to all of the, but other aliases do because we do not know for
-	 * sure which object is a part of the relationship.
-	 * @param boundVars The list of variables to check
-	 * @param node The ast node where we are checking at.
-	 * @return true if the variables are all distinct or a wildcard, false if we aren't sure what it is.
-	 */
-	private boolean isDistinctOrWild(Variable[] boundVars, ASTNode node) {
-		for (Variable var : boundVars) {
-			if (var == null)
-				continue;
-			if (mainAnalysis.getLabels(var, node).size() > 1)
-				return false;
-		}
-		return true;
-	}
 
-	/**
-	 * Get the list of variables for this relationship annotation, given the method call to retrieve variables
-	 * from and the ordered list of parameter names.
-	 * All variables in anno will match up to a parameter, or they will be the receiver or target of the
-	 * method invocation.
-	 * It is possible that the relationship annotation uses a wildcard, in which case, there will be null
-	 * in this slot
-	 * @param instr The method call which has the arguments
-	 * @param anno The relationship annotation we want to bind up
-	 * @param paramNames The ordered parameter names for instr
-	 * @return The variables, in the order they appear in anno.
-	 */
-/*	private Variable[] getVariables(MethodCallInstruction instr, RelationshipAnnotation anno, String[] paramNames) {
-		Variable[] vars = new Variable[anno.getParams().length];
-		int ndx = 0;
-		
-		for (String param : anno.getParams()) {
-			vars[ndx] = getVariable(param, instr, paramNames);
-			ndx++;
-		}
-		return vars;
+		return delta;
 	}
-*/	
-
-	/**
-	 * Get the Variable for a parameter name
-	 * @param param The parameter name we are searching for
-	 * @param instr The method call which has the arguments
-	 * @param params The list of possible parameter names, in the correct order.
-	 * @return The variable which corresponds to param
-	 */
-/*	private Variable getVariable(String param, MethodCallInstruction instr, String[] paramNames) {
-		if (param.equals(RelationshipAnnotation.RETURN))
-			return instr.getTarget();
-		else if (param.equals(RelationshipAnnotation.THIS))
-			return instr.getReceiverOperand();
-		else if (param.equals(RelationshipAnnotation.ANY))
-			return null;
-		else {	
-			assert(paramNames.length == instr.getArgOperands().size());
-			for (int ndx = 0; ndx < paramNames.length; ndx++) {
-				if (param.equals(paramNames[ndx]))
-					return ((List<Variable>)instr.getArgOperands()).get(ndx);
-			}
-			return null;
-		}
-	}
-*/
-
-
 }

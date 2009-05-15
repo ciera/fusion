@@ -2,10 +2,15 @@ package edu.cmu.cs.fusion;
 
 import java.util.Set;
 
-import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.fusion.constraint.Substitution;
+import edu.cmu.cs.crystal.tac.TACInstruction;
+import edu.cmu.cs.crystal.tac.Variable;
 
+/**
+ * The alias context at a particular instruction in the analysis.
+ * @author ciera
+ *
+ */
 public interface AliasContext {
 	/**
 	 * Returns the possible object labels. May be null.

@@ -6,7 +6,13 @@ import edu.cmu.cs.crystal.tac.IVariableVisitor;
 import edu.cmu.cs.crystal.tac.Variable;
 
 public class StubVariable extends Variable {
+	private String name;
 
+	public StubVariable(String name) {
+		super();
+		this.name = name;
+	}
+	
 	public StubVariable() {
 		super();
 	}
@@ -19,6 +25,14 @@ public class StubVariable extends Variable {
 	@Override
 	public ITypeBinding resolveType() {
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		if (name != null)
+			return name;
+		else
+			return super.toString();
 	}
 
 }

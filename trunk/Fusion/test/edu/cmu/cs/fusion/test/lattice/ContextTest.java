@@ -1,20 +1,17 @@
 package edu.cmu.cs.fusion.test.lattice;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Test;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
-import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.Relation;
+import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.relationship.FourPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 
 public class ContextTest {
 	static RelationshipDelta d1, d2, d3, d4;

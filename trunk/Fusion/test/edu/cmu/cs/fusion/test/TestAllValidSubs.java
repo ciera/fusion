@@ -1,17 +1,14 @@
 package edu.cmu.cs.fusion.test;
 
-import static org.junit.Assert.*;
-
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.tac.Variable;
-import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
