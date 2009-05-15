@@ -1,6 +1,6 @@
 package edu.cmu.cs.fusion.test.constraint.predicates;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +32,9 @@ public class TestTestPredicate {
 		FreeVars fv;
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(2));
-		int size = 0;
 		
 		fv = pred.getFreeVariables();
-		size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(3, size);
+		assertEquals(3, fv.size());
 
 		String[] types = utils.getRelation(0).getFullyQualifiedTypes();
 		assertEquals(FreeVars.BOOL_TYPE, fv.getType(utils.getVar(2)));		

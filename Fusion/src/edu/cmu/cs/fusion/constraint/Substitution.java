@@ -1,8 +1,5 @@
 package edu.cmu.cs.fusion.constraint;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
@@ -55,4 +52,5 @@ public class Substitution {
 		return subs.size();
 	}
 
+	public String toString() {return subs.toString();}
 }

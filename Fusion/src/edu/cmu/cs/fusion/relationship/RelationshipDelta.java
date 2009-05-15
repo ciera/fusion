@@ -29,8 +29,8 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		rels = new HashMap<Relationship, ThreeValue>();
 	}
 	
-	public boolean hasChanges() {
-		return !rels.isEmpty();
+	public int numberOfChanges() {
+		return rels.size();
 	}
 	
 	public FourPointLattice getValue(Relationship rel) {
@@ -90,7 +90,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 	
 	
 	private void join(RelationshipDelta other, boolean isEquality) {
-		Set<Relationship> combinedRels = new HashSet(rels.keySet());
+		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
 		combinedRels.addAll(other.rels.keySet());
 		
 		for (Relationship rel : combinedRels) {
@@ -167,7 +167,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		String str = "<";
 		
 		for (Entry<Relationship, ThreeValue> entry : rels.entrySet()) {
-			str += entry.getKey().toString() + "->" + entry.getValue().toString() + ", ";
+			str += entry.getKey() + "->" + entry.getValue() + ", ";
 		}
 
 		str += ">";

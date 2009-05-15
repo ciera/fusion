@@ -85,6 +85,10 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 		return vars.isEmpty();
 	}
 	
+	public int size() {
+		return vars.size();
+	}
+	
 	public String toString() {
 		return vars.toString();
 	}

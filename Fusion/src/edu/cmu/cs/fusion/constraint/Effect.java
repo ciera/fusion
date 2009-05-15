@@ -4,7 +4,6 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.relationship.FourPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
@@ -53,8 +52,10 @@ public class Effect {
 		Relationship rel;
 		FourPointLattice effect = FourPointLattice.TRU;
 		
-		for (int ndx = 0; ndx < vars.length; ndx++)
+		for (int ndx = 0; ndx < vars.length; ndx++) {
 			labels[ndx] = subs.getSub(vars[ndx]);
+			assert labels[ndx] != null;
+		}
 		rel = new Relationship(type, labels);
 		
 		if (test != null) {

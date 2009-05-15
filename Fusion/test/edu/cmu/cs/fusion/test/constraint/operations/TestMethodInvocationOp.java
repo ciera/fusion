@@ -1,21 +1,19 @@
 package edu.cmu.cs.fusion.test.constraint.operations;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import edu.cmu.cs.crystal.util.Pair;
-
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -42,10 +40,7 @@ public class TestMethodInvocationOp {
 		assertEquals("Foo", fv.getType(utils.getVar(0)));
 		assertEquals("Bar", fv.getType(utils.getVar(1)));
 		
-		int size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(4, size);
+		assertEquals(4, fv.size());
 	}
 	
 	@Test

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,10 +36,7 @@ public class TestEffect {
 		assertEquals(types[0], fv.getType(utils.getVar(0)));
 		assertEquals(types[1], fv.getType(utils.getVar(1)));
 
-		int size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(2, size);
+		assertEquals(2, fv.size());
 	}
 	
 	@Test
@@ -53,10 +49,7 @@ public class TestEffect {
 		assertEquals(types[1], fv.getType(utils.getVar(1)));
 		assertEquals(FreeVars.BOOL_TYPE, fv.getType(utils.getVar(2)));
 
-		int size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(3, size);
+		assertEquals(3, fv.size());
 	}
 	
 	@Test
@@ -69,11 +62,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.TRU, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);
+		assertEquals(1, delta.numberOfChanges());
 	}
 	
 	@Test
@@ -86,11 +75,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.FAL, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
+		assertEquals(1, delta.numberOfChanges());
 	}
 	
 	@Test
@@ -106,11 +91,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.TRU, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
+		assertEquals(1, delta.numberOfChanges());
 	}
 	
 	@Test
@@ -126,12 +107,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.FAL, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
-		
+		assertEquals(1, delta.numberOfChanges());
 	}
 	
 	@Test
@@ -147,12 +123,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.UNK, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
-		
+		assertEquals(1, delta.numberOfChanges());
 	}
 
 	@Test
@@ -168,11 +139,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.FAL, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
+		assertEquals(1, delta.numberOfChanges());
 	}
 
 	@Test
@@ -188,12 +155,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.TRU, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
-		
+		assertEquals(1, delta.numberOfChanges());
 	}
 
 	@Test
@@ -209,11 +171,7 @@ public class TestEffect {
 		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
 		assertEquals(FourPointLattice.UNK, val);
 		
-		int size = 0;
-		for (Entry<Relationship, ThreeValue> rel : delta) {
-			size++;
-		}
-		assertEquals(1, size);		
+		assertEquals(1, delta.numberOfChanges());
 	
 	}
 }

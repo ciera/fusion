@@ -1,6 +1,6 @@
 package edu.cmu.cs.fusion.test.constraint.predicates;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,6 @@ import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Predicate;
-import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.predicates.BooleanValue;
 import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
@@ -30,13 +29,9 @@ public class TestBooleanValue {
 	public void testFreeVars() {
 		FreeVars fv;
 		Predicate bPred = new BooleanValue(utils.getVar(0));
-		int size = 0;
 		
 		fv = bPred.getFreeVariables();
-		size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(1, size);
+		assertEquals(1, fv.size());
 		assertEquals(fv.getType(utils.getVar(0)), FreeVars.BOOL_TYPE);
 	}
 	

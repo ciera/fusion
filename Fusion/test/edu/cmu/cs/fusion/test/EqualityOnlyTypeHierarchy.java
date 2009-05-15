@@ -1,7 +1,5 @@
 package edu.cmu.cs.fusion.test;
 
-import java.util.Set;
-
 import edu.cmu.cs.fusion.TypeHierarchy;
 
 public class EqualityOnlyTypeHierarchy implements TypeHierarchy {

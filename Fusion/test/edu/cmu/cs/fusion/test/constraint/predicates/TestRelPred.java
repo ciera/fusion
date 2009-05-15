@@ -1,6 +1,6 @@
 package edu.cmu.cs.fusion.test.constraint.predicates;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,10 +33,7 @@ public class TestRelPred {
 		assertEquals(types[0], fv.getType(utils.getVar(0)));
 		assertEquals(types[1], fv.getType(utils.getVar(1)));
 		
-		int size = 0;
-		for (SpecVar var : fv)
-			size++;
-		assertEquals(size, 2);
+		assertEquals(2, fv.size());
 	}
 	
 	@Test
