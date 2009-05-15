@@ -87,16 +87,16 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		//run twice: once assuming return is false, and again assuming return is true.
 		AliasContext aContext = new MayAliasWrapper(instr, mainAnalysis.getAliasAnalysis());
 		if (labels.contains(BooleanLabel.getBooleanLabel(true)) && labels.contains(BooleanLabel.getBooleanLabel(false))) {
-			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), true);
-			FusionEnvironment tEnv = new FusionEnvironment(aContext, value, null, types);
+			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis(), true);
+			FusionEnvironment tEnv = new FusionEnvironment(aContext, value, tBContext, types);
 			RelationshipContext tNewContext = genericFlowFunction(tEnv, instr);
 			
-			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), false);
-			FusionEnvironment fEnv = new FusionEnvironment(aContext, value, null, types);
+			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis(), false);
+			FusionEnvironment fEnv = new FusionEnvironment(aContext, value, fBContext, types);
 			RelationshipContext fNewContext = genericFlowFunction(fEnv, instr);
 			
 			LabeledResult<RelationshipContext> result = new LabeledResult<RelationshipContext>(labels, new RelationshipContext(false));
-			result.put(BooleanLabel.getBooleanLabel(true), fNewContext);
+			result.put(BooleanLabel.getBooleanLabel(true), tNewContext);
 			result.put(BooleanLabel.getBooleanLabel(false), fNewContext);
 			return result;
 		}
