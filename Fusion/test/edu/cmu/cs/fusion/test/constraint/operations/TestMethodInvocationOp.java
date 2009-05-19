@@ -35,8 +35,8 @@ public class TestMethodInvocationOp {
 		MethodInvocationOp invoke = new MethodInvocationOp("mName", "Foo", vars, new String[] {"Foo", "Bar"}, "Bar");
 		FreeVars fv = invoke.getFreeVariables();
 		
-		assertEquals("Foo", fv.getType(new SpecVar(Constraint.TARGET)));
-		assertEquals("Bar", fv.getType(new SpecVar(Constraint.RESULT)));
+		assertEquals("Foo", fv.getType(Constraint.RECEIVER));
+		assertEquals("Bar", fv.getType(Constraint.RESULT));
 		assertEquals("Foo", fv.getType(utils.getVar(0)));
 		assertEquals("Bar", fv.getType(utils.getVar(1)));
 		
@@ -54,7 +54,7 @@ public class TestMethodInvocationOp {
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 
-		MethodCallInstruction instr = getMCI(new StubVariable(), new StubVariable(), params);
+		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "Bazaz");
@@ -70,7 +70,7 @@ public class TestMethodInvocationOp {
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 
-		MethodCallInstruction instr = getMCI(new StubVariable(), new StubVariable(), params);
+		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo2", vars, vTypes, "Bazaz");
@@ -86,7 +86,7 @@ public class TestMethodInvocationOp {
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 
-		MethodCallInstruction instr = getMCI(new StubVariable(), new StubVariable(), params);
+		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz2"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
@@ -103,7 +103,7 @@ public class TestMethodInvocationOp {
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 
-		MethodCallInstruction instr = getMCI(new StubVariable(), new StubVariable(), params);
+		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz", "blah"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
@@ -126,7 +126,7 @@ public class TestMethodInvocationOp {
 		params.add(p1);
 		params.add(p2);
 
-		MethodCallInstruction instr = getMCI(rVar, tVar, params);
+		MethodCallInstruction instr = getMCI(rVar, params, tVar);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
@@ -134,8 +134,8 @@ public class TestMethodInvocationOp {
 		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(new SpecVar(Constraint.RESULT), rVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(new SpecVar(Constraint.TARGET), tVar)));
+		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RESULT, tVar)));
+		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RECEIVER, rVar)));
 		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(0), p1)));
 		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(1), p2)));
 		
@@ -150,7 +150,7 @@ public class TestMethodInvocationOp {
 		params.add(rVar);
 		params.add(tVar);
 
-		MethodCallInstruction instr = getMCI(rVar, tVar, params);
+		MethodCallInstruction instr = getMCI(rVar, params, tVar);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
@@ -158,8 +158,8 @@ public class TestMethodInvocationOp {
 		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(new SpecVar(Constraint.RESULT), rVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(new SpecVar(Constraint.TARGET), tVar)));
+		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RESULT, tVar)));
+		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RECEIVER, rVar)));
 		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(0), rVar)));
 		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(1), tVar)));
 		
@@ -167,10 +167,10 @@ public class TestMethodInvocationOp {
 
 	}
 	
-	private MethodCallInstruction getMCI(StubVariable resVar, StubVariable tarVar, List<StubVariable> params) {
+	private MethodCallInstruction getMCI(StubVariable resVar, List<StubVariable> params, StubVariable tarVar) {
 		StubTypeBinding rBinding = new StubTypeBinding("Foo");		
 		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
 		
-		return new StubMethodCallInstruction("mName", resVar, tarVar, params, new StubMethodBinding(rBinding, vBindings));	
+		return new StubMethodCallInstruction("mName", resVar, params, new StubMethodBinding(rBinding, vBindings), tarVar);	
 	}
 }

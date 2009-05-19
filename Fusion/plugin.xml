@@ -2,37 +2,10 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="edu.cmu.cs.crystal.CrystalAnnotation">
-      <customAnnotation
-            name="Relationship"
-            parserClass="edu.cmu.cs.crystal.analysis.relationship.RelationshipAnnotation">
-         <sourceAnnotation
-               annotationClass="edu.cmu.cs.crystal.client.AddRel"
-               name="AddRelationship">
-         </sourceAnnotation>
-         <sourceAnnotation
-               annotationClass="edu.cmu.cs.crystal.client.RemoveRel"
-               name="RemoveRelationship">
-         </sourceAnnotation>
-         <sourceAnnotation
-               annotationClass="edu.cmu.cs.crystal.client.SetRel"
-               name="SetRelationship">
-         </sourceAnnotation>
-      </customAnnotation>
-   </extension>
-   <extension
          point="edu.cmu.cs.crystal.CrystalAnalysis">
       <analysis
-            class="du.cmu.cs.crystal.analysis.relationship.RelationshipAnalysis"
-            name="RelationAnalysis">
+            class="edu.cmu.cs.fusion.FusionAnalysis"
+            name="FusionAnalysis">
       </analysis>
    </extension>
-   <extension
-         point="edu.cmu.cs.crystal.CrystalAnalysis">
-      <analysis
-            class="edu.cmu.cs.crystal.analysis.constraint.ConstraintAnalysis"
-            name="ConstraintAnalysis">
-      </analysis>
-   </extension>
-
 </plugin>

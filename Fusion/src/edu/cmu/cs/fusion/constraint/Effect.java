@@ -13,6 +13,22 @@ import edu.cmu.cs.fusion.relationship.RelationshipDelta;
  *
  */
 public class Effect {
+	public static Effect createAddEffect(Relation relation, SpecVar[] specVars) {
+		return new Effect(relation, specVars, null, false);
+	}
+
+	public static Effect createRemoveEffect(Relation relation, SpecVar[] specVars) {
+		return new Effect(relation, specVars, null, true);
+	}
+
+	public static Effect createTestEffect(Relation relation, SpecVar[] specVars, SpecVar test) {
+		return new Effect(relation, specVars, test, false);
+	}
+
+	public static Effect createNegatedTestEffect(Relation relation, SpecVar[] specVars, SpecVar test) {
+		return new Effect(relation, specVars, test, true);
+	}
+
 	private SpecVar[] vars;
 	private SpecVar test;
 	private Relation type;
@@ -74,19 +90,27 @@ public class Effect {
 		return delta;
 	}
 
-	public static Effect createAddEffect(Relation relation, SpecVar[] specVars) {
-		return new Effect(relation, specVars, null, false);
+	public String toString() {
+		String str = "";
+		
+		if (negate)
+			str += "!";
+		if (test != null)
+			str += "?";
+		str += type.getName() + "(";
+		
+		for (int ndx = 0; ndx < vars.length; ndx++) {
+			str += vars[ndx];
+			if (ndx < vars.length - 1)
+				str += ", ";
+		}
+		
+		str += ")";
+		
+		if (test != null)
+			str += ":" + test;
+		return str;
 	}
 
-	public static Effect createRemoveEffect(Relation relation, SpecVar[] specVars) {
-		return new Effect(relation, specVars, null, true);
-	}
 
-	public static Effect createTestEffect(Relation relation, SpecVar[] specVars, SpecVar test) {
-		return new Effect(relation, specVars, test, false);
-	}
-
-	public static Effect createNegatedTestEffect(Relation relation, SpecVar[] specVars, SpecVar test) {
-		return new Effect(relation, specVars, test, true);
-	}
 }

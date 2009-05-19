@@ -1,14 +1,13 @@
 package edu.cmu.cs.fusion;
 
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
-import edu.cmu.cs.crystal.analysis.alias.MayAliasAnalysis;
-import edu.cmu.cs.crystal.analysis.constant.ConstantAnalysis;
+import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
+import edu.cmu.cs.crystal.analysis.alias.MayAliasTransferFunction;
+import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
+import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
-import edu.cmu.cs.crystal.tac.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
@@ -21,15 +20,29 @@ import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
-	private ConstantAnalysis constants;
-	private MayAliasAnalysis aliases;
+	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
+	private TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> aliases;
 	private TACFlowAnalysis<RelationshipContext> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
 	
-	public FusionAnalysis(MayAliasAnalysis aliases, ConstantAnalysis constants, Variant variant) {
-		this.aliases = aliases;
-		this.constants = constants;
+	/**
+	 * Default constructor which Crystal will use to create the entire analysis.
+	 */
+	public FusionAnalysis() {
+		super();
+		this.variant = Variant.PRAGMATIC;
+		constraints = new ConstraintEnvironment();
+	}
+
+	/**
+	 * Constructor used only for the purposes of the unit tests of fusion.
+	 * 
+	 * @param aliases
+	 * @param constants
+	 * @param variant
+	 */
+	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		constraints = new ConstraintEnvironment();
 	}
@@ -39,19 +52,28 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 
 	public String getName() {
-		return "Fusion Analysis";
+		return "FusionAnalysis";
 	}
 	
-	public void analyzeMethod(MethodDeclaration d) {
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(this, constraints, variant);
-		fa = new TACFlowAnalysis<RelationshipContext>(tf, this.analysisInput.getComUnitTACs().unwrap());
+	public void analyzeMethod(MethodDeclaration methodDecl) {
+		RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, variant);
+		fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+		
+		MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
+		aliases = new TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>>(tfA, this.analysisInput.getComUnitTACs().unwrap());
+		aliases.getResultsAfter(methodDecl);
+		
+		ConstantTransferFunction tfC = new ConstantTransferFunction();
+		constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
+		constants.getResultsAfter(methodDecl);
 		
 		// must call getResultsAfter at least once on this method,
 		// or the analysis won't be run on this method
-		RelationshipContext finalLattice = fa.getResultsAfter(d);
+		RelationshipContext finalLattice = fa.getResultsAfter(methodDecl);
 		
-		//d.accept(checkResults );
-
+		System.out.println(methodDecl.getName());
+		System.out.println(finalLattice);
+		System.out.println(fa.getResultsAfter(methodDecl.getBody()));
 	}
 	
 	public RelationshipContext getResultsBefore(TACInstruction instr) {
@@ -62,28 +84,15 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return fa.getResultsAfter(instr);		
 	}
 	
-	
-	private ITypeBinding getMatchingType(TypeDeclaration decl, String typeName) {
-		if (decl.resolveBinding().getQualifiedName().equals(typeName))
-			return decl.resolveBinding();
-		
-		for (TypeDeclaration inner : decl.getTypes()) {
-			ITypeBinding binding = getMatchingType(inner, typeName);
-			if (binding != null)
-				return binding;
-		}
-		return null;
-	}
-
 	public void reportError(Variant variant, Constraint cons, TACInstruction instr) {
-		//TODO
+		reporter.reportUserProblem("The constraint " + cons.toString() + " was violated.", instr.getNode(), this.getName() + ": " + variant.toString(), SEVERITY.WARNING);
 	}
 
-	public MayAliasAnalysis getAliasAnalysis() {
+	public TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> getAliasAnalysis() {
 		return aliases;
 	}
 
-	public ConstantAnalysis getBooleanAnalysis() {
+	public TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> getBooleanAnalysis() {
 		return constants;
 	}
 }

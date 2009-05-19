@@ -70,8 +70,8 @@ public class TestSingleConstraint {
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Foo"}, "Bar");
 		trigger = new TruePredicate();
 		req = new TruePredicate();
-		effects.add(Effect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {new SpecVar(Constraint.TARGET), utils.getVar(0)}));
-		effects.add(Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {new SpecVar(Constraint.RESULT), utils.getVar(0)}));
+		effects.add(Effect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {Constraint.RECEIVER, utils.getVar(0)}));
+		effects.add(Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
 		
 		cons = new Constraint(op, trigger, req, effects);
 		
@@ -102,8 +102,8 @@ public class TestSingleConstraint {
 		List<StubVariable> vars = new LinkedList<StubVariable>();
 		vars.add(new StubVariable());
 		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("m", new StubVariable(), new StubVariable(), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}));
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("m", new StubVariable(), vars,
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable());
 		
 		//op has type Foo.methodName(Foo) : Bar
 		//instr has type Foo.m(Foo) : Bar
@@ -130,12 +130,12 @@ public class TestSingleConstraint {
 		List<StubVariable> vars = new LinkedList<StubVariable>();
 		vars.add(new StubVariable("p0"));
 		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), new StubVariable("tVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}));
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
-		aliases.addAlias(instr.getReceiverOperand(), labels[5]);
-		aliases.addAlias(instr.getTarget(), labels[0]);
+		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
+		aliases.addAlias(instr.getTarget(), labels[5]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
@@ -160,12 +160,12 @@ public class TestSingleConstraint {
 		List<StubVariable> vars = new LinkedList<StubVariable>();
 		vars.add(new StubVariable("p0"));
 		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), new StubVariable("tVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}));
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
-		aliases.addAlias(instr.getReceiverOperand(), labels[2]);
-		aliases.addAlias(instr.getTarget(), labels[0]);
+		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
+		aliases.addAlias(instr.getTarget(), labels[2]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
@@ -190,13 +190,13 @@ public class TestSingleConstraint {
 		List<StubVariable> vars = new LinkedList<StubVariable>();
 		vars.add(new StubVariable("p0"));
 		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), new StubVariable("tVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}));
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
-		aliases.addAlias(instr.getReceiverOperand(), labels[6]);
-		aliases.addAlias(instr.getReceiverOperand(), labels[5]);
-		aliases.addAlias(instr.getTarget(), labels[0]);
+		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
+		aliases.addAlias(instr.getTarget(), labels[5]);
+		aliases.addAlias(instr.getTarget(), labels[6]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
@@ -223,13 +223,13 @@ public class TestSingleConstraint {
 		List<StubVariable> vars = new LinkedList<StubVariable>();
 		vars.add(new StubVariable("p0"));
 		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), new StubVariable("tVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}));
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
-		aliases.addAlias(instr.getReceiverOperand(), labels[2]);
-		aliases.addAlias(instr.getReceiverOperand(), labels[5]);
-		aliases.addAlias(instr.getTarget(), labels[0]);
+		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
+		aliases.addAlias(instr.getTarget(), labels[2]);
+		aliases.addAlias(instr.getTarget(), labels[5]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		

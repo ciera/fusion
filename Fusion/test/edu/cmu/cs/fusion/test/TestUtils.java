@@ -88,8 +88,8 @@ public class TestUtils {
 		subs[1] = subs[1].addSub(vars[0], labels[0]);
 		subs[1] = subs[1].addSub(vars[1], labels[2]);
 		subs[1] = subs[1].addSub(vars[2], labels[3]);
-		subs[1] = subs[1].addSub(new SpecVar(Constraint.RESULT), labels[2]);
-		subs[1] = subs[1].addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		subs[1] = subs[1].addSub(Constraint.RESULT, labels[2]);
+		subs[1] = subs[1].addSub(Constraint.RECEIVER, labels[1]);
 		
 		delta = new RelationshipDelta();
 		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FourPointLattice.TRU);

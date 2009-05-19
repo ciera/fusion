@@ -51,7 +51,9 @@ public class FusionEnvironment {
 		public Pair<SubPair, FreeVars> call(Pair<SpecVar, Variable> boundVar, Pair<SubPair, FreeVars> restAndVars) {
 			FreeVars fv = restAndVars.snd();
 			SubPair otherSubs = restAndVars.fst();
-			SubPair subs = generateNewSubPair(boundVar.fst(), fv.getType(boundVar.fst()), alias.getAliases(boundVar.snd()), otherSubs);
+			Set<ObjectLabel> labels = alias.getAliases(boundVar.snd());
+			String typeToFind = fv.getType(boundVar.fst());
+			SubPair subs = generateNewSubPair(boundVar.fst(), typeToFind, labels, otherSubs);
 			return new Pair<SubPair, FreeVars>(subs, fv);
 		}
 	};

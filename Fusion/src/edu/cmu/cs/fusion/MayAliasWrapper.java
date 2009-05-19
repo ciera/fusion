@@ -8,6 +8,7 @@ import edu.cmu.cs.crystal.analysis.alias.MayAliasAnalysis;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
+import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
 
@@ -15,8 +16,8 @@ public class MayAliasWrapper implements AliasContext {
 	
 	private TupleLatticeElement<Variable, AliasLE> lattice;
 
-	public MayAliasWrapper(TACInstruction instr, MayAliasAnalysis aliasAnalysis) {
-		lattice = aliasAnalysis.getResultsAfter(instr);
+	public MayAliasWrapper(TACInstruction instr, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> flowAnalysis) {
+		lattice = flowAnalysis.getResultsAfter(instr);
 	}
 
 	public Set<ObjectLabel> getAliases(Variable var) {

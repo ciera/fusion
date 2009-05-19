@@ -46,13 +46,22 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	private Variant variant;
 	
 	public enum Variant {
-		SOUND, COMPLETE, PRAGMATIC
+		SOUND, COMPLETE, PRAGMATIC;
+		
+		public String toString() {
+			if (this == SOUND)
+				return "Sound";
+			else if (this == COMPLETE)
+				return "Complete";
+			else
+				return "Pragmatic";
+		}
 	}
 	
 	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, Variant variant) {
 		mainAnalysis = relAnalysis;
 		this.constraints = constraints;
-		types = new EqualityOnlyTypeHierarchy();
+		types = new FakeTypeHierarchy();
 		this.variant = variant;
 	}
 
@@ -101,7 +110,8 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			return result;
 		}
 		else {
-			FusionEnvironment env = new FusionEnvironment(aContext, value, null, types);
+			BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis());
+			FusionEnvironment env = new FusionEnvironment(aContext, value, bContext, types);
 			RelationshipContext newContext = genericFlowFunction(env, instr);
 			
 			return LabeledSingleResult.createResult(newContext);

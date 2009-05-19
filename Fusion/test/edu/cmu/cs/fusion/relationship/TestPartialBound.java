@@ -69,7 +69,7 @@ public class TestPartialBound {
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Foo"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(2), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {new SpecVar(Constraint.RESULT), utils.getVar(0)}));
+		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
 		effects.add(Effect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
 		
 		cons = new Constraint(op, trigger, req, effects);
@@ -93,8 +93,8 @@ public class TestPartialBound {
 
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[0]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[0]);
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(new StubVariable(), labels[0]);
@@ -122,8 +122,8 @@ public class TestPartialBound {
 
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[0]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[0]);
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(new StubVariable(), labels[0]);
@@ -156,8 +156,8 @@ public class TestPartialBound {
 
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[0]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[0]);
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(new StubVariable(), labels[0]);
@@ -191,8 +191,8 @@ public class TestPartialBound {
 
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[0]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[0]);
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(new StubVariable(), labels[0]);

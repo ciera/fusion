@@ -24,8 +24,8 @@ public class MethodInvocationOp implements Operation {
 
 	public MethodInvocationOp(String methodName, String thisType, SpecVar[] paramNames,
 		    String[] paramTypes, String returnType) {
-			thisVar = new SpecVar(Constraint.TARGET);
-			retVar = new SpecVar(Constraint.RESULT);
+			thisVar = Constraint.RECEIVER;
+			retVar = Constraint.RESULT;
 			this.params = paramNames;
 			this.paramTypes = paramTypes;
 			this.retType = returnType;
@@ -49,24 +49,37 @@ public class MethodInvocationOp implements Operation {
 
 		IMethodBinding method = invoke.resolveBinding();
 
-		if (!types.isSubtypeCompatible(thisType, method.getDeclaringClass().getQualifiedName()))
+		if (!types.existsCommonSubtype(thisType, method.getDeclaringClass().getQualifiedName()))
 			return null;
 
 		if (method.getParameterTypes().length != paramTypes.length)
 			return null;
 
 		for (int ndx = 0; ndx < paramTypes.length; ndx++)
-			if (!types.isSubtypeCompatible(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
+			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
 		ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
 		
-		vars = ConsList.cons(new Pair<SpecVar, Variable>(thisVar, invoke.getTarget()), vars);
-		vars = ConsList.cons(new Pair<SpecVar, Variable>(retVar, invoke.getReceiverOperand()), vars);
+		vars = ConsList.cons(new Pair<SpecVar, Variable>(thisVar, invoke.getReceiverOperand()), vars);
+		vars = ConsList.cons(new Pair<SpecVar, Variable>(retVar, invoke.getTarget()), vars);
 		
 		for (int ndx = 0; ndx < params.length; ndx++)
 			vars = ConsList.cons(new Pair<SpecVar, Variable>(params[ndx], invoke.getArgOperands().get(ndx)), vars);
 
 		return vars;
+	}
+	
+	public String toString() {
+		String str = thisType + "." + name + "(";
+		
+		for (int ndx = 0; ndx < params.length; ndx++) {
+			str += paramTypes[ndx] + " " + params[ndx];
+			if (ndx < params.length - 1)
+				str += ", ";
+		}
+		str += ") : " + retType;
+		
+		return str;
 	}
 }
