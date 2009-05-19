@@ -78,14 +78,14 @@ public class TestFullyBound {
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {new SpecVar(Constraint.RESULT), utils.getVar(1)}));
+		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		
 		cons = new Constraint(op, trigger, req, effects);
 		
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(2), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {new SpecVar(Constraint.RESULT), utils.getVar(1)}));
+		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		
 		possCons = new Constraint(op, trigger, req, effects);
 		
@@ -137,8 +137,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, noEffectCons, new StubMethodCallInstruction());
@@ -157,7 +157,7 @@ public class TestFullyBound {
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {new SpecVar(Constraint.RESULT), utils.getVar(1)}));
+		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		effects.add(Effect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(1)}));
 
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
@@ -173,8 +173,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
@@ -199,7 +199,7 @@ public class TestFullyBound {
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {new SpecVar(Constraint.RESULT), utils.getVar(1)}));
+		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		effects.add(Effect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(1)}));
 
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
@@ -215,8 +215,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
@@ -242,8 +242,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
@@ -268,8 +268,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -296,8 +296,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -337,8 +337,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
@@ -364,8 +364,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
@@ -390,8 +390,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -418,8 +418,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -459,8 +459,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
@@ -483,8 +483,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -510,8 +510,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -538,8 +538,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
@@ -565,8 +565,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
@@ -591,8 +591,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -620,8 +620,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -650,8 +650,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
@@ -691,8 +691,8 @@ public class TestFullyBound {
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.RESULT), labels[6]);
-		partialSub = partialSub.addSub(new SpecVar(Constraint.TARGET), labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());

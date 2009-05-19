@@ -18,14 +18,7 @@ public class StubFusionAnalysis extends FusionAnalysis {
 	private Map<Constraint, List<TACInstruction>> pragmaticErrors;
 
 	public StubFusionAnalysis() {
-		super(null, null, null);
-		soundErrors = new HashMap<Constraint, List<TACInstruction>>();
-		completeErrors = new HashMap<Constraint, List<TACInstruction>>();
-		pragmaticErrors = new HashMap<Constraint, List<TACInstruction>>();
-	}
-
-	public StubFusionAnalysis(MayAliasAnalysis aliases, ConstantAnalysis constants) {
-		super(aliases, constants, null);
+		super(null);
 		soundErrors = new HashMap<Constraint, List<TACInstruction>>();
 		completeErrors = new HashMap<Constraint, List<TACInstruction>>();
 		pragmaticErrors = new HashMap<Constraint, List<TACInstruction>>();

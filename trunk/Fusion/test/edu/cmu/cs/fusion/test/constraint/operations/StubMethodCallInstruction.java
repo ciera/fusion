@@ -23,7 +23,7 @@ public class StubMethodCallInstruction implements MethodCallInstruction {
 	public StubMethodCallInstruction() {}
 	
 	public StubMethodCallInstruction(String methodName, StubVariable receiver,
-			StubVariable target, List<StubVariable> vars, StubMethodBinding binding) {
+			List<StubVariable> vars, StubMethodBinding binding, StubVariable target) {
 		this.methodName = methodName;
 		this.receiver = receiver;
 		this.target = target;

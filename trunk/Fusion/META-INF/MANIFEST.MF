@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Relations Plug-in
-Bundle-SymbolicName: Relations;singleton:=true
+Bundle-Name: Fusion Plug-in
+Bundle-SymbolicName: Fusion;singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: edu.cmu.cs.crystal,
  org.eclipse.ui,

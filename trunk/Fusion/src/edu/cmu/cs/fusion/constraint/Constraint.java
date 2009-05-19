@@ -3,8 +3,8 @@ package edu.cmu.cs.fusion.constraint;
 import java.util.List;
 
 public class Constraint {
-	static public final String TARGET = "target";
-	static public final String RESULT = "result";
+	static public final SpecVar RECEIVER = new SpecVar("receiver");
+	static public final SpecVar RESULT = new SpecVar("result");
 	
 	private Operation op;
 	private Predicate trigger;
@@ -50,5 +50,9 @@ public class Constraint {
 		fv = fv.union(trigger.getFreeVariables());
 
 		return fv;
+	}
+	
+	public String toString() {
+		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " EFFECTS\n" + effects;
 	}
 }
