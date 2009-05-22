@@ -1,5 +1,8 @@
 package edu.cmu.cs.fusion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
@@ -25,14 +28,13 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private TACFlowAnalysis<RelationshipContext> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
+	private Logger log;
 	
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
 	 */
 	public FusionAnalysis() {
-		super();
-		this.variant = Variant.PRAGMATIC;
-		constraints = new ConstraintEnvironment();
+		this(Variant.PRAGMATIC);
 	}
 
 	/**
@@ -45,6 +47,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		constraints = new ConstraintEnvironment();
+		log = Logger.getLogger("edu.cmu.cs.fusion");
+		log.setLevel(Level.CONFIG);
 	}
 
 	public void beforeAllCompilationUnits() {
@@ -71,9 +75,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		// or the analysis won't be run on this method
 		RelationshipContext finalLattice = fa.getResultsAfter(methodDecl);
 		
-		System.out.println(methodDecl.getName());
-		System.out.println(finalLattice);
-		System.out.println(fa.getResultsAfter(methodDecl.getBody()));
+		methodDecl.accept(new StatementRelationshipVisitor(fa, log, Level.INFO));
 	}
 	
 	public RelationshipContext getResultsBefore(TACInstruction instr) {
