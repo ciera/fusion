@@ -11,6 +11,7 @@ import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.analysis.alias.MayAliasAnalysis;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
+import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLatticeOps;
 import edu.cmu.cs.crystal.analysis.constant.ConstantAnalysis;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.AssignmentInstruction;
@@ -63,11 +64,12 @@ public class BooleanConstantWrapper implements BooleanContext {
 		
 		if (value == null) {
 			BooleanConstantLE labelConstant = BooleanConstantLE.BOTTOM;
+			BooleanConstantLatticeOps boolOps = new BooleanConstantLatticeOps();
 			
 			for (Variable var : aliasLattice.getKeySet()) {
 				if (aliasLattice.get(var).getLabels().contains(label)) {
 					BooleanConstantLE varConstant = boolLattice.get(var);
-					labelConstant = labelConstant.join(varConstant, null);
+					labelConstant = boolOps.join(labelConstant, varConstant);
 				}
 			}
 			if (labelConstant == BooleanConstantLE.TRUE)
