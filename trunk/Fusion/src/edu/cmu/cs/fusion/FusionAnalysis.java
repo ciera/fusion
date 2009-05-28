@@ -3,10 +3,12 @@ package edu.cmu.cs.fusion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
 import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
+import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.analysis.alias.MayAliasTransferFunction;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
@@ -16,7 +18,6 @@ import edu.cmu.cs.crystal.tac.TACInstruction;
 import edu.cmu.cs.crystal.tac.Variable;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
-import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
@@ -78,12 +79,12 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		methodDecl.accept(new StatementRelationshipVisitor(fa, log, Level.INFO));
 	}
 	
-	public RelationshipContext getResultsBefore(TACInstruction instr) {
-		return fa.getResultsBefore(instr);
+	public RelationshipContext getResultsBefore(ASTNode node) {
+		return fa.getResultsBefore(node);
 	}
 	
-	public RelationshipContext getResultsAfter(TACInstruction instr) {
-		return fa.getResultsAfter(instr);		
+	public RelationshipContext getResultsAfter(ASTNode node) {
+		return fa.getResultsAfter(node);		
 	}
 	
 	public void reportError(Variant variant, Constraint cons, TACInstruction instr) {
