@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import edu.cmu.cs.crystal.BooleanLabel;
-import edu.cmu.cs.crystal.ILabel;
 import edu.cmu.cs.crystal.analysis.alias.AliasLE;
+import edu.cmu.cs.crystal.flow.BooleanLabel;
+import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.flow.LabeledResult;
