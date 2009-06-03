@@ -6,15 +6,12 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.flow.BooleanLabel;
 import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.flow.LabeledResult;
 import edu.cmu.cs.crystal.flow.LabeledSingleResult;
-import edu.cmu.cs.crystal.flow.SingleResult;
-import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.TACInstruction;
@@ -35,7 +32,6 @@ import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
-import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 
 
 public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTransferFunction<RelationshipContext> {
@@ -104,7 +100,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			FusionEnvironment fEnv = new FusionEnvironment(aContext, value, fBContext, types);
 			RelationshipContext fNewContext = genericFlowFunction(fEnv, instr);
 			
-			LabeledResult<RelationshipContext> result = new LabeledResult<RelationshipContext>(labels, new RelationshipContext(false));
+			LabeledResult<RelationshipContext> result = LabeledResult.createResult(labels, new RelationshipContext(false));
 			result.put(BooleanLabel.getBooleanLabel(true), tNewContext);
 			result.put(BooleanLabel.getBooleanLabel(false), fNewContext);
 			return result;
