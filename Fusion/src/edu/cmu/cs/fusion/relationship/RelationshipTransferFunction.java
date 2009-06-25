@@ -13,9 +13,9 @@ import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.flow.LabeledResult;
 import edu.cmu.cs.crystal.flow.LabeledSingleResult;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
-import edu.cmu.cs.crystal.tac.MethodCallInstruction;
-import edu.cmu.cs.crystal.tac.TACInstruction;
-import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
+import edu.cmu.cs.crystal.tac.model.TACInstruction;
+import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.AliasContext;
@@ -65,8 +65,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		return new RelationshipContext(false);
 	}
 
-	public ILatticeOperations<RelationshipContext> createLatticeOperations(
-			MethodDeclaration method) {
+	public ILatticeOperations<RelationshipContext> getLatticeOperations() {
 		return new RelationshipLatticeOperations();
 	}
 

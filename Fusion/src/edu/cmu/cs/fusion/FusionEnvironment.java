@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;

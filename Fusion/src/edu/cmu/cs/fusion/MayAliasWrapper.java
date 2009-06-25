@@ -4,13 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import edu.cmu.cs.crystal.analysis.alias.AliasLE;
-import edu.cmu.cs.crystal.analysis.alias.MayAliasAnalysis;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
-import edu.cmu.cs.crystal.tac.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
-import edu.cmu.cs.crystal.tac.TACInstruction;
-import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.tac.model.TACInstruction;
+import edu.cmu.cs.crystal.tac.model.Variable;
 
 public class MayAliasWrapper implements AliasContext {
 	

@@ -3,8 +3,7 @@ package edu.cmu.cs.fusion;
 import java.util.Set;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.tac.TACInstruction;
-import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.tac.model.Variable;
 
 /**
  * The alias context at a particular instruction in the analysis.

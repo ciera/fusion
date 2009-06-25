@@ -10,8 +10,8 @@ import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.tac.ITACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.ITACTransferFunction;
-import edu.cmu.cs.crystal.tac.MethodCallInstruction;
-import edu.cmu.cs.crystal.tac.Variable;
+import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
+import edu.cmu.cs.crystal.tac.model.Variable;
 
 public class StubMethodCallInstruction implements MethodCallInstruction {
 	private String methodName;

@@ -5,9 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import edu.cmu.cs.crystal.analysis.alias.MayAliasAnalysis;
-import edu.cmu.cs.crystal.analysis.constant.ConstantAnalysis;
-import edu.cmu.cs.crystal.tac.TACInstruction;
+import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;

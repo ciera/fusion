@@ -5,20 +5,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ITypeBinding;
-
 import edu.cmu.cs.crystal.analysis.alias.AliasLE;
-import edu.cmu.cs.crystal.analysis.alias.MayAliasAnalysis;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLatticeOps;
-import edu.cmu.cs.crystal.analysis.constant.ConstantAnalysis;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
-import edu.cmu.cs.crystal.tac.AssignmentInstruction;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
-import edu.cmu.cs.crystal.tac.Variable;
-import edu.cmu.cs.fusion.BooleanContext;
-import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.crystal.tac.model.AssignmentInstruction;
+import edu.cmu.cs.crystal.tac.model.Variable;
 
 public class BooleanConstantWrapper implements BooleanContext {
 
