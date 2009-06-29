@@ -76,7 +76,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		// or the analysis won't be run on this method
 		RelationshipContext finalLattice = fa.getResultsAfter(methodDecl);
 		
-		methodDecl.accept(new StatementRelationshipVisitor(fa, log, Level.INFO));
+		StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
+		methodDecl.accept(debugger);
+		log.log(Level.INFO, debugger.getResult());
 	}
 	
 	public RelationshipContext getResultsBefore(ASTNode node) {

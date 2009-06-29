@@ -9,10 +9,12 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 public class ReferenceEqualityPredicate implements NegatablePredicate {
 	private SpecVar left;
 	private SpecVar right;
+	private boolean isPositive;
 	
 	public ReferenceEqualityPredicate(SpecVar left, SpecVar right) {
 		this.left = left;
 		this.right = right;
+		isPositive = true;
 	}
 
 	public FreeVars getFreeVariables() {
@@ -21,9 +23,17 @@ public class ReferenceEqualityPredicate implements NegatablePredicate {
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		if (sub.getSub(left).equals(sub.getSub(right)))
-			return ThreeValue.TRUE;
+			return isPositive ? ThreeValue.TRUE : ThreeValue.FALSE;
 		else
-			return ThreeValue.FALSE;
+			return isPositive ? ThreeValue.FALSE : ThreeValue.TRUE;
+	}
+
+	public boolean isPositive() {
+		return isPositive;
+	}
+
+	public void setPositive(boolean isPositive) {
+		this.isPositive = isPositive;
 	}
 
 }
