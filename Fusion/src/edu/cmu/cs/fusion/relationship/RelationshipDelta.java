@@ -179,4 +179,21 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		return rels.entrySet().iterator();
 	}
 
+	public boolean isStrictlyMorePrecise(RelationshipContext context) {
+		boolean strictlyMore = false;
+		if (rels.isEmpty())
+			return false;
+		for (Entry<Relationship, ThreeValue> entry : rels.entrySet()) {
+			ThreeValue contextVal = context.getRelationship(entry.getKey());
+			//all most be more precise or equal to
+			if (contextVal != ThreeValue.UNKNOWN && contextVal != entry.getValue())
+				return false;
+			//and one must be more precise
+			if (contextVal == ThreeValue.UNKNOWN && entry.getValue() != ThreeValue.UNKNOWN)
+				strictlyMore = true;
+		}
+		
+		return strictlyMore;
+	}
+
 }

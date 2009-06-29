@@ -10,10 +10,12 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 public class InstanceOfPredicate implements NegatablePredicate {
 	private String type;
 	private SpecVar variable;
+	private boolean isPositive;
 	
 	public InstanceOfPredicate(SpecVar var, String fullyQualifiedType) {
 		variable = var;
 		type = fullyQualifiedType;
+		isPositive = true;
 	}
 
 	public FreeVars getFreeVariables() {
@@ -23,10 +25,18 @@ public class InstanceOfPredicate implements NegatablePredicate {
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		ObjectLabel obj = sub.getSub(variable);
 		if (env.isSubtypeCompatible(obj.getType().getQualifiedName(), type))
-			return ThreeValue.TRUE;
+			return isPositive ? ThreeValue.TRUE : ThreeValue.FALSE;
 		else
-			return ThreeValue.FALSE;
+			return isPositive ? ThreeValue.FALSE : ThreeValue.TRUE;
 				
+	}
+
+	public boolean isPositive() {
+		return isPositive;
+	}
+
+	public void setPositive(boolean isPositive) {
+		this.isPositive = isPositive;
 	}
 
 }

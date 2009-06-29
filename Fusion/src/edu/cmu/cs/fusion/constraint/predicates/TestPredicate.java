@@ -9,10 +9,12 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 public class TestPredicate implements NegatablePredicate {
 	private RelationshipPredicate inner;
 	private SpecVar test;
+	private boolean isPositive;
 	
 	public TestPredicate(RelationshipPredicate inner, SpecVar test) {
 		this.inner = inner;
 		this.test = test;
+		isPositive = true;
 	}
 	
 	public FreeVars getFreeVariables() {
@@ -24,17 +26,27 @@ public class TestPredicate implements NegatablePredicate {
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		ThreeValue testVal = env.getBooleanValue(sub.getSub(test));
+		ThreeValue val;
 		
 		if (testVal == ThreeValue.UNKNOWN)
-			return ThreeValue.UNKNOWN;
+			val = ThreeValue.UNKNOWN;
 		else {
 			ThreeValue relVal = inner.getTruth(env, sub);
 			if (relVal == ThreeValue.UNKNOWN)
-				return ThreeValue.UNKNOWN;
+				val =  ThreeValue.UNKNOWN;
 			else if (relVal == testVal)
-				return ThreeValue.TRUE;
+				val =  ThreeValue.TRUE;
 			else
-				return ThreeValue.FALSE;
+				val =  ThreeValue.FALSE;
 		}
+		return isPositive ? val : val.negate();
+	}
+
+	public boolean isPositive() {
+		return isPositive;
+	}
+
+	public void setPositive(boolean isPositive) {
+		this.isPositive = isPositive;
 	}
 }

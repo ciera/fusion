@@ -27,7 +27,7 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		Relation itemRel = new Relation("Item", new String[] {listItemType, listItemCollType});
 		Relation childRel = new Relation("Child", new String[] {listItemType, listControlType});
 		Relation selectedRel = new Relation("Selected", new String[] {listItemType});
-		Relation textRel = new Relation("Text", new String[] {"String", listItemType});
+		Relation textRel = new Relation("Text", new String[] {"java.lang.String", listItemType});
 		
 		op = new MethodInvocationOp("getItems", listControlType, new SpecVar[] {}, new String[] {}, listItemCollType);
 		trigger = new TruePredicate();
@@ -58,14 +58,14 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		effect.add(Effect.createTestEffect(selectedRel, new SpecVar[] {Constraint.RECEIVER}, new SpecVar("selected")));
 		constraints.add(new Constraint(op, trigger, required, effect));
 		
-		op = new MethodInvocationOp("getText", listItemType, new SpecVar[] {}, new String[] {}, "boolean");
+		op = new MethodInvocationOp("getText", listItemType, new SpecVar[] {}, new String[] {}, "java.lang.String");
 		trigger = new TruePredicate();
 		required = new TruePredicate();
 		effect = new LinkedList<Effect>();
 		effect.add(Effect.createAddEffect(textRel, new SpecVar[] {Constraint.RESULT, Constraint.RECEIVER}));
 		constraints.add(new Constraint(op, trigger, required, effect));
 		
-		op = new MethodInvocationOp("setText", listItemType, new SpecVar[] {new SpecVar("text")}, new String[] {"boolean"}, "void");
+		op = new MethodInvocationOp("setText", listItemType, new SpecVar[] {new SpecVar("text")}, new String[] {"java.lang.String"}, "void");
 		trigger = new TruePredicate();
 		required = new TruePredicate();
 		effect = new LinkedList<Effect>();
@@ -102,7 +102,7 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		effect.add(Effect.createTestEffect(itemRel, new SpecVar[] {new SpecVar("item"), Constraint.RECEIVER}, new SpecVar("toAdd")));
 		constraints.add(new Constraint(op, trigger, required, effect));
 
-		op = new MethodInvocationOp("findByText", listItemCollType, new SpecVar[] {new SpecVar("text")}, new String[] {"String"}, listItemType);
+		op = new MethodInvocationOp("findByText", listItemCollType, new SpecVar[] {new SpecVar("text")}, new String[] {"java.lang.String"}, listItemType);
 		trigger = new TruePredicate();
 		required = new TruePredicate();
 		effect = new LinkedList<Effect>();

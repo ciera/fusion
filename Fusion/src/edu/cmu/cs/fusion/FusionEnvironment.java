@@ -1,6 +1,8 @@
 package edu.cmu.cs.fusion;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
@@ -8,27 +10,70 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
+import edu.cmu.cs.fusion.constraint.InferredRel;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
+import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
+import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
 public class FusionEnvironment {
 	private enum MatchType {
 		DEF, POS, NONE
 	}
 
-	RelationshipContext context;
-	BooleanContext bools;
-	AliasContext alias;
-	TypeHierarchy tHierarchy;
+	private RelationshipContext context;
+	private BooleanContext bools;
+	private AliasContext alias;
+	private TypeHierarchy tHierarchy;
+	private InferenceEnvironment inference;
 	
 	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types) {
 		context = relLattice;
 		alias = aliasLattice;
 		bools = boolLattice;
 		tHierarchy = types;
+		inference = new InferenceEnvironment();
+	}
+	
+	public RelationshipDelta getInferredDelta(RelationshipPredicate rel, Substitution sub) {
+		RelationshipDelta delta;
+
+		for (InferredRel inf : inference) {
+			//first, find out what substitutions are needed to make rel. There might 
+			//be more than one if more than one effect could be the one to use.
+			List<Substitution> subs = inf.canProduce(rel, sub);
+			
+			for (Substitution partSub : subs) {
+				//bind up the rest of the variables that we need
+				SubPair pair = this.allValidSubs(partSub, inf.getFreeVars());
+				//and then only look at definite ones (we want true/falses, not unknowns!)
+				Iterator<Substitution> defSubs = pair.getDefiniteSubstitutions();
+				
+				while (defSubs.hasNext()) {
+					Substitution finalSub = defSubs.next();
+					ThreeValue val = inf.getPredicate().getTruth(this, finalSub);
+					//if it doesn't produce the value we wanted, continue.
+					if (!(val == ThreeValue.TRUE && rel.isPositive() || val == ThreeValue.FALSE && !rel.isPositive()))
+						continue;
+					
+					//ok, see if this conflicts with what we have
+					List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
+					for (Effect effect : inf.getEffects())
+						eDeltas.add(effect.makeEffects(this, finalSub));
+					delta = RelationshipDelta.join(eDeltas);
+					
+					//if it doesn't conflict AND it makes some change, return it!
+					if (delta.isStrictlyMorePrecise(context))
+						return delta;
+				}
+			}
+		}
+		return null;		
 	}
 	
 	/**
@@ -141,5 +186,9 @@ public class FusionEnvironment {
 
 	public boolean isSubtypeCompatible(String subType, String superType) {
 		return tHierarchy.isSubtypeCompatible(subType, superType);
+	}
+
+	public FusionEnvironment copy(RelationshipContext newContext) {
+		return new FusionEnvironment(alias, newContext, bools, tHierarchy);
 	}
 }

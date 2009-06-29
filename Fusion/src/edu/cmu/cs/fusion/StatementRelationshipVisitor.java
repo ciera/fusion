@@ -1,8 +1,6 @@
 package edu.cmu.cs.fusion;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AssertStatement;
@@ -31,188 +29,246 @@ import edu.cmu.cs.fusion.relationship.RelationshipContext;
 public class StatementRelationshipVisitor extends ASTVisitor {
 
 	private TACFlowAnalysis<RelationshipContext> fusionAnalysis;
-	private Logger logger;
-	private Level level;
+	private StringBuilder buff;
 
-	public StatementRelationshipVisitor(TACFlowAnalysis<RelationshipContext> fa, Logger log, Level level) {
+	public StatementRelationshipVisitor(TACFlowAnalysis<RelationshipContext> fa) {
 		fusionAnalysis = fa;
-		logger = log;
-		this.level = level;
+		buff = new StringBuilder();
 	}
 
 	@Override
 	public boolean visit(AssertStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(Assignment node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(BreakStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(ContinueStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(DoStatement node) {
-		logger.log(level, "do {");
-		logger.log(level, fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("do {");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("\n");
 		node.getBody().accept(this);
-		logger.log(level, "} while (" + node.getExpression() + ")");
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("} while (" + node.getExpression() + ")");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(EmptyStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(EnhancedForStatement node) {
-		logger.log(level, "for(" + node.getParameter() + " : " + node.getExpression() + ") {");
-		logger.log(level, fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("for(" + node.getParameter() + " : " + node.getExpression() + ") {");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("\n");
 		node.getBody().accept(this);
-		logger.log(level, "}");
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("}");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(ExpressionStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(ForStatement node) {
-		logger.log(level, "for(" + node.initializers() + "; " + node.getExpression() + "; " + node.updaters() + ") {");
-		logger.log(level, fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("for(" + node.initializers() + "; " + node.getExpression() + "; " + node.updaters() + ") {");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("\n");
 		node.getBody().accept(this);
-		logger.log(level, "}");
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("}");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(IfStatement node) {
-		logger.log(level, "if (" + node.getExpression() + ") {");
-		logger.log(level, fusionAnalysis.getResultsBefore(node.getThenStatement()).toString());		
+		buff.append("if (" + node.getExpression() + ") {");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsBefore(node.getThenStatement()).toString());		
+		buff.append("\n");
 		node.getThenStatement().accept(this);
-		logger.log(level, "}");
+		buff.append("}");
+		buff.append("\n");
 		if (node.getElseStatement() != null) {
-			logger.log(level, "else {");
-			logger.log(level, fusionAnalysis.getResultsBefore(node.getElseStatement()).toString());		
+			buff.append("else {");
+			buff.append("\n");
+			buff.append(fusionAnalysis.getResultsBefore(node.getElseStatement()).toString());		
+			buff.append("\n");
 			node.getElseStatement().accept(this);
-			logger.log(level, "}");
+			buff.append("}");
+			buff.append("\n");
 		}
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		logger.log(level, node.getName() + "{");
+		buff.append(node.getName() + "{");
+		buff.append("\n");
 		if (node.getBody() == null || node.getBody().statements().isEmpty())
-			logger.log(level, fusionAnalysis.getResultsBefore(node).toString());	
+			buff.append(fusionAnalysis.getResultsBefore(node).toString());	
 		else
-			logger.log(level, fusionAnalysis.getResultsBefore((Statement)node.getBody().statements().get(0)).toString());
+			buff.append(fusionAnalysis.getResultsBefore((Statement)node.getBody().statements().get(0)).toString());
+		buff.append("\n");
 		
 		if (node.getBody() != null) {
 			node.getBody().accept(this);
 		}
-		logger.log(level, "}");
-		logger.log(level, "//" + node.getName());
+		buff.append("}");
+		buff.append("\n");
+		buff.append("//" + node.getName());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(ReturnStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(SwitchStatement node) {
-		logger.log(level, "switch (" + node.getExpression() + ") {");
+		buff.append("switch (" + node.getExpression() + ") {");
+		buff.append("\n");
 		
-		if (!node.statements().isEmpty())
-			logger.log(level, fusionAnalysis.getResultsBefore((Statement)node.statements().get(0)).toString());		
-
+		if (!node.statements().isEmpty()) {
+			buff.append(fusionAnalysis.getResultsBefore((Statement)node.statements().get(0)).toString());		
+			buff.append("\n");
+		}
 		for (Statement statement : (List<Statement>)node.statements()) {
 			statement.accept(this);
 		}
 		
-		logger.log(level, "}");
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("}");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(ThrowStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(TryStatement node) {
-		logger.log(level, "try {");
-		logger.log(level, fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("try {");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("\n");
 		node.getBody().accept(this);
-		logger.log(level, "}");
+		buff.append("}");
+		buff.append("\n");
 		for (CatchClause catcher : (List<CatchClause>)node.catchClauses()) {
-			logger.log(level, "catch (" + catcher.getException() + ") {");
-			logger.log(level, fusionAnalysis.getResultsBefore(catcher.getBody()).toString());		
+			buff.append("catch (" + catcher.getException() + ") {");
+			buff.append("\n");
+			buff.append(fusionAnalysis.getResultsBefore(catcher.getBody()).toString());		
 			catcher.getBody().accept(this);
-			logger.log(level, "}");
+			buff.append("\n");
+			buff.append("}");
+			buff.append("\n");
 		}
 		
 		if (node.getFinally() != null) {
-			logger.log(level, "finally {");
-			logger.log(level, fusionAnalysis.getResultsBefore(node.getFinally()).toString());		
+			buff.append("finally {");
+			buff.append("\n");
+			buff.append(fusionAnalysis.getResultsBefore(node.getFinally()).toString());		
+			buff.append("\n");
 			node.getFinally().accept(this);
 		}
 
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(VariableDeclarationStatement node) {
-		logger.log(level, node.toString().trim());
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(node.toString().trim());
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
 	@Override
 	public boolean visit(WhileStatement node) {
-		logger.log(level, "while (" + node.getExpression() + ") {");
-		logger.log(level, fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("while (" + node.getExpression() + ") {");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append("\n");
 		node.getBody().accept(this);
-		logger.log(level, "}");
-		logger.log(level, fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("}");
+		buff.append("\n");
+		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append("\n");
 		return false;
 	}
 
+	public String getResult() {
+		return buff.toString();
+	}
 }

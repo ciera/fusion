@@ -13,6 +13,13 @@ import edu.cmu.cs.fusion.relationship.RelationshipDelta;
  *
  */
 public class Effect {
+	public enum EffectType {
+		ADD, REMOVE, TEST, NEG_TEST;
+		
+		public boolean isTest() {return this == TEST || this == NEG_TEST;}
+		public boolean isNegative() {return this == REMOVE || this == NEG_TEST;}		
+	}
+
 	public static Effect createAddEffect(Relation relation, SpecVar[] specVars) {
 		return new Effect(relation, specVars, null, false);
 	}
@@ -89,6 +96,22 @@ public class Effect {
 		delta.setRelationship(rel, effect);
 		return delta;
 	}
+	
+	public Relation getRelation() {
+		return type;
+	}
+
+	public SpecVar[] getVars() {
+		return vars;
+	}
+	
+	public EffectType getType() {
+		if (test != null) 
+			return negate ? EffectType.REMOVE : EffectType.ADD;
+		else
+			return negate ? EffectType.NEG_TEST : EffectType.TEST;
+	}
+	
 
 	public String toString() {
 		String str = "";
@@ -111,6 +134,5 @@ public class Effect {
 			str += ":" + test;
 		return str;
 	}
-
 
 }
