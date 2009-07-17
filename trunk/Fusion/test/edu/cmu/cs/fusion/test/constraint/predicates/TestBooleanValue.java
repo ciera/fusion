@@ -64,4 +64,37 @@ public class TestBooleanValue {
 		
 		assertEquals(ThreeValue.UNKNOWN, bv.getTruth(env, utils.getSub(0)));
 	}
+
+	@Test
+	public void testTruthNotFalse() {
+		BooleanValue bv = new BooleanValue(utils.getVar(0));
+		bv.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		assertEquals(ThreeValue.TRUE, bv.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotTrue() {
+		BooleanValue bv = new BooleanValue(utils.getVar(0));
+		bv.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		assertEquals(ThreeValue.FALSE, bv.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotUnknown() {
+		BooleanValue bv = new BooleanValue(utils.getVar(0));
+		bv.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.UNKNOWN);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		assertEquals(ThreeValue.UNKNOWN, bv.getTruth(env, utils.getSub(0)));
+	}
 }

@@ -65,6 +65,31 @@ public class TestTestPredicate {
 	}
 	
 	@Test
+	public void testTruthNotTrue1() {
+		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
+		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
+		pred.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
+		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
+	}
+	
+	@Test
+	public void testTruthNotTrue2() {
+		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
+		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
+		pred.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
+		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	
+	@Test
 	public void testTruthFalse1() {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
@@ -87,6 +112,30 @@ public class TestTestPredicate {
 	}
 
 	@Test
+	public void testTruthNotFalse1() {
+		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
+		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
+		pred.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
+		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotFalse2() {
+		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
+		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
+		pred.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
+		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
 	public void testTruthUnknown1() {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
@@ -101,6 +150,30 @@ public class TestTestPredicate {
 	public void testTruthUnknown2() {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(2), utils.getVar(3)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
+		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotUnknown1() {
+		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
+		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
+		pred.setPositive(false);
+		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		
+		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.UNKNOWN);
+		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
+	}
+	
+	@Test
+	public void testTruthNotUnknown2() {
+		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(2), utils.getVar(3)});
+		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
+		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
 		

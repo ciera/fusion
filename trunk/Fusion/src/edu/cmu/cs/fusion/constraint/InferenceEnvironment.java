@@ -1,18 +1,21 @@
 package edu.cmu.cs.fusion.constraint;
 
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 public class InferenceEnvironment implements Iterable<InferredRel>{
-	List<InferredRel> inferRules;
+	Set<InferredRel> inferRules;
 	
 	public InferenceEnvironment() {
-		inferRules = new LinkedList<InferredRel>();
+		inferRules = new HashSet<InferredRel>();
 	}
 	
 	public Iterator<InferredRel> iterator() {
 		return inferRules.iterator();
 	}
 
+	public void addRule(InferredRel inf) {
+		inferRules.add(inf);
+	}
 }

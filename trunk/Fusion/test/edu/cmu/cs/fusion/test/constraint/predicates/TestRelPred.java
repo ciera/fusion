@@ -41,7 +41,7 @@ public class TestRelPred {
 		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
 		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
-		assertEquals(pred.getTruth(env, utils.getSub(0)), ThreeValue.FALSE);
+		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class TestRelPred {
 		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
-		assertEquals(pred.getTruth(env, utils.getSub(0)), ThreeValue.TRUE);
+		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
 
 	@Test
@@ -57,6 +57,33 @@ public class TestRelPred {
 		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(2), utils.getVar(1)});
 		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
 		
-		assertEquals(pred.getTruth(env, utils.getSub(0)), ThreeValue.UNKNOWN);
+		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotFalse() {
+		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(2)});
+		pred.setPositive(false);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
+		
+		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotTrue() {
+		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
+		pred.setPositive(false);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
+		
+		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotUnknownNoInference() {
+		RelationshipPredicate pred = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(2), utils.getVar(1)});
+		pred.setPositive(false);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
+		
+		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
 	}
 }

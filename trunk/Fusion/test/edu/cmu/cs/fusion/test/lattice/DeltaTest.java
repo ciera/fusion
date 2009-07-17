@@ -17,7 +17,6 @@ import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
 public class DeltaTest {
 	static RelationshipDelta d1, d2, d3, d4;
-	static RelationshipContext c1;
 	
 	static Relation tA, tB;
 	
@@ -166,5 +165,55 @@ public class DeltaTest {
 		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FourPointLattice.UNK);
 	}
 	
+	@Test
+	public void testStrictPrecise() {
+		RelationshipContext ctx = new RelationshipContext(false).applyChangesFromDelta(d1);
+		RelationshipDelta delta;
+		
+		//test the empty delta
+		delta = new RelationshipDelta();
+		assertTrue(!delta.isStrictlyMorePrecise(ctx));
+		
+		//test an equal delta
+		delta = new RelationshipDelta();
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FourPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FourPointLattice.BOT);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FourPointLattice.BOT);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FourPointLattice.FAL);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FourPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FourPointLattice.UNK);
+		assertTrue(!delta.isStrictlyMorePrecise(ctx));
+		
+		//test a more precise delta
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FourPointLattice.TRU);
+		assertTrue(delta.isStrictlyMorePrecise(ctx));
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FourPointLattice.UNK);
+		
+		//test a more precise delta, BUT BOTTOM
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FourPointLattice.BOT);
+		assertTrue(!delta.isStrictlyMorePrecise(ctx));
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FourPointLattice.TRU);
+
+		//test a more precise delta, BUT BOTTOM on unknown
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FourPointLattice.TRU);
+		assertTrue(delta.isStrictlyMorePrecise(ctx));
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FourPointLattice.BOT);
+
+		//test a more and less precise delta
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FourPointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {z, y}), FourPointLattice.TRU);
+		assertTrue(!delta.isStrictlyMorePrecise(ctx));
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FourPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FourPointLattice.UNK);
+
+		//test a less precise U delta
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FourPointLattice.UNK);
+		assertTrue(!delta.isStrictlyMorePrecise(ctx));
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FourPointLattice.TRU);
+		
+		//test a thrashing delta
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FourPointLattice.FAL);
+		assertTrue(!delta.isStrictlyMorePrecise(ctx));
+	}
 
 }

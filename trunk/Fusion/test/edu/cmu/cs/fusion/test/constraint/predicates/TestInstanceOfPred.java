@@ -48,4 +48,22 @@ public class TestInstanceOfPred {
 		
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}
+
+	@Test
+	public void testTruthNotFalse() {
+		InstanceOfPredicate pred = new InstanceOfPredicate(utils.getVar(0), "Foo");
+		pred.setPositive(false);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), null);
+		
+		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
+	}
+
+	@Test
+	public void testTruthNotTrue() {
+		InstanceOfPredicate pred = new InstanceOfPredicate(utils.getVar(1), "Foo");
+		pred.setPositive(false);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), null);
+		
+		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
+	}
 }

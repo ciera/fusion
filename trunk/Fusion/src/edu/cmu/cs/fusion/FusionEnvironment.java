@@ -32,18 +32,37 @@ public class FusionEnvironment {
 	private TypeHierarchy tHierarchy;
 	private InferenceEnvironment inference;
 	
+	private ConsList<Pair<RelationshipPredicate, Substitution>> continuation;
+	
+	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf) {
+		context = relLattice;
+		alias = aliasLattice;
+		bools = boolLattice;
+		tHierarchy = types;
+		inference = inf;
+		continuation = ConsList.empty();
+	}
+
+	@Deprecated
 	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types) {
 		context = relLattice;
 		alias = aliasLattice;
 		bools = boolLattice;
 		tHierarchy = types;
 		inference = new InferenceEnvironment();
+		continuation = ConsList.empty();
 	}
 	
 	public RelationshipDelta getInferredDelta(RelationshipPredicate rel, Substitution sub) {
 		RelationshipDelta delta;
 
-		for (InferredRel inf : inference) {
+		//check to see if we've looked for this relationship before with our existing continuation...
+		if (alreadyLookingForRel(rel, sub))
+			return null;
+		
+		continuation = continuation.cons(new Pair(rel, sub), continuation);
+		
+		for (InferredRel inf : inference) {	
 			//first, find out what substitutions are needed to make rel. There might 
 			//be more than one if more than one effect could be the one to use.
 			List<Substitution> subs = inf.canProduce(rel, sub);
@@ -57,8 +76,8 @@ public class FusionEnvironment {
 				while (defSubs.hasNext()) {
 					Substitution finalSub = defSubs.next();
 					ThreeValue val = inf.getPredicate().getTruth(this, finalSub);
-					//if it doesn't produce the value we wanted, continue.
-					if (!(val == ThreeValue.TRUE && rel.isPositive() || val == ThreeValue.FALSE && !rel.isPositive()))
+					
+					if (val != ThreeValue.TRUE)
 						continue;
 					
 					//ok, see if this conflicts with what we have
@@ -68,14 +87,42 @@ public class FusionEnvironment {
 					delta = RelationshipDelta.join(eDeltas);
 					
 					//if it doesn't conflict AND it makes some change, return it!
-					if (delta.isStrictlyMorePrecise(context))
+					if (delta.isStrictlyMorePrecise(context)) {
+						continuation = continuation.tl();
 						return delta;
+					}
 				}
 			}
 		}
+		continuation = continuation.tl();
 		return null;		
 	}
 	
+	private boolean alreadyLookingForRel(RelationshipPredicate rel,
+			Substitution sub) {
+		for (Pair<RelationshipPredicate, Substitution> pair : continuation) 
+			if (matches(pair.fst(), pair.snd(), rel, sub))
+				return true;
+		return false;
+	}
+	
+	private boolean matches(RelationshipPredicate r1, Substitution s1, RelationshipPredicate r2, Substitution s2) {
+		if (!(r1.getRelation().equals(r2.getRelation())))
+			return false;
+		
+		for (int ndx = 0; ndx < r1.getVars().length; ndx++) {
+			ObjectLabel o1 = s1.getSub(r1.getVars()[ndx]);
+			ObjectLabel o2 = s2.getSub(r2.getVars()[ndx]);
+			
+			//It's possible that something is null, because it isn't bound to anything in particular
+			//In that case, treat it as a match because it could be bound to the thing we have in the
+			//other one. Basically, it's a free variable, so continue to treat it like one!
+			if (o1 != null && o2 != null && !(o1.equals(o2)))
+				return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Find the potential substitutions for some bound specification variables.
 	 * @param variables The bound variables which we must produce aliasing substitutions for
@@ -189,6 +236,8 @@ public class FusionEnvironment {
 	}
 
 	public FusionEnvironment copy(RelationshipContext newContext) {
-		return new FusionEnvironment(alias, newContext, bools, tHierarchy);
+		FusionEnvironment env = new FusionEnvironment(alias, newContext, bools, tHierarchy, inference);
+		env.continuation = continuation;
+		return env;
 	}
 }
