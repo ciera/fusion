@@ -9,11 +9,8 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 public class NoSelectionSet {
 	public void noSelectionSet(DropDownList ctrl) {
 		ListItem newSel; 
-		ListItemCollection coll;
-		
-		coll = ctrl.getItems();
-		
-		newSel = coll.findByText("foo");
+
+		newSel = ctrl.getSelectedItem();
 		newSel.setSelected(false);
 	}
 }
