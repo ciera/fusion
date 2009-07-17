@@ -12,7 +12,7 @@ public class FakeTypeHierarchy implements TypeHierarchy {
 	}
 
 	public boolean isSubtypeCompatible(String subType, String superType) {
-		if (subType.equals(superType))
+		if (subType.equals(superType) || superType.equals("java.lang.Object"))
 			return true;
 		else if (subType.equals("edu.cmu.cs.fusion.test.aspnet.api.DropDownList"))
 			return superType.equals("edu.cmu.cs.fusion.test.aspnet.api.ListControl");

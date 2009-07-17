@@ -11,8 +11,12 @@ public class BooleanValue implements NegatablePredicate {
 	private boolean isPositive;
 	
 	public BooleanValue(SpecVar var) {
+		this(var, true);
+	}
+
+	public BooleanValue(SpecVar var, boolean isPos) {
 		value = var;
-		isPositive = true;
+		isPositive = isPos;
 	}
 
 	public FreeVars getFreeVariables() {
@@ -32,4 +36,5 @@ public class BooleanValue implements NegatablePredicate {
 		this.isPositive = isPositive;
 	}
 
+	public String toString() {return isPositive ? value.toString() : "!" + value.toString();}
 }

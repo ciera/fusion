@@ -28,11 +28,23 @@ public class TestInstanceOfPred {
 		pred = new InstanceOfPredicate(utils.getVar(0), "Foo");
 		fv = pred.getFreeVariables();
 	
-		assertEquals(FreeVars.OBJECT_TYPE, fv.getType(utils.getVar(0)));
-		
+		assertEquals("Foo", fv.getType(utils.getVar(0)));
 		assertEquals(1, fv.size());
 	}
 	
+	@Test
+	public void testFreeVarsNeg() {
+		FreeVars fv;
+		InstanceOfPredicate pred;
+		
+		pred = new InstanceOfPredicate(utils.getVar(0), "Foo");
+		pred.setPositive(false);
+		fv = pred.getFreeVariables();
+	
+		assertEquals(FreeVars.OBJECT_TYPE, fv.getType(utils.getVar(0)));
+		assertEquals(1, fv.size());
+	}
+
 	@Test
 	public void testTruthFalse() {
 		InstanceOfPredicate pred = new InstanceOfPredicate(utils.getVar(0), "Foo");

@@ -15,5 +15,7 @@ public class TruePredicate implements Predicate {
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		return ThreeValue.TRUE;
 	}
+	
+	public String toString() {return "true";}
 
 }

@@ -21,4 +21,6 @@ public class ImpliesPredicate extends BinaryPredicate {
 		else
 			return ThreeValue.UNKNOWN;
 	}
+
+	public String toString() {return lhs.toString() + " -> " + rhs.toString();}
 }

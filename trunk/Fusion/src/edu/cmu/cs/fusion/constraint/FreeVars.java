@@ -17,6 +17,7 @@ import edu.cmu.cs.crystal.util.Pair;
 public class FreeVars implements Iterable<SpecVar>, Cloneable {
 	public static final String OBJECT_TYPE = "java.lang.Object";
 	public static final String BOOL_TYPE = "boolean";
+	public static final String VOID_TYPE = "void";
 	
 	Map<SpecVar, String> vars;
 

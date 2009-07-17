@@ -59,6 +59,10 @@ public class InferredRel {
 	public List<Effect> getEffects() {
 		return effects;
 	}
+	
+	public String toString() {
+		return pred.toString() + " IMPLIES \n" + effects.toString();
+	}
 
 	@Override
 	public int hashCode() {

@@ -36,4 +36,7 @@ public class ReferenceEqualityPredicate implements NegatablePredicate {
 		this.isPositive = isPositive;
 	}
 
+	public String toString() {
+		return isPositive ? left.toString() + " == " + right.toString() : left.toString() + " != " + right.toString();
+	}
 }

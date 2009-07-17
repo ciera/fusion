@@ -23,5 +23,6 @@ public class AndPredicate extends BinaryPredicate {
 
 	}
 	
+	public String toString() {return lhs.toString() + " && " + rhs.toString();}
 	
 }
