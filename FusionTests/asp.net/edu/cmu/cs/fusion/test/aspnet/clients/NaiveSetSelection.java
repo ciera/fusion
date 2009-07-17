@@ -11,7 +11,10 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 public class NaiveSetSelection {
 	public void naiveSetSelection(DropDownList ctrl) {
 		ListItem newSel; 
-		newSel = ctrl.getItems().findByText("foo");
+		ListItemCollection coll;
+		
+		coll = ctrl.getItems();
+		newSel = coll.findByText("foo");
 		newSel.setSelected(true);
 	}
 }

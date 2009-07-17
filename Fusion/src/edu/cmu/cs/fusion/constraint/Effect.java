@@ -106,7 +106,7 @@ public class Effect {
 	}
 	
 	public EffectType getType() {
-		if (test != null) 
+		if (test == null) 
 			return negate ? EffectType.REMOVE : EffectType.ADD;
 		else
 			return negate ? EffectType.NEG_TEST : EffectType.TEST;
