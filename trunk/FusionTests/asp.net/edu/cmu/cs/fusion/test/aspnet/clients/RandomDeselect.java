@@ -6,13 +6,14 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @FailingTest(1)
 @UseAnalyses("FusionAnalysis")
-public class WrongOrder {
-	public void wrongOrder(DropDownList ctrl) {
-		ListItem newSel, oldSel; 
+public class RandomDeselect {
+	public void noSelectionSet(DropDownList ctrl) {
+		ListItem newSel; 
+		ListItemCollection coll;
 		
-		newSel = ctrl.getItems().findByText("foo");
-		newSel.setSelected(true);
-		oldSel = ctrl.getSelectedItem();
-		oldSel.setSelected(false);
+		coll = ctrl.getItems();
+		
+		newSel = coll.findByText("foo");
+		newSel.setSelected(false);
 	}
 }
