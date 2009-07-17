@@ -19,7 +19,7 @@ public class InstanceOfPredicate implements NegatablePredicate {
 	}
 
 	public FreeVars getFreeVariables() {
-		return new FreeVars().addVar(variable, FreeVars.OBJECT_TYPE);
+		return new FreeVars().addVar(variable, isPositive ? type : FreeVars.OBJECT_TYPE);
 	}
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
@@ -39,4 +39,7 @@ public class InstanceOfPredicate implements NegatablePredicate {
 		this.isPositive = isPositive;
 	}
 
+	public String toString() {
+		return isPositive ? variable.toString() + " iof " + type : variable.toString() + " !iof " + type;
+	}
 }

@@ -16,4 +16,5 @@ public class FalsePredicate implements Predicate {
 		return ThreeValue.FALSE;
 	}
 
+	public String toString() {return "false";}
 }

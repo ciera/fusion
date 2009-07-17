@@ -21,4 +21,6 @@ public class OrPredicate extends BinaryPredicate {
 		else
 			return  rhs.getTruth(env, sub);
 	}
+
+	public String toString() {return lhs.toString() + " or " + rhs.toString();}
 }

@@ -57,4 +57,10 @@ public class TestPredicate implements NegatablePredicate {
 	public void setPositive(boolean isPositive) {
 		this.isPositive = isPositive;
 	}
+	public String toString() {
+		String str = inner.toString() + " ?= ";
+		str += isPositive ? test.toString() : "!" + test.toString();
+		
+		return str;
+	}
 }

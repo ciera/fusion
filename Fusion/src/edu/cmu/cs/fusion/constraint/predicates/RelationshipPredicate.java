@@ -18,9 +18,15 @@ public class RelationshipPredicate implements NegatablePredicate {
 	
 	
 	public RelationshipPredicate(Relation type, SpecVar[] vars) { 
+		this(type, vars, true);
+	}
+
+	public RelationshipPredicate(Relation type, SpecVar[] vars,
+			boolean isPositive) {
 		this.vars = vars;
 		this.type = type;
-		isPositive = true;
+		this.isPositive = isPositive;
+		
 	}
 
 	public FreeVars getFreeVariables() {
@@ -65,5 +71,16 @@ public class RelationshipPredicate implements NegatablePredicate {
 
 	public void setPositive(boolean isPositive) {
 		this.isPositive = isPositive;
+	}
+	
+	public String toString() {
+		String str = type.getName() + "(";
+		for (int ndx = 0; ndx < vars.length; ndx++) {
+			str += vars[ndx];
+			if (ndx < vars.length - 1)
+				str += ", ";
+		}
+		str += ")";	
+		return isPositive ? str : "!" + str;
 	}
 }
