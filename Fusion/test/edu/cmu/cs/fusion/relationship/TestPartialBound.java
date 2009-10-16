@@ -14,6 +14,7 @@ import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -87,7 +88,7 @@ public class TestPartialBound {
 	@Test
 	public void testNoMatches() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -101,7 +102,7 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[3]);
 		aliases.addAlias(new StubVariable(), labels[4]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(0, delta.numberOfChanges());	
@@ -111,7 +112,7 @@ public class TestPartialBound {
 	@Test
 	public void testDefOnly() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]}), FourPointLattice.TRU);
@@ -132,7 +133,7 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[5]);
 		aliases.addAlias(new StubVariable(), labels[6]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
@@ -147,7 +148,7 @@ public class TestPartialBound {
 	@Test
 	public void testPartialOnly() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]}), FourPointLattice.TRU);
@@ -165,7 +166,7 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[4]);
 		aliases.addAlias(new StubVariable(), labels[2]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
@@ -180,7 +181,7 @@ public class TestPartialBound {
 	@Test
 	public void testCombined() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]}), FourPointLattice.TRU);
@@ -200,7 +201,7 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[6]);
 		aliases.addAlias(new StubVariable(), labels[2]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});

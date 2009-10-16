@@ -29,6 +29,7 @@ import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
@@ -40,6 +41,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	private ConstraintEnvironment constraints;
 	private TypeHierarchy types;
 	private Variant variant;
+	private InferenceEnvironment infers;
 	
 	public enum Variant {
 		SOUND, COMPLETE, PRAGMATIC;
@@ -54,9 +56,10 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		}
 	}
 	
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, Variant variant) {
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, Variant variant) {
 		mainAnalysis = relAnalysis;
 		this.constraints = constraints;
+		this.infers = inf;
 		types = new FakeTypeHierarchy();
 		this.variant = variant;
 	}
@@ -92,11 +95,11 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		AliasContext aContext = new MayAliasWrapper(instr, mainAnalysis.getAliasAnalysis());
 		if (labels.contains(BooleanLabel.getBooleanLabel(true)) && labels.contains(BooleanLabel.getBooleanLabel(false))) {
 			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis(), true);
-			FusionEnvironment tEnv = new FusionEnvironment(aContext, value, tBContext, types);
+			FusionEnvironment tEnv = new FusionEnvironment(aContext, value, tBContext, types, infers);
 			RelationshipContext tNewContext = genericFlowFunction(tEnv, instr);
 			
 			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis(), false);
-			FusionEnvironment fEnv = new FusionEnvironment(aContext, value, fBContext, types);
+			FusionEnvironment fEnv = new FusionEnvironment(aContext, value, fBContext, types, infers);
 			RelationshipContext fNewContext = genericFlowFunction(fEnv, instr);
 			
 			LabeledResult<RelationshipContext> result = LabeledResult.createResult(labels, new RelationshipContext(false));
@@ -106,7 +109,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		}
 		else {
 			BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis());
-			FusionEnvironment env = new FusionEnvironment(aContext, value, bContext, types);
+			FusionEnvironment env = new FusionEnvironment(aContext, value, bContext, types, infers);
 			RelationshipContext newContext = genericFlowFunction(env, instr);
 			
 			return LabeledSingleResult.createResult(newContext);

@@ -38,4 +38,9 @@ public class InferenceEnvironment implements Iterable<InferredRel>{
 	public void addRule(InferredRel inf) {
 		inferRules.add(inf);
 	}
+
+	public void populate() {
+		// TODO Auto-generated method stub
+		
+	}
 }

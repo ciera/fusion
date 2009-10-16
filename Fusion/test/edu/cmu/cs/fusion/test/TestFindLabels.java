@@ -15,6 +15,7 @@ import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
@@ -88,7 +89,7 @@ public class TestFindLabels {
 	
 	@Test
 	public void testEmptyFindLabels() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar(), "Foo").addVar(new SpecVar(), "Bar");
 		ConsList<Pair<SpecVar, Variable>> emptyList = ConsList.empty();
 		SubPair pair = env.findLabels(emptyList, fv);
@@ -104,7 +105,7 @@ public class TestFindLabels {
 	
 	@Test
 	public void testFindLabelsOneOption() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
 		
@@ -130,7 +131,7 @@ public class TestFindLabels {
 
 	@Test
 	public void testFindLabelsAliasesAllDefinite() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
 		
@@ -167,7 +168,7 @@ public class TestFindLabels {
 	
 	@Test
 	public void testFindLabelsPossibleFromSuperTypes() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "SnaFu").addVar(new SpecVar("b"), "Baz");
 		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
 		
@@ -204,7 +205,7 @@ public class TestFindLabels {
 
 	@Test
 	public void testFindLabelsDefAndPoss() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "SnaFu").addVar(new SpecVar("b"), "Bazar");
 		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
 		
