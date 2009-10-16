@@ -142,7 +142,7 @@ public class RelationshipContext {
 	/**
 	 * Apply the changes from a delta lattice.
 	 * @param delta
-	 * @return
+	 * @return A new context which is this context with the changes described in delta
 	 */
 	public RelationshipContext applyChangesFromDelta(RelationshipDelta delta) {
 		RelationshipContext changed = new RelationshipContext(this);

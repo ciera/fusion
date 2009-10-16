@@ -12,13 +12,15 @@ import edu.cmu.cs.crystal.tac.model.Variable;
  */
 public interface AliasContext {
 	/**
-	 * Returns the possible object labels. May be null.
 	 * @param var the variable to get aliases for
-	 * @param existing the existing aliases we should assume have already been made.
-	 * @return
+	 * @return the possible object labels. May be null if this variable is unknown to us.
 	 */
 	public Set<ObjectLabel> getAliases(Variable var);
 	
+	/**
+	 * 
+	 * @return all object labels which are currently known. That is, returns a complete representation of the heap.
+	 */
 	public Set<ObjectLabel> getAllAliases();
 	
 }
