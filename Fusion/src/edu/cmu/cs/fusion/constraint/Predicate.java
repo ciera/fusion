@@ -16,7 +16,7 @@ public interface Predicate {
 	/**
 	 * The free variables for the predicate, and the type which
 	 * is expected by them.
-	 * @return
+	 * @return a collection of our free variables
 	 */
 	FreeVars getFreeVariables();
 }

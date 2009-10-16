@@ -33,8 +33,8 @@ public class Substitution {
 	
 	/**
 	 * Assumes that vars.first does not already exist in subs
-	 * @param var
-	 * @param label
+	 * @param vars A list of substitutions to concat with ours. This assumes that all elements
+	 * of vars.first are new to subs so that we won't have duplicates.
 	 */
 	public Substitution addSeveralSub(ConsList<Pair<SpecVar, ObjectLabel>> vars) {
 		return new Substitution(ConsList.concat(vars, subs));

@@ -21,8 +21,7 @@ public interface Operation {
 	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr);
 	
 	/**
-	 * Return the free variables and types
-	 * @return
+	 * @return A collection of the free variables and their types
 	 */
 	public FreeVars getFreeVariables();
 }

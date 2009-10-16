@@ -153,7 +153,7 @@ public class FusionEnvironment {
 
 	/**
 	 * Find all possible substitutions for the specification variables in fv, with the starting substitutions given
-	 * @param subs The existing substitutions, which must correspond to the free variables passed in
+	 * @param existing The existing substitutions, which must correspond to the free variables passed in
 	 * @param fv The free variables to get substitutions for
 	 * @return A SubPair of possible substutitions, where each sub contains existing and the domain of the sub is equal to the domain of freevars
 	 */

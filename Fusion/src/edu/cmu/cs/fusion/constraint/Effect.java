@@ -49,8 +49,7 @@ public class Effect {
 	}
 	
 	/**
-	 * Get the free variables for this effect, including the test variable if applicable.
-	 * @return
+	 * @return the free variables for this effect, including the test variable if applicable.
 	 */
 	public FreeVars getFreeVariables() {
 		FreeVars fv = new FreeVars();

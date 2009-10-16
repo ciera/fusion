@@ -41,8 +41,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
 	 * 
-	 * @param aliases
-	 * @param constants
 	 * @param variant
 	 */
 	public FusionAnalysis(Variant variant) {
