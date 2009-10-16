@@ -14,6 +14,7 @@ import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -95,7 +96,7 @@ public class TestSingleConstraint {
 	 */
 	public void testNoMatches() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 		
@@ -113,7 +114,7 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[5]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
 
 		assertEquals(0, delta.numberOfChanges());	
@@ -123,7 +124,7 @@ public class TestSingleConstraint {
 	@Test
 	public void testDefOnly() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -138,7 +139,7 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[5]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[5], labels[3]});
@@ -153,7 +154,7 @@ public class TestSingleConstraint {
 	@Test
 	public void testPartialOnly() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -168,7 +169,7 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[2]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[2], labels[3]});
@@ -183,7 +184,7 @@ public class TestSingleConstraint {
 	@Test
 	public void testSeveralDef() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -199,7 +200,7 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[6]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[6], labels[3]});
@@ -216,7 +217,7 @@ public class TestSingleConstraint {
 	@Test
 	public void testCombined() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -232,7 +233,7 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[5]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[2], labels[3]});

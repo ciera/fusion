@@ -12,6 +12,7 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
@@ -87,7 +88,7 @@ public class TestAllValidSubs {
 	
 	@Test
 	public void testEmptyValidLabels() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		
@@ -104,7 +105,7 @@ public class TestAllValidSubs {
 	
 	@Test
 	public void testFindLabelsOneOption() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		
@@ -128,7 +129,7 @@ public class TestAllValidSubs {
 
 	@Test
 	public void testFindLabelsAliasesAllDefinite() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		
@@ -184,7 +185,7 @@ public class TestAllValidSubs {
 	
 	@Test
 	public void testFindLabelsPossibleFromSuperTypes() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH);
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		

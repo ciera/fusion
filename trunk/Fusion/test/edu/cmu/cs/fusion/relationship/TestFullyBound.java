@@ -14,6 +14,7 @@ import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -127,7 +128,7 @@ public class TestFullyBound {
 		Constraint noEffectCons = new Constraint(op, trigger, req, effects);
 
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -140,7 +141,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, noEffectCons, new StubMethodCallInstruction());
 		
 		assertEquals(0, delta.numberOfChanges());
@@ -163,7 +164,7 @@ public class TestFullyBound {
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
 
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null,Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -176,7 +177,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
 		
 		Relationship eRel1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -205,7 +206,7 @@ public class TestFullyBound {
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
 
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null,Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -218,7 +219,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
@@ -232,7 +233,7 @@ public class TestFullyBound {
 	@Test
 	public void testPragmaticTrueTrue() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -245,7 +246,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -259,7 +260,7 @@ public class TestFullyBound {
 	@Test
 	public void testPragmaticTrueErrorU() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -273,7 +274,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -285,7 +286,7 @@ public class TestFullyBound {
 	@Test
 	public void testPragmaticTrueErrorF() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -301,7 +302,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -313,7 +314,7 @@ public class TestFullyBound {
 	@Test
 	public void testPragmaticFalse() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
@@ -328,7 +329,7 @@ public class TestFullyBound {
 	@Test
 	public void testPragmaticUnknown() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.UNK);
@@ -340,7 +341,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -354,7 +355,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundTrueTrue() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -367,7 +368,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -381,7 +382,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundTrueErrorU() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -395,7 +396,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -407,7 +408,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundTrueErrorF() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -423,7 +424,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -435,7 +436,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundFalse() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
@@ -450,7 +451,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundUnknownTrue() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
@@ -462,7 +463,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -476,7 +477,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundUnknownErrorU() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -488,7 +489,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -500,7 +501,7 @@ public class TestFullyBound {
 	@Test
 	public void testSoundUnknownErrorF() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
@@ -515,7 +516,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -528,7 +529,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteTrueTrueDefinite() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -541,7 +542,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -555,7 +556,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteTrueTruePossible() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -568,7 +569,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
@@ -582,7 +583,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteTrueUnkown() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -596,7 +597,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -608,7 +609,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteTrueSomeFail() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -625,7 +626,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -638,7 +639,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteTrueErrorF() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -655,7 +656,7 @@ public class TestFullyBound {
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 		
 		assertEquals(1, delta.numberOfChanges());
@@ -667,7 +668,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteFalse() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
@@ -682,7 +683,7 @@ public class TestFullyBound {
 	@Test
 	public void testCompleteUnknown() {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.UNK);
@@ -694,7 +695,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
 		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH);		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});

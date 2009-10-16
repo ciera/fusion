@@ -18,6 +18,7 @@ import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
+import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
@@ -30,6 +31,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private ConstraintEnvironment constraints;
 	private Variant variant;
 	private Logger log;
+	private InferenceEnvironment infers;
 	
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
@@ -46,12 +48,14 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		constraints = new ConstraintEnvironment();
+		infers = new InferenceEnvironment();
 		log = Logger.getLogger("edu.cmu.cs.fusion");
 		log.setLevel(Level.CONFIG);
 	}
 
 	public void beforeAllCompilationUnits() {
 		constraints.populate();
+		infers.populate();
 	}
 
 	public String getName() {
@@ -59,7 +63,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public void analyzeMethod(MethodDeclaration methodDecl) {
-		RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, variant);
+		RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, variant);
 		fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 		
 		MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
