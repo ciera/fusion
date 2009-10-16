@@ -3,25 +3,28 @@ package edu.cmu.cs.fusion.test.aspnet.api;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.cmu.cs.fusion.annot.Relation;
+import edu.cmu.cs.fusion.test.aspnet.relations.Item;
+
 public class ListItemCollection implements Iterable<ListItem> {
 	private List<ListItem> items;
 	
-//	@Item({"item", "this"})
+	@Item({"item", "this"})
 	public void remove(ListItem item) {
 		items.remove(item);
 	}
 	
-//	@Item({"item", "this"})
+	@Item({"item", "this"})
 	public void add(ListItem item) {
 		items.add(item);
 	}
 	
-//	@Item(value={"item", "this"}, effect = Relation.Effect.TEST, test="ret")
+	@Item(value={"item", "this"}, effect = Relation.Effect.TEST, test="ret")
 	public boolean contains(ListItem item) {
 		return items.contains(item);
 	}
 	
-//	@Item(value={"item", "this"}, effect = Relation.Effect.TEST, test="add")
+	@Item(value={"item", "this"}, effect = Relation.Effect.TEST, test="add")
 	public void addOrRemove(ListItem item, boolean add) {
 		if (add)
 			items.add(item);
@@ -29,13 +32,13 @@ public class ListItemCollection implements Iterable<ListItem> {
 			items.remove(item);
 	}
 	
-//	@Item({"ret", "this"})
+	@Item({"ret", "this"})
 //	@Text({"ret", "text"})
 	public ListItem findByText(String text) {
 		return null;
 	}
 
-//	@Item(value={"_", "this"}, effect = Relation.Effect.REMOVE)
+	@Item(value={"_", "this"}, effect = Relation.Effect.REMOVE)
 	public void clear() {
 		items.clear();
 	}
