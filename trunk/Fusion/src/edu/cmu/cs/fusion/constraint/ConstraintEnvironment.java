@@ -4,24 +4,108 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.IAnnotation;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.search.IJavaSearchConstants;
+import org.eclipse.jdt.core.search.IJavaSearchScope;
+import org.eclipse.jdt.core.search.SearchEngine;
+import org.eclipse.jdt.core.search.SearchMatch;
+import org.eclipse.jdt.core.search.SearchParticipant;
+import org.eclipse.jdt.core.search.SearchPattern;
+import org.eclipse.jdt.core.search.SearchRequestor;
+import org.eclipse.jdt.core.search.TypeReferenceMatch;
+
 import edu.cmu.cs.fusion.Relation;
+import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.AndPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.BooleanValue;
 import edu.cmu.cs.fusion.constraint.predicates.InstanceOfPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
+import edu.cmu.cs.fusion.parsers.EffectParser;
+import edu.cmu.cs.fusion.parsers.OperationParser;
+import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
+import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
 public class ConstraintEnvironment implements Iterable<Constraint> {
+	private class ConstraintRequestor extends SearchRequestor {
+		
+		public ConstraintRequestor(RelationsEnvironment rels) {
+			this.rels = rels;
+		}
+		
+		private RelationsEnvironment rels;
+		private OperationParser opParser = new OperationParser();
+		private EffectParser effParser = new EffectParser();
+		
+		@Override
+		public void acceptSearchMatch(SearchMatch match) throws CoreException {
+			if (match.getAccuracy() == SearchMatch.A_INACCURATE)
+				return;
+			TypeReferenceMatch refMatch = (TypeReferenceMatch)match;
+			
+			IType contextType = (IType) refMatch.getElement();			
+			IAnnotation constraint = (IAnnotation) refMatch.getLocalElement();
+			
+			String opString = (String)constraint.getMemberValuePairs()[0].getValue();
+			String trgString = (String)constraint.getMemberValuePairs()[1].getValue();
+			String reqString = (String)constraint.getMemberValuePairs()[2].getValue();
+			
+			Object[] effObj = (Object[])constraint.getMemberValuePairs()[3].getValue();
+			String[] effString = new String[effObj.length];
+			for (int ndx = 0; ndx < effString.length; ndx++) {
+				effString[ndx] = (String)effObj[ndx];
+			}
+			
+			FPLParser trgParser = new FPLParser(trgString, rels, contextType);
+			FPLParser reqParser = new FPLParser(reqString, rels, contextType);
+			
+			Constraint cons;
+			try {
+				cons = new Constraint(opParser.parse(opString, contextType), trgParser.expression(), reqParser.expression(), effParser.parse(effString));
+				constraints.add(cons);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	private class EffectRequestor extends SearchRequestor {
+		@Override
+		public void acceptSearchMatch(SearchMatch match) throws CoreException {
+			// TODO Auto-generated method stub	
+		}
+	}
+	
 	List<Constraint> constraints;
 	
-	public void populate() {
+	public ConstraintEnvironment() {
+		constraints = new LinkedList<Constraint>();
+	}
+	
+	public void populate(RelationsEnvironment rels, IProgressMonitor monitor) throws CoreException {
+		SearchEngine engine = new SearchEngine();
+		SearchPattern pattern = SearchPattern.createPattern("Constraint", IJavaSearchConstants.ANNOTATION_TYPE, IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
+		SearchParticipant[] participants = new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()};
+		IJavaSearchScope scope = SearchEngine.createWorkspaceScope();
+		
+		engine.search(pattern, participants, scope, new ConstraintRequestor(rels), monitor);
+		
+		
+		
+		
+		
+		
+		
+		
 		MethodInvocationOp op;
 		Predicate trigger;
 		Predicate required;
 		List<Effect> effect;
-
-		constraints = new LinkedList<Constraint>();
 
 		String listControlType = "edu.cmu.cs.fusion.test.aspnet.api.ListControl";
 		String ddlType = "edu.cmu.cs.fusion.test.aspnet.api.DropDownList";

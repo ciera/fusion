@@ -1,0 +1,304 @@
+/**
+* JJTree file
+*/
+
+options {
+  JDK_VERSION = "1.5";
+  STATIC = false;
+}
+ 
+PARSER_BEGIN(FPLParser) 
+package edu.cmu.cs.fusion.parsers.predicate;
+
+import edu.cmu.cs.fusion.constraint.predicates.*;
+import java.util.*;
+import edu.cmu.cs.crystal.util.Utilities;
+import edu.cmu.cs.fusion.Relation;
+import edu.cmu.cs.fusion.RelationsEnvironment;
+import edu.cmu.cs.fusion.constraint.SpecVar;
+import edu.cmu.cs.fusion.constraint.Predicate;
+import java.io.StringReader;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
+
+
+public class FPLParser {
+  	RelationsEnvironment relations;
+  	IType context;
+  	
+	public FPLParser(String input, RelationsEnvironment rels, IType context)	{
+	  	this(new StringReader(input));		this.context = context;
+		this.relations = rels;
+	}
+}
+PARSER_END(FPLParser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN : /* OPERATORS */
+{
+	< EQUALS: "==" > 
+|	< NEQ: "!=" > 
+|	< INSTANCEOF: "instanceof" >
+|   < NEG :"!" >
+|   < OR : "OR" >
+|   < IMPLIES : "IMPLIES" >
+|   < AND : "AND" >
+
+}
+
+
+TOKEN : /* LITERALS */
+{
+  < INTEGER_LITERAL: (< DIGIT >)+ >
+|
+  < TRUE: "TRUE" >
+| 
+  < FALSE:  "FALSE" >
+}
+
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|  < #LETTER: ["_","a"-"z","A"-"Z"] >
+|  < #DIGIT: ["0"-"9"] >
+}
+
+
+Predicate expression():
+{Predicate p;
+} 
+{
+  p = impExpression()
+  {return p;}
+}
+
+Predicate impExpression():
+{
+	Predicate rhs;
+	Predicate lhs;
+}
+{
+  lhs = orExpression()
+  (
+    ( < IMPLIES > ) rhs = orExpression()
+  {
+    lhs = new ImpliesPredicate(lhs, rhs);
+    rhs = null;
+  }
+  )*
+  {
+    return lhs;
+  }
+}
+
+Predicate orExpression():
+{
+	Predicate rhs;
+	Predicate lhs;
+}
+{
+  lhs = andExpression()
+  (
+    ( < OR > ) rhs = andExpression()
+  {
+    lhs = new OrPredicate(lhs, rhs);
+    rhs = null;
+  }
+  )*
+  {
+    return lhs;
+  }
+}
+
+Predicate andExpression():
+{
+	Predicate rhs;
+	Predicate lhs;
+}
+{
+  lhs = parenExpression()
+  (
+  ( <AND > ) rhs = parenExpression()
+  {
+    lhs = new AndPredicate(lhs, rhs);
+    rhs = null;  }
+  )*
+  {    return lhs;
+  }
+}
+
+Predicate parenExpression():
+{
+Predicate p;
+}
+{
+  "(" p = expression() ")" { return p;}
+| 
+  p = relationship() { return p;}
+}
+
+Predicate relationship() :
+{
+Predicate p;
+}
+{
+	p = testUserRelationship()	{ return p;}
+| 
+  	LOOKAHEAD(3)
+	p = userRelationship() {return p;}
+|
+	LOOKAHEAD(2)
+	p = iof() {return p;}
+|
+	LOOKAHEAD(2)
+ 	p = equal() {return p;}
+|
+	p = boolValue() {return p;}
+|
+	p = boolLiteral() {return p;}
+}
+
+TestPredicate testUserRelationship() :
+{
+	SpecVar test;
+	boolean isPos = true;
+	RelationshipPredicate inner;}
+{
+	"?"
+	inner = userRelationship()
+	"="
+	[< NEG > {isPos = false;	}]
+	test = param()
+	{
+		return new TestPredicate(inner, test, isPos);	  
+	} }
+
+RelationshipPredicate userRelationship() :
+{
+	Token t;
+	Relation rel;
+	SpecVar var;
+	boolean isPos = true;
+	SpecVar[] params;
+	int ndx = 0;
+}
+{
+	[< NEG >{isPos = false;	}]
+	t = <IDENTIFIER>
+	{
+	  rel = relations.findRelation(t.image);
+	  params = new SpecVar[rel.getFullyQualifiedTypes().length];
+	  ndx = 0;	}
+	"(" var = wcParam()
+	{
+	  params[ndx] = var;
+	  ndx++;	}
+	(
+	  "," var = wcParam()
+	{
+	  params[ndx] = var;
+	  ndx++;
+	}
+	)* ")"
+	{
+	  return new RelationshipPredicate(rel, params, isPos);	}
+}
+
+InstanceOfPredicate iof():
+{
+	SpecVar v;
+	String partialType;
+	String qualifiedType;
+	boolean isPos = true;
+}
+{
+	v = param()
+	[< NEG >{isPos = false;	}] < INSTANCEOF >
+	partialType = type()
+	{
+	  try	  {	    
+		  qualifiedType = Utilities.resolveType(context, partialType);
+		  return new InstanceOfPredicate(v, qualifiedType, isPos);	  }
+	  catch (JavaModelException err)	  {	    return null;
+	  }
+
+	}
+}
+
+ReferenceEqualityPredicate equal():
+{
+	SpecVar left, right;
+	boolean isEquals = true;
+}
+{
+	left = param()	(	  < EQUALS > | < NEQ >	  {	    isEquals = false;
+	  }
+	)
+	right = param()
+	{
+		return new ReferenceEqualityPredicate(left, right, isEquals);	}
+}
+
+BooleanValue boolValue() :
+{
+	SpecVar v;}
+{	v = param()
+	{	  return new BooleanValue(v, true);
+	}
+|
+	< NEG >
+	v = param()
+	{		return new BooleanValue(v, false);
+	}
+}
+
+/** A literal. */
+Predicate boolLiteral() :
+{
+}
+{ 
+	< TRUE > { return new TruePredicate(); }|
+	< FALSE > { return new FalsePredicate(); }
+}
+
+String type() :
+{
+  Token t;
+}
+{	t = < IDENTIFIER >
+	{	  return t.image;
+	}
+}
+
+SpecVar wcParam() :
+{
+  SpecVar var;
+}
+{
+  var = param()
+  {
+    return var;
+  }
+|
+  "*"
+  {
+    return new SpecVar();
+  }
+}
+
+SpecVar param() :
+{
+  Token t;
+}
+{
+  t = < IDENTIFIER >
+  {    return new SpecVar(t.image);
+  }
+}

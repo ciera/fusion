@@ -23,6 +23,16 @@ public class TestPredicate implements NegatablePredicate {
 		isPositive = true;
 	}
 	
+	public TestPredicate(RelationshipPredicate inner, SpecVar test, boolean isPositive) {
+		this.inner = inner;
+		this.test = test;
+		this.isPositive = isPositive;
+	}
+	
+	public RelationshipPredicate getRelationship() {
+		return inner;
+	}
+
 	public FreeVars getFreeVariables() {
 		FreeVars fv = new FreeVars();
 		fv = fv.addVar(test, "boolean");

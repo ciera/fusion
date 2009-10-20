@@ -17,6 +17,12 @@ public class ReferenceEqualityPredicate implements NegatablePredicate {
 		isPositive = true;
 	}
 
+	public ReferenceEqualityPredicate(SpecVar left, SpecVar right, boolean isPositive) {
+		this.left = left;
+		this.right = right;
+		this.isPositive = isPositive;
+	}
+
 	public FreeVars getFreeVariables() {
 		return new FreeVars().addVar(left, FreeVars.OBJECT_TYPE).addVar(right, FreeVars.OBJECT_TYPE);
 	}

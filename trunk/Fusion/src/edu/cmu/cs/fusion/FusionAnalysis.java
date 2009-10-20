@@ -3,6 +3,7 @@ package edu.cmu.cs.fusion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
@@ -32,6 +33,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private Variant variant;
 	private Logger log;
 	private InferenceEnvironment infers;
+	private RelationsEnvironment rels;
 	
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
@@ -47,16 +49,25 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	 */
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
-		constraints = new ConstraintEnvironment();
-		infers = new InferenceEnvironment();
 		log = Logger.getLogger("edu.cmu.cs.fusion");
 		log.setLevel(Level.CONFIG);
 	}
 
 	public void beforeAllCompilationUnits() {
-		constraints.populate();
-		infers.populate();
+		rels = new RelationsEnvironment();
+		constraints = new ConstraintEnvironment();
+		infers = new InferenceEnvironment();
+		try {
+			rels.populate(null);
+			//then, find and check all the constraints and releffects
+			constraints.populate(rels, null);
+		//finally, find and check all the infers
+		infers.populate(rels);
+		} catch (CoreException err) {
+			log.log(Level.SEVERE, "Error while parsing relations", err);
+		}
 	}
+
 
 	public String getName() {
 		return "FusionAnalysis";
