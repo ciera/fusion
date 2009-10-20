@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import edu.cmu.cs.fusion.Relation;
+import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.constraint.predicates.AndPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 
@@ -39,7 +40,7 @@ public class InferenceEnvironment implements Iterable<InferredRel>{
 		inferRules.add(inf);
 	}
 
-	public void populate() {
+	public void populate(RelationsEnvironment rels) {
 		// TODO Auto-generated method stub
 		
 	}

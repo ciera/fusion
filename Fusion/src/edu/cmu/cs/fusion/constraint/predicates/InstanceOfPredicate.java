@@ -18,6 +18,12 @@ public class InstanceOfPredicate implements NegatablePredicate {
 		isPositive = true;
 	}
 
+	public InstanceOfPredicate(SpecVar var, String fullyQualifiedType, boolean isPositive) {
+		variable = var;
+		type = fullyQualifiedType;
+		this.isPositive = isPositive;
+	}
+
 	public FreeVars getFreeVariables() {
 		return new FreeVars().addVar(variable, isPositive ? type : FreeVars.OBJECT_TYPE);
 	}

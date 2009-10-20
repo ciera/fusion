@@ -5,13 +5,11 @@ import java.util.List;
 public class Constraint {
 	static public final SpecVar RECEIVER = new SpecVar("receiver");
 	static public final SpecVar RESULT = new SpecVar("result");
-	
+		
 	private Operation op;
 	private Predicate trigger;
 	private Predicate requires;
 	private List<Effect> effects;
-	
-	
 	
 	public Constraint(Operation op, Predicate trigger, Predicate requires, List<Effect> effects) {
 		this.op = op;
@@ -19,7 +17,6 @@ public class Constraint {
 		this.requires = requires;
 		this.effects = effects;
 	}
-	
 	
 	public Operation getOp() {
 		return op;
