@@ -103,10 +103,12 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 	
 	private class EffectRequestor extends SearchRequestor {
 
-		private Relation rel;
+		private RelationsEnvironment rels;
+		private HashSet<IMethod> parsed;
 		
-		public EffectRequestor(Relation relation) {
-			rel = relation;
+		public EffectRequestor(RelationsEnvironment rels) {
+			this.rels = rels;
+			parsed = new HashSet<IMethod>();
 		}
 
 		@Override
@@ -115,12 +117,31 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 				return;
 			TypeReferenceMatch refMatch = (TypeReferenceMatch)match;
 			
-			IMethod method = (IMethod) refMatch.getElement();			
-			IAnnotation effectAnno = (IAnnotation) refMatch.getLocalElement();
-			
+			IMethod method = (IMethod) refMatch.getElement();		
+			if (parsed.contains(method))	//SYE!!!!
+				return;
+
 			List<Effect> effects = new LinkedList<Effect>();
-			effects.add(parseEffect(effectAnno));
 			
+			for (IAnnotation anno : method.getAnnotations()) {
+				String qName = Utilities.resolveType(method.getDeclaringType(), anno.getElementName());
+				Relation rel = rels.findRelation(qName);
+				
+				if (rel != null) {
+					effects.add(parseEffect(anno, rel));
+				}
+				else {
+					rel = isMultiRelation(anno, method.getDeclaringType());
+					if (rel != null) {
+						for (Object obj : (Object[])anno.getMemberValuePairs()[0].getValue()) {
+							IAnnotation inner = (IAnnotation)obj;
+							effects.add(parseEffect(inner, rel));
+						}
+					}
+				}
+			}
+			parsed.add(method);
+			assert(effects.size() > 0);			
 
 			MethodInvocationOp op;
 			IType contextType = method.getDeclaringType();
@@ -139,7 +160,26 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 			constraints.add(new Constraint(op, new TruePredicate(), new TruePredicate(), effects));
 		}
 		
-		private Effect parseEffect(IAnnotation effectAnno) throws JavaModelException {
+		private Relation isMultiRelation(IAnnotation anno, IType context) throws JavaModelException {
+			//check if it has an array of annotations
+			if (anno.getMemberValuePairs().length != 1)
+				return null;
+			IMemberValuePair pair = anno.getMemberValuePairs()[0];
+			if (pair.getValueKind() != IMemberValuePair.K_ANNOTATION)
+				return null;
+			if (!(pair.getValue() instanceof Object[]))
+				return null;
+			if (((Object[])pair.getValue()).length < 2)	//can't be a multi-anno if there's less than two things in it
+				return null;
+			
+			
+			//check if those annotations are a relation
+			IAnnotation inner = (IAnnotation)((Object[])pair.getValue())[0];
+			String qName = Utilities.resolveType(context, inner.getElementName());
+			return rels.findRelation(qName);
+		}
+		
+		private Effect parseEffect(IAnnotation effectAnno, Relation rel) throws JavaModelException {
 			Effect effect = null;
 			IMemberValuePair paramsPair = null;
 			IMemberValuePair actEffectPair = null;
@@ -244,9 +284,10 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		
 		engine.search(pattern, participants, scope, new ConstraintRequestor(rels), monitor);
 		
+		EffectRequestor requestor = new EffectRequestor(rels);
 		for (Relation rel : rels) {
 			pattern = SearchPattern.createPattern(rel.getName(), IJavaSearchConstants.ANNOTATION_TYPE, IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
-			engine.search(pattern, participants, scope, new EffectRequestor(rel), monitor);			
+			engine.search(pattern, participants, scope, requestor, monitor);			
 		}
 	}
 
