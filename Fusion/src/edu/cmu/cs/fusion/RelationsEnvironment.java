@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
@@ -18,7 +19,7 @@ import org.eclipse.jdt.core.search.TypeReferenceMatch;
 
 import edu.cmu.cs.crystal.util.Utilities;
 
-public class RelationsEnvironment extends SearchRequestor {
+public class RelationsEnvironment extends SearchRequestor implements Iterable<Relation> {
 	private Map<String, Relation> rels;
 	
 	public RelationsEnvironment() {
@@ -27,6 +28,10 @@ public class RelationsEnvironment extends SearchRequestor {
 	
 	public Relation findRelation(String qualifiedName) {
 		return rels.get(qualifiedName);
+	}
+	
+	public Iterator<Relation> iterator() {
+		return rels.values().iterator();
 	}
 	
 	public void populate(IProgressMonitor monitor) throws CoreException {

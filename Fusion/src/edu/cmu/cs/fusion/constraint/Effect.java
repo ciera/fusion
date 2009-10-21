@@ -115,10 +115,10 @@ public class Effect {
 	public String toString() {
 		String str = "";
 		
-		if (negate)
-			str += "!";
 		if (test != null)
 			str += "?";
+		if (negate)
+			str += "!";
 		str += type.getName() + "(";
 		
 		for (int ndx = 0; ndx < vars.length; ndx++) {

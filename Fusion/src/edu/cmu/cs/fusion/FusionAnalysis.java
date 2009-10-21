@@ -59,10 +59,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		infers = new InferenceEnvironment();
 		try {
 			rels.populate(null);
-			//then, find and check all the constraints and releffects
 			constraints.populate(rels, null);
-		//finally, find and check all the infers
-		infers.populate(rels);
+			infers.populate(rels, null);
 		} catch (CoreException err) {
 			log.log(Level.SEVERE, "Error while parsing relations", err);
 		}
@@ -87,11 +85,12 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		
 		// must call getResultsAfter at least once on this method,
 		// or the analysis won't be run on this method
-		RelationshipContext finalLattice = fa.getResultsAfter(methodDecl);
+		RelationshipContext finalLattice = fa.getEndResults(methodDecl);
 		
 		StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
 		methodDecl.accept(debugger);
 		log.log(Level.INFO, debugger.getResult());
+		//report the errors here...
 	}
 	
 	public RelationshipContext getResultsBefore(ASTNode node) {
@@ -103,6 +102,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public void reportError(Variant variant, Constraint cons, TACInstruction instr) {
+		//TODO: to avoid duplicates, store the errors, then report them.
 		reporter.reportUserProblem("The constraint " + cons.toString() + " was violated.", instr.getNode(), this.getName() + ": " + variant.toString(), SEVERITY.WARNING);
 	}
 
