@@ -3,6 +3,7 @@ package edu.cmu.cs.fusion.test.aspnet.api;
 import edu.cmu.cs.fusion.annot.Relation.Effect;
 import edu.cmu.cs.fusion.test.aspnet.relations.Selected;
 import edu.cmu.cs.fusion.test.aspnet.relations.Text;
+import edu.cmu.cs.fusion.test.aspnet.relations.Texts;
 
 
 public class ListItem {
@@ -22,10 +23,10 @@ public class ListItem {
 		return null;
 	}
 	
-//	@Relations({
-//	@Text(value={"*", "this"}, effect = Relation.Effect.REMOVE)//,
-//	@Text({"test", "this"})
-//	})
+	@Texts({
+	@Text(value={"*", "this"}, effect = Effect.REMOVE),
+	@Text({"test", "this"})
+	})
 	public void setText(String text) {
 	}
 }
