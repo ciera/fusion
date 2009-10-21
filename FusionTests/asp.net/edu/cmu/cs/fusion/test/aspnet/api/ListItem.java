@@ -1,26 +1,29 @@
 package edu.cmu.cs.fusion.test.aspnet.api;
 
+import edu.cmu.cs.fusion.annot.Relation.Effect;
+import edu.cmu.cs.fusion.test.aspnet.relations.Selected;
+import edu.cmu.cs.fusion.test.aspnet.relations.Text;
 
 
 public class ListItem {
 	public ListItem() {}
 	
-//	@Selected(value={"this"}, test="ret", effect = Relation.Effect.TEST)
+	@Selected(value={"target"}, effect = Effect.TEST, test="result")
 	public boolean isSelected() {
 		return false;
 	}
 	
-//	@Selected(value={"this"}, test="select", effect = Relation.Effect.TEST)
+	@Selected(value={"target"}, effect = Effect.TEST, test="select")
 	public void setSelected(boolean select) {	
 	}
 
-//	@Text({"ret", "this"})
+	@Text({"result", "target"})
 	public String getText() {
 		return null;
 	}
 	
 //	@Relations({
-//	@Text(value={"_", "this"}, effect = Relation.Effect.REMOVE)//,
+//	@Text(value={"*", "this"}, effect = Relation.Effect.REMOVE)//,
 //	@Text({"test", "this"})
 //	})
 	public void setText(String text) {
