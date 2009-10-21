@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion.constraint;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +8,11 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IAnnotation;
+import org.eclipse.jdt.core.IMemberValuePair;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
@@ -17,16 +22,11 @@ import org.eclipse.jdt.core.search.SearchPattern;
 import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jdt.core.search.TypeReferenceMatch;
 
+import edu.cmu.cs.crystal.util.Utilities;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
-import edu.cmu.cs.fusion.constraint.predicates.AndPredicate;
-import edu.cmu.cs.fusion.constraint.predicates.BooleanValue;
-import edu.cmu.cs.fusion.constraint.predicates.InstanceOfPredicate;
-import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
-import edu.cmu.cs.fusion.parsers.EffectParser;
-import edu.cmu.cs.fusion.parsers.OperationParser;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
@@ -35,11 +35,11 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		
 		public ConstraintRequestor(RelationsEnvironment rels) {
 			this.rels = rels;
+			parsed = new HashSet<IAnnotation>();
 		}
 		
 		private RelationsEnvironment rels;
-		private OperationParser opParser = new OperationParser();
-		private EffectParser effParser = new EffectParser();
+		private HashSet<IAnnotation> parsed;
 		
 		@Override
 		public void acceptSearchMatch(SearchMatch match) throws CoreException {
@@ -50,34 +50,183 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 			IType contextType = (IType) refMatch.getElement();			
 			IAnnotation constraint = (IAnnotation) refMatch.getLocalElement();
 			
+			if (parsed.contains(constraint))
+				return; //SCREW YOU ECLIPSE!!!!
+			
+			if (constraint.getElementName().contains("Constraints")) {
+				for (Object objAnno : (Object[])constraint.getMemberValuePairs()[0].getValue()) {
+					parseConstraint((IAnnotation)objAnno, contextType);
+				}
+			}
+			else
+				parseConstraint(constraint, contextType);
+			parsed.add(constraint);
+		}
+
+		private void parseConstraint(IAnnotation constraint, IType contextType) throws JavaModelException {
 			String opString = (String)constraint.getMemberValuePairs()[0].getValue();
 			String trgString = (String)constraint.getMemberValuePairs()[1].getValue();
 			String reqString = (String)constraint.getMemberValuePairs()[2].getValue();
 			
 			Object[] effObj = (Object[])constraint.getMemberValuePairs()[3].getValue();
-			String[] effString = new String[effObj.length];
-			for (int ndx = 0; ndx < effString.length; ndx++) {
-				effString[ndx] = (String)effObj[ndx];
+			String[] effStrings = new String[effObj.length];
+			for (int ndx = 0; ndx < effStrings.length; ndx++) {
+				effStrings[ndx] = (String)effObj[ndx];
 			}
 			
-			FPLParser trgParser = new FPLParser(trgString, rels, contextType);
-			FPLParser reqParser = new FPLParser(reqString, rels, contextType);
+			FPLParser parser = new FPLParser(rels, contextType);
+			Operation op;
+			Predicate trigger, requires;
+			List<Effect> effects = new LinkedList<Effect>();
 			
-			Constraint cons;
 			try {
-				cons = new Constraint(opParser.parse(opString, contextType), trgParser.expression(), reqParser.expression(), effParser.parse(effString));
-				constraints.add(cons);
+				parser.reset(opString);
+				op = parser.operation();
+				
+				parser.reset(trgString);
+				trigger = parser.expression();
+			
+				parser.reset(reqString);
+				requires = parser.expression();
+				
+				for (String eString : effStrings) {
+					parser.reset(eString);
+					effects.add(parser.effect());
+				}
+
+				constraints.add(new Constraint(op, trigger, requires, effects));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			
 		}
 	}
 	
 	private class EffectRequestor extends SearchRequestor {
+
+		private Relation rel;
+		
+		public EffectRequestor(Relation relation) {
+			rel = relation;
+		}
+
 		@Override
 		public void acceptSearchMatch(SearchMatch match) throws CoreException {
-			// TODO Auto-generated method stub	
+			if (match.getAccuracy() == SearchMatch.A_INACCURATE)
+				return;
+			TypeReferenceMatch refMatch = (TypeReferenceMatch)match;
+			
+			IMethod method = (IMethod) refMatch.getElement();			
+			IAnnotation effectAnno = (IAnnotation) refMatch.getLocalElement();
+			
+			List<Effect> effects = new LinkedList<Effect>();
+			effects.add(parseEffect(effectAnno));
+			
+
+			MethodInvocationOp op;
+			IType contextType = method.getDeclaringType();
+			String methodName = method.getElementName();
+			String receiverType = contextType.getFullyQualifiedName();
+			String returnType = Utilities.resolveType(contextType, Signature.toString(method.getReturnType()));
+			String[] paramTypes = new String[method.getParameterTypes().length];
+			SpecVar[] opParams = new SpecVar[method.getParameterNames().length];
+			
+			for (int ndx = 0; ndx < paramTypes.length; ndx++) {
+				paramTypes[ndx] = Utilities.resolveType(contextType, Signature.toString(method.getParameterTypes()[ndx]));
+				opParams[ndx] = new SpecVar(method.getParameterNames()[ndx]);
+			}
+			op = new MethodInvocationOp(methodName, receiverType, opParams, paramTypes, returnType);
+			
+			constraints.add(new Constraint(op, new TruePredicate(), new TruePredicate(), effects));
+		}
+		
+		private Effect parseEffect(IAnnotation effectAnno) throws JavaModelException {
+			Effect effect = null;
+			IMemberValuePair paramsPair = null;
+			IMemberValuePair actEffectPair = null;
+			IMemberValuePair testPair = null;
+			
+			switch (effectAnno.getMemberValuePairs().length) {
+			case 1:
+				paramsPair = effectAnno.getMemberValuePairs()[0];
+				break;
+			case 2: 
+				if (effectAnno.getMemberValuePairs()[0].getMemberName().equals("value")) {
+					paramsPair = effectAnno.getMemberValuePairs()[0];
+					actEffectPair = effectAnno.getMemberValuePairs()[1];
+				}
+				else {
+					paramsPair = effectAnno.getMemberValuePairs()[1];
+					actEffectPair = effectAnno.getMemberValuePairs()[0];
+				}	
+				break;
+			case 3:
+				if (effectAnno.getMemberValuePairs()[0].getMemberName().equals("value")) {
+					paramsPair = effectAnno.getMemberValuePairs()[0];
+					if (effectAnno.getMemberValuePairs()[1].getMemberName().equals("effect")) {
+						actEffectPair = effectAnno.getMemberValuePairs()[1];
+						testPair = effectAnno.getMemberValuePairs()[2];
+					}
+					else {
+						actEffectPair = effectAnno.getMemberValuePairs()[2];
+						testPair = effectAnno.getMemberValuePairs()[1];
+					}	
+				}
+				else if (effectAnno.getMemberValuePairs()[1].getMemberName().equals("value")) {
+					paramsPair = effectAnno.getMemberValuePairs()[1];
+					if (effectAnno.getMemberValuePairs()[0].getMemberName().equals("effect")) {
+						actEffectPair = effectAnno.getMemberValuePairs()[0];
+						testPair = effectAnno.getMemberValuePairs()[2];
+					}
+					else {
+						actEffectPair = effectAnno.getMemberValuePairs()[2];
+						testPair = effectAnno.getMemberValuePairs()[0];
+					}	
+				}
+				else {
+					paramsPair = effectAnno.getMemberValuePairs()[2];
+					if (effectAnno.getMemberValuePairs()[0].getMemberName().equals("effect")) {
+						actEffectPair = effectAnno.getMemberValuePairs()[0];
+						testPair = effectAnno.getMemberValuePairs()[1];
+					}
+					else {
+						actEffectPair = effectAnno.getMemberValuePairs()[1];
+						testPair = effectAnno.getMemberValuePairs()[0];
+					}	
+				}
+				break;
+			}
+			
+			
+			Object[] objParams = (Object[])paramsPair.getValue();
+			SpecVar[] params = new SpecVar[objParams.length];
+			for (int ndx = 0; ndx < objParams.length; ndx++) {
+				params[ndx] = new SpecVar((String)objParams[ndx]);
+			}
+			
+			edu.cmu.cs.fusion.annot.Relation.Effect actualEffect;
+			
+			if (actEffectPair != null) {
+				String strEffect = ((String)actEffectPair.getValue()).substring(((String)actEffectPair.getValue()).lastIndexOf('.') + 1); //SCREW YOU ECLIPSE!!!!!
+				actualEffect = edu.cmu.cs.fusion.annot.Relation.Effect.valueOf(strEffect);
+			}
+			else
+				actualEffect = edu.cmu.cs.fusion.annot.Relation.Effect.ADD;
+			
+			String test = null;
+			
+			switch (actualEffect) {
+			case ADD:
+				effect = Effect.createAddEffect(rel, params);
+				break;
+			case REMOVE:
+				effect = Effect.createRemoveEffect(rel, params);
+				break;
+			case TEST:
+				test = (String) testPair.getValue();
+				effect = Effect.createTestEffect(rel, params, new SpecVar(test));
+				break;
+			}
+			return effect;
 		}
 	}
 	
@@ -95,138 +244,11 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		
 		engine.search(pattern, participants, scope, new ConstraintRequestor(rels), monitor);
 		
-		
-		
-		
-		
-		
-		
-		
-		MethodInvocationOp op;
-		Predicate trigger;
-		Predicate required;
-		List<Effect> effect;
-
-		String listControlType = "edu.cmu.cs.fusion.test.aspnet.api.ListControl";
-		String ddlType = "edu.cmu.cs.fusion.test.aspnet.api.DropDownList";
-		String listItemCollType = "edu.cmu.cs.fusion.test.aspnet.api.ListItemCollection";
-		String listItemType = "edu.cmu.cs.fusion.test.aspnet.api.ListItem";
-
-		Relation itemsRel = new Relation("Items", new String[] {listItemCollType, listControlType});
-		Relation itemRel = new Relation("Item", new String[] {listItemType, listItemCollType});
-		Relation childRel = new Relation("Child", new String[] {listItemType, listControlType});
-		Relation corrSelRel = new Relation("CorrectlySelected", new String[] {listControlType});
-		Relation selectedRel = new Relation("Selected", new String[] {listItemType});
-		Relation textRel = new Relation("Text", new String[] {"java.lang.String", listItemType});
-		
-		op = new MethodInvocationOp("getItems", listControlType, new SpecVar[] {}, new String[] {}, listItemCollType);
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createAddEffect(itemsRel, new SpecVar[] {Constraint.RESULT, Constraint.RECEIVER}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("getSelectedItem", listControlType, new SpecVar[] {}, new String[] {}, listItemType);
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createAddEffect(childRel, new SpecVar[] {Constraint.RESULT, Constraint.RECEIVER}));
-		effect.add(Effect.createAddEffect(selectedRel, new SpecVar[] {Constraint.RESULT}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("getSelected", listItemType, new SpecVar[] {}, new String[] {}, "boolean");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createTestEffect(selectedRel, new SpecVar[] {Constraint.RECEIVER}, Constraint.RESULT));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("setSelected", listItemType, new SpecVar[] {new SpecVar("selected")}, new String[] {"boolean"}, "void");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createTestEffect(selectedRel, new SpecVar[] {Constraint.RECEIVER}, new SpecVar("selected")));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("getText", listItemType, new SpecVar[] {}, new String[] {}, "java.lang.String");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createAddEffect(textRel, new SpecVar[] {Constraint.RESULT, Constraint.RECEIVER}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("setText", listItemType, new SpecVar[] {new SpecVar("text")}, new String[] {"java.lang.String"}, "void");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createRemoveEffect(textRel, new SpecVar[] {new SpecVar(), Constraint.RECEIVER}));
-		effect.add(Effect.createAddEffect(textRel, new SpecVar[] {new SpecVar("text"), Constraint.RECEIVER}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("remove", listItemCollType, new SpecVar[] {new SpecVar("item")}, new String[] {listItemType}, "void");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createRemoveEffect(itemRel, new SpecVar[] {new SpecVar("item"), Constraint.RECEIVER}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-
-	
-		op = new MethodInvocationOp("add", listItemCollType, new SpecVar[] {new SpecVar("item")}, new String[] {listItemType}, "void");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createAddEffect(itemRel, new SpecVar[] {new SpecVar("item"), Constraint.RECEIVER}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-		
-		op = new MethodInvocationOp("contains", listItemCollType, new SpecVar[] {new SpecVar("item")}, new String[] {listItemType}, "boolean");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createTestEffect(itemRel, new SpecVar[] {new SpecVar("item"), Constraint.RECEIVER}, Constraint.RESULT));
-		constraints.add(new Constraint(op, trigger, required, effect));
-
-		op = new MethodInvocationOp("addOrRemove", listItemCollType, new SpecVar[] {new SpecVar("item"), new SpecVar("toAdd")}, new String[] {listItemType, "boolean"}, "void");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createTestEffect(itemRel, new SpecVar[] {new SpecVar("item"), Constraint.RECEIVER}, new SpecVar("toAdd")));
-		constraints.add(new Constraint(op, trigger, required, effect));
-
-		op = new MethodInvocationOp("findByText", listItemCollType, new SpecVar[] {new SpecVar("text")}, new String[] {"java.lang.String"}, listItemType);
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createAddEffect(itemRel, new SpecVar[] {Constraint.RESULT, Constraint.RECEIVER}));
-		effect.add(Effect.createAddEffect(textRel, new SpecVar[] {new SpecVar("text"), Constraint.RESULT}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-
-		op = new MethodInvocationOp("clear", listItemCollType, new SpecVar[] {}, new String[] {}, "void");
-		trigger = new TruePredicate();
-		required = new TruePredicate();
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createRemoveEffect(itemRel, new SpecVar[] {new SpecVar(), Constraint.RECEIVER}));
-		constraints.add(new Constraint(op, trigger, required, effect));	
-
-		op = new MethodInvocationOp("setSelected", listItemType, new SpecVar[] {new SpecVar("selected")}, new String[] {"boolean"}, "void");
-		Predicate p1 = new BooleanValue(new SpecVar("selected"));
-		Predicate p2 = new RelationshipPredicate(childRel, new SpecVar[] {Constraint.RECEIVER, new SpecVar("ctrl")});
-		Predicate p3 = new InstanceOfPredicate(new SpecVar("ctrl"), ddlType);		
-		trigger = new AndPredicate(new AndPredicate(p1, p2), p3);
-		required = new RelationshipPredicate(corrSelRel, new SpecVar[] {new SpecVar("ctrl")}, false);
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createAddEffect(corrSelRel, new SpecVar[] {new SpecVar("ctrl")}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-
-		op = new MethodInvocationOp("setSelected", listItemType, new SpecVar[] {new SpecVar("selected")}, new String[] {"boolean"}, "void");
-		p1 = new BooleanValue(new SpecVar("selected"), false);
-		p2 = new RelationshipPredicate(childRel, new SpecVar[] {Constraint.RECEIVER, new SpecVar("ctrl")});
-		p3 = new InstanceOfPredicate(new SpecVar("ctrl"), ddlType);		
-		trigger = new AndPredicate(new AndPredicate(p1, p2), p3);
-		required = new RelationshipPredicate(selectedRel, new SpecVar[] {Constraint.RECEIVER});
-		effect = new LinkedList<Effect>();
-		effect.add(Effect.createRemoveEffect(corrSelRel, new SpecVar[] {new SpecVar("ctrl")}));
-		constraints.add(new Constraint(op, trigger, required, effect));
-}
+		for (Relation rel : rels) {
+			pattern = SearchPattern.createPattern(rel.getName(), IJavaSearchConstants.ANNOTATION_TYPE, IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
+			engine.search(pattern, participants, scope, new EffectRequestor(rel), monitor);			
+		}
+	}
 
 	public Iterator<Constraint> iterator() {
 		return constraints.iterator();

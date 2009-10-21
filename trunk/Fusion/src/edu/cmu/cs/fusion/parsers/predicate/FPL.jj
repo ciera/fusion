@@ -11,10 +11,14 @@ PARSER_BEGIN(FPLParser)
 package edu.cmu.cs.fusion.parsers.predicate;
 
 import edu.cmu.cs.fusion.constraint.predicates.*;
+import edu.cmu.cs.fusion.constraint.operations.*;
 import java.util.*;
 import edu.cmu.cs.crystal.util.Utilities;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
+import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import java.io.StringReader;
@@ -26,10 +30,20 @@ public class FPLParser {
   	RelationsEnvironment relations;
   	IType context;
   	
-	public FPLParser(String input, RelationsEnvironment rels, IType context)	{
-	  	this(new StringReader(input));		this.context = context;
+	public FPLParser(RelationsEnvironment rels, IType context)	{
+	  	this("", rels, context);
+	}
+
+	public FPLParser(String input, RelationsEnvironment rels, IType context)
+	{
+	  	this(new StringReader(input));
+		this.context = context;
 		this.relations = rels;
 	}
+
+	public void reset(String input)	{		ReInit(new StringReader(input));
+	}
+	
 }
 PARSER_END(FPLParser)
 
@@ -47,11 +61,20 @@ TOKEN : /* OPERATORS */
 |	< NEQ: "!=" > 
 |	< INSTANCEOF: "instanceof" >
 |   < NEG :"!" >
+|   < TEST :"?" >
+|   < TEST_SEP :":" >
 |   < OR : "OR" >
 |   < IMPLIES : "IMPLIES" >
 |   < AND : "AND" >
 
 }
+
+TOKEN : /* Operation Tokens */
+{
+	< EOM: "EOM" > 
+|   < DOT : "." >
+}
+
 
 
 TOKEN : /* LITERALS */
@@ -69,7 +92,6 @@ TOKEN : /* IDENTIFIERS */
 |  < #LETTER: ["_","a"-"z","A"-"Z"] >
 |  < #DIGIT: ["0"-"9"] >
 }
-
 
 Predicate expression():
 {Predicate p;
@@ -171,9 +193,9 @@ TestPredicate testUserRelationship() :
 	boolean isPos = true;
 	RelationshipPredicate inner;}
 {
-	"?"
+	< TEST >
 	inner = userRelationship()
-	"="
+	< TEST_SEP >
 	[< NEG > {isPos = false;	}]
 	test = param()
 	{
@@ -182,31 +204,16 @@ TestPredicate testUserRelationship() :
 
 RelationshipPredicate userRelationship() :
 {
-	Token t;
 	Relation rel;
-	SpecVar var;
 	boolean isPos = true;
 	SpecVar[] params;
-	int ndx = 0;
+	int numParams;
 }
 {
 	[< NEG >{isPos = false;	}]
-	t = <IDENTIFIER>
-	{
-	  rel = relations.findRelation(t.image);
-	  params = new SpecVar[rel.getFullyQualifiedTypes().length];
-	  ndx = 0;	}
-	"(" var = wcParam()
-	{
-	  params[ndx] = var;
-	  ndx++;	}
-	(
-	  "," var = wcParam()
-	{
-	  params[ndx] = var;
-	  ndx++;
-	}
-	)* ")"
+ 	 rel = relation()
+	{numParams = rel.getFullyQualifiedTypes().length;}
+	params = wcParams(numParams)
 	{
 	  return new RelationshipPredicate(rel, params, isPos);	}
 }
@@ -214,21 +221,15 @@ RelationshipPredicate userRelationship() :
 InstanceOfPredicate iof():
 {
 	SpecVar v;
-	String partialType;
 	String qualifiedType;
 	boolean isPos = true;
 }
 {
 	v = param()
 	[< NEG >{isPos = false;	}] < INSTANCEOF >
-	partialType = type()
+	qualifiedType = type()
 	{
-	  try	  {	    
-		  qualifiedType = Utilities.resolveType(context, partialType);
-		  return new InstanceOfPredicate(v, qualifiedType, isPos);	  }
-	  catch (JavaModelException err)	  {	    return null;
-	  }
-
+	  return new InstanceOfPredicate(v, qualifiedType, isPos);
 	}
 }
 
@@ -268,12 +269,231 @@ Predicate boolLiteral() :
 	< FALSE > { return new FalsePredicate(); }
 }
 
+
+
+/**
+*
+* Parsing of Effects
+*
+**/
+
+
+Effect effect():
+{
+  Relation rel;
+  int numParams;
+  boolean isPos = true;
+  SpecVar[] vars;
+  SpecVar testVar;
+}
+{
+  [< NEG >{isPos = false;	}]
+  rel = relation()
+  {numParams = rel.getFullyQualifiedTypes().length;}  vars = params(numParams)
+  {
+    if (isPos)
+    	return Effect.createAddEffect(rel, vars);
+    else
+    	return Effect.createRemoveEffect(rel, vars);  }
+|
+  <TEST >
+  [< NEG >{isPos = false;	}]
+  rel = relation()
+  {numParams = rel.getFullyQualifiedTypes().length;}
+  vars = params(numParams)
+  < TEST_SEP >
+  testVar = param()
+  {    if (isPos)
+    	return Effect.createTestEffect(rel, vars, testVar);
+    else
+    	return Effect.createNegatedTestEffect(rel, vars, testVar);
+  }
+}
+
+
+
+
+/**
+*
+* Operation parsing
+*
+**/
+
+Operation operation() :{
+  Operation op;}
+{
+	op = eom() {return op;}
+|
+	op = invoke() {return op;}}
+
+Operation eom() :
+{
+  SpecVar param;}
+{	< EOM >	"("		param = wcParam()
+	")"
+	{	  return new EndOfMethodOp(param);
+	}
+}
+
+MethodInvocationOp invoke() :
+{
+  String receiverType;
+  Token name;
+  Pair<String[], SpecVar[] > params;
+  String returnType;}
+{
+  receiverType = type()
+  < DOT >
+  name = < IDENTIFIER >
+  params = typedParams()
+  ":"
+  returnType = type()
+  {
+	return new MethodInvocationOp(name.image, receiverType, params.snd(), params.fst(), returnType);
+  }}
+
+
+
+
+
+
+
+
+
+
+/**
+*
+* General parsing utlities
+*
+**/
+
+
+
+
+Relation relation():
+{
+  Token t;
+  Relation rel;}
+{
+	t = <IDENTIFIER>
+	{
+	  try	  {
+		  rel = relations.findRelation(Utilities.resolveType(context, t.image));
+		  if (rel == null)
+		  	throw new ParseException("Relation " + Utilities.resolveType(context, t.image) + " could not be found.");
+		  return rel;
+		}
+		catch (JavaModelException err)		{			throw new ParseException(err.getMessage());
+		}
+	}}
+
+Pair<String[], SpecVar[]> typedParams() :
+{
+  SpecVar var;
+  String type;
+  ArrayList<SpecVar > params = new ArrayList<SpecVar>();
+  ArrayList<String> types = new ArrayList<String>();
+  String[] typeArr;
+  SpecVar[] paramArr;
+}
+{
+	"("
+	[
+	type = type()
+	var = param()
+	{
+	  params.add(var);
+	  types.add(type);
+	}
+
+	(
+	  "," type = type() var = param()
+	{
+	  params.add(var);
+	  types.add(type);
+	}
+	)*
+	]
+	")"
+  {
+    paramArr = new SpecVar[params.size()];
+    typeArr = new String[params.size()];    
+	for (int ndx = 0; ndx < params.size(); ndx++) {		paramArr[ndx] = params.get(ndx);
+		typeArr[ndx] = types.get(ndx);
+	}
+    
+    return new Pair<String[], SpecVar[]>(typeArr, paramArr);
+  }   
+}
+
+
+SpecVar[] params(int numParams) :{
+  int ndx;
+  SpecVar var;
+  SpecVar[] params;}
+{
+	{
+	  params = new SpecVar[numParams];
+	  ndx = 0;
+	}
+	"(" var = param()
+	{
+	  params[ndx] = var;
+	  ndx++;
+	}
+	(
+	  "," var = param()
+	{
+	  params[ndx] = var;
+	  ndx++;
+	}
+	)* ")"
+  {return params;}   }
+
+SpecVar[] wcParams(int numParams) :
+{
+  int ndx;
+  SpecVar var;
+  SpecVar[] params;
+}
+{
+	{
+	  params = new SpecVar[numParams];
+	  ndx = 0;
+	}
+	"(" var = wcParam()
+	{
+	  params[ndx] = var;
+	  ndx++;
+	}
+	(
+	  "," var = wcParam()
+	{
+	  params[ndx] = var;
+	  ndx++;
+	}
+	)* ")"
+  {return params;}   
+}
+
+
+
 String type() :
 {
   Token t;
+  String qualifiedType;
 }
 {	t = < IDENTIFIER >
-	{	  return t.image;
+	{
+	  try
+	  {
+		  qualifiedType = Utilities.resolveType(context, t.image);
+		  return qualifiedType;
+	  }
+	  catch (JavaModelException err)
+	  {
+	    return null;
+	  }
 	}
 }
 

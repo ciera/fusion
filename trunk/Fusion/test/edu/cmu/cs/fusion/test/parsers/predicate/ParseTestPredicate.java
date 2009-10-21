@@ -16,7 +16,7 @@ import edu.cmu.cs.fusion.test.StubIType;
 public class ParseTestPredicate {	
 	@Test
 	public void testTestPosPosPred() throws ParseException {
-		String string = "?Foo(a, b) = c";
+		String string = "?Foo(a, b) : c";
 		RelationsEnvironment env = new RelationsEnvironment();
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
@@ -40,7 +40,7 @@ public class ParseTestPredicate {
 
 	@Test
 	public void testTestNegPosPred() throws ParseException {
-		String string = "?Foo(a, b) = !c";
+		String string = "?Foo(a, b) : !c";
 		RelationsEnvironment env = new RelationsEnvironment();
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
@@ -63,7 +63,7 @@ public class ParseTestPredicate {
 	
 	@Test
 	public void testTestPosNegPred() throws ParseException {
-		String string = "?!Foo(a, b) = c";
+		String string = "?!Foo(a, b) : c";
 		RelationsEnvironment env = new RelationsEnvironment();
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
@@ -86,7 +86,7 @@ public class ParseTestPredicate {
 
 	@Test
 	public void testTestNegNegPred() throws ParseException {
-		String string = "?!Foo(a, b) = !c";
+		String string = "?!Foo(a, b) : !c";
 		RelationsEnvironment env = new RelationsEnvironment();
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		

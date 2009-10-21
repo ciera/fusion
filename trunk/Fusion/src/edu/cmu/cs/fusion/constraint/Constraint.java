@@ -3,7 +3,7 @@ package edu.cmu.cs.fusion.constraint;
 import java.util.List;
 
 public class Constraint {
-	static public final SpecVar RECEIVER = new SpecVar("receiver");
+	static public final SpecVar RECEIVER = new SpecVar("target");
 	static public final SpecVar RESULT = new SpecVar("result");
 		
 	private Operation op;
@@ -50,6 +50,6 @@ public class Constraint {
 	}
 	
 	public String toString() {
-		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " EFFECTS\n" + effects;
+		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " EFFECTS\n" + effects + "\n";
 	}
 }
