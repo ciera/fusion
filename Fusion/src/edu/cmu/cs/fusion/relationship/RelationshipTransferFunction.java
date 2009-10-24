@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.flow.BooleanLabel;
@@ -18,14 +21,16 @@ import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.BooleanConstantWrapper;
 import edu.cmu.cs.fusion.BooleanContext;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.MayAliasWrapper;
 import edu.cmu.cs.fusion.ThreeValue;
-import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
@@ -39,7 +44,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 
 	private FusionAnalysis mainAnalysis;
 	private ConstraintEnvironment constraints;
-	private TypeHierarchy types;
+	protected TypeHierarchy types;
 	private Variant variant;
 	private InferenceEnvironment infers;
 	
@@ -56,11 +61,26 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		}
 	}
 	
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, Variant variant) {
+	/**
+	 * Do not use, only for testing purposes.
+	 * @param relAnalysis
+	 * @param variant
+	 * @throws FusionException
+	 */
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, Variant variant) throws FusionException {
+		mainAnalysis = relAnalysis;
+		this.variant = variant;
+	}
+	
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, Variant variant, IJavaProject project, IProgressMonitor monitor) throws FusionException {
 		mainAnalysis = relAnalysis;
 		this.constraints = constraints;
 		this.infers = inf;
-		types = new FakeTypeHierarchy();
+		try {
+			types = new CachedTypeHierarchy(project, monitor);
+		} catch (JavaModelException e) {
+			throw new FusionException("Could not create type hierarchy", e);
+		}
 		this.variant = variant;
 	}
 

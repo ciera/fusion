@@ -9,9 +9,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -23,6 +24,7 @@ import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
 import edu.cmu.cs.fusion.test.StubFusionAnalysis;
 import edu.cmu.cs.fusion.test.TestAliasContext;
+import edu.cmu.cs.fusion.test.TestRelationshipTransferFunction;
 import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
@@ -36,8 +38,8 @@ public class TestSingleConstraint {
 	private static ObjectLabel[] labels;
 	
 	static private TypeHierarchy testH = new TypeHierarchy() {
-		public boolean existsCommonSubtype(String t1, String t2) {
-			if (isSubtypeCompatible(t1, t2) || isSubtypeCompatible(t2, t1))
+		public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
+			if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
 				return true;
 			else if (t1.equals("Bar"))
 				return t2.equals("Baz");
@@ -45,6 +47,10 @@ public class TestSingleConstraint {
 				return t2.equals("Bar");
 			else
 				return false;
+		}
+		
+		public boolean existsCommonSubtype(String t1, String t2) {
+			return existsCommonSubtype(t1, t2, false, false);
 		}
 
 		public boolean isSubtypeCompatible(String subType, String superType) {
@@ -94,9 +100,9 @@ public class TestSingleConstraint {
 	 * there has to be some aliasing possible because at runtime, those varaibles are going to bind to at least one possible
 	 * aliasing configuration!
 	 */
-	public void testNoMatches() {
+	public void testNoMatches() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 		
@@ -122,9 +128,9 @@ public class TestSingleConstraint {
 	}
 	
 	@Test
-	public void testDefOnly() {
+	public void testDefOnly() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -152,9 +158,9 @@ public class TestSingleConstraint {
 	}
 	
 	@Test
-	public void testPartialOnly() {
+	public void testPartialOnly() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -182,9 +188,9 @@ public class TestSingleConstraint {
 	}
 	
 	@Test
-	public void testSeveralDef() {
+	public void testSeveralDef() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -215,9 +221,9 @@ public class TestSingleConstraint {
 	}
 
 	@Test
-	public void testCombined() {
+	public void testCombined() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 
 		RelationshipContext rels = new RelationshipContext(false);
 

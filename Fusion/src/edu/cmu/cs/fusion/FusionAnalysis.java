@@ -4,7 +4,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
@@ -34,6 +38,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private Logger log;
 	private InferenceEnvironment infers;
 	private RelationsEnvironment rels;
+	private IJavaProject project;
 	
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
@@ -66,31 +71,43 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		}
 	}
 
+	
+
+	@Override
+	public void beforeAllMethods(ICompilationUnit compUnit,
+			CompilationUnit rootNode) {
+		project = compUnit.getJavaProject();
+	}
 
 	public String getName() {
 		return "FusionAnalysis";
 	}
 	
 	public void analyzeMethod(MethodDeclaration methodDecl) {
-		RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, variant);
-		fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
-		
-		MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
-		aliases = new TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>>(tfA, this.analysisInput.getComUnitTACs().unwrap());
-		aliases.getResultsAfter(methodDecl);
-		
-		ConstantTransferFunction tfC = new ConstantTransferFunction();
-		constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
-		constants.getResultsAfter(methodDecl);
-		
-		// must call getResultsAfter at least once on this method,
-		// or the analysis won't be run on this method
-		RelationshipContext finalLattice = fa.getEndResults(methodDecl);
-		
-		StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
-		methodDecl.accept(debugger);
-		log.log(Level.INFO, debugger.getResult());
-		//report the errors here...
+		try {
+			IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
+			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, variant, project, monitor);
+			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+			
+			MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
+			aliases = new TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>>(tfA, this.analysisInput.getComUnitTACs().unwrap());
+			aliases.getResultsAfter(methodDecl);
+			
+			ConstantTransferFunction tfC = new ConstantTransferFunction();
+			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
+			constants.getResultsAfter(methodDecl);
+			
+			// must call getResultsAfter at least once on this method,
+			// or the analysis won't be run on this method
+			RelationshipContext finalLattice = fa.getEndResults(methodDecl);
+			
+			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
+			methodDecl.accept(debugger);
+			log.log(Level.INFO, debugger.getResult());
+			//report the errors here...
+		} catch (FusionException e) {
+			log.log(Level.SEVERE, "Error in Fusion analysis", e);
+		}
 	}
 	
 	public RelationshipContext getResultsBefore(ASTNode node) {

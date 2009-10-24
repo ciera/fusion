@@ -7,7 +7,7 @@ import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
-import edu.cmu.cs.fusion.TypeHierarchy;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;

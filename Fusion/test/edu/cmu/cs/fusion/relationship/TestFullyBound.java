@@ -9,9 +9,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -25,6 +26,7 @@ import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
 import edu.cmu.cs.fusion.test.StubFusionAnalysis;
 import edu.cmu.cs.fusion.test.TestAliasContext;
 import edu.cmu.cs.fusion.test.TestEnvironment;
+import edu.cmu.cs.fusion.test.TestRelationshipTransferFunction;
 import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
@@ -44,8 +46,8 @@ public class TestFullyBound {
 	private static ObjectLabel[] labels;
 
 	static private TypeHierarchy testH = new TypeHierarchy() {
-		public boolean existsCommonSubtype(String t1, String t2) {
-			if (isSubtypeCompatible(t1, t2) || isSubtypeCompatible(t2, t1))
+		public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
+			if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
 				return true;
 			else if (t1.equals("Bar"))
 				return t2.equals("Baz");
@@ -53,6 +55,10 @@ public class TestFullyBound {
 				return t2.equals("Bar");
 			else
 				return false;
+		}
+		
+		public boolean existsCommonSubtype(String t1, String t2) {
+			return existsCommonSubtype(t1, t2, false, false);
 		}
 
 		public boolean isSubtypeCompatible(String subType, String superType) {
@@ -115,7 +121,7 @@ public class TestFullyBound {
 	}
 	
 	@Test
-	public void testNoEffects() {
+	public void testNoEffects() throws FusionException {
 		Operation op;
 		Predicate trigger;
 		Predicate req;
@@ -128,7 +134,7 @@ public class TestFullyBound {
 		Constraint noEffectCons = new Constraint(op, trigger, req, effects);
 
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -149,7 +155,7 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSeveralEffectsNotOverlap() {
+	public void testSeveralEffectsNotOverlap() throws FusionException {
 		Operation op;
 		Predicate trigger;
 		Predicate req;
@@ -164,7 +170,7 @@ public class TestFullyBound {
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
 
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null,Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -191,7 +197,7 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSeveralEffectsSame() {
+	public void testSeveralEffectsSame() throws FusionException {
 		Operation op;
 		Predicate trigger;
 		Predicate req;
@@ -206,7 +212,7 @@ public class TestFullyBound {
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
 
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null,Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -231,9 +237,9 @@ public class TestFullyBound {
 	}
 	
 	@Test
-	public void testPragmaticTrueTrue() {
+	public void testPragmaticTrueTrue() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -258,9 +264,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testPragmaticTrueErrorU() {
+	public void testPragmaticTrueErrorU() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -284,9 +290,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testPragmaticTrueErrorF() {
+	public void testPragmaticTrueErrorF() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -312,9 +318,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testPragmaticFalse() {
+	public void testPragmaticFalse() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
@@ -327,9 +333,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testPragmaticUnknown() {
+	public void testPragmaticUnknown() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.PRAGMATIC);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.UNK);
@@ -353,9 +359,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundTrueTrue() {
+	public void testSoundTrueTrue() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -380,9 +386,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundTrueErrorU() {
+	public void testSoundTrueErrorU() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -406,9 +412,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundTrueErrorF() {
+	public void testSoundTrueErrorF() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -434,9 +440,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundFalse() {
+	public void testSoundFalse() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
@@ -449,9 +455,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundUnknownTrue() {
+	public void testSoundUnknownTrue() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
@@ -475,9 +481,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundUnknownErrorU() {
+	public void testSoundUnknownErrorU() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -499,9 +505,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testSoundUnknownErrorF() {
+	public void testSoundUnknownErrorF() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.SOUND);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.SOUND);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
@@ -527,9 +533,9 @@ public class TestFullyBound {
 
 	
 	@Test
-	public void testCompleteTrueTrueDefinite() {
+	public void testCompleteTrueTrueDefinite() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -554,9 +560,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testCompleteTrueTruePossible() {
+	public void testCompleteTrueTruePossible() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -581,9 +587,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testCompleteTrueUnkown() {
+	public void testCompleteTrueUnkown() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -607,9 +613,9 @@ public class TestFullyBound {
 	}
 	
 	@Test
-	public void testCompleteTrueSomeFail() {
+	public void testCompleteTrueSomeFail() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -637,9 +643,9 @@ public class TestFullyBound {
 
 
 	@Test
-	public void testCompleteTrueErrorF() {
+	public void testCompleteTrueErrorF() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
@@ -666,9 +672,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testCompleteFalse() {
+	public void testCompleteFalse() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
@@ -681,9 +687,9 @@ public class TestFullyBound {
 	}
 
 	@Test
-	public void testCompleteUnknown() {
+	public void testCompleteUnknown() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new RelationshipTransferFunction(stubAnalysis, null, null, Variant.COMPLETE);
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.COMPLETE);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.UNK);
