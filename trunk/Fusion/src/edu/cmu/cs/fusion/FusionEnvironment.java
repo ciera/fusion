@@ -10,6 +10,7 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -215,7 +216,7 @@ public class FusionEnvironment {
 		if (tHierarchy.isSubtypeCompatible(label.getType().getQualifiedName(), type)) {
 			return MatchType.DEF;
 		}
-		else if (tHierarchy.existsCommonSubtype(label.getType().getQualifiedName(), type)) {
+		else if (tHierarchy.existsCommonSubtype(label.getType().getQualifiedName(), type, true, false)) {
 			return MatchType.POS;
 		}
 		else

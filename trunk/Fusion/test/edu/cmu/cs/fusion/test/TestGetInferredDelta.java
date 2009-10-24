@@ -11,10 +11,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.TypeHierarchy;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.InferredRel;
@@ -36,8 +36,8 @@ public class TestGetInferredDelta {
 	
 	private static Relation[] relations;
 	static private TypeHierarchy testH = new TypeHierarchy() {
-		public boolean existsCommonSubtype(String t1, String t2) {
-			if (isSubtypeCompatible(t1, t2) || isSubtypeCompatible(t2, t1))
+		public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
+			if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
 				return true;
 			else if (t1.equals("Bar"))
 				return t2.equals("Baz");
@@ -45,6 +45,10 @@ public class TestGetInferredDelta {
 				return t2.equals("Bar");
 			else
 				return false;
+		}
+		
+		public boolean existsCommonSubtype(String t1, String t2) {
+			return existsCommonSubtype(t1, t2, false, false);
 		}
 
 		public boolean isSubtypeCompatible(String subType, String superType) {
