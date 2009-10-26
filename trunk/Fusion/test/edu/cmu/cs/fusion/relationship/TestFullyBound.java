@@ -82,14 +82,14 @@ public class TestFullyBound {
 		Predicate req;
 		List<Effect> effects = new LinkedList<Effect>();
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		
 		cons = new Constraint(op, trigger, req, effects);
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(2), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
@@ -127,9 +127,14 @@ public class TestFullyBound {
 		Predicate req;
 		List<Effect> effects = new LinkedList<Effect>();
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
+		
+		//Foo.m(Foo, Bar) : Bar
+		//R0(Foo, Bar) -> R1(Bar, Bar)
+		//target.(v0, v2) : result
+		//R0(v0, v1) -> R1(v1, v2)
 		
 		Constraint noEffectCons = new Constraint(op, trigger, req, effects);
 
@@ -140,12 +145,14 @@ public class TestFullyBound {
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
 		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
+		
+		//R0(0, 1) R1(1, 6)
 
 		Substitution partialSub = new Substitution();
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
-		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
-		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, noEffectCons, new StubMethodCallInstruction());
@@ -161,7 +168,7 @@ public class TestFullyBound {
 		Predicate req;
 		List<Effect> effects = new LinkedList<Effect>();
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
@@ -181,7 +188,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
-		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
@@ -203,7 +210,7 @@ public class TestFullyBound {
 		Predicate req;
 		List<Effect> effects = new LinkedList<Effect>();
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(2)}, new String[] {"Foo", "Foo"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
@@ -223,7 +230,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[1]);
-		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
@@ -250,7 +257,7 @@ public class TestFullyBound {
 		partialSub = partialSub.addSub(utils.getVar(0), labels[0]);
 		partialSub = partialSub.addSub(utils.getVar(1), labels[1]);
 		partialSub = partialSub.addSub(Constraint.RESULT, labels[6]);
-		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[1]);
+		partialSub = partialSub.addSub(Constraint.RECEIVER, labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());

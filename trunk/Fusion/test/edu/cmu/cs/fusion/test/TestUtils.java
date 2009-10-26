@@ -5,6 +5,7 @@ import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.constraint.Constraint;
+import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.FourPointLattice;
@@ -51,6 +52,7 @@ public class TestUtils {
 	}
 	
 	public TestUtils() {
+		FreeVars.setHierarchy(new EqualityOnlyTypeHierarchy());
 		deltas = new RelationshipDelta[4];
 		contexts = new RelationshipContext[4];
 		relations = new Relation[3];
