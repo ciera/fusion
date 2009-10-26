@@ -34,6 +34,7 @@ import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
@@ -78,6 +79,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		this.infers = inf;
 		try {
 			types = new CachedTypeHierarchy(project, monitor);
+			FreeVars.setHierarchy(types);
 		} catch (JavaModelException e) {
 			throw new FusionException("Could not create type hierarchy", e);
 		}

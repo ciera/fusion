@@ -3,9 +3,11 @@ package edu.cmu.cs.fusion.constraint;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
 
 
 /**
@@ -20,7 +22,12 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 	public static final String VOID_TYPE = "void";
 	
 	Map<SpecVar, String> vars;
+	private static TypeHierarchy hierarchy;
 
+	public static void setHierarchy(TypeHierarchy types) {
+		hierarchy = types;
+	}
+	
 	public FreeVars() {
 		vars = new HashMap<SpecVar, String>();
 	}
@@ -43,7 +50,10 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 
 	public FreeVars union(FreeVars other) {
 		FreeVars newVars = (FreeVars) clone();
-		newVars.vars.putAll(other.vars);
+		
+		for (Entry<SpecVar, String> entry : other.vars.entrySet()) 
+			newVars.vars.put(entry.getKey(), getRightType(entry.getKey(), entry.getValue()));
+		
 		return newVars;
 	}
 
@@ -58,14 +68,26 @@ public class FreeVars implements Iterable<SpecVar>, Cloneable {
 		assert vars.length == types.length;
 		FreeVars newVars = (FreeVars)clone();
 		for (int ndx = 0; ndx < vars.length; ndx++)
-			newVars.vars.put(vars[ndx], types[ndx]);
+			newVars.vars.put(vars[ndx], getRightType(vars[ndx], types[ndx]));
 		return newVars;
 	}
 
 	public FreeVars addVar(SpecVar var, String type) {
 		FreeVars newVars = (FreeVars) clone();
-		newVars.vars.put(var, type);
+		
+		newVars.vars.put(var, getRightType(var, type));
+
 		return newVars;
+	}
+	
+	private String getRightType(SpecVar var, String newType) {
+		String oldType = vars.get(var);
+		if (oldType == null || hierarchy.isSubtypeCompatible(oldType, newType)) 
+			return newType;
+		else if (hierarchy.isSubtypeCompatible(newType, oldType))
+			return oldType;
+		else
+			return FreeVars.OBJECT_TYPE;
 	}
 	
 	public String getType(SpecVar var) {

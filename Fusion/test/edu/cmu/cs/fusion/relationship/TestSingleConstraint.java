@@ -74,7 +74,7 @@ public class TestSingleConstraint {
 		Predicate req;
 		List<Effect> effects = new LinkedList<Effect>();
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Foo"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"}, "Foo");
 		trigger = new TruePredicate();
 		req = new TruePredicate();
 		effects.add(Effect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {Constraint.RECEIVER, utils.getVar(0)}));
@@ -116,8 +116,8 @@ public class TestSingleConstraint {
 		//instr has type Foo.m(Foo) : Bar
 		
 		TestAliasContext aliases = new TestAliasContext();
-		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
-		aliases.addAlias(instr.getTarget(), labels[5]);
+		aliases.addAlias(instr.getReceiverOperand(), labels[5]);
+		aliases.addAlias(instr.getTarget(), labels[0]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
@@ -138,17 +138,17 @@ public class TestSingleConstraint {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
-		aliases.addAlias(instr.getTarget(), labels[5]);
-		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
+		aliases.addAlias(instr.getTarget(), labels[3]);
+		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
-		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
-		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[5], labels[3]});
+		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
+		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
 		assertEquals(2, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
@@ -168,17 +168,17 @@ public class TestSingleConstraint {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
-		aliases.addAlias(instr.getTarget(), labels[2]);
-		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
+		aliases.addAlias(instr.getTarget(), labels[3]);
+		aliases.addAlias(instr.getArgOperands().get(0), labels[2]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
-		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
-		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[2], labels[3]});
+		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
+		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
 		assertEquals(2, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
@@ -198,19 +198,19 @@ public class TestSingleConstraint {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
-		aliases.addAlias(instr.getTarget(), labels[5]);
-		aliases.addAlias(instr.getTarget(), labels[6]);
-		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
+		aliases.addAlias(instr.getTarget(), labels[3]);
+		aliases.addAlias(instr.getTarget(), labels[4]);
+		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
-		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
-		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[6], labels[3]});
-		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[5], labels[3]});
+		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
+		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
+		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[4], labels[5]});
 
 		assertEquals(3, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
@@ -231,24 +231,26 @@ public class TestSingleConstraint {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
-		aliases.addAlias(instr.getTarget(), labels[2]);
-		aliases.addAlias(instr.getTarget(), labels[5]);
-		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
+		aliases.addAlias(instr.getTarget(), labels[3]);
+		aliases.addAlias(instr.getArgOperands().get(0), labels[1]);
+		aliases.addAlias(instr.getArgOperands().get(0), labels[2]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
-		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[3]});
-		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[2], labels[3]});
-		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[5], labels[3]});
+		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]});
+		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[1]});
+		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
+		Relationship eff4 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
-		assertEquals(3, delta.numberOfChanges());
+		assertEquals(4, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
+		assertEquals(FourPointLattice.UNK, delta.getValue(eff4));
 		
 		assertEquals(0, stubAnalysis.getError(Variant.PRAGMATIC, cons).size());			
 	}
