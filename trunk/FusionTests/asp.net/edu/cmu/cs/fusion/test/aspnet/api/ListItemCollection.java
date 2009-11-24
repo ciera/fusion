@@ -10,7 +10,7 @@ import edu.cmu.cs.fusion.test.aspnet.relations.Text;
 public class ListItemCollection implements Iterable<ListItem> {
 	private List<ListItem> items;
 	
-	@Item({"item", "target"})
+	@Item(value = {"item", "target"}, effect = Relation.Effect.REMOVE)
 	public void remove(ListItem item) {
 		items.remove(item);
 	}

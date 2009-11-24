@@ -28,9 +28,11 @@ import edu.cmu.cs.fusion.BooleanConstantWrapper;
 import edu.cmu.cs.fusion.BooleanContext;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.FusionErrorStorage;
 import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.MayAliasWrapper;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
@@ -46,21 +48,8 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	private FusionAnalysis mainAnalysis;
 	private ConstraintEnvironment constraints;
 	protected TypeHierarchy types;
-	private Variant variant;
 	private InferenceEnvironment infers;
-	
-	public enum Variant {
-		SOUND, COMPLETE, PRAGMATIC;
-		
-		public String toString() {
-			if (this == SOUND)
-				return "Sound";
-			else if (this == COMPLETE)
-				return "Complete";
-			else
-				return "Pragmatic";
-		}
-	}
+	private FusionErrorStorage errors;
 	
 	/**
 	 * Do not use, only for testing purposes.
@@ -68,13 +57,14 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	 * @param variant
 	 * @throws FusionException
 	 */
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, Variant variant) throws FusionException {
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, FusionErrorStorage errors) throws FusionException {
 		mainAnalysis = relAnalysis;
-		this.variant = variant;
+		this.errors = errors;
 	}
 	
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, Variant variant, IJavaProject project, IProgressMonitor monitor) throws FusionException {
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, FusionErrorStorage errors, ConstraintEnvironment constraints, InferenceEnvironment inf, Variant variant, IJavaProject project, IProgressMonitor monitor) throws FusionException {
 		mainAnalysis = relAnalysis;
+		this.errors = errors;
 		this.constraints = constraints;
 		this.infers = inf;
 		try {
@@ -83,7 +73,6 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		} catch (JavaModelException e) {
 			throw new FusionException("Could not create type hierarchy", e);
 		}
-		this.variant = variant;
 	}
 
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
@@ -225,57 +214,55 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	 */
 	protected RelationshipDelta checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons, TACInstruction instr) {	
 		RelationshipDelta delta;
-		boolean causedAnError = true;
+		int error = 0;
+		boolean definitelyPasses = false;
+		boolean possiblyPasses = false;
 		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 
-		//check for errors
-		if (trigger == ThreeValue.FALSE) { //F-SND, F-PRG, F-CMP
-			causedAnError = false;
-		}
-		else if (trigger == ThreeValue.UNKNOWN && variant != Variant.SOUND) { //U-PRG, U-CMP
-			causedAnError = false;
-		}
-		else if (trigger == ThreeValue.TRUE && variant == Variant.COMPLETE) { //T-CMP
+
+		if (trigger != ThreeValue.FALSE) {
+		
 			SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 			
+			//check all three for definite substitutions
 			Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
-			while (itr.hasNext()) {
+			definitelyPasses = false;
+			possiblyPasses = false;
+			while (itr.hasNext() && !definitelyPasses) {
 				Substitution fullSub = itr.next();
-				ThreeValue value = cons.getRequires().getTruth(env, fullSub);
-				if (value != ThreeValue.FALSE)
-					causedAnError = false;
+				ThreeValue req = cons.getRequires().getTruth(env, fullSub);
+				if (req == ThreeValue.TRUE) 
+					definitelyPasses = possiblyPasses = true; //something was found which passed
+				else if (req == ThreeValue.UNKNOWN)
+					possiblyPasses = true;					//it's possible that something passed
 			}
-			itr = pair.getPossibleSubstitutions();
-			while (itr.hasNext()) {
-				Substitution fullSub = itr.next();
-				ThreeValue value = cons.getRequires().getTruth(env, fullSub);
-				if (value != ThreeValue.FALSE)
-					causedAnError = false;
-			}	
-		}
-		else {  //T-SND, U-SND, T-PRG
-			SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 			
-			Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
-			while (itr.hasNext()) {
+			//if nothing passes, also check possible subs for the complete variant
+			itr = pair.getPossibleSubstitutions();
+			while (itr.hasNext() && !possiblyPasses) {
 				Substitution fullSub = itr.next();
-				ThreeValue value = cons.getRequires().getTruth(env, fullSub);
-				if (value == ThreeValue.TRUE)
-					causedAnError = false;
-			}	
-		}
-		
-		//report errors
-		if (causedAnError) {
-			mainAnalysis.reportError(variant, cons, instr);
-		}
-		
-		//make any effects
-		if (trigger == ThreeValue.FALSE) {
-			delta = new RelationshipDelta();
-		}
-		else {
+				ThreeValue req = cons.getRequires().getTruth(env, fullSub);
+				if (req != ThreeValue.FALSE)
+					possiblyPasses = true;
+			}		
+			
+			
+			if (trigger == ThreeValue.TRUE) {
+				if (!possiblyPasses) //nothing passed! Errors all around
+					error = Variant.SOUND | Variant.COMPLETE | Variant.PRAGMATIC;
+				else if (!definitelyPasses) //was no definite pass, errors for sound and prag
+					error = Variant.SOUND | Variant.PRAGMATIC;
+			}
+			else if (!definitelyPasses) { //trg = unknown and no req passes with a true
+					error = Variant.SOUND;
+			}
+			
+			//report errors
+			if (error != 0)
+				errors.addError(new FusionErrorReport(new Variant(error), cons, instr));
+			
+			//now make the effects
 			List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
 			for (Effect effect : cons.getEffects())
 				eDeltas.add(effect.makeEffects(env, partialSubs));
@@ -283,7 +270,11 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			if (trigger == ThreeValue.UNKNOWN)
 				delta = delta.polarize();
 		}
-
+		else {
+			delta = new RelationshipDelta();
+		}
+		
+		
 		return delta;
 	}
 }

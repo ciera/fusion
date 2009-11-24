@@ -3,18 +3,18 @@ package edu.cmu.cs.fusion.test.io.api;
 import edu.cmu.cs.fusion.annot.Constraint;
 import edu.cmu.cs.fusion.annot.Constraints;
 import edu.cmu.cs.fusion.annot.Relation.Effect;
-import edu.cmu.cs.fusion.test.io.relations.Writeable;
 import edu.cmu.cs.fusion.test.io.relations.Closed;
+import edu.cmu.cs.fusion.test.io.relations.Writeable;
 
 @Constraints({
 @Constraint(
-		op = "FileWriter.write(String) : void",
+		op = "FileWriter.write(String str) : void",
 		trigger = "TRUE",
 		requires = "Writeable(target)",
 		effects = {}
 ),
 @Constraint(
-		op = "EOM",
+		op = "EOM(*)",
 		trigger = "TRUE",
 		requires = "Closed(target)",
 		effects = {}

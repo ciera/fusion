@@ -208,12 +208,16 @@ RelationshipPredicate userRelationship() :
 	boolean isPos = true;
 	SpecVar[] params;
 	int numParams;
+	String relName;
 }
 {
 	[< NEG >{isPos = false;	}]
  	 rel = relation()
-	{numParams = rel.getFullyQualifiedTypes().length;}
-	params = wcParams(numParams)
+	{
+	  numParams = rel.getFullyQualifiedTypes().length;
+		relName = rel.getName();
+	}
+	params = wcParams(numParams, relName)
 	{
 	  return new RelationshipPredicate(rel, params, isPos);	}
 }
@@ -285,11 +289,15 @@ Effect effect():
   boolean isPos = true;
   SpecVar[] vars;
   SpecVar testVar;
+  String name;
 }
 {
   [< NEG >{isPos = false;	}]
   rel = relation()
-  {numParams = rel.getFullyQualifiedTypes().length;}  vars = params(numParams)
+  {
+    numParams = rel.getFullyQualifiedTypes().length;
+	name = rel.getName();
+  }  vars = params(numParams, name)
   {
     if (isPos)
     	return Effect.createAddEffect(rel, vars);
@@ -299,8 +307,11 @@ Effect effect():
   <TEST >
   [< NEG >{isPos = false;	}]
   rel = relation()
-  {numParams = rel.getFullyQualifiedTypes().length;}
-  vars = params(numParams)
+ {
+    numParams = rel.getFullyQualifiedTypes().length;
+	name = rel.getName();
+  }
+  vars = params(numParams, name)
   < TEST_SEP >
   testVar = param()
   {    if (isPos)
@@ -380,10 +391,10 @@ Relation relation():
 	  try	  {
 		  rel = relations.findRelation(Utilities.resolveType(context, t.image));
 		  if (rel == null)
-		  	throw new ParseException("Relation " + Utilities.resolveType(context, t.image) + " could not be found.");
+		  	throw new ParseException("The relation " + t.image + " was found within the context of " + context.getFullyQualifiedName() + ", but no relation existed!");
 		  return rel;
 		}
-		catch (JavaModelException err)		{			throw new ParseException(err.getMessage());
+		catch (JavaModelException err)		{			throw new ParseException("Model error found when trying to resolve " + t.image + " within the context of " + context.getFullyQualifiedName() + ".");
 		}
 	}}
 
@@ -427,7 +438,7 @@ Pair<String[], SpecVar[]> typedParams() :
 }
 
 
-SpecVar[] params(int numParams) :{
+SpecVar[] params(int numParams, String name) :{
   int ndx;
   SpecVar var;
   SpecVar[] params;}
@@ -438,19 +449,27 @@ SpecVar[] params(int numParams) :{
 	}
 	"(" var = param()
 	{
+	  if (ndx > numParams - 1)
+	  	throw new ParseException("Too many parameters for the relation " + name + " , expected " + numParams + ".");
 	  params[ndx] = var;
 	  ndx++;
 	}
 	(
 	  "," var = param()
 	{
+	  if (ndx > numParams - 1)
+	  	throw new ParseException("Too many parameters for the relation " + name + " , expected " + numParams + ".");
 	  params[ndx] = var;
 	  ndx++;
 	}
 	)* ")"
+	{
+	  if (ndx < numParams - 1)
+	  	throw new ParseException("Too few parameters for this relation " + name + " , expected " + numParams + ".");
+	 }
   {return params;}   }
 
-SpecVar[] wcParams(int numParams) :
+SpecVar[] wcParams(int numParams, String relName) :
 {
   int ndx;
   SpecVar var;
@@ -463,16 +482,24 @@ SpecVar[] wcParams(int numParams) :
 	}
 	"(" var = wcParam()
 	{
+	  if (ndx > numParams - 1)
+	  	throw new ParseException("Too many parameters for the relation " + relName + " , expected " + numParams + ".");
 	  params[ndx] = var;
 	  ndx++;
 	}
 	(
 	  "," var = wcParam()
 	{
+	  if (ndx > numParams - 1)
+	  	throw new ParseException("Too many parameters for this relation " + relName + " , expected " + numParams + ".");
 	  params[ndx] = var;
 	  ndx++;
 	}
 	)* ")"
+	{
+	  if (ndx < numParams - 1)
+	  	throw new ParseException("Too few parameters for this relation " + relName + " , expected " + numParams + ".");
+	 }
   {return params;}   
 }
 
@@ -492,7 +519,7 @@ String type() :
 	  }
 	  catch (JavaModelException err)
 	  {
-	    return null;
+	    throw new ParseException("The type " + t.image + " could not be found within the context of " + context.getFullyQualifiedName() + ".");
 	  }
 	}
 }

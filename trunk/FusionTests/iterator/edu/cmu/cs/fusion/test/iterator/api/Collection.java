@@ -2,13 +2,14 @@ package edu.cmu.cs.fusion.test.iterator.api;
 
 import edu.cmu.cs.fusion.annot.Constraint;
 import edu.cmu.cs.fusion.annot.Relation.Effect;
-import edu.cmu.cs.fusion.test.iterator.relations.Iterator;
 import edu.cmu.cs.fusion.test.iterator.relations.Item;
+import edu.cmu.cs.fusion.test.iterator.relations.Iterator;
+import edu.cmu.cs.fusion.test.iterator.relations.HasNext;
 
 @Constraint(
 		op = "Iterator.next() : Object",
 		trigger = "TRUE",
-		requires = "HasNext(target) AND Iterator(iterator, coll)",
+		requires = "HasNext(target) AND Iterator(target, coll)",
 		effects = {"!HasNext(target)", "Item(result, coll)"}
 )
 public class Collection {

@@ -12,21 +12,17 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
-import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
 import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.analysis.alias.MayAliasTransferFunction;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
-import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
-import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
-import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
@@ -39,12 +35,13 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private InferenceEnvironment infers;
 	private RelationsEnvironment rels;
 	private IJavaProject project;
+	private FusionErrorStorage errors;
 	
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
 	 */
 	public FusionAnalysis() {
-		this(Variant.PRAGMATIC);
+		this(new Variant(Variant.PRAGMATIC));
 	}
 
 	/**
@@ -85,8 +82,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	
 	public void analyzeMethod(MethodDeclaration methodDecl) {
 		try {
+			errors = new FusionErrorStorage();
 			IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
-			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, variant, project, monitor);
+			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, errors, constraints, infers, variant, project, monitor);
 			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
@@ -104,6 +102,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
 			methodDecl.accept(debugger);
 			log.log(Level.INFO, debugger.getResult());
+			
+			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(errors, reporter);
+			methodDecl.accept(errVisitor);
+			errors = null;
+			
 			//report the errors here...
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
@@ -116,11 +119,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	
 	public RelationshipContext getResultsAfter(ASTNode node) {
 		return fa.getResultsAfter(node);		
-	}
-	
-	public void reportError(Variant variant, Constraint cons, TACInstruction instr) {
-		//TODO: to avoid duplicates, store the errors, then report them.
-		reporter.reportUserProblem("The constraint " + cons.toString() + " was violated.", instr.getNode(), this.getName() + ": " + variant.toString(), SEVERITY.WARNING);
 	}
 
 	public TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> getAliasAnalysis() {

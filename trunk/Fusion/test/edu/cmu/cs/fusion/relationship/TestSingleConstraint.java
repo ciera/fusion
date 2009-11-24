@@ -13,6 +13,7 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -21,8 +22,8 @@ import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
-import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction.Variant;
 import edu.cmu.cs.fusion.test.StubFusionAnalysis;
+import edu.cmu.cs.fusion.test.StubFusionErrorStorage;
 import edu.cmu.cs.fusion.test.TestAliasContext;
 import edu.cmu.cs.fusion.test.TestRelationshipTransferFunction;
 import edu.cmu.cs.fusion.test.TestUtils;
@@ -102,7 +103,8 @@ public class TestSingleConstraint {
 	 */
 	public void testNoMatches() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
+		StubFusionErrorStorage errors = new StubFusionErrorStorage();
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
 
 		RelationshipContext rels = new RelationshipContext(false);
 		
@@ -124,13 +126,14 @@ public class TestSingleConstraint {
 		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
 
 		assertEquals(0, delta.numberOfChanges());	
-		assertEquals(0, stubAnalysis.getError(Variant.PRAGMATIC, cons).size());		
+		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());		
 	}
 	
 	@Test
 	public void testDefOnly() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
+		StubFusionErrorStorage errors = new StubFusionErrorStorage();
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -154,13 +157,14 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
 		
-		assertEquals(0, stubAnalysis.getError(Variant.PRAGMATIC, cons).size());			
+		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
 	}
 	
 	@Test
 	public void testPartialOnly() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
+		StubFusionErrorStorage errors = new StubFusionErrorStorage();
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -184,13 +188,14 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertEquals(0, stubAnalysis.getError(Variant.PRAGMATIC, cons).size());			
+		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
 	}
 	
 	@Test
 	public void testSeveralDef() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
+		StubFusionErrorStorage errors = new StubFusionErrorStorage();
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -217,13 +222,14 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
 		
-		assertEquals(0, stubAnalysis.getError(Variant.PRAGMATIC, cons).size());			
+		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
 	}
 
 	@Test
 	public void testCombined() throws FusionException {
 		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, Variant.PRAGMATIC);
+		StubFusionErrorStorage errors = new StubFusionErrorStorage();
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
 
 		RelationshipContext rels = new RelationshipContext(false);
 
@@ -252,6 +258,6 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff4));
 		
-		assertEquals(0, stubAnalysis.getError(Variant.PRAGMATIC, cons).size());			
+		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
 	}
 }

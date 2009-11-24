@@ -96,6 +96,7 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 
 				constraints.add(new Constraint(op, trigger, requires, effects));
 			} catch (ParseException e) {
+				//TODO send this out to the actual error reporting functionality!!!
 				e.printStackTrace();
 			}
 		}
