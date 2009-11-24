@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -19,7 +20,10 @@ import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.model.Variable;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
+import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
@@ -36,7 +40,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private RelationsEnvironment rels;
 	private IJavaProject project;
 	private FusionErrorStorage errors;
-	
+	private TypeHierarchy types;
+	private boolean majorErrorOccured = false;
+
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
 	 */
@@ -65,6 +71,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			infers.populate(rels, null);
 		} catch (CoreException err) {
 			log.log(Level.SEVERE, "Error while parsing relations", err);
+			majorErrorOccured = true;
 		}
 	}
 
@@ -73,7 +80,18 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	@Override
 	public void beforeAllMethods(ICompilationUnit compUnit,
 			CompilationUnit rootNode) {
-		project = compUnit.getJavaProject();
+
+		if (project == null || !project.equals(compUnit.getJavaProject())) {
+			//we have a new project. reset the type hierarchy
+			project = compUnit.getJavaProject();
+			try {
+				IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
+				types = new CachedTypeHierarchy(project, monitor);
+				FreeVars.setHierarchy(types);
+			} catch (JavaModelException e) {
+				log.log(Level.SEVERE, "Could not create type hierarchy", e);
+			}
+		}
 	}
 
 	public String getName() {
@@ -81,10 +99,13 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public void analyzeMethod(MethodDeclaration methodDecl) {
+		if (types == null || majorErrorOccured) {
+			log.log(Level.SEVERE, "something was wrong in initial setup, check log above");
+			return;
+		}
 		try {
 			errors = new FusionErrorStorage();
-			IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
-			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, errors, constraints, infers, variant, project, monitor);
+			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, errors, constraints, infers, types);
 			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
