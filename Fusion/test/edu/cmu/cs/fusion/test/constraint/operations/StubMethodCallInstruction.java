@@ -50,7 +50,7 @@ public class StubMethodCallInstruction implements MethodCallInstruction {
 	}
 
 	public ASTNode getNode() {
-		throw new UnsupportedOperationException("stub not complete");
+		return null;
 	}
 
 

@@ -24,10 +24,6 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 		requires = "FALSE",
 		effects = {}
 	)})
-@Infer(
-	trigger = "Items(list, ctrl) AND Item(item, list)",
-	effects = {"Child(item, ctrl)"}
-)
 public class DropDownList extends ListControl {
 
 }

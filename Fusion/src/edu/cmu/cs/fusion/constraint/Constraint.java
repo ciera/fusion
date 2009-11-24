@@ -52,4 +52,6 @@ public class Constraint {
 	public String toString() {
 		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " EFFECTS\n" + effects + "\n";
 	}
+	
+	
 }
