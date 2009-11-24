@@ -4,9 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.flow.BooleanLabel;
@@ -22,7 +19,6 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
-import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.BooleanConstantWrapper;
 import edu.cmu.cs.fusion.BooleanContext;
@@ -36,7 +32,6 @@ import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
-import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.SubPair;
@@ -53,8 +48,6 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	
 	/**
 	 * Do not use, only for testing purposes.
-	 * @param relAnalysis
-	 * @param variant
 	 * @throws FusionException
 	 */
 	public RelationshipTransferFunction(FusionAnalysis relAnalysis, FusionErrorStorage errors) throws FusionException {
@@ -62,17 +55,12 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		this.errors = errors;
 	}
 	
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, FusionErrorStorage errors, ConstraintEnvironment constraints, InferenceEnvironment inf, Variant variant, IJavaProject project, IProgressMonitor monitor) throws FusionException {
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, FusionErrorStorage errors, ConstraintEnvironment constraints, InferenceEnvironment inf, TypeHierarchy types) throws FusionException {
 		mainAnalysis = relAnalysis;
 		this.errors = errors;
 		this.constraints = constraints;
 		this.infers = inf;
-		try {
-			types = new CachedTypeHierarchy(project, monitor);
-			FreeVars.setHierarchy(types);
-		} catch (JavaModelException e) {
-			throw new FusionException("Could not create type hierarchy", e);
-		}
+		this.types = types;
 	}
 
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
