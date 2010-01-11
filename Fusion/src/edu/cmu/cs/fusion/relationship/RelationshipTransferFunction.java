@@ -14,6 +14,7 @@ import edu.cmu.cs.crystal.flow.LabeledResult;
 import edu.cmu.cs.crystal.flow.LabeledSingleResult;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
+import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
@@ -113,6 +114,17 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			
 			return LabeledSingleResult.createResult(newContext);
 		}
+	}
+
+	@Override
+	public IResult<RelationshipContext> transfer(NewObjectInstruction instr,
+			List<ILabel> labels, RelationshipContext value) {
+		AliasContext aContext = new MayAliasWrapper(instr, mainAnalysis.getAliasAnalysis());
+		BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis());
+		FusionEnvironment env = new FusionEnvironment(aContext, value, bContext, types, infers);
+		RelationshipContext newContext = genericFlowFunction(env, instr);
+		
+		return LabeledSingleResult.createResult(newContext);		
 	}
 
 	/**

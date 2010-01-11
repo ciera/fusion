@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
+import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
@@ -44,8 +44,20 @@ public class TestMethodInvocationOp {
 	}
 	
 	@Test
-	@Ignore
 	public void testMatchWrongInstr() {
+		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
+		List<StubVariable> params = new ArrayList<StubVariable>();
+		params.add(new StubVariable());
+		params.add(new StubVariable());
+		
+		NewObjectInstruction instr = new StubNewObjectInstruction(params, new StubMethodBinding(new StubTypeBinding("Foo"), vBindings), new StubVariable());	
+		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
+		String[] vTypes = new String[] {"Bar", "Baz"};
+		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "void");
+		
+		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+
+		assertTrue(map == null);
 	}
 	
 	@Test
@@ -143,7 +155,7 @@ public class TestMethodInvocationOp {
 	}	
 
 	@Test
-	public void testMatchCorrectAndAliased() {
+	public void testMatchCorrectAndMultiple() {
 		StubVariable rVar = new StubVariable();
 		StubVariable tVar = new StubVariable();
 		List<StubVariable> params = new ArrayList<StubVariable>();
@@ -166,7 +178,7 @@ public class TestMethodInvocationOp {
 		assertEquals(4, list.size());
 
 	}
-	
+
 	private MethodCallInstruction getMCI(StubVariable resVar, List<StubVariable> params, StubVariable tarVar) {
 		StubTypeBinding rBinding = new StubTypeBinding("Foo");		
 		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
