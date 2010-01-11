@@ -335,7 +335,10 @@ Operation operation() :{
 {
 	op = eom() {return op;}
 |
-	op = invoke() {return op;}}
+LOOKAHEAD(2)
+	op = invoke() {return op;}
+|
+	op = construct() {return op;}}
 
 Operation eom() :
 {
@@ -344,6 +347,20 @@ Operation eom() :
 	")"
 	{	  return new EndOfMethodOp(param);
 	}
+}
+
+ConstructorOp construct() :
+{
+  String receiverType;
+  Pair<String[], SpecVar[] > params;
+}
+{
+  receiverType = type()
+  params = typedParams()
+  {
+
+	return new ConstructorOp(receiverType, params.snd(), params.fst());
+  }
 }
 
 MethodInvocationOp invoke() :

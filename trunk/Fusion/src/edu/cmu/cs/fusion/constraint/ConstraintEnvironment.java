@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.search.TypeReferenceMatch;
 import edu.cmu.cs.crystal.util.Utilities;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
+import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
@@ -142,21 +143,37 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 				}
 			}
 			parsed.add(method);
-			assert(effects.size() > 0);			
-
-			MethodInvocationOp op;
-			IType contextType = method.getDeclaringType();
-			String methodName = method.getElementName();
-			String receiverType = contextType.getFullyQualifiedName();
-			String returnType = Utilities.resolveType(contextType, Signature.toString(method.getReturnType()));
-			String[] paramTypes = new String[method.getParameterTypes().length];
-			SpecVar[] opParams = new SpecVar[method.getParameterNames().length];
+			assert(effects.size() > 0);
 			
-			for (int ndx = 0; ndx < paramTypes.length; ndx++) {
-				paramTypes[ndx] = Utilities.resolveType(contextType, Signature.toString(method.getParameterTypes()[ndx]));
-				opParams[ndx] = new SpecVar(method.getParameterNames()[ndx]);
+			Operation op;
+			//this effect could be on a method OR a constructor.
+			if (method.isConstructor()) {
+				IType contextType = method.getDeclaringType();
+				String type = contextType.getFullyQualifiedName();
+				String[] paramTypes = new String[method.getParameterTypes().length];
+				SpecVar[] opParams = new SpecVar[method.getParameterNames().length];
+				
+				for (int ndx = 0; ndx < paramTypes.length; ndx++) {
+					paramTypes[ndx] = Utilities.resolveType(contextType, Signature.toString(method.getParameterTypes()[ndx]));
+					opParams[ndx] = new SpecVar(method.getParameterNames()[ndx]);
+				}
+				op = new ConstructorOp(type, opParams, paramTypes);
+			
 			}
-			op = new MethodInvocationOp(methodName, receiverType, opParams, paramTypes, returnType);
+			else {
+				IType contextType = method.getDeclaringType();
+				String methodName = method.getElementName();
+				String receiverType = contextType.getFullyQualifiedName();
+				String returnType = Utilities.resolveType(contextType, Signature.toString(method.getReturnType()));
+				String[] paramTypes = new String[method.getParameterTypes().length];
+				SpecVar[] opParams = new SpecVar[method.getParameterNames().length];
+				
+				for (int ndx = 0; ndx < paramTypes.length; ndx++) {
+					paramTypes[ndx] = Utilities.resolveType(contextType, Signature.toString(method.getParameterTypes()[ndx]));
+					opParams[ndx] = new SpecVar(method.getParameterNames()[ndx]);
+				}
+				op = new MethodInvocationOp(methodName, receiverType, opParams, paramTypes, returnType);
+			}
 			
 			constraints.add(new Constraint(op, new TruePredicate(), new TruePredicate(), effects));
 		}

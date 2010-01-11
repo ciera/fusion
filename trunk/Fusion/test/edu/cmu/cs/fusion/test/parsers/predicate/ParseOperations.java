@@ -7,6 +7,7 @@ import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
+import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
@@ -67,4 +68,54 @@ public class ParseOperations {
 		Assert.assertEquals("Wrong type", "Baz", vars.getType(new SpecVar("baz")));		
 	}
 
+	@Test
+	public void testConstructor0() throws ParseException {
+		String string = "Foo()";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a ConstructorOp, but is " + op.getClass().getCanonicalName(), op instanceof ConstructorOp);
+		
+		ConstructorOp construct = (ConstructorOp)op;
+				
+		FreeVars vars = construct.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 1, vars.size());
+		Assert.assertEquals("Wrong type", "Foo", vars.getType(Constraint.RESULT));				
+	}
+
+	@Test
+	public void testConstructor1() throws ParseException {
+		String string = "Foo(Bar bar)";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a ConstructorOp, but is " + op.getClass().getCanonicalName(), op instanceof ConstructorOp);
+		
+		ConstructorOp construct = (ConstructorOp)op;
+				
+		FreeVars vars = construct.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 2, vars.size());
+		Assert.assertEquals("Wrong type", "Foo", vars.getType(Constraint.RESULT));				
+		Assert.assertEquals("Wrong type", "Bar", vars.getType(new SpecVar("bar")));				
+	}
+
+	@Test
+	public void testConstructor2() throws ParseException {
+		String string = "Foo(Bar bar, Baz baz)";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a ConstructorOp, but is " + op.getClass().getCanonicalName(), op instanceof ConstructorOp);
+		
+		ConstructorOp construct = (ConstructorOp)op;
+				
+		FreeVars vars = construct.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 3, vars.size());
+		Assert.assertEquals("Wrong type", "Foo", vars.getType(Constraint.RESULT));				
+		Assert.assertEquals("Wrong type", "Bar", vars.getType(new SpecVar("bar")));				
+		Assert.assertEquals("Wrong type", "Baz", vars.getType(new SpecVar("baz")));				
+	}
 }

@@ -20,6 +20,7 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
+import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 import edu.cmu.cs.fusion.test.StubFusionAnalysis;
@@ -29,6 +30,7 @@ import edu.cmu.cs.fusion.test.TestRelationshipTransferFunction;
 import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
+import edu.cmu.cs.fusion.test.constraint.operations.StubNewObjectInstruction;
 import edu.cmu.cs.fusion.test.constraint.operations.StubTypeBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
@@ -128,6 +130,46 @@ public class TestSingleConstraint {
 		assertEquals(0, delta.numberOfChanges());	
 		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());		
 	}
+	
+	@Test
+	public void testDefConstructor() throws FusionException {
+		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
+		StubFusionErrorStorage errors = new StubFusionErrorStorage();
+		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
+
+		RelationshipContext rels = new RelationshipContext(false);
+
+		List<StubVariable> vars = new LinkedList<StubVariable>();
+		vars.add(new StubVariable("p0"));
+		
+		StubNewObjectInstruction instr = new StubNewObjectInstruction(vars,
+				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
+		
+		TestAliasContext aliases = new TestAliasContext();
+		aliases.addAlias(instr.getTarget(), labels[3]);
+		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
+		
+		
+		Operation op = new ConstructorOp("Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"});
+		List<Effect> effects = new LinkedList<Effect>();
+		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
+		effects.add(Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
+		
+		Constraint cons = new Constraint(op, new TruePredicate(), new TruePredicate(), effects);
+
+
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
+		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
+		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[5], labels[5]});
+		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
+
+		assertEquals(2, delta.numberOfChanges());
+		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
+		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
+		
+		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+	}
+
 	
 	@Test
 	public void testDefOnly() throws FusionException {
