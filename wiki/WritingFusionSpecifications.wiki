@@ -1,0 +1,11 @@
+#summary How to write FUSION specifications
+#labels Featured
+
+= FUSION specs =
+
+  # Defining relationships
+  # Relationship Effects
+  # Constraints
+  # Infer Rules (optional)
+  # XML Retrieval (optional)
+ 
