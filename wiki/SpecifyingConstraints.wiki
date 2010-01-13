@@ -17,10 +17,10 @@ Constraints are written as a class-level Java 5 annotation called `Constraint`. 
 
 {{{
 @Constraint(
-		op="EOM(x)",
-		trigger = "!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList",
-		requires = "FALSE",
-		effects = {}
+	op="EOM(x)",
+	trigger = "!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList",
+	requires = "FALSE",
+	effects = {}
 )
 }}}
 
