@@ -1,5 +1,5 @@
 #summary How to write FUSION specifications
-#labels Featured
+#labels Featured,Documentation-Specifications
 
 = FUSION specs =
 The pages below describe the 5 types of FUSION specifications. The first three are integral to get anything usable working.
