@@ -2,7 +2,9 @@
 #labels Documentation-Specifications
 
 = Specifying Constraints =
-Constraints are written as a class-level Java 5 annotation. Some examples below:
+Constraints are written as a class-level Java 5 annotation called `Constraint`. To write multiple constraints on the same class, use the annotation `Constraints` to make an array of `Constraint` annotations. 
+
+=Examples=
 
 {{{
 @Constraint(
@@ -13,6 +15,34 @@ Constraints are written as a class-level Java 5 annotation. Some examples below:
 )
 }}}
 
+{{{
+@Constraint(
+		op="EOM(x)",
+		trigger = "!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList",
+		requires = "FALSE",
+		effects = {}
+)
+}}}
+
+{{{
+@Constraint(
+	op = "File(String s)",
+	trigger = "TRUE",
+	requires = "File_GetAbsolutePath(x)",
+	effects = {}					
+)
+}}}
+
+{{{
+@Constraint(
+	op = "File.getParentFile() : void",
+	trigger = "TRUE",
+	requires = "File_Init(target)",
+	effects = {}
+)
+}}}
+
+=Syntax=
 A constraint has 4 parts:
   # The operator being constrained
   # The trigger predicate
