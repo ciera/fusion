@@ -1,7 +1,8 @@
 #summary How to specify FUSION Constraints
+#labels Documentation-Specifications
 
 = Specifying Constraints =
-Constraints are written as a class-level Java 5 annotation. An example is shown below.
+Constraints are written as a class-level Java 5 annotation. Some examples below:
 
 {{{
 @Constraint(
@@ -21,9 +22,30 @@ A constraint has 4 parts:
 The first 3 parts are written as Strings, and the last is an array of Strings. (While not ideal, this is due to the limitations of Java 5 annotations.) The syntax of these strings is described below.
 
 == Operator syntax ==
+Operator ::= !MethodCall | Constructor | EOM<br>
+!MethodCall ::= Type*.methodName(*(Type var)`*` *):* Type<br>
+Constructor ::= Type*(*(Type var)`*`*)*<br>
+EOM ::= *eom(* var *)* | *eom*<br>
+Type ::= elementalType | typeName<br>
 
+*Note: EOM doesn't  yet work*
+
+ While it will parse, it will not yet match to anything. There is an issue in Crystal that must be fixed first. [http://code.google.com/p/fusion/issues/detail?id=7 Issue 7] has the relevant details.
 
 == Predicate syntax ==
+Both the trigger predicate and the requires predicate have the same syntax.
 
+Predicate ::= Predicate *IMPLIES* Predicate | Predicate *OR* Predicate | Predicate *AND* Predicate | *(*Predicate*)* | Relationship | Boolean<br>
+Relationship ::= *!*Relationship | !TypeRelationship | !EqualityRelationship | !UserRelationship | !TestRelationship<br>
+Boolean ::= *TRUE* | *FALSE* | var | *!*var<br>
+!TypeRelationship ::= var *instanceof* Type<br>
+!EqualityRelationship ::= var *==* var<br>
+!UserRelationship ::= relName*(*var`*`*)*<br>
+!TestRelationship ::= *?*relName*(*var`*`*) :* var<br>
 
 == Effects syntax ==
+
+Effect ::= *!*Effect | !UserRelationship | !TestRelationship<br>
+!UserRelationship ::= relName*(*WCVar`*`*)*<br>
+!TestRelationship ::= *?*relName*(*WCVar`*`*) :* var<br>
+WCVar ::= *`*`* | var<br>
