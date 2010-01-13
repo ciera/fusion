@@ -1,4 +1,5 @@
 #summary How to specify relationship effects
+#labels Documentation-Specifications
 
 Effect annotations allow you to specify the effects of running a method (or calling a constructor).
 
