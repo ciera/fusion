@@ -1,5 +1,5 @@
+#summary How to specify relationship types
 #labels Documentation-Specifications
-#How to specify relationship types
 
 = Relationship Types =
 
