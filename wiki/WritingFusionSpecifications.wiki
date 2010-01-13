@@ -2,10 +2,11 @@
 #labels Featured
 
 = FUSION specs =
+The pages below describe the 5 types of FUSION specifications. The first three are integral to get anything usable working.
 
-  # Defining relationships
-  # Relationship Effects
-  # Constraints
+  # [SpecifyingRelationships Defining relationships]
+  # [SpecifyingEffects Relationship Effects]
+  # [SpecifyingConsraints Constraints]
   # Infer Rules (optional)
   # XML Retrieval (optional)
  
