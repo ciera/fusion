@@ -19,12 +19,12 @@ A constraint has 4 parts:
   # The requires predicate
   # The effects list
 
-The first 3 parts are written as Strings, and the last is an array of Strings. (While not ideal, this is due to the limitations of Java 5 annotations.) The syntax of these strings is described below.
+The first 3 parts are written as Strings, and the last is an array of Strings. (While not ideal, this is due to the limitations of Java 5 annotations.) The syntax of these strings is described below. *Bold text* is used to describe required syntax, while _italic text_ is used to describe a 0-n comma separated list.
 
 == Operator syntax ==
 Operator ::= !MethodCall | Constructor | EOM<br>
-!MethodCall ::= Type*.methodName(*(Type var)`*` *):* Type<br>
-Constructor ::= Type*(*(Type var)`*`*)*<br>
+!MethodCall ::= Type*.methodName(*_Type var_ *):* Type<br>
+Constructor ::= Type*(*_Type var_*)*<br>
 EOM ::= *eom(* var *)* | *eom*<br>
 Type ::= elementalType | typeName<br>
 
@@ -40,12 +40,12 @@ Relationship ::= *!*Relationship | !TypeRelationship | !EqualityRelationship | !
 Boolean ::= *TRUE* | *FALSE* | var | *!*var<br>
 !TypeRelationship ::= var *instanceof* Type<br>
 !EqualityRelationship ::= var *==* var<br>
-!UserRelationship ::= relName*(*var`*`*)*<br>
-!TestRelationship ::= *?*relName*(*var`*`*) :* var<br>
+!UserRelationship ::= relName*(*_var_*)*<br>
+!TestRelationship ::= *?*relName*(*_var_*) :* var<br>
 
 == Effects syntax ==
 
 Effect ::= *!*Effect | !UserRelationship | !TestRelationship<br>
-!UserRelationship ::= relName*(*WCVar`*`*)*<br>
-!TestRelationship ::= *?*relName*(*WCVar`*`*) :* var<br>
+!UserRelationship ::= relName*(*_WCVar_*)*<br>
+!TestRelationship ::= *?*relName*(*_WCVar_*) :* var<br>
 WCVar ::= *`*`* | var<br>
