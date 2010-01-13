@@ -1,0 +1,35 @@
+#summary How to specify relationship effects
+
+Effect annotations allow you to specify the effects of running a method (or calling a constructor).
+
+For the examples below, we will use the _Item_ relationship between an {{{Object}}} and a {{{Collection}}}. The methods being annotated are in the {{{Collection}}} type.
+
+==The add effect==
+{{{
+@Item{"item", "target"}
+public void add(Object item);
+}}}
+
+{{{
+@Item{"result", "target"}
+public Object get(int ndx);
+}}}
+
+
+==The remove effect==
+{{{
+@Item(value = {"item", "target"}, effect =Effect.REMOVE)
+public void remove(Object item);
+}}}
+
+==The test effect==
+{{{
+@Item(value={"item", "target"}, effect =Effect.TEST, test="result")
+public boolean contains(Object item);
+}}}
+
+==Wildcards in effects==
+{{{
+@Item(value={"*", "target"}, effect =Effect.REMOVE)
+public void clear() {
+}}}
