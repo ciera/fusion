@@ -34,3 +34,10 @@ public boolean contains(Object item);
 @Item(value={"*", "target"}, effect =Effect.REMOVE)
 public void clear() {
 }}}
+
+==Acceptable variable names==
+The acceptable variable names are:
+  * `target` to represent the "this" variable
+  * `result` to represent the returned value
+  * Any parameter name
+  * `*` to represent wildcards. Wildcards may not be used in the test parameter, only in the value parameter.
