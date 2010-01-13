@@ -1,0 +1,25 @@
+#summary How to specify inferred relationships
+#labels Documentation-Specifications
+
+= What are inferred relationships? =
+
+An inferred relationship is a relationship which is dynamically created on an as-needed basis. For example, if a predicate needs a relationship `Foo(x, y)` to be true, but it is not true or false in the current context, the analysis will check the inferred relationships to see if a `Foo(x, y)` can be dynamically inferred.
+
+Inferred relationships may not conflict with the context, and are ignored and not used when they do.
+
+=Examples=
+Inferred relationships are written using the `@Infer` class annotation. To make several of them, use the `@Infers` annotation.
+
+{{{
+@Infer(
+	trigger = "Items(list, ctrl) AND Item(item, list)",
+	effects = {"Child(item, ctrl)"}
+)
+}}}
+
+The infer annotation has two parts:
+  * The trigger predicate describes when the effects can be inferred
+  * The list of effects described what may be dynamically inferred when the trigger is true
+
+=Syntax=
+The syntax is the same as for [SpecifyingConstraints constraints].
