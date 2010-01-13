@@ -1,0 +1,29 @@
+#summary How to specify FUSION Constraints
+
+= Specifying Constraints =
+Constraints are written as a class-level Java 5 annotation. An example is shown below.
+
+{{{
+@Constraint(
+	op="ListItem.setSelected(boolean selected) : void",
+	trigger = "!selected AND Child(target, ctrl) AND ctrl instanceof DropDownList",
+	requires = "Selected(target)",
+	effects = {"!CorrectlySelected(ctrl)"}
+)
+}}}
+
+A constraint has 4 parts:
+  # The operator being constrained
+  # The trigger predicate
+  # The requires predicate
+  # The effects list
+
+The first 3 parts are written as Strings, and the last is an array of Strings. (While not ideal, this is due to the limitations of Java 5 annotations.) The syntax of these strings is described below.
+
+== Operator syntax ==
+
+
+== Predicate syntax ==
+
+
+== Effects syntax ==
