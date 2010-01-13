@@ -6,7 +6,7 @@ The pages below describe the 5 types of FUSION specifications. The first three a
 
   # [SpecifyingRelationships Defining relationships]
   # [SpecifyingEffects Relationship Effects]
-  # [SpecifyingConsraints Constraints]
+  # [SpecifyingConstraints Constraints]
   # Infer Rules (optional)
   # XML Retrieval (optional)
  
