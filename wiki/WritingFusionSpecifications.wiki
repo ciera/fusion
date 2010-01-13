@@ -6,7 +6,9 @@ The pages below describe the 5 types of FUSION specifications. The first three a
 
 Througout these pages, the keyword "target" refers to the receiver object, and "result" refers to the returned object. Therefore, in the following example:
 
-{{{x = y.foo(z)}}}
+{{{
+x = y.foo(z);
+}}}
 
 {{{x}}} is the result, and {{{y}}} is the target of the method. If we are looking at it from the perspective of the declaration:
 
