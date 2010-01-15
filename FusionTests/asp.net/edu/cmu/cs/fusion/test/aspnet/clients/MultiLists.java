@@ -4,7 +4,7 @@ import edu.cmu.cs.crystal.annotations.FailingTest;
 import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
-@FailingTest(1)
+@FailingTest(2)
 @UseAnalyses("FusionAnalysis")
 public class MultiLists {
 	public void multiLists(DropDownList ctrlA, DropDownList ctrlB) {
