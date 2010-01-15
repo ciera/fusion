@@ -27,6 +27,10 @@ public class Variant {
 		return str;
 	}
 	
+	public boolean noError() {
+		return val == 0;
+	}
+	
 	public boolean isSound() {
 		return (val & 0x1) == SOUND;
 	}

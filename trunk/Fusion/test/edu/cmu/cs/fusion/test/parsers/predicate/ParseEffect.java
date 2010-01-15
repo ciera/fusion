@@ -49,6 +49,30 @@ public class ParseEffect {
 		Assert.assertEquals("a should have a Bar type", "Bar", vars.getType(new SpecVar("a")));		
 		Assert.assertEquals("b should have a Baz type", "Baz", vars.getType(new SpecVar("b")));		
 	}
+	
+	@Test
+	public void testRemoveManyEffect() throws ParseException {
+		String string = "!Foo(*, b)";
+		RelationsEnvironment env = new RelationsEnvironment();
+		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
+		
+		FPLParser parser = new FPLParser(string, env, new StubIType());
+		Effect effect = parser.effect();
+		
+		Assert.assertEquals("Effect type is wrong", Effect.EffectType.REMOVE, effect.getType());
+		Assert.assertEquals("Effect relation is wrong", "Foo", effect.getRelation().getName());
+		
+		FreeVars vars = effect.getFreeVariables();
+		FreeVars wcs = effect.getWildCards();
+		Assert.assertEquals("Should only contain one free variable", 1, vars.size());
+		Assert.assertEquals("But actually has two!", 2, effect.getVars().length);	
+		Assert.assertEquals("one wildcard", 1, wcs.size());
+		Assert.assertTrue("The first param should be a wildcard!", effect.getVars()[0].isWildCard());		
+		Assert.assertEquals("wild card should have a Bar type", "Bar", wcs.getType(effect.getVars()[0]));		
+		Assert.assertTrue("The second param should be normal", !effect.getVars()[1].isWildCard());
+		Assert.assertEquals("b should have a Baz type", "Baz", vars.getType(new SpecVar("b")));		
+	}
+
 
 	@Test
 	public void testTestEffect() throws ParseException {

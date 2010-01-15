@@ -3,6 +3,8 @@ package edu.cmu.cs.fusion;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.jdt.core.dom.ASTNode;
+
 import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
@@ -18,6 +20,9 @@ public class MayAliasWrapper implements AliasContext {
 		lattice = flowAnalysis.getResultsAfter(instr);
 	}
 
+	public MayAliasWrapper(ASTNode node, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> flowAnalysis) {
+		lattice = flowAnalysis.getResultsAfter(node);
+	}
 	public Set<ObjectLabel> getAliases(Variable var) {
 		return lattice.get(var).getLabels();
 	}

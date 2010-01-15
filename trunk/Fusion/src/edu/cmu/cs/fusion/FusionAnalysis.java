@@ -19,12 +19,15 @@ import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
+import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
+import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
+import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 
@@ -39,7 +42,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private InferenceEnvironment infers;
 	private RelationsEnvironment rels;
 	private IJavaProject project;
-	private FusionErrorStorage errors;
 	private TypeHierarchy types;
 	private boolean majorErrorOccured = false;
 
@@ -69,6 +71,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			rels.populate(null);
 			constraints.populate(rels, null);
 			infers.populate(rels, null);
+			
+			for (Constraint cons : constraints) {
+				log.log(Level.INFO, cons.toString());
+			}
+			
 		} catch (CoreException err) {
 			log.log(Level.SEVERE, "Error while parsing relations", err);
 			majorErrorOccured = true;
@@ -104,34 +111,36 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			return;
 		}
 		try {
-			errors = new FusionErrorStorage();
-			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, errors, constraints, infers, types);
+			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types);
 			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
 			aliases = new TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>>(tfA, this.analysisInput.getComUnitTACs().unwrap());
-			aliases.getResultsAfter(methodDecl);
 			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
-			constants.getResultsAfter(methodDecl);
 			
-			// must call getResultsAfter at least once on this method,
-			// or the analysis won't be run on this method
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl);
 			
 			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
 			methodDecl.accept(debugger);
 			log.log(Level.INFO, debugger.getResult());
 			
-			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(errors, reporter);
+			EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
+			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, new ConstraintChecker(constraints, types), reporter, tac);
 			methodDecl.accept(errVisitor);
-			errors = null;
-			
-			//report the errors here...
+		
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
 		}
+	}
+	
+	public TypeHierarchy getHierarchy() {
+		return types;
+	}
+	
+	public InferenceEnvironment getInfers() {
+		return infers;
 	}
 	
 	public RelationshipContext getResultsBefore(ASTNode node) {
