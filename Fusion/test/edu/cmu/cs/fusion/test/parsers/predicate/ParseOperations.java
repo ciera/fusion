@@ -8,12 +8,28 @@ import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
+import edu.cmu.cs.fusion.constraint.operations.EndOfMethodOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 import edu.cmu.cs.fusion.test.StubIType;
 
 public class ParseOperations {	
+	@Test
+	public void testEOM() throws ParseException {
+		String string = "EOM";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a EOM, but is " + op.getClass().getCanonicalName(), op instanceof EndOfMethodOp);
+		
+		EndOfMethodOp invoke = (EndOfMethodOp)op;
+				
+		FreeVars vars = invoke.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 0, vars.size());		
+	}
+
 	@Test
 	public void testMethodInvocation0() throws ParseException {
 		String string = "Foo.mName() : Baz";

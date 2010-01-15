@@ -23,47 +23,16 @@ import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
-import edu.cmu.cs.fusion.test.StubFusionAnalysis;
-import edu.cmu.cs.fusion.test.StubFusionErrorStorage;
 import edu.cmu.cs.fusion.test.TestAliasContext;
-import edu.cmu.cs.fusion.test.TestRelationshipTransferFunction;
 import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
 
-public class TestPartialBound {
+public class TestPartialBound extends ConstraintChecker{
 	static Constraint cons;
 	static TestUtils utils;
 	private static ObjectLabel[] labels;
-
-	static private TypeHierarchy testH = new TypeHierarchy() {
-		public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
-			if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
-				return true;
-			else if (t1.equals("Bar"))
-				return t2.equals("Baz");
-			else if (t1.equals("Baz"))
-				return t2.equals("Bar");
-			else
-				return false;
-		}
-		
-		public boolean existsCommonSubtype(String t1, String t2) {
-			return existsCommonSubtype(t1, t2, false, false);
-		}
-
-		public boolean isSubtypeCompatible(String subType, String superType) {
-			if (subType.equals(superType))
-				return true;
-			else if (subType.equals("SnaFu"))
-				return superType.equals("Foo");
-			else if (subType.equals("Bazar"))
-				return superType.equals("Baz") || superType.equals("Bar");
-			else
-				return false;
-		}
-	};
 
 	@BeforeClass
 	static public void setup() {
@@ -92,12 +61,40 @@ public class TestPartialBound {
 		labels[6] = new AbstractObjectLabel("6", "Bazar");
 	}
 
+	public TestPartialBound() {
+		super(null, null);
+		types = new TypeHierarchy() {
+			public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
+				if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
+					return true;
+				else if (t1.equals("Bar"))
+					return t2.equals("Baz");
+				else if (t1.equals("Baz"))
+					return t2.equals("Bar");
+				else
+					return false;
+			}
+			
+			public boolean existsCommonSubtype(String t1, String t2) {
+				return existsCommonSubtype(t1, t2, false, false);
+			}
+
+			public boolean isSubtypeCompatible(String subType, String superType) {
+				if (subType.equals(superType))
+					return true;
+				else if (subType.equals("SnaFu"))
+					return superType.equals("Foo");
+				else if (subType.equals("Bazar"))
+					return superType.equals("Baz") || superType.equals("Bar");
+				else
+					return false;
+			}
+		};
+	}
+
+
 	@Test
 	public void testNoMatches() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 
 		Substitution partialSub = new Substitution();
@@ -110,19 +107,16 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[3]);
 		aliases.addAlias(new StubVariable(), labels[4]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(0, delta.numberOfChanges());	
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());		
+		assertEquals(0, error & Variant.PRAGMATIC);			
 	}
 	
 	@Test
 	public void testDefOnly() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]}), FourPointLattice.TRU);
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[6]}), FourPointLattice.TRU);
@@ -142,8 +136,9 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[5]);
 		aliases.addAlias(new StubVariable(), labels[6]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -151,15 +146,11 @@ public class TestPartialBound {
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
 		
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+		assertEquals(0, error & Variant.PRAGMATIC);			
 	}
 	
 	@Test
 	public void testPartialOnly() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]}), FourPointLattice.TRU);
 		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[2], labels[2]}), FourPointLattice.TRU);
@@ -176,8 +167,9 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[4]);
 		aliases.addAlias(new StubVariable(), labels[2]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -185,15 +177,11 @@ public class TestPartialBound {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertEquals(0, errors.getError(Variant.COMPLETE_VARIANT, cons).size());			
+		assertEquals(0, error & Variant.COMPLETE);			
 	}
 	
 	@Test
 	public void testCombined() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]}), FourPointLattice.TRU);
 		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[2], labels[2]}), FourPointLattice.TRU);
@@ -212,8 +200,9 @@ public class TestPartialBound {
 		aliases.addAlias(new StubVariable(), labels[6]);
 		aliases.addAlias(new StubVariable(), labels[2]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -221,6 +210,6 @@ public class TestPartialBound {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertEquals(0, errors.getError(Variant.COMPLETE_VARIANT, cons).size());					
+		assertEquals(0, error & Variant.COMPLETE);			
 	}
 }

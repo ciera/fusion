@@ -1,26 +1,16 @@
 package edu.cmu.cs.fusion.relationship;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-
-import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
 
 public class FusionErrorReport {
 	private Variant variant;
 	private Constraint cons;
-	private ASTNode node;
 	
-	public FusionErrorReport(Variant variant, Constraint cons,
-			TACInstruction instr) {
+	public FusionErrorReport(Variant variant, Constraint cons) {
 		super();
 		this.variant = variant;
 		this.cons = cons;
-		node = instr.getNode();
-	}
-
-	public ASTNode getNode() {
-		return node;
 	}
 
 	public Variant getVariant() {
@@ -40,7 +30,6 @@ public class FusionErrorReport {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cons == null) ? 0 : cons.hashCode());
-		result = prime * result + ((node == null) ? 0 : node.hashCode());
 		result = prime * result + ((variant == null) ? 0 : variant.hashCode());
 		return result;
 	}
@@ -58,11 +47,6 @@ public class FusionErrorReport {
 			if (other.cons != null)
 				return false;
 		} else if (!cons.equals(other.cons))
-			return false;
-		if (node == null) {
-			if (other.node != null)
-				return false;
-		} else if (!node.equals(other.node))
 			return false;
 		if (variant == null) {
 			if (other.variant != null)

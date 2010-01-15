@@ -130,14 +130,14 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 				Relation rel = rels.findRelation(qName);
 				
 				if (rel != null) {
-					effects.add(parseEffect(anno, rel));
+					effects.add(parseEffect(anno, rel, method));
 				}
 				else {
 					rel = isMultiRelation(anno, method.getDeclaringType());
 					if (rel != null) {
 						for (Object obj : (Object[])anno.getMemberValuePairs()[0].getValue()) {
 							IAnnotation inner = (IAnnotation)obj;
-							effects.add(parseEffect(inner, rel));
+							effects.add(parseEffect(inner, rel, method));
 						}
 					}
 				}
@@ -197,7 +197,7 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 			return rels.findRelation(qName);
 		}
 		
-		private Effect parseEffect(IAnnotation effectAnno, Relation rel) throws JavaModelException {
+		private Effect parseEffect(IAnnotation effectAnno, Relation rel, IMethod method) throws JavaModelException {
 			Effect effect = null;
 			IMemberValuePair paramsPair = null;
 			IMemberValuePair actEffectPair = null;
@@ -257,10 +257,21 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 			
 			Object[] objParams = (Object[])paramsPair.getValue();
 			SpecVar[] params = new SpecVar[objParams.length];
+			
 			for (int ndx = 0; ndx < objParams.length; ndx++) {
-				params[ndx] = new SpecVar((String)objParams[ndx]);
+				if (objParams[ndx].equals(SpecVar.WILD_CARD))
+					params[ndx] = SpecVar.createWildCard();
+				else
+					params[ndx] = new SpecVar((String)objParams[ndx]);
 			}
 			
+/*			try {
+				checkTypes(rel, params, method);
+			} catch (ParseException e) {
+				// TODO Put out a real error message
+				e.printStackTrace();
+			}
+*/			
 			edu.cmu.cs.fusion.annot.Relation.Effect actualEffect;
 			
 			if (actEffectPair != null) {
@@ -286,8 +297,44 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 			}
 			return effect;
 		}
+
+/*		private void checkTypes(Relation rel, SpecVar[] params, IMethod method) throws ParseException, JavaModelException {
+			String[] fqt = rel.getFullyQualifiedTypes();
+			IType declType = method.getDeclaringType();
+			
+			for (int ndx = 0; ndx < params.length; ndx++) {
+				SpecVar sVar = params[ndx];
+				if (sVar.isWildCard())
+					continue;
+				String type = fqt[ndx];
+				
+				if (sVar.equals(Constraint.RECEIVER)) {
+					if (!hierarchy.isSubtypeCompatible(declType.getFullyQualifiedName(), type))
+						throw new ParseException("The variable " + sVar.getVar() + " does not have type " + type);
+				}
+				else if (sVar.equals(Constraint.RESULT)) {
+					if (!hierarchy.isSubtypeCompatible(Utilities.resolveBinaryType(declType, method.getReturnType()), type))
+						throw new ParseException("The variable " + sVar.getVar() + " does not have type " + type);
+				}
+				else {
+					String paramType = null;
+					for (int paramNdx = 0; paramNdx < method.getNumberOfParameters(); paramNdx++) {
+						if (method.getParameterNames()[paramNdx].equals(sVar.getVar())) {
+							paramType = method.getParameterTypes()[paramNdx];
+							break;
+						}
+					}
+					
+					if (paramType == null)
+						throw new ParseException("The parameter " + sVar.getVar() + " does not exist.");
+					if (!hierarchy.isSubtypeCompatible(Utilities.resolveBinaryType(declType, paramType), type))
+						throw new ParseException("The variable " + sVar.getVar() + " does not have type " + type);
+				}
+			}
+		}
+*/
 	}
-	
+
 	List<Constraint> constraints;
 	
 	public ConstraintEnvironment() {

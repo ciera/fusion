@@ -4,27 +4,93 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.ConstructorInvocation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
 import edu.cmu.cs.crystal.IAnalysisReporter;
-import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
+import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
+import edu.cmu.cs.crystal.tac.model.TACInstruction;
+import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.FusionErrorReport;
+import edu.cmu.cs.fusion.relationship.RelationshipContext;
+import edu.cmu.cs.fusion.test.constraint.DefaultReturnInstruction;
 
 public class ErrorReporterVisitor extends ASTVisitor {
 
-	private FusionErrorStorage errors;
 	private IAnalysisReporter reporter;
+	private ConstraintChecker checker;
+	private EclipseTAC tac;
+	private FusionAnalysis fa;
 
-	public ErrorReporterVisitor(FusionErrorStorage errors, IAnalysisReporter reporter) {
-		this.errors = errors;
+	public ErrorReporterVisitor(FusionAnalysis analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac) {
 		this.reporter = reporter;
+		this.checker = constraintChecker;
+		this.fa = analysis;
+		this.tac = tac;
+	}
+
+	
+	@Override
+	public void endVisit(ClassInstanceCreation node) {
+		check(node);
 	}
 
 	@Override
-	public void preVisit(ASTNode node) {
-		List<FusionErrorReport> errList = errors.getError(node);
+	public void endVisit(ConstructorInvocation node) {
+		check(node);
+	}
+	
+	@Override
+	public void endVisit(MethodDeclaration node) {
+		TACInstruction instr = new DefaultReturnInstruction();
+		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), fa.getAliasAnalysis());
+		AliasContext aliases = new MayAliasWrapper(node.getBody(), fa.getAliasAnalysis());
+		RelationshipContext rels = fa.getResultsAfter(node.getBody());
+		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
 		
-		for (FusionErrorReport err : errList)
-			reporter.reportUserProblem("The constraint " + err.getConstraint().toString() + " was violated.", err.getNode(), err.getVariant().toString(), SEVERITY.WARNING);
+		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
+		
+		for (FusionErrorReport err : errors)
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString());	
+	}
+
+
+	@Override
+	public void endVisit(MethodInvocation node) {
+		check(node);
+	}
+
+	@Override
+	public void endVisit(ReturnStatement node) {
+		check(node);
+	}
+
+	@Override
+	public void endVisit(SuperConstructorInvocation node) {
+		check(node);
+	}
+
+	@Override
+	public void endVisit(SuperMethodInvocation node) {
+		check(node);
+	}
+
+	private void check(ASTNode node) {
+		TACInstruction instr = tac.instruction(node);
+		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), fa.getAliasAnalysis());
+		AliasContext aliases = new MayAliasWrapper(node, fa.getAliasAnalysis());
+		RelationshipContext rels = fa.getResultsBefore(node);
+		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
+		
+		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
+		
+		for (FusionErrorReport err : errors)
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString());	
 	}
 
 }

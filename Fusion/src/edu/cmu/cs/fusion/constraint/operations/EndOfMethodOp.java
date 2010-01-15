@@ -11,25 +11,15 @@ import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 
 public class EndOfMethodOp implements Operation {
-	private SpecVar var;
-	
-	public EndOfMethodOp(SpecVar var) {
-		this.var = var;
-	}
-	
 	public FreeVars getFreeVariables() {
-		return new FreeVars().addVar(var, FreeVars.OBJECT_TYPE);
+		return new FreeVars();
 	}
 
 	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types,
 			TACInstruction instr) {
-		if (instr instanceof ReturnInstruction) {
-			Variable retVar = ((ReturnInstruction) instr).getReturnedVariable();
-			ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
-			return ConsList.cons(new Pair<SpecVar, Variable>(var, retVar), vars);
-		}
+		if (instr instanceof ReturnInstruction)
+			return ConsList.empty();
 		else
 			return null;
 	}
-
 }

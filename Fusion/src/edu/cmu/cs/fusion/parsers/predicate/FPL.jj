@@ -73,6 +73,7 @@ TOKEN : /* Operation Tokens */
 {
 	< EOM: "EOM" > 
 |   < DOT : "." >
+|   < WC : "*" >
 }
 
 
@@ -217,7 +218,7 @@ RelationshipPredicate userRelationship() :
 	  numParams = rel.getFullyQualifiedTypes().length;
 		relName = rel.getName();
 	}
-	params = wcParams(numParams, relName)
+	params = params(numParams, relName)
 	{
 	  return new RelationshipPredicate(rel, params, isPos);	}
 }
@@ -297,7 +298,7 @@ Effect effect():
   {
     numParams = rel.getFullyQualifiedTypes().length;
 	name = rel.getName();
-  }  vars = params(numParams, name)
+  }  vars = wcParams(numParams, name)
   {
     if (isPos)
     	return Effect.createAddEffect(rel, vars);
@@ -311,7 +312,7 @@ Effect effect():
     numParams = rel.getFullyQualifiedTypes().length;
 	name = rel.getName();
   }
-  vars = params(numParams, name)
+  vars = wcParams(numParams, name)
   < TEST_SEP >
   testVar = param()
   {    if (isPos)
@@ -342,10 +343,9 @@ LOOKAHEAD(2)
 
 Operation eom() :
 {
-  SpecVar param;}
-{	< EOM >	"("		param = wcParam()
-	")"
-	{	  return new EndOfMethodOp(param);
+}
+{	< EOM >
+	{	  return new EndOfMethodOp();
 	}
 }
 
@@ -546,14 +546,14 @@ SpecVar wcParam() :
   SpecVar var;
 }
 {
+  < WC >
+  {
+    return SpecVar.createWildCard();
+  }
+| 
   var = param()
   {
     return var;
-  }
-|
-  "*"
-  {
-    return new SpecVar();
   }
 }
 

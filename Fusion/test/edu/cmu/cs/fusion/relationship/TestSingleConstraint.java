@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.relationship;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,6 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -23,10 +23,7 @@ import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
-import edu.cmu.cs.fusion.test.StubFusionAnalysis;
-import edu.cmu.cs.fusion.test.StubFusionErrorStorage;
 import edu.cmu.cs.fusion.test.TestAliasContext;
-import edu.cmu.cs.fusion.test.TestRelationshipTransferFunction;
 import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
@@ -35,38 +32,10 @@ import edu.cmu.cs.fusion.test.constraint.operations.StubTypeBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
 
-public class TestSingleConstraint {
+public class TestSingleConstraint extends ConstraintChecker {
 	static Constraint cons;
 	static TestUtils utils;
 	private static ObjectLabel[] labels;
-	
-	static private TypeHierarchy testH = new TypeHierarchy() {
-		public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
-			if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
-				return true;
-			else if (t1.equals("Bar"))
-				return t2.equals("Baz");
-			else if (t1.equals("Baz"))
-				return t2.equals("Bar");
-			else
-				return false;
-		}
-		
-		public boolean existsCommonSubtype(String t1, String t2) {
-			return existsCommonSubtype(t1, t2, false, false);
-		}
-
-		public boolean isSubtypeCompatible(String subType, String superType) {
-			if (subType.equals(superType))
-				return true;
-			else if (subType.equals("SnaFu"))
-				return superType.equals("Foo");
-			else if (subType.equals("Bazar"))
-				return superType.equals("Baz") || superType.equals("Bar");
-			else
-				return false;
-		}
-	};
 
 	@BeforeClass
 	static public void setup() {
@@ -95,6 +64,37 @@ public class TestSingleConstraint {
 		labels[6] = new AbstractObjectLabel("6", "Bazar");
 		
 	}
+	
+	public TestSingleConstraint() {
+		super(null, null);
+		types = new TypeHierarchy() {
+			public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
+				if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
+					return true;
+				else if (t1.equals("Bar"))
+					return t2.equals("Baz");
+				else if (t1.equals("Baz"))
+					return t2.equals("Bar");
+				else
+					return false;
+			}
+			
+			public boolean existsCommonSubtype(String t1, String t2) {
+				return existsCommonSubtype(t1, t2, false, false);
+			}
+
+			public boolean isSubtypeCompatible(String subType, String superType) {
+				if (subType.equals(superType))
+					return true;
+				else if (subType.equals("SnaFu"))
+					return superType.equals("Foo");
+				else if (subType.equals("Bazar"))
+					return superType.equals("Baz") || superType.equals("Bar");
+				else
+					return false;
+			}
+		};
+	}
 
 	
 	@Test
@@ -104,10 +104,6 @@ public class TestSingleConstraint {
 	 * aliasing configuration!
 	 */
 	public void testNoMatches() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 		
 		List<StubVariable> vars = new LinkedList<StubVariable>();
@@ -124,19 +120,16 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[0]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
-
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
+		
 		assertEquals(0, delta.numberOfChanges());	
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());		
+		assertNull(error);
 	}
 	
 	@Test
 	public void testDefConstructor() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 
 		List<StubVariable> vars = new LinkedList<StubVariable>();
@@ -158,8 +151,9 @@ public class TestSingleConstraint {
 		Constraint cons = new Constraint(op, new TruePredicate(), new TruePredicate(), effects);
 
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[5], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
@@ -167,16 +161,12 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
 		
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+		assertNull(error);			
 	}
 
 	
 	@Test
 	public void testDefOnly() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 
 		List<StubVariable> vars = new LinkedList<StubVariable>();
@@ -190,8 +180,9 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[3]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
@@ -199,15 +190,11 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
 		
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+		assertNull(error);			
 	}
 	
 	@Test
 	public void testPartialOnly() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 
 		List<StubVariable> vars = new LinkedList<StubVariable>();
@@ -221,8 +208,9 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[3]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[2]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
@@ -230,15 +218,11 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+		assertNull(error);			
 	}
 	
 	@Test
 	public void testSeveralDef() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 
 		List<StubVariable> vars = new LinkedList<StubVariable>();
@@ -253,8 +237,9 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getTarget(), labels[4]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[4], labels[5]});
@@ -264,15 +249,11 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
 		
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+		assertNull(error);			
 	}
 
 	@Test
 	public void testCombined() throws FusionException {
-		StubFusionAnalysis stubAnalysis = new StubFusionAnalysis();
-		StubFusionErrorStorage errors = new StubFusionErrorStorage();
-		RelationshipTransferFunction tf = new TestRelationshipTransferFunction(stubAnalysis, errors);
-
 		RelationshipContext rels = new RelationshipContext(false);
 
 		List<StubVariable> vars = new LinkedList<StubVariable>();
@@ -287,8 +268,9 @@ public class TestSingleConstraint {
 		aliases.addAlias(instr.getArgOperands().get(0), labels[1]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[2]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, testH, new InferenceEnvironment());		
-		RelationshipDelta delta = tf.checkSingleConstraint(env, cons, instr);
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[1]});
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
@@ -300,6 +282,6 @@ public class TestSingleConstraint {
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff4));
 		
-		assertEquals(0, errors.getError(Variant.PRAGMATIC_VARIANT, cons).size());			
+		assertNull(error);			
 	}
 }
