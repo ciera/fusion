@@ -12,7 +12,7 @@ import edu.cmu.cs.fusion.test.iterator.relations.HasNext;
 		requires = "HasNext(target) AND CollIterator(target, coll)",
 		effects = {"!HasNext(target)", "Item(result, coll)"}
 )
-public class Collection<T> {
+public class Collection<T extends CharSequence> {
 	public Collection() {}
 	
 	@CollIterator({"result", "target"})
