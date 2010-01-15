@@ -14,9 +14,9 @@ import edu.cmu.cs.fusion.test.io.relations.Writeable;
 		effects = {}
 ),
 @Constraint(
-		op = "EOM(*)",
-		trigger = "TRUE",
-		requires = "Closed(target)",
+		op = "EOM",
+		trigger = "x instanceof FileWriter",
+		requires = "Closed(x)",
 		effects = {}
 )})
 public class FileWriter {

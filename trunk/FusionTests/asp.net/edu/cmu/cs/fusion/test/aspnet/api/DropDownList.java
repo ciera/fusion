@@ -19,7 +19,7 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 	effects = {"!CorrectlySelected(ctrl)"}
 ),
 @Constraint(
-		op="EOM(*)",
+		op="EOM",
 		trigger = "!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList",
 		requires = "FALSE",
 		effects = {}

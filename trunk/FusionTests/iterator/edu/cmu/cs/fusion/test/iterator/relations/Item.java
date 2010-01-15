@@ -4,7 +4,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.Collection;
+import edu.cmu.cs.fusion.test.iterator.api.*;
 
 import edu.cmu.cs.fusion.annot.Relation;
 import edu.cmu.cs.fusion.test.io.api.FileWriter;

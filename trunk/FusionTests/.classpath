@@ -5,6 +5,7 @@
 	<classpathentry kind="src" path="io"/>
 	<classpathentry kind="src" path="iterator"/>
 	<classpathentry kind="src" path="eclipse-jdt"/>
+	<classpathentry kind="src" path="dictenum"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="plaid-annotations-1.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
