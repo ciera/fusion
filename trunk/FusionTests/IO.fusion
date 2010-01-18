@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://code.google.com/p/fusion/stuff/fusion.xsd">
-	<Import qualName="edu.cmu.cs.fusion.test.io.api.FileWriter"/>
+	<Import qualName="java.io.FileWriter"/>
 	<Import qualName="java.lang.String"/>
 	<Import qualName="edu.cmu.cs.fusion.test.io.relations.Writeable"/>
 	<Import qualName="edu.cmu.cs.fusion.test.io.relations.Closed"/>
@@ -15,7 +15,7 @@
 		<req>Closed(x)</req>
 	</Constraint>
 	<Constraint>
-		<op>FileWriter()</op>
+		<op>FileWriter(String str)</op>
 		<eff>Writeable(target)</eff>
 	</Constraint>
 	<Constraint>
