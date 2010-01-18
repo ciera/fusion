@@ -241,4 +241,8 @@ public class FusionEnvironment {
 		env.continuation = continuation;
 		return env;
 	}
+	
+	public String printAllAliases() {
+		return alias.toString();
+	}
 }
