@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 import edu.cmu.cs.fusion.test.iterator.api.*;
 
 import edu.cmu.cs.fusion.annot.Relation;
-import edu.cmu.cs.fusion.test.io.api.FileWriter;
 import edu.cmu.cs.fusion.test.iterator.api.Iterator;
 
 @Relation({Object.class, Collection.class})
