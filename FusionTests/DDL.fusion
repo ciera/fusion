@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://code.google.com/p/fusion/stuff/fusion.xsd">
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.api.ListItem"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.api.DropDownList"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Child"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Item"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Items"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.CorrectlySelected"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Selected"/>
+	<Constraint>
+		<op>ListItem.setSelected(boolean selected) : void</op>
+		<trg>selected AND Child(target, ctrl) AND ctrl instanceof DropDownList</trg>
+		<req>!CorrectlySelected(ctrl)</req>
+		<eff>CorrectlySelected(ctrl)</eff>
+	</Constraint>
+	<Constraint>
+		<op>ListItem.setSelected(boolean selected) : void</op>
+		<trg>!selected AND Child(target, ctrl) AND ctrl instanceof DropDownList</trg>
+		<req>Selected(target)</req>
+		<eff>!CorrectlySelected(ctrl)</eff>
+	</Constraint>
+	<Constraint>
+		<op>EOM</op>
+		<trg>!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList</trg>
+		<req>FALSE</req>
+	</Constraint>
+	<Infer>
+		<trg>Items(list, ctrl) AND Item(item, list)</trg>
+		<eff>Child(item, ctrl)</eff>
+	</Infer>
+</Specs>

@@ -6,6 +6,7 @@ import edu.cmu.cs.fusion.annot.Relation.Effect;
 import edu.cmu.cs.fusion.test.io.relations.Closed;
 import edu.cmu.cs.fusion.test.io.relations.Writeable;
 
+/*
 @Constraints({
 @Constraint(
 		op = "FileWriter.write(String str) : void",
@@ -19,13 +20,14 @@ import edu.cmu.cs.fusion.test.io.relations.Writeable;
 		requires = "Closed(x)",
 		effects = {}
 )})
+*/
 public class FileWriter {
-	@Writeable({"target"})
+//	@Writeable({"target"})
 	public FileWriter() {}
 	
 	public void write(String str) {}
 	
-	@Closed({"target"})
-	@Writeable(value = {"target"}, effect = Effect.REMOVE)
+//	@Closed({"target"})
+//	@Writeable(value = {"target"}, effect = Effect.REMOVE)
 	public void close() {}
 }

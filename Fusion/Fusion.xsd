@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://code.google.com/p/fusion xmlns:tns="http://code.google.com/p/fusion" elementFormDefault="qualified" xmlns:Q1="xmlns:tns=">
+
+
+    <complexType name="Constraint">
+    	<sequence>
+    		<element name="op" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="trg" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="req" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="eff" type="string" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Infer">
+    	<sequence>
+    		<element name="trg" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="eff" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    
+    
+
+
+    <complexType name="Specs">
+    	<sequence>
+    		<element name="Constraint"
+    			type="http://code.google.com/p/fusion Q1:Constraint"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="Infer"
+    			type="http://code.google.com/p/fusion Q1:Infer"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="Import" type="http://code.google.com/p/fusion Q1:Import" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="Specs"
+    	type="http://code.google.com/p/fusion Q1:Specs">
+    </element>
+
+    <complexType name="Import">
+    	<attribute name="qualName" type="string"></attribute>
+    </complexType>
+</schema>
