@@ -7,9 +7,9 @@ public class Correct {
 
 	public void m1() {
 		Dictionary d  = new Dictionary();
-		Enumeration e = new Enumeration();
+		Enumeration e;
 		d.size();
-		d.keys();		
+		e = d.keys();		
 		e.nextElement();
 		e.nextElement();
 		e.nextElement();
