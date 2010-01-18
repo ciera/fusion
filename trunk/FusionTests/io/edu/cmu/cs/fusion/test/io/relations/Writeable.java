@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import edu.cmu.cs.fusion.annot.Relation;
-import edu.cmu.cs.fusion.test.io.api.FileWriter;
+import java.io.FileWriter;
 
 @Relation({FileWriter.class})
 @Retention(RetentionPolicy.RUNTIME)
