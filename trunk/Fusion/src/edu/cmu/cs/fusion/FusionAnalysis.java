@@ -3,6 +3,7 @@ package edu.cmu.cs.fusion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -65,12 +66,14 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 	public void beforeAllCompilationUnits() {
 		rels = new RelationsEnvironment();
-		constraints = new ConstraintEnvironment();
-		infers = new InferenceEnvironment();
+		constraints = new ConstraintEnvironment(rels);
+		infers = new InferenceEnvironment(rels);
 		try {
 			rels.populate(null);
-			constraints.populate(rels, null);
-			infers.populate(rels, null);
+			constraints.populate(null);
+			infers.populate(null);
+			
+			ResourcesPlugin.getWorkspace().getRoot().accept(new XMLFileVisitor(constraints, infers));
 			
 			for (Constraint cons : constraints) {
 				log.log(Level.INFO, cons.toString());

@@ -21,6 +21,10 @@ import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jdt.core.search.TypeReferenceMatch;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import edu.cmu.cs.crystal.util.Utilities;
 import edu.cmu.cs.fusion.Relation;
@@ -32,6 +36,7 @@ import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
 public class ConstraintEnvironment implements Iterable<Constraint> {
+
 	private class ConstraintRequestor extends SearchRequestor {
 		
 		public ConstraintRequestor(RelationsEnvironment rels) {
@@ -336,12 +341,14 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 	}
 
 	List<Constraint> constraints;
+	private RelationsEnvironment rels;
 	
-	public ConstraintEnvironment() {
+	public ConstraintEnvironment(RelationsEnvironment rels) {
 		constraints = new LinkedList<Constraint>();
+		this.rels = rels;
 	}
 	
-	public void populate(RelationsEnvironment rels, IProgressMonitor monitor) throws CoreException {
+	public void populate(IProgressMonitor monitor) throws CoreException {
 		SearchEngine engine = new SearchEngine();
 		SearchPattern pattern = SearchPattern.createPattern("Constraint", IJavaSearchConstants.ANNOTATION_TYPE, IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
 		SearchParticipant[] participants = new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()};
@@ -356,7 +363,56 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		}
 	}
 
+	public void populateFromXMLFile(Document doc, XMLContext context) throws ParseException {
+		NodeList consNodes = doc.getDocumentElement().getElementsByTagName("Constraint");
+		for (int ndx = 0; ndx < consNodes.getLength(); ndx++) {
+			addConstraintFromXML(context, consNodes.item(ndx));
+		}
+	}
+
+	private void addConstraintFromXML(XMLContext context, Node item) throws ParseException {
+		NodeList consParts = item.getChildNodes();
+		Operation op = null;
+		Predicate trigger = null, requires = null;
+		List<Effect> effects = new LinkedList<Effect>();
+		
+		FPLParser parser = new FPLParser(rels, context);
+		
+		for (int ndx = 0; ndx < consParts.getLength(); ndx++) {
+			Node node = consParts.item(ndx);
+			if (!(node instanceof Element))
+				continue;
+			String name = node.getNodeName();
+			
+			if (name.equals("op")) {
+				assert op == null;
+				parser.reset(node.getTextContent());
+				op = parser.operation();
+			}
+			else if (name.equals("trg")) {
+				assert trigger == null;
+				parser.reset(node.getTextContent());
+				trigger = parser.expression();
+			}
+			else if (name.equals("req")) {
+				assert requires == null;
+				parser.reset(node.getTextContent());
+				requires = parser.expression();
+			}
+			else if (name.equals("eff")) {
+				parser.reset(node.getTextContent());
+				effects.add(parser.effect());
+			}
+		}
+		if (trigger == null)
+			trigger = new TruePredicate();
+		if (requires == null)
+			requires = new TruePredicate();
+		constraints.add(new Constraint(op, trigger, requires, effects));
+	}
+
 	public Iterator<Constraint> iterator() {
 		return constraints.iterator();
 	}
+
 }

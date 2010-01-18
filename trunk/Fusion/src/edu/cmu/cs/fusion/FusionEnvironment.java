@@ -50,7 +50,7 @@ public class FusionEnvironment {
 		alias = aliasLattice;
 		bools = boolLattice;
 		tHierarchy = types;
-		inference = new InferenceEnvironment();
+		inference = new InferenceEnvironment(null);
 		continuation = ConsList.empty();
 	}
 	
