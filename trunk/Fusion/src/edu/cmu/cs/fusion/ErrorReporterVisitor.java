@@ -1,6 +1,8 @@
 package edu.cmu.cs.fusion;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -26,12 +28,14 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	private ConstraintChecker checker;
 	private EclipseTAC tac;
 	private FusionAnalysis fa;
+	private Logger log;
 
-	public ErrorReporterVisitor(FusionAnalysis analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac) {
+	public ErrorReporterVisitor(FusionAnalysis analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, Logger log) {
 		this.reporter = reporter;
 		this.checker = constraintChecker;
 		this.fa = analysis;
 		this.tac = tac;
+		this.log = log;
 	}
 
 	
@@ -55,8 +59,12 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
-		for (FusionErrorReport err : errors)
+		for (FusionErrorReport err : errors) {
 			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString());	
+			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
+			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
+			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
+		}
 	}
 
 
@@ -89,8 +97,12 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
-		for (FusionErrorReport err : errors)
+		for (FusionErrorReport err : errors) {
 			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString());	
+			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
+			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
+			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
+		}
 	}
 
 }

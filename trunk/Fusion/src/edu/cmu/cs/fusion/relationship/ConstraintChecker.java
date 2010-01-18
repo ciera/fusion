@@ -121,7 +121,7 @@ public class ConstraintChecker {
 		}
 		
 		if (err != 0)
-			return new FusionErrorReport(new Variant(err), cons);
+			return new FusionErrorReport(new Variant(err), cons, boundVars, env);
 		else
 			return null;
 	}

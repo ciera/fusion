@@ -37,5 +37,14 @@ public class MayAliasWrapper implements AliasContext {
 		
 		return allLabels;
 	}
+	
+	public String toString() {
+		String str = "Points-to: " + lattice.toString() + "\nTypes: {";
+		for (ObjectLabel label : getAllAliases()) {
+			str += label + ":" + label.getType().getQualifiedName() + ", ";
+		}
+		str += "}";
+		return str;
+	}
 
 }

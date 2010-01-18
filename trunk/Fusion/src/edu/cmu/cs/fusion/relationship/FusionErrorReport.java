@@ -1,16 +1,39 @@
 package edu.cmu.cs.fusion.relationship;
 
+import edu.cmu.cs.crystal.tac.model.Variable;
+import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
+import edu.cmu.cs.fusion.constraint.SpecVar;
 
 public class FusionErrorReport {
 	private Variant variant;
 	private Constraint cons;
+	private ConsList<Pair<SpecVar, Variable>> failingVars;
+	private FusionEnvironment failingEnvironment;
 	
 	public FusionErrorReport(Variant variant, Constraint cons) {
-		super();
 		this.variant = variant;
 		this.cons = cons;
+	}
+
+	public FusionErrorReport(Variant variant, Constraint cons,
+			ConsList<Pair<SpecVar, Variable>> boundVars, FusionEnvironment env) {
+		this.variant = variant;
+		this.cons = cons;
+		this.failingVars = boundVars;
+		this.failingEnvironment = env;
+	}
+	
+
+	public ConsList<Pair<SpecVar, Variable>> getFailingVars() {
+		return failingVars;
+	}
+
+	public FusionEnvironment getFailingEnvironment() {
+		return failingEnvironment;
 	}
 
 	public Variant getVariant() {
