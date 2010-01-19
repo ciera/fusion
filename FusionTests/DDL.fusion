@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://code.google.com/p/fusion/stuff/fusion.xsd">
+<Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://fusion.googlecode.com/svn/trunk/Fusion/Fusion.xsd">
 	<Import qualName="edu.cmu.cs.fusion.test.aspnet.api.ListItem"/>
 	<Import qualName="edu.cmu.cs.fusion.test.aspnet.api.DropDownList"/>
 	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Child"/>
