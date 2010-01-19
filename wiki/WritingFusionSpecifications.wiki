@@ -9,4 +9,9 @@ The pages below describe the 5 types of FUSION specifications. The first three a
   # [SpecifyingConstraints Constraints]
   # Infer Rules (optional)
   # XML Retrieval (optional)
+
+=Specifying existing libraries=
+The specifications above require that you annotate code directly. If this is not possible, FUSION allows you to write specifications in XML. This is particularly useful for specifying third-party libraries and frameworks.
+
+[SpecifyingLibraries Specifying Libraries]
  
