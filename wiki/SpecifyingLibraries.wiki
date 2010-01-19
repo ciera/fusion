@@ -20,6 +20,7 @@
   * [http://fusion.googlecode.com/svn/trunk/FusionTests/IO.fusion File I/O]
 
 = Some sample translation =
+==A constraint==
 {{{
 @Constraint(
         op="ListItem.setSelected(boolean selected) : void",
@@ -40,6 +41,7 @@ is the same as
 	</Constraint>
 }}}
 
+==An effect==
 {{{
 public class FileWriter {
    @Writeable(value={"target"}, effect=Effect.REMOVE)
@@ -58,6 +60,7 @@ is the same as
 	</Constraint>
 }}}
 
+==An infer rule==
 {{{
 @Infer(
                 trigger = "Items(list, ctrl) AND Item(item, list)",
