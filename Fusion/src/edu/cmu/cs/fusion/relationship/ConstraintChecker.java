@@ -101,58 +101,75 @@ public class ConstraintChecker {
 	
 	protected FusionErrorReport checkSingleConstraint(FusionEnvironment env, Constraint cons, TACInstruction instr) {
 		ConsList<Pair<SpecVar, Variable>> boundVars = cons.getOp().matches(types, instr);
-		int err = 0;
-		
+
 		if (boundVars == null)
 			return null;
 
 		SubPair pairs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
 		Iterator<Substitution> itr;
-		
+		Variant err = new Variant(0);
+		List<Substitution> failingSubs = new LinkedList<Substitution>();
 		
 		itr = pairs.getDefiniteSubstitutions();
 		while (itr.hasNext()) {
-			err = err | checkPartialBound(env, itr.next(), cons, instr);
+			Pair<Variant, List<Substitution>> error = checkPartialBound(env, itr.next(), cons, instr);
+			err = err.merge(error.fst());
+			if (!error.fst().noError())
+				failingSubs.addAll(error.snd());
 		}
 
 		itr = pairs.getPossibleSubstitutions();
 		while (itr.hasNext()) {
-			err = err | checkPartialBound(env, itr.next(), cons, instr);
+			Pair<Variant, List<Substitution>> error = checkPartialBound(env, itr.next(), cons, instr);
+			err = err.merge(error.fst());
+			if (!error.fst().noError())
+				failingSubs.addAll(error.snd());
 		}
 		
-		if (err != 0)
-			return new FusionErrorReport(new Variant(err), cons, boundVars, env);
+		if (!err.noError())
+			return new FusionErrorReport(err, cons, failingSubs, env);
 		else
 			return null;
 	}
 	
-	protected int checkPartialBound(FusionEnvironment env,
+	protected Pair<Variant, List<Substitution>> checkPartialBound(FusionEnvironment env,
 			Substitution boundSubs, Constraint cons, TACInstruction instr) {
 		
-		int err = 0;
+		Variant err = new Variant(0);
+		List<Substitution> failingSubs = new LinkedList<Substitution>();
 		SubPair pair = env.allValidSubs(boundSubs, cons.getFreeVarsExceptReqs());
 
 		Iterator<Substitution> itr;
 		
 		itr = pair.getDefiniteSubstitutions();
-		while (itr.hasNext())
-			err = err | checkFullyBound(env, itr.next(), cons, instr);
+		while (itr.hasNext()) {
+			Pair<Variant, Substitution> error = checkFullyBound(env, itr.next(), cons, instr);
+			err = err.merge(error.fst());
+			if (!error.fst().noError())
+				failingSubs.add(error.snd());
+		}
 
 		itr = pair.getPossibleSubstitutions();
-		while (itr.hasNext())
-			err = err | checkFullyBound(env, itr.next(), cons, instr);
+		while (itr.hasNext()) {
+			Pair<Variant, Substitution> error = checkFullyBound(env, itr.next(), cons, instr);
+			err = err.merge(error.fst());
+			if (!error.fst().noError())
+				failingSubs.add(error.snd());
+		}
 		
-		return err;
+		return new Pair<Variant, List<Substitution>>(err, failingSubs);
 	}
 
-	protected int checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons, TACInstruction instr) {	
+	protected Pair<Variant, Substitution> checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons, TACInstruction instr) {	
 		int error = 0;
 		boolean definitelyPasses = false;
 		boolean possiblyPasses = false;
+		Substitution failingSubs = null;
 		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 
 		if (trigger != ThreeValue.FALSE) {
+			failingSubs = partialSubs;
 			SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 			
 			//check all three for definite substitutions
@@ -189,7 +206,7 @@ public class ConstraintChecker {
 			}			
 		}
 
-		return error;
+		return new Pair<Variant, Substitution>(new Variant(error), failingSubs);
 	}
 
 	protected RelationshipDelta runPartialBound(FusionEnvironment env,

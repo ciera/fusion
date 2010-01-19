@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.relationship;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -109,10 +111,10 @@ public class TestPartialBound extends ConstraintChecker{
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(0, delta.numberOfChanges());	
-		assertEquals(0, error & Variant.PRAGMATIC);			
+		assertTrue(errs.fst().noError());			
 	}
 	
 	@Test
@@ -138,7 +140,7 @@ public class TestPartialBound extends ConstraintChecker{
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -146,7 +148,7 @@ public class TestPartialBound extends ConstraintChecker{
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
 		
-		assertEquals(0, error & Variant.PRAGMATIC);			
+		assertTrue(!errs.fst().isPragmatic());			
 	}
 	
 	@Test
@@ -169,7 +171,7 @@ public class TestPartialBound extends ConstraintChecker{
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -177,7 +179,7 @@ public class TestPartialBound extends ConstraintChecker{
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertEquals(0, error & Variant.COMPLETE);			
+		assertTrue(!errs.fst().isComplete());			
 	}
 	
 	@Test
@@ -202,7 +204,7 @@ public class TestPartialBound extends ConstraintChecker{
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -210,6 +212,6 @@ public class TestPartialBound extends ConstraintChecker{
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertEquals(0, error & Variant.COMPLETE);			
+		assertTrue(!errs.fst().isComplete());			
 	}
 }

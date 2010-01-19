@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import edu.cmu.cs.crystal.IAnalysisReporter;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
+import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.FusionErrorReport;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
@@ -64,6 +65,8 @@ public class ErrorReporterVisitor extends ASTVisitor {
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
+			for (Substitution failure : err.getFailingVars())
+				log.log(Level.INFO, "Failing subtitution " + failure.toString());
 		}
 	}
 
@@ -102,6 +105,8 @@ public class ErrorReporterVisitor extends ASTVisitor {
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
+			for (Substitution failure : err.getFailingVars())
+				log.log(Level.INFO, "Failing subtitution " + failure.toString());
 		}
 	}
 

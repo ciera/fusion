@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import edu.cmu.cs.fusion.annot.Relation;
-import edu.cmu.cs.fusion.test.iterator.api.Iterator;
+import java.util.Iterator;
 
 @Relation({Iterator.class})
 @Retention(RetentionPolicy.RUNTIME)
