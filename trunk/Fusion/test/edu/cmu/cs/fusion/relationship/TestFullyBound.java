@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.relationship;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -157,10 +159,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, noEffectCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, noEffectCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, noEffectCons, new StubMethodCallInstruction());
 		
 		assertEquals(0, delta.numberOfChanges());
-		assertEquals(0, error & Variant.PRAGMATIC);
+		assertTrue(error.fst().noError());
 	}
 
 	@Test
@@ -191,7 +193,7 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
 
 		Relationship eRel1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 		Relationship eRel2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
@@ -200,7 +202,7 @@ public class TestFullyBound extends ConstraintChecker {
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eRel2));
 	
-		assertEquals(0, error & Variant.PRAGMATIC);
+		assertTrue(!error.fst().isPragmatic());
 	}
 
 	@Test
@@ -231,14 +233,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, severalEffectCons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
 	
-		assertEquals(0, error & Variant.PRAGMATIC);
+		assertTrue(!error.fst().isPragmatic());
 	}
 	
 	@Test
@@ -256,14 +258,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.PRAGMATIC);
+		assertTrue(!error.fst().isPragmatic());
 	}
 
 	@Test
@@ -282,12 +284,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(Variant.PRAGMATIC, error & Variant.PRAGMATIC);
+		assertTrue(error.fst().isPragmatic());
 	}
 
 	@Test
@@ -308,12 +310,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(Variant.PRAGMATIC, error & Variant.PRAGMATIC);
+		assertTrue(error.fst().isPragmatic());
 	}
 
 	@Test
@@ -323,10 +325,10 @@ public class TestFullyBound extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		RelationshipDelta delta = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
 
 		assertEquals(0, delta.numberOfChanges());
-		assertEquals(0, error & Variant.PRAGMATIC);
+		assertTrue(!error.fst().isPragmatic());
 	}
 
 	@Test
@@ -343,14 +345,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.PRAGMATIC);
+		assertTrue(!error.fst().isPragmatic());
 	}
 
 	@Test
@@ -368,14 +370,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.SOUND);
+		assertTrue(!error.fst().isSound());
 	}
 
 	@Test
@@ -394,12 +396,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(Variant.SOUND, error & Variant.SOUND);
+		assertTrue(error.fst().isSound());
 	}
 
 	@Test
@@ -420,12 +422,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(Variant.SOUND, error & Variant.SOUND);
+		assertTrue(error.fst().isSound());
 	}
 
 	@Test
@@ -435,10 +437,10 @@ public class TestFullyBound extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		RelationshipDelta delta = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
 
 		assertEquals(0, delta.numberOfChanges());
-		assertEquals(0, error & Variant.SOUND);
+		assertTrue(!error.fst().isSound());
 	}
 
 	@Test
@@ -455,14 +457,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.SOUND);
+		assertTrue(!error.fst().isSound());
 	}
 
 	@Test
@@ -479,12 +481,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
 		
-		assertEquals(Variant.SOUND, error & Variant.SOUND);
+		assertTrue(error.fst().isSound());
 	}
 
 	@Test
@@ -504,12 +506,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
 		
-		assertEquals(Variant.SOUND, error & Variant.SOUND);
+		assertTrue(error.fst().isSound());
 	}
 
 	
@@ -528,14 +530,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.COMPLETE);
+		assertTrue(!error.fst().isComplete());
 	}
 
 	@Test
@@ -553,14 +555,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.COMPLETE);
+		assertTrue(!error.fst().isComplete());
 	}
 
 	@Test
@@ -579,12 +581,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.COMPLETE);
+		assertTrue(!error.fst().isComplete());
 	}
 	
 	@Test
@@ -606,12 +608,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.COMPLETE);
+		assertTrue(!error.fst().isComplete());
 	}
 
 
@@ -634,12 +636,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, possCons, new StubMethodCallInstruction());
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
 		
-		assertEquals(Variant.COMPLETE, error & Variant.COMPLETE);
+		assertTrue(error.fst().isComplete());
 	}
 
 	@Test
@@ -649,10 +651,10 @@ public class TestFullyBound extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		RelationshipDelta delta = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons, new StubMethodCallInstruction());
 
 		assertEquals(0, delta.numberOfChanges());
-		assertEquals(0, error & Variant.COMPLETE);
+		assertTrue(!error.fst().isComplete());
 	}
 
 	@Test
@@ -669,13 +671,13 @@ public class TestFullyBound extends ConstraintChecker {
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
 		RelationshipDelta delta = runFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
-		int error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
+		Pair<Variant, Substitution> error = checkFullyBound(env, partialSub, cons, new StubMethodCallInstruction());
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
 		assertEquals(1, delta.numberOfChanges());
 		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
 		
-		assertEquals(0, error & Variant.COMPLETE);	
+		assertTrue(!error.fst().isComplete());
 	}
 }

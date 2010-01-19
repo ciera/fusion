@@ -61,7 +61,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		log = Logger.getLogger("edu.cmu.cs.fusion");
-		log.setLevel(Level.INFO);
+		log.setLevel(Level.CONFIG);
 	}
 
 	public void beforeAllCompilationUnits() {
@@ -76,7 +76,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			ResourcesPlugin.getWorkspace().getRoot().accept(new XMLFileVisitor(constraints, infers));
 			
 			for (Constraint cons : constraints) {
-				log.log(Level.CONFIG, cons.toString());
+				log.log(Level.INFO, cons.toString());
 			}
 			
 		} catch (CoreException err) {
@@ -127,7 +127,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			
 			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
 			methodDecl.accept(debugger);
-			log.log(Level.CONFIG, debugger.getResult());
+			log.log(Level.INFO, debugger.getResult());
 			
 			EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
 			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, new ConstraintChecker(constraints, types), reporter, tac, log);

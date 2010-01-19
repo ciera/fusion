@@ -7,9 +7,9 @@ import java.lang.annotation.Target;
 
 
 import edu.cmu.cs.fusion.annot.Relation;
-import edu.cmu.cs.fusion.test.iterator.api.*;
+import java.util.*;
 
-@Relation({Iterator.class, Collection.class})
+@Relation({Iterator.class, Iterable.class})
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
 public @interface CollIterator {

@@ -2,7 +2,7 @@ package edu.cmu.cs.fusion.test.iterator.clients;
 
 import edu.cmu.cs.crystal.annotations.FailingTest;
 import edu.cmu.cs.crystal.annotations.UseAnalyses;
-import edu.cmu.cs.fusion.test.iterator.api.*;
+import java.util.*;
 
 @FailingTest(1)
 @UseAnalyses("FusionAnalysis")
