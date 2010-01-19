@@ -4,7 +4,7 @@
 = Steps to specify a library =
   # As before, [SpecifyingRelations specify the relations as annotations]
   # Create an XML file with the extension .fusion and the [http://fusion.googlecode.com/svn/trunk/Fusion/Fusion.xsd FUSION schema]
-  # Use the Import element to specify the fully qualified names of the types you will use. Failure to do this will result in errors. The wildcard * cannot be used.
+  # Use the Import element to specify the fully qualified names of the types you will use. Failure to do this will result in errors. The wildcard `*` cannot be used.
   # Add constraints and infers to the .fusion file. The format is the same as for the strings in @Constraint and @Infer.
     * Constraints
       * The op element is required for constraints.
