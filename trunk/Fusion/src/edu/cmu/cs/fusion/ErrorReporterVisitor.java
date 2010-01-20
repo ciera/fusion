@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
 import edu.cmu.cs.crystal.IAnalysisReporter;
+import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.fusion.constraint.Substitution;
@@ -61,7 +62,8 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
 		for (FusionErrorReport err : errors) {
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString());	
+			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
@@ -101,7 +103,8 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
 		for (FusionErrorReport err : errors) {
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString());	
+			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());

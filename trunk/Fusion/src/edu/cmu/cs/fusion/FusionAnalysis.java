@@ -69,6 +69,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		constraints = new ConstraintEnvironment(rels);
 		infers = new InferenceEnvironment(rels);
 		try {
+			ReportingUtility.clearMarkers(ResourcesPlugin.getWorkspace().getRoot());
+			
 			rels.populate(null);
 			constraints.populate(null);
 			infers.populate(null);
