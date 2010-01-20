@@ -4,7 +4,7 @@ import edu.cmu.cs.fusion.annot.Constraint;
 import edu.cmu.cs.fusion.annot.Constraints;
 import edu.cmu.cs.fusion.annot.Infer;
 import edu.cmu.cs.fusion.test.aspnet.relations.*;
-/*
+
 @Constraints({
 @Constraint(
 	op="ListItem.setSelected(boolean selected) : void",
@@ -24,7 +24,7 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 		requires = "FALSE",
 		effects = {}
 	)})
-*/
+
 public class DropDownList extends ListControl {
 
 }
