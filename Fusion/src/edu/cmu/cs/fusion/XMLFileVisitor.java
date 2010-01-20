@@ -18,7 +18,6 @@ import org.xml.sax.SAXException;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.XMLContext;
-import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
 public class XMLFileVisitor implements IResourceVisitor {	
 	
@@ -36,8 +35,8 @@ public class XMLFileVisitor implements IResourceVisitor {
 				File file = resource.getLocation().toFile();
 				Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 				XMLContext context = createContext(file.getAbsolutePath(), doc);
-				constraints.populateFromXMLFile(doc, context);
-				infers.populateFromXMLFile(doc, context);
+				constraints.populateFromXMLFile(resource, doc, context);
+				infers.populateFromXMLFile(resource, doc, context);
 				return false;
 			}
 				
@@ -46,8 +45,6 @@ public class XMLFileVisitor implements IResourceVisitor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return true;
