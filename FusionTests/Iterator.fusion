@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://fusion.googlecode.com/svn/trunk/Fusion/Fusion.xsd">
+<Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../Fusion/Fusion.xsd">
 	<Import qualName="java.lang.Object"/>
 	<Import qualName="java.lang.Iterable"/>
 	<Import qualName="java.util.Collection"/>
