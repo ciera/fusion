@@ -6,7 +6,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @FailingTest(2)
 @UseAnalyses("FusionAnalysis")
-public class MultiLists {
+public class MultiLists extends Page {
 	public void multiLists(DropDownList ctrlA, DropDownList ctrlB) {
 		ListItem newSel, oldSel; 
 			

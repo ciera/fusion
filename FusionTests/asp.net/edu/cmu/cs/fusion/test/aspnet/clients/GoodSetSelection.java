@@ -6,7 +6,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @PassingTest
 @UseAnalyses("FusionAnalysis")
-public class GoodSetSelection {
+public class GoodSetSelection extends Page {
 	public void goodSetSelection(DropDownList ctrl) {
 		ListItem newSel, oldSel; 
 		

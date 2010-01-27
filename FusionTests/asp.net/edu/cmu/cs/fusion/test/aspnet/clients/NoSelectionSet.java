@@ -6,7 +6,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @FailingTest(1)
 @UseAnalyses("FusionAnalysis")
-public class NoSelectionSet {
+public class NoSelectionSet extends Page {
 	public void noSelectionSet(DropDownList ctrl) {
 		ListItem newSel; 
 
