@@ -71,12 +71,13 @@ public class InferRequestor extends SearchRequestor {
 		try {			
 			parser.reset(trgString);
 			trigger = parser.expression();
+			assert(trigger != null);
 			
 			for (String eString : effStrings) {
 				parser.reset(eString);
 				effects.add(parser.effect());
 			}
-
+			
 			inferRules.add(new InferredRel(trigger, effects));
 		} catch (ParseException e) {
 			ReportingUtility.reportParseError(infer.getResource(), infer.getNameRange(), e.getMessage());
