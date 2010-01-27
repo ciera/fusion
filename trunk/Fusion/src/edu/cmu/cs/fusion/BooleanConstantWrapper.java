@@ -1,9 +1,7 @@
 package edu.cmu.cs.fusion;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
@@ -41,26 +39,11 @@ public class BooleanConstantWrapper implements BooleanContext {
 			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> aliasAnalysis, boolean resultValue) {
 		this(instr, constants, aliasAnalysis);
 		
-		assert getAfterAliasLabels(instr.getTarget(), aliasAnalysis.getResultsAfter(instr)).size() == 1;
-		//If there's more than one...something wacky is going on....should still work though....
-		for (ObjectLabel returnLabel : getAfterAliasLabels(instr.getTarget(), aliasAnalysis.getResultsAfter(instr))) {
+		//Need to fill in the cache with the returned value as well as what we normally have (which uses before results
+		AliasLE retAliases = aliasAnalysis.getResultsAfter(instr).get(instr.getTarget());
+		for (ObjectLabel returnLabel : retAliases.getLabels()) {
 			cache.put(returnLabel, resultValue ? ThreeValue.TRUE : ThreeValue.FALSE);
 		}
-	}
-	
-	private Set<ObjectLabel> getAfterAliasLabels(Variable searchVariable, TupleLatticeElement<Variable, AliasLE> le) {
-		//TODO: Find a cheaper way of maintaining this context and have the ability
-		//to query it at any node. Maybe a Contextual Lattice?
-		Set<ObjectLabel> labels = new HashSet<ObjectLabel>();
-		for (Variable var : le.getKeySet()) {
-			Set<ObjectLabel> aliases = le.get(var).getLabels();
-			
-			for (ObjectLabel label : aliases) {
-				if (searchVariable.resolveType().isCastCompatible(label.getType()))
-					labels.add(label);
-			}
-		}
-		return labels;
 	}
 
 	public ThreeValue getBooleanValue(ObjectLabel label) {
