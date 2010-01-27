@@ -146,7 +146,7 @@ public class RelationshipContext {
 	 */
 	public RelationshipContext applyChangesFromDelta(RelationshipDelta delta) {
 		RelationshipContext changed = new RelationshipContext(this);
-		changed.isBottom = delta.numberOfChanges() == 0;
+		changed.isBottom = isBottom && delta.numberOfChanges() == 0;
 		
 		for (Entry<Relationship, ThreeValue> entry : delta)
 			changed.setRelationship(entry.getKey(), entry.getValue());
