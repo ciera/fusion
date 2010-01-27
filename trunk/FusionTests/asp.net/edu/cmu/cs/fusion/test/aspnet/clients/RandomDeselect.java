@@ -6,7 +6,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @FailingTest(2)
 @UseAnalyses("FusionAnalysis")
-public class RandomDeselect {
+public class RandomDeselect extends Page {
 	public void noSelectionSet(DropDownList ctrl) {
 		ListItem newSel; 
 		ListItemCollection coll;

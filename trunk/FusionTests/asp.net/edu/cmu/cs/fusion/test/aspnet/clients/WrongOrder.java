@@ -6,7 +6,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @FailingTest(2)
 @UseAnalyses("FusionAnalysis")
-public class WrongOrder {
+public class WrongOrder extends Page {
 	public void wrongOrder(DropDownList ctrl) {
 		ListItem newSel, oldSel; 
 		

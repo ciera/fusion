@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asp:Page xmlns:asp="aspx" ID="MyPage">
+	<asp:LoginView ID="LoginScreen">
+	<asp:DropDownList ID="DDL2">
+	</asp:DropDownList>
+	</asp:LoginView>
+	<asp:DropDownList ID="DDL">
+	</asp:DropDownList>
+</asp:Page>
