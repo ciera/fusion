@@ -3,6 +3,8 @@ package edu.cmu.cs.fusion.constraint;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -17,6 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.ReportingUtility;
@@ -26,7 +29,7 @@ import edu.cmu.cs.fusion.constraint.requestors.EffectRequestor;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
-public class ConstraintEnvironment implements Iterable<Constraint> {
+public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
 	List<Constraint> constraints;
 	private RelationsEnvironment rels;
 	
@@ -53,13 +56,14 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 		constraints.addAll(effReq.getConstraints());
 	}
 
-	public void populateFromXMLFile(IResource resource, Document doc, XMLContext context) {
-		NodeList consNodes = doc.getDocumentElement().getElementsByTagName("Constraint");
+	public void update(Observable o, Object arg) {
+		Triple<IResource, Document, XMLContext> triple = (Triple<IResource, Document, XMLContext>)arg;
+		NodeList consNodes = triple.snd().getDocumentElement().getElementsByTagName("Constraint");
 		for (int ndx = 0; ndx < consNodes.getLength(); ndx++) {
-			addConstraintFromXML(resource, context, consNodes.item(ndx));
+			addConstraintFromXML(triple.fst(), triple.thrd(), consNodes.item(ndx));
 		}
 	}
-
+	
 	private void addConstraintFromXML(IResource resource, XMLContext context, Node item) {
 		try {
 			NodeList consParts = item.getChildNodes();
@@ -108,5 +112,4 @@ public class ConstraintEnvironment implements Iterable<Constraint> {
 	public Iterator<Constraint> iterator() {
 		return constraints.iterator();
 	}
-
 }

@@ -20,6 +20,7 @@ import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 import edu.cmu.cs.fusion.test.TestUtils;
+import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class TestMethodInvocationOp {
 	static TestUtils utils;
@@ -45,12 +46,12 @@ public class TestMethodInvocationOp {
 	
 	@Test
 	public void testMatchWrongInstr() {
-		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
+		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Bar"), new NamedTypeBinding("Baz")};
 		List<StubVariable> params = new ArrayList<StubVariable>();
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 		
-		NewObjectInstruction instr = new StubNewObjectInstruction(params, new StubMethodBinding(new StubTypeBinding("Foo"), vBindings), new StubVariable());	
+		NewObjectInstruction instr = new StubNewObjectInstruction(params, new StubMethodBinding(new NamedTypeBinding("Foo"), vBindings), new StubVariable());	
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "void");
@@ -180,8 +181,8 @@ public class TestMethodInvocationOp {
 	}
 
 	private MethodCallInstruction getMCI(StubVariable resVar, List<StubVariable> params, StubVariable tarVar) {
-		StubTypeBinding rBinding = new StubTypeBinding("Foo");		
-		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
+		NamedTypeBinding rBinding = new NamedTypeBinding("Foo");		
+		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Bar"), new NamedTypeBinding("Baz")};
 		
 		return new StubMethodCallInstruction("mName", resVar, params, new StubMethodBinding(rBinding, vBindings), tarVar);	
 	}

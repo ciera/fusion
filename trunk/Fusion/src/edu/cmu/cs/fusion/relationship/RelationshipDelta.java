@@ -88,6 +88,18 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		return joined;
 	}
 	
+	/**
+	 * Join two deltas together. Convenience method for use instead of join(List<RelationshipDelta>).
+	 */
+	static public RelationshipDelta join(RelationshipDelta d1, RelationshipDelta d2) {
+		RelationshipDelta joined = new RelationshipDelta();
+		
+		joined.rels = new HashMap<Relationship, ThreeValue>(d1.rels);
+		joined.join(d2, false);
+		
+		return joined;
+	}
+	
 	
 	private void join(RelationshipDelta other, boolean isEquality) {
 		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());

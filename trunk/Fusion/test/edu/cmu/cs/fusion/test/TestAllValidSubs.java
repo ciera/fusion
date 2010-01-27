@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
@@ -48,6 +49,8 @@ public class TestAllValidSubs {
 				return superType.equals("Baz") || superType.equals("Bar");
 			else
 				return false;
+		}
+		public void sendToXML(Document doc) {
 		}
 	};
 	

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
@@ -28,9 +29,9 @@ import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
 import edu.cmu.cs.fusion.test.constraint.operations.StubNewObjectInstruction;
-import edu.cmu.cs.fusion.test.constraint.operations.StubTypeBinding;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
+import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class TestSingleConstraint extends ConstraintChecker {
 	static Constraint cons;
@@ -93,6 +94,8 @@ public class TestSingleConstraint extends ConstraintChecker {
 				else
 					return false;
 			}
+			public void sendToXML(Document doc) {
+			}
 		};
 	}
 
@@ -110,7 +113,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		vars.add(new StubVariable());
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("m", new StubVariable(), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Foo")}), new StubVariable());
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Foo")}), new StubVariable());
 		
 		//op has type Foo.methodName(Foo) : Bar
 		//instr has type Foo.m(Foo) : Bar
@@ -136,7 +139,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		vars.add(new StubVariable("p0"));
 		
 		StubNewObjectInstruction instr = new StubNewObjectInstruction(vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getTarget(), labels[3]);
@@ -173,7 +176,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -201,7 +204,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -229,7 +232,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -260,7 +263,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		vars.add(new StubVariable("p0"));
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new StubTypeBinding("Foo"), new StubTypeBinding[]{new StubTypeBinding("Bar")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);

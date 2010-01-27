@@ -6,13 +6,15 @@ import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
+import edu.cmu.cs.fusion.xml.NamedTypeBinding;
+
 public class StubMethodBinding implements IMethodBinding {
-	private StubTypeBinding receiverType;
-	private StubTypeBinding[] paramTypes;
+	private NamedTypeBinding receiverType;
+	private NamedTypeBinding[] paramTypes;
 	
 
-	public StubMethodBinding(StubTypeBinding receiverType,
-			StubTypeBinding[] paramTypes) {
+	public StubMethodBinding(NamedTypeBinding receiverType,
+			NamedTypeBinding[] paramTypes) {
 		this.receiverType = receiverType;
 		this.paramTypes = paramTypes;
 	}

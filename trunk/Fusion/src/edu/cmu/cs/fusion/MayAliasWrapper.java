@@ -23,6 +23,11 @@ public class MayAliasWrapper implements AliasContext {
 	public MayAliasWrapper(ASTNode node, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> flowAnalysis) {
 		lattice = flowAnalysis.getResultsAfter(node);
 	}
+	
+	public MayAliasWrapper(TupleLatticeElement<Variable, AliasLE> lattice) {
+		this.lattice = lattice;
+	}
+	
 	public Set<ObjectLabel> getAliases(Variable var) {
 		return lattice.get(var).getLabels();
 	}

@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
@@ -51,6 +52,8 @@ public class TestFindLabels {
 				return superType.equals("Baz") || superType.equals("Bar");
 			else
 				return false;
+		}
+		public void sendToXML(Document doc) {
 		}
 	};
 	

@@ -24,6 +24,10 @@ public class Relationship {
 		return parameters[ndx];
 	}
 	
+	public Relation getRelation() {
+		return type;
+	}
+	
 	public String getName() {
 		return type.getName();
 	}
@@ -70,4 +74,5 @@ public class Relationship {
 		str += ")";
 		return str;
 	}
+
 }

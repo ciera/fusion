@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
+import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.flow.BooleanLabel;
 import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.flow.LabeledResult;
 import edu.cmu.cs.crystal.flow.LabeledSingleResult;
+import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
+import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.BooleanConstantWrapper;
@@ -23,6 +26,7 @@ import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.MayAliasWrapper;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
+import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTransferFunction<RelationshipContext> {
@@ -31,6 +35,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	protected TypeHierarchy types;
 	private InferenceEnvironment infers;
 	private ConstraintChecker checker;
+	private XMLRetriever retriever;
 	
 	/**
 	 * Do not use, only for testing purposes.
@@ -41,15 +46,24 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		checker = new ConstraintChecker(null, null);
 	}
 	
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, TypeHierarchy types) throws FusionException {
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, TypeHierarchy types, XMLRetriever retriever) throws FusionException {
 		mainAnalysis = relAnalysis;
 		this.infers = inf;
 		this.types = types;
 		checker = new ConstraintChecker(constraints, types);
+		this.retriever = retriever;
 	}
 
+	/**
+	 * Get the entry value based on the starting context received from the XML files.
+	 */
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
-		return new RelationshipContext(false);
+		Variable thisVar = getAnalysisContext().getThisVariable();
+		TupleLatticeElement<Variable, AliasLE> aliases = mainAnalysis.getAliasAnalysis().getResultsBefore(method.getBody());
+		
+		RelationshipContext startingContext = retriever.getStartContext(thisVar, new MayAliasWrapper(aliases));
+		
+		return startingContext;
 	}
 
 	public ILatticeOperations<RelationshipContext> getLatticeOperations() {
