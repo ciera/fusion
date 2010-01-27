@@ -20,6 +20,7 @@ import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 import edu.cmu.cs.fusion.test.TestUtils;
+import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class TestNewObjectInstructionOp {
 	static TestUtils utils;
@@ -43,12 +44,12 @@ public class TestNewObjectInstructionOp {
 	
 	@Test
 	public void testMatchWrongInstr() {
-		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
+		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Bar"), new NamedTypeBinding("Baz")};
 		List<StubVariable> params = new ArrayList<StubVariable>();
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 		
-		StubTypeBinding rBinding = new StubTypeBinding("Foo");		
+		NamedTypeBinding rBinding = new NamedTypeBinding("Foo");		
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("mName", new StubVariable(), params, new StubMethodBinding(rBinding, vBindings), new StubVariable());	
 		
@@ -138,8 +139,8 @@ public class TestNewObjectInstructionOp {
 	private NewObjectInstruction getNOI(StubVariable tarVar, StubVariable param) {
 		List<StubVariable> params = new LinkedList<StubVariable>();
 		params.add(param);
-		StubTypeBinding rBinding = new StubTypeBinding("Foo");		
-		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar")};
+		NamedTypeBinding rBinding = new NamedTypeBinding("Foo");		
+		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Bar")};
 		
 		return new StubNewObjectInstruction(params, new StubMethodBinding(rBinding, vBindings), tarVar);	
 	}

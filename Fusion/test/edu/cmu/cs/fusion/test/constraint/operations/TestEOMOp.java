@@ -19,6 +19,7 @@ import edu.cmu.cs.fusion.constraint.operations.EndOfMethodOp;
 import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 import edu.cmu.cs.fusion.test.TestUtils;
 import edu.cmu.cs.fusion.test.constraint.DefaultReturnInstruction;
+import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class TestEOMOp {
 	static TestUtils utils;
@@ -38,12 +39,12 @@ public class TestEOMOp {
 	
 	@Test
 	public void testMatchWrongInstr() {
-		StubTypeBinding[] vBindings = new StubTypeBinding[] {new StubTypeBinding("Bar"), new StubTypeBinding("Baz")};
+		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Bar"), new NamedTypeBinding("Baz")};
 		List<StubVariable> params = new ArrayList<StubVariable>();
 		params.add(new StubVariable());
 		params.add(new StubVariable());
 		
-		StubTypeBinding rBinding = new StubTypeBinding("Foo");		
+		NamedTypeBinding rBinding = new NamedTypeBinding("Foo");		
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("mName", new StubVariable(), params, new StubMethodBinding(rBinding, vBindings), new StubVariable());	
 		

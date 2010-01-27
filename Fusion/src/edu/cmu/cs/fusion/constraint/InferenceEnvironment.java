@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
@@ -19,13 +21,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.ReportingUtility;
 import edu.cmu.cs.fusion.constraint.requestors.InferRequestor;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
-public class InferenceEnvironment implements Iterable<InferredRel>{
+public class InferenceEnvironment implements Iterable<InferredRel>, Observer{
 	private Set<InferredRel> inferRules;
 	private RelationsEnvironment rels;
 
@@ -62,10 +65,11 @@ public class InferenceEnvironment implements Iterable<InferredRel>{
 		inferRules.addAll(requestor.getRules());
 	}
 
-	public void populateFromXMLFile(IResource resource, Document doc, XMLContext context) {
-		NodeList consNodes = doc.getDocumentElement().getElementsByTagName("Infer");
+	public void update(Observable o, Object arg) {
+		Triple<IResource, Document, XMLContext> triple = (Triple<IResource, Document, XMLContext>)arg;
+		NodeList consNodes = triple.snd().getDocumentElement().getElementsByTagName("Infer");
 		for (int ndx = 0; ndx < consNodes.getLength(); ndx++) {
-			addInferFromXML(resource, context, consNodes.item(ndx));
+			addInferFromXML(triple.fst(), triple.thrd(), consNodes.item(ndx));
 		}
 	}
 

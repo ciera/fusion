@@ -539,4 +539,22 @@ public class StubIType implements IType {
 		return null;
 	}
 
+	public void codeComplete(char[] snippet, int insertion, int position,
+			char[][] localVariableTypeNames, char[][] localVariableNames,
+			int[] localVariableModifiers, boolean isStatic,
+			CompletionRequestor requestor, IProgressMonitor monitor)
+			throws JavaModelException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void codeComplete(char[] snippet, int insertion, int position,
+			char[][] localVariableTypeNames, char[][] localVariableNames,
+			int[] localVariableModifiers, boolean isStatic,
+			CompletionRequestor requestor, WorkingCopyOwner owner,
+			IProgressMonitor monitor) throws JavaModelException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

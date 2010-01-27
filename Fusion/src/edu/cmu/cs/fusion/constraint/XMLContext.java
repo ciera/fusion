@@ -494,4 +494,20 @@ public class XMLContext implements IType {
 
 	}
 
+	public void codeComplete(char[] snippet, int insertion, int position,
+			char[][] localVariableTypeNames, char[][] localVariableNames,
+			int[] localVariableModifiers, boolean isStatic,
+			CompletionRequestor requestor, IProgressMonitor monitor)
+			throws JavaModelException {
+		throw new UnsupportedOperationException("Stub type for XML file");
+	}
+
+	public void codeComplete(char[] snippet, int insertion, int position,
+			char[][] localVariableTypeNames, char[][] localVariableNames,
+			int[] localVariableModifiers, boolean isStatic,
+			CompletionRequestor requestor, WorkingCopyOwner owner,
+			IProgressMonitor monitor) throws JavaModelException {
+		throw new UnsupportedOperationException("Stub type for XML file");
+	}
+
 }

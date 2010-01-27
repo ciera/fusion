@@ -31,6 +31,7 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
+import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
@@ -45,6 +46,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private IJavaProject project;
 	private TypeHierarchy types;
 	private boolean majorErrorOccured = false;
+	private XMLRetriever retriever;
 
 	/**
 	 * Default constructor which Crystal will use to create the entire analysis.
@@ -61,13 +63,15 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		log = Logger.getLogger("edu.cmu.cs.fusion");
-		log.setLevel(Level.CONFIG);
+		log.setLevel(Level.INFO);
 	}
 
 	public void beforeAllCompilationUnits() {
 		rels = new RelationsEnvironment();
 		constraints = new ConstraintEnvironment(rels);
 		infers = new InferenceEnvironment(rels);
+		retriever = new XMLRetriever(rels);
+		majorErrorOccured = false;
 		try {
 			ReportingUtility.clearMarkers(ResourcesPlugin.getWorkspace().getRoot());
 			
@@ -75,10 +79,15 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			constraints.populate(null);
 			infers.populate(null);
 			
-			ResourcesPlugin.getWorkspace().getRoot().accept(new XMLFileVisitor(constraints, infers));
+			FusionFileVisitor visitor = new FusionFileVisitor();
+			visitor.addObserver(constraints);
+			visitor.addObserver(infers);
+			visitor.addObserver(retriever);
+			
+			ResourcesPlugin.getWorkspace().getRoot().accept(visitor);
 			
 			for (Constraint cons : constraints) {
-				log.log(Level.INFO, cons.toString());
+				log.log(Level.CONFIG, cons.toString());
 			}
 			
 		} catch (CoreException err) {
@@ -92,17 +101,21 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	@Override
 	public void beforeAllMethods(ICompilationUnit compUnit,
 			CompilationUnit rootNode) {
-
-		if (project == null || !project.equals(compUnit.getJavaProject())) {
-			//we have a new project. reset the type hierarchy
-			project = compUnit.getJavaProject();
-			try {
+		try {
+			if (project == null || !project.equals(compUnit.getJavaProject())) {
+				//we have a new project. reset the type hierarchy
+				project = compUnit.getJavaProject();
 				IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
 				types = new CachedTypeHierarchy(project, monitor);
 				FreeVars.setHierarchy(types);
-			} catch (JavaModelException e) {
-				log.log(Level.SEVERE, "Could not create type hierarchy", e);
 			}
+			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), types);
+		} catch (JavaModelException e) {
+			log.log(Level.SEVERE, "Could not create type hierarchy", e);
+			majorErrorOccured = true;
+		} catch (CoreException e) {
+			log.log(Level.SEVERE, "Could not create type hierarchy", e);
+			majorErrorOccured = true;
 		}
 	}
 
@@ -111,12 +124,12 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public void analyzeMethod(MethodDeclaration methodDecl) {
-		if (types == null || majorErrorOccured) {
+		if (majorErrorOccured) {
 			log.log(Level.SEVERE, "something was wrong in initial setup, check log above");
 			return;
 		}
 		try {
-			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types);
+			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types, retriever);
 			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);

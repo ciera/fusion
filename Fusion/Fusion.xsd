@@ -53,10 +53,10 @@
 
     <xsi:complexType name="XMLSchema">
     	<xsi:sequence>
+    		<xsi:element name="locals" type="xsi:string"></xsi:element>
     		<xsi:element name="topElement" type="xsi:string"
     			maxOccurs="unbounded" minOccurs="0">
     		</xsi:element>
-    		<xsi:element name="type" type="xsi:string"></xsi:element>
     		<xsi:element name="query" type="xsi:string" maxOccurs="unbounded" minOccurs="1"></xsi:element>
     	</xsi:sequence>
     	<xsi:attribute name="schemaURI" type="xsi:string"></xsi:attribute>
