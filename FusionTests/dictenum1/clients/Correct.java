@@ -6,7 +6,7 @@ import api.Enumeration;
 public class Correct {
 
 	public void m1() {
-		Dictionary d  = new Dictionary();
+		Dictionary<Object> d  = new Dictionary<Object>();
 		Enumeration e;
 		d.size();
 		e = d.keys();		
