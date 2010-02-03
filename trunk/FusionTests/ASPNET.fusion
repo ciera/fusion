@@ -2,8 +2,9 @@
 <Specs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../Fusion/Fusion.xsd">
 	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Child"/>
 	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.SubControl"/>
-	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.CorrectlySelected"/>
-	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Selected"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.AnonymousControl"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.LoggedInControl"/>
+	<Import qualName="edu.cmu.cs.fusion.test.aspnet.relations.Name"/>
 	<XMLSchema schema="aspx">
 		<locals>
 			declare namespace asp="aspx";
@@ -14,7 +15,7 @@
       		   concat("edu.cmu.cs.fusion.test.aspnet.api.",local-name($element))
 		    };
 		    declare function local:name($element as node()) as xs:string {
-      		   concat($doc, ":", data($element/@ID))
+      		   data($element/@ID)
 		    };
 		</locals>
 		<topElement>
@@ -41,6 +42,41 @@
 			for $subControl in $control/asp:*
 			where fusion:isSubtype(local:type($control), "edu.cmu.cs.fusion.test.aspnet.api.Control") and fusion:isSubtype(local:type($subControl), "edu.cmu.cs.fusion.test.aspnet.api.Control")
 			return <Relationship name="SubControl" effect="ADD">
+						<Object name ="{local:name($subControl)}" type="{local:type($subControl)}"/>
+						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
+					</Relationship>
+			]]>
+		</query>
+		<query>
+			<![CDATA[			
+			let $page := doc($doc)/asp:Page/.
+			for $control in $page/*/asp:*
+			where fusion:isSubtype(local:type($control), "edu.cmu.cs.fusion.test.aspnet.api.Control")
+			return <Relationship name="Name" effect="ADD">
+						<Object name ="{data($control/@ID)}" type="java.lang.String"/>
+						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
+					</Relationship>
+			]]>
+		</query>
+		<query>
+			<![CDATA[			
+			let $page := doc($doc)/asp:Page/.
+			for $control in $page/asp:LoginView
+			for $subControl in $control/AnonymousTemplate/asp:*
+			where fusion:isSubtype(local:type($subControl), "edu.cmu.cs.fusion.test.aspnet.api.Control")
+			return <Relationship name="AnonymousControl" effect="ADD">
+						<Object name ="{local:name($subControl)}" type="{local:type($subControl)}"/>
+						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
+					</Relationship>
+			]]>
+		</query>
+		<query>
+			<![CDATA[			
+			let $page := doc($doc)/asp:Page/.
+			for $control in $page/asp:LoginView
+			for $subControl in $control/LoggedInTemplate/asp:*
+			where fusion:isSubtype(local:type($subControl), "edu.cmu.cs.fusion.test.aspnet.api.Control")
+			return <Relationship name="LoggedInControl" effect="ADD">
 						<Object name ="{local:name($subControl)}" type="{local:type($subControl)}"/>
 						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
 					</Relationship>
