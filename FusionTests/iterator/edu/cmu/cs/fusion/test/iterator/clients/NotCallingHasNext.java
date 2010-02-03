@@ -8,8 +8,8 @@ import java.util.*;
 @FailingTest(2)
 @UseAnalyses("FusionAnalysis")
 public class NotCallingHasNext {
-	public void foo(Collection<String> coll) {
-		Iterator<String> itr = coll.iterator();
+	public void foo(Collection<String> collection) {
+		Iterator<String> itr = collection.iterator();
 		itr.next();
 		itr.next();
 	}
