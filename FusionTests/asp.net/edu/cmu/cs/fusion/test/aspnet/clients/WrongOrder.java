@@ -12,6 +12,7 @@ public class WrongOrder extends Page {
 		
 		newSel = ctrl.getItems().findByText("foo");
 		newSel.setSelected(true);
+		
 		oldSel = ctrl.getSelectedItem();
 		oldSel.setSelected(false);
 	}
