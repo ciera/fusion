@@ -12,6 +12,7 @@ public class GoodSetSelection extends Page {
 		
 		oldSel = ctrl.getSelectedItem();
 		oldSel.setSelected(false);
+		
 		newSel = ctrl.getItems().findByText("foo");
 		newSel.setSelected(true);
 	}
