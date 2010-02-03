@@ -6,8 +6,8 @@ import api.Enumeration;
 public class InCorrect {
 
 	public void m1() {
-		//Dictionary<Object> d = new Dictionary<Object>();
-		Dictionary d = new Dictionary();
+		Dictionary<Object> d = new Dictionary<Object>();
+		//Dictionary d = new Dictionary();
 		Enumeration e;
 		//d.size();
 		e = d.keys();   // WRONG
@@ -17,7 +17,7 @@ public class InCorrect {
 	}
 	
 	public void m2() {
-		Dictionary d = new Dictionary();
+		Dictionary<Object> d = new Dictionary<Object>();
 		Enumeration e;
 		d.size();
 		e = d.keys();   
