@@ -19,4 +19,6 @@ public interface Predicate {
 	 * @return a collection of our free variables
 	 */
 	FreeVars getFreeVariables();
+
+	String getShortString();
 }

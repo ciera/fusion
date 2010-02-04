@@ -23,4 +23,6 @@ public class OrPredicate extends BinaryPredicate {
 	}
 
 	public String toString() {return lhs.toString() + " or " + rhs.toString();}
+
+	public String getShortString() {return lhs.getShortString() + " or " + rhs.getShortString();}
 }

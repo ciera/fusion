@@ -23,4 +23,6 @@ public class ImpliesPredicate extends BinaryPredicate {
 	}
 
 	public String toString() {return lhs.toString() + " -> " + rhs.toString();}
+
+	public String getShortString() {return lhs.getShortString() + " -> " + rhs.getShortString();}
 }

@@ -63,7 +63,7 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		for (FusionErrorReport err : errors) {
 			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString(), sev);	
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), node, err.getVariant().toString(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
@@ -104,7 +104,7 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		for (FusionErrorReport err : errors) {
 			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint(), node, err.getVariant().toString(), sev);	
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), node, err.getVariant().toString(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());

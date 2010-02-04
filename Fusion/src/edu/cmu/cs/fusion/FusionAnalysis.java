@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
@@ -105,8 +104,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			if (project == null || !project.equals(compUnit.getJavaProject())) {
 				//we have a new project. reset the type hierarchy
 				project = compUnit.getJavaProject();
-				IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
-				types = new CachedTypeHierarchy(project, monitor);
+//				IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
+				types = new CachedTypeHierarchy(project, null);
 				FreeVars.setHierarchy(types);
 			}
 			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), types);

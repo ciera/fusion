@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -11,6 +12,7 @@ import org.eclipse.jdt.core.dom.ContinueStatement;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.EmptyStatement;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
@@ -20,6 +22,7 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
@@ -159,10 +162,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration node) {
 		buff.append(node.getName() + "{");
 		buff.append("\n");
-		if (node.getBody() == null || node.getBody().statements().isEmpty())
-			buff.append(fusionAnalysis.getResultsBefore(node).toString());	
-		else
-			buff.append(fusionAnalysis.getResultsBefore((Statement)node.getBody().statements().get(0)).toString());
+		buff.append(fusionAnalysis.getStartResults(node).toString());
 		buff.append("\n");
 		
 		if (node.getBody() != null) {
@@ -249,7 +249,17 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(VariableDeclarationStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		Expression lastInit = null;
+		Iterator itr = node.fragments().iterator();
+		while (itr.hasNext()) {
+			VariableDeclarationFragment last = (VariableDeclarationFragment) itr.next();
+			if (last.getInitializer() != null)
+				lastInit = last.getInitializer();
+		}
+		if (lastInit != null)
+			buff.append(fusionAnalysis.getResultsAfter(lastInit).toString());
+		else
+			buff.append(fusionAnalysis.getResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}

@@ -48,4 +48,9 @@ public class InstanceOfPredicate implements NegatablePredicate {
 	public String toString() {
 		return isPositive ? variable.toString() + " iof " + type : variable.toString() + " !iof " + type;
 	}
+
+	public String getShortString() {
+		String shortType = type.lastIndexOf('.') != -1 ? type.substring(type.lastIndexOf('.') + 1) : type;
+		return isPositive ? variable.toString() + " iof " + shortType : variable.toString() + " !iof " + shortType;
+	}
 }
