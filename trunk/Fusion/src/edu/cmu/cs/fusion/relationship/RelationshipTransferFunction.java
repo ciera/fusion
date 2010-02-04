@@ -59,7 +59,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	 */
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
 		Variable thisVar = getAnalysisContext().getThisVariable();
-		TupleLatticeElement<Variable, AliasLE> aliases = mainAnalysis.getAliasAnalysis().getResultsBefore(method.getBody());
+		TupleLatticeElement<Variable, AliasLE> aliases = mainAnalysis.getAliasAnalysis().getStartResults(method);
 		
 		RelationshipContext startingContext = retriever.getStartContext(thisVar, new MayAliasWrapper(aliases));
 		

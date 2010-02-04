@@ -18,4 +18,8 @@ public class TruePredicate implements Predicate {
 	
 	public String toString() {return "true";}
 
+	public String getShortString() {
+		return toString();
+	}
+
 }

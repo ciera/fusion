@@ -45,4 +45,8 @@ public class ReferenceEqualityPredicate implements NegatablePredicate {
 	public String toString() {
 		return isPositive ? left.toString() + " == " + right.toString() : left.toString() + " != " + right.toString();
 	}
+
+	public String getShortString() {
+		return toString();
+	}
 }

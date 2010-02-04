@@ -73,4 +73,11 @@ public class TestPredicate implements NegatablePredicate {
 		
 		return str;
 	}
+
+	public String getShortString() {
+		String str = inner.getShortString() + " ?= ";
+		str += isPositive ? test.toString() : "!" + test.toString();
+		
+		return str;
+	}
 }

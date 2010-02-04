@@ -83,4 +83,18 @@ public class RelationshipPredicate implements NegatablePredicate {
 		str += ")";	
 		return isPositive ? str : "!" + str;
 	}
+
+	public String getShortString() {
+		String longType = type.getName();
+		String shortType = longType.lastIndexOf('.') != -1 ? longType.substring(longType.lastIndexOf('.') + 1) : longType;
+		String str = shortType + "(";
+		for (int ndx = 0; ndx < vars.length; ndx++) {
+			str += vars[ndx];
+			if (ndx < vars.length - 1)
+				str += ", ";
+		}
+		str += ")";	
+		return isPositive ? str : "!" + str;
+
+	}
 }

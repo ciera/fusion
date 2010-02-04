@@ -49,6 +49,10 @@ public class Constraint {
 		return fv;
 	}
 	
+	public String toErrorString() {
+		return "(" + trigger.getShortString() +  ") IMPLIES (" + requires.getShortString() + ")";
+	}
+	
 	public String toString() {
 		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " EFFECTS\n" + effects + "\n";
 	}

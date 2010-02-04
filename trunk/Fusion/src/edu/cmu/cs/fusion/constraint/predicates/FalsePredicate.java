@@ -17,4 +17,6 @@ public class FalsePredicate implements Predicate {
 	}
 
 	public String toString() {return "false";}
+
+	public String getShortString() {return "false";}
 }

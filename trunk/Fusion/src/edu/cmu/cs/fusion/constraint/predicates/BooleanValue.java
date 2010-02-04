@@ -37,4 +37,8 @@ public class BooleanValue implements NegatablePredicate {
 	}
 
 	public String toString() {return isPositive ? value.toString() : "!" + value.toString();}
+
+	public String getShortString() {
+		return toString();
+	}
 }
