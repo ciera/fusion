@@ -63,7 +63,8 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		for (FusionErrorReport err : errors) {
 			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), node, err.getVariant().toString(), sev);	
+			ASTNode reportOn = (node.getBody() == null) ? node : (ASTNode)node.getBody().statements().get(node.getBody().statements().size() - 1);
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, err.getVariant().toString(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
