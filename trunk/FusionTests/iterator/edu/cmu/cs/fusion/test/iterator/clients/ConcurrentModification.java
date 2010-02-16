@@ -8,11 +8,15 @@ import java.util.*;
 @FailingTest(1)
 @UseAnalyses("FusionAnalysis")
 public class ConcurrentModification {
-	public void foo(Collection<String> coll) {
+	
+	public void duplicate(Collection<String> coll) {
 		Iterator<String> itr = coll.iterator();
+		String str;
+		
 		while (itr.hasNext()) {
-			itr.next();
-			coll.add("bar");
+			str = itr.next();
+			coll.add(str);
 		}
 	}
+	
 }
