@@ -1,5 +1,5 @@
+#summary Directions for using the FUSION test scaffolds.
 #labels Phase-QA
-#Directions for using the FUSION test scaffolds.
 
 = Unit Tests =
 
