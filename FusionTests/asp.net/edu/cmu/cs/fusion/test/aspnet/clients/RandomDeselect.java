@@ -1,11 +1,13 @@
 package edu.cmu.cs.fusion.test.aspnet.clients;
 
+import edu.cmu.cs.crystal.annotations.AnalysisTests;
 import edu.cmu.cs.crystal.annotations.FailingTest;
 import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
-@FailingTest(2)
-@UseAnalyses("FusionAnalysis")
+@AnalysisTests(
+		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=2, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
+)
 public class RandomDeselect extends Page {
 	public void noSelectionSet(DropDownList ctrl) {
 		ListItem newSel; 

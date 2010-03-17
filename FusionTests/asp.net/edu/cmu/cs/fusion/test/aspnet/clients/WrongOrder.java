@@ -1,11 +1,15 @@
 package edu.cmu.cs.fusion.test.aspnet.clients;
 
+import edu.cmu.cs.crystal.annotations.AnalysisTests;
 import edu.cmu.cs.crystal.annotations.FailingTest;
+import edu.cmu.cs.crystal.annotations.PassingTest;
 import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
-@FailingTest(2)
-@UseAnalyses("FusionAnalysis")
+@AnalysisTests(
+		pass={@PassingTest(analysis="FusionComplete")},
+		fail={@FailingTest(value=2, analysis="FusionPragmatic"), @FailingTest(value=3, analysis="FusionSound")}
+)
 public class WrongOrder extends Page {
 	public void wrongOrder(DropDownList ctrl) {
 		ListItem newSel, oldSel; 

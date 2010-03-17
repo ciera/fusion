@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asp:Page xmlns:asp="aspx" ID="MyPage">
+<asp:Page xmlns:asp="aspx" ID="MyPage" codebehind="edu.cmu.cs.fusion.test.aspnet.clients.GoodLoginView">
 	<asp:LoginView ID="LoginScreen">
 	<AnonymousTemplate>
 		<asp:DropDownList ID="AnonymousDDL"/>

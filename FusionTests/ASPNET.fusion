@@ -12,7 +12,9 @@
 			declare variable $doc as xs:string external;
 			
 		    declare function local:type($element as node()) as xs:string {
-      		   concat("edu.cmu.cs.fusion.test.aspnet.api.",local-name($element))
+		    	if (local-name($element) = "Page" and namespace-uri($element) = "aspx") 
+		    	then $element/@codebehind
+		    	else concat("edu.cmu.cs.fusion.test.aspnet.api.",local-name($element))
 		    };
 		    declare function local:name($element as node()) as xs:string {
       		   data($element/@ID)
@@ -50,7 +52,7 @@
 		<query>
 			<![CDATA[			
 			let $page := doc($doc)/asp:Page/.
-			for $control in $page/*/asp:*
+			for $control in $page//asp:*
 			where fusion:isSubtype(local:type($control), "edu.cmu.cs.fusion.test.aspnet.api.Control")
 			return <Relationship name="Name" effect="ADD">
 						<Object name ="{data($control/@ID)}" type="java.lang.String"/>
