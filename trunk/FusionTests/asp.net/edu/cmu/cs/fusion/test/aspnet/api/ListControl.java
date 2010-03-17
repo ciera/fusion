@@ -8,7 +8,6 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 		trigger = "Items(list, ctrl) AND Item(item, list)",
 		effects = {"Child(item, ctrl)"}
 	)
-
 public class ListControl extends Control {
 	@Items({"result", "target"})
 	public ListItemCollection getItems() {return null;}
