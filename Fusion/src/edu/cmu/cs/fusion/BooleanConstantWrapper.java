@@ -23,12 +23,41 @@ public class BooleanConstantWrapper implements BooleanContext {
 	private Map<ObjectLabel, ThreeValue> cache;
 	
 	public BooleanConstantWrapper(TACInstruction instr,
+			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, AliasContext aliases) {
+		boolLattice = constants.getResultsBefore(instr);
+		aliasLattice = aliases;
+		cache = new HashMap<ObjectLabel, ThreeValue>();		
+	}
+
+	public BooleanConstantWrapper(ASTNode node,
+			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, AliasContext aliases) {
+		boolLattice = constants.getResultsBefore(node);
+		aliasLattice = aliases;
+		cache = new HashMap<ObjectLabel, ThreeValue>();		
+	}
+
+	
+	public BooleanConstantWrapper(AssignmentInstruction instr,
+			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, AliasContext aliasesBefore, AliasContext aliasesAfter, boolean resultValue) {
+		this(instr, constants, aliasesBefore);
+		
+		//Need to fill in the cache with the returned value as well as what we normally have (which uses before results
+		Set<ObjectLabel> labels = aliasesAfter.getAliases(instr.getTarget());
+		for (ObjectLabel returnLabel : labels) {
+			cache.put(returnLabel, resultValue ? ThreeValue.TRUE : ThreeValue.FALSE);
+		}
+	}
+
+
+	@Deprecated
+	public BooleanConstantWrapper(TACInstruction instr,
 			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<? extends AliasContext> aliasAnalysis) {
 		boolLattice = constants.getResultsBefore(instr);
 		aliasLattice = aliasAnalysis.getResultsBefore(instr);
 		cache = new HashMap<ObjectLabel, ThreeValue>();		
 	}
 
+	@Deprecated
 	public BooleanConstantWrapper(ASTNode node,
 			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<? extends AliasContext> aliasAnalysis) {
 		boolLattice = constants.getResultsBefore(node);
@@ -36,6 +65,7 @@ public class BooleanConstantWrapper implements BooleanContext {
 		cache = new HashMap<ObjectLabel, ThreeValue>();		
 	}
 
+	@Deprecated
 	public BooleanConstantWrapper(AssignmentInstruction instr,
 			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<? extends AliasContext> aliasAnalysis, boolean resultValue) {
 		this(instr, constants, aliasAnalysis);

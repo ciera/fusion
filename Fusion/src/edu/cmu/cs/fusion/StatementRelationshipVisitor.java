@@ -26,15 +26,12 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
-import edu.cmu.cs.fusion.relationship.RelationshipContext;
-
 public class StatementRelationshipVisitor extends ASTVisitor {
 
-	private TACFlowAnalysis<RelationshipContext> fusionAnalysis;
+	private FusionAnalysis fusionAnalysis;
 	private StringBuilder buff;
 
-	public StatementRelationshipVisitor(TACFlowAnalysis<RelationshipContext> fa) {
+	public StatementRelationshipVisitor(FusionAnalysis fa) {
 		fusionAnalysis = fa;
 		buff = new StringBuilder();
 	}
@@ -43,7 +40,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(AssertStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -52,7 +49,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(Assignment node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -61,7 +58,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(BreakStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -70,7 +67,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(ContinueStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -79,12 +76,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(DoStatement node) {
 		buff.append("do {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("} while (" + node.getExpression() + ")");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -93,7 +90,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(EmptyStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -102,12 +99,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(EnhancedForStatement node) {
 		buff.append("for(" + node.getParameter() + " : " + node.getExpression() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -116,7 +113,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(ExpressionStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -125,12 +122,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(ForStatement node) {
 		buff.append("for(" + node.initializers() + "; " + node.getExpression() + "; " + node.updaters() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -139,7 +136,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(IfStatement node) {
 		buff.append("if (" + node.getExpression() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsBefore(node.getThenStatement()).toString());		
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getThenStatement()).toString());		
 		buff.append("\n");
 		node.getThenStatement().accept(this);
 		buff.append("}");
@@ -147,13 +144,13 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		if (node.getElseStatement() != null) {
 			buff.append("else {");
 			buff.append("\n");
-			buff.append(fusionAnalysis.getResultsBefore(node.getElseStatement()).toString());		
+			buff.append(fusionAnalysis.getRelResultsBefore(node.getElseStatement()).toString());		
 			buff.append("\n");
 			node.getElseStatement().accept(this);
 			buff.append("}");
 			buff.append("\n");
 		}
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -162,7 +159,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration node) {
 		buff.append(node.getName() + "{");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getStartResults(node).toString());
+		buff.append(fusionAnalysis.getRelResultsBefore(node).toString());
 		buff.append("\n");
 		
 		if (node.getBody() != null) {
@@ -179,7 +176,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(ReturnStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -190,7 +187,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		buff.append("\n");
 		
 		if (!node.statements().isEmpty()) {
-			buff.append(fusionAnalysis.getResultsBefore((Statement)node.statements().get(0)).toString());		
+			buff.append(fusionAnalysis.getRelResultsBefore((Statement)node.statements().get(0)).toString());		
 			buff.append("\n");
 		}
 		for (Statement statement : (List<Statement>)node.statements()) {
@@ -199,7 +196,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -208,7 +205,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(ThrowStatement node) {
 		buff.append(node.toString().trim());
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -217,7 +214,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(TryStatement node) {
 		buff.append("try {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
@@ -225,7 +222,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		for (CatchClause catcher : (List<CatchClause>)node.catchClauses()) {
 			buff.append("catch (" + catcher.getException() + ") {");
 			buff.append("\n");
-			buff.append(fusionAnalysis.getResultsBefore(catcher.getBody()).toString());		
+			buff.append(fusionAnalysis.getRelResultsBefore(catcher.getBody()).toString());		
 			catcher.getBody().accept(this);
 			buff.append("\n");
 			buff.append("}");
@@ -235,12 +232,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		if (node.getFinally() != null) {
 			buff.append("finally {");
 			buff.append("\n");
-			buff.append(fusionAnalysis.getResultsBefore(node.getFinally()).toString());		
+			buff.append(fusionAnalysis.getRelResultsBefore(node.getFinally()).toString());		
 			buff.append("\n");
 			node.getFinally().accept(this);
 		}
 
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -257,9 +254,9 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 				lastInit = last.getInitializer();
 		}
 		if (lastInit != null)
-			buff.append(fusionAnalysis.getResultsAfter(lastInit).toString());
+			buff.append(fusionAnalysis.getRelResultsAfter(lastInit).toString());
 		else
-			buff.append(fusionAnalysis.getResultsAfter(node).toString());
+			buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -268,12 +265,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(WhileStatement node) {
 		buff.append("while (" + node.getExpression() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("\n");
 		return false;
 	}
