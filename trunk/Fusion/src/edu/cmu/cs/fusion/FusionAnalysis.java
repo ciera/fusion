@@ -19,11 +19,11 @@ import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.alias.MayPointsToAliasContext;
-import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -36,8 +36,7 @@ import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
-	private TACFlowAnalysis<MayPointsToAliasContext> aliases;
-	private TACFlowAnalysis<RelationshipContext> fa;
+	private TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
 	private Logger log;
@@ -122,17 +121,14 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		}
 		try {
 			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types, retriever);
-			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+			fa = new TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
-			MayPointsToTransferFunctions pts = new MayPointsToTransferFunctions(retriever, types);
-			aliases = new TACFlowAnalysis<MayPointsToAliasContext>(pts, this.analysisInput.getComUnitTACs().unwrap());
-
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
 			
-			RelationshipContext finalLattice = fa.getEndResults(methodDecl);
+			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
-			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(fa);
+			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(this);
 			methodDecl.accept(debugger);
 			log.log(Level.INFO, debugger.getResult());
 			
@@ -153,16 +149,20 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return infers;
 	}
 	
-	public RelationshipContext getResultsBefore(ASTNode node) {
-		return fa.getResultsBefore(node);
+	public AliasContext getPointsToResultsBefore(ASTNode node) {
+		return fa.getResultsBefore(node).fst();
 	}
 	
-	public RelationshipContext getResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node);		
+	public AliasContext getPointsToResultsAfter(ASTNode node) {
+		return fa.getResultsAfter(node).fst();		
 	}
 
-	public TACFlowAnalysis<? extends AliasContext> getAliasAnalysis() {
-		return aliases;
+	public RelationshipContext getRelResultsBefore(ASTNode node) {
+		return fa.getResultsBefore(node).snd();
+	}
+	
+	public RelationshipContext getRelResultsAfter(ASTNode node) {
+		return fa.getResultsAfter(node).snd();		
 	}
 
 	public TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> getBooleanAnalysis() {

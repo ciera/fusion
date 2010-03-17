@@ -55,9 +55,9 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	@Override
 	public void endVisit(MethodDeclaration node) {
 		TACInstruction instr = new DefaultReturnInstruction();
-		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), fa.getAliasAnalysis());
-		AliasContext aliases = fa.getAliasAnalysis().getResultsAfter(node.getBody());
-		RelationshipContext rels = fa.getResultsAfter(node.getBody());
+		AliasContext aliases = fa.getPointsToResultsAfter(node.getBody());
+		RelationshipContext rels = fa.getRelResultsAfter(node.getBody());
+		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), aliases);
 		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
@@ -100,9 +100,9 @@ public class ErrorReporterVisitor extends ASTVisitor {
 
 	private void check(ASTNode node) {
 		TACInstruction instr = tac.instruction(node);
-		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), fa.getAliasAnalysis());
-		AliasContext aliases = fa.getAliasAnalysis().getResultsAfter(node);
-		RelationshipContext rels = fa.getResultsBefore(node);
+		AliasContext aliases = fa.getPointsToResultsAfter(node);
+		RelationshipContext rels = fa.getRelResultsBefore(node);
+		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), aliases);
 		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);

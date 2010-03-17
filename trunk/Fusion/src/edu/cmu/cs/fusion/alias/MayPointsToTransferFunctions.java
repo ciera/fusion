@@ -111,13 +111,17 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 			newValue.addPointsTo(instr.getTarget(), aliases);
 		}
 		else {
-			if (!onlySingleFresh) {
-				newValue.addPointsToAnySubtype(instr.getTarget(), instr.getTarget().resolveType());
+			if (instr.getTarget().resolveType().getQualifiedName().equals("void")) {
+				newValue.addPointsTo(instr.getTarget(), voidLabel);
 			}
-			
-			ObjectLabel freshLabel = new DefaultObjectLabel(instr.getTarget().resolveType(), isInLoop);
-			newValue.addPointsTo(instr.getTarget(), freshLabel);
-			newValue.addLabel(freshLabel);
+			else {
+				if (!onlySingleFresh)
+					newValue.addPointsToAnySubtype(instr.getTarget(), instr.getTarget().resolveType());
+
+				ObjectLabel freshLabel = new DefaultObjectLabel(instr.getTarget().resolveType(), isInLoop);
+				newValue.addPointsTo(instr.getTarget(), freshLabel);
+				newValue.addLabel(freshLabel);
+			}
 			
 			if (isInLoop) {
 				Set<ObjectLabel> storeAliases = newValue.getAliases(instr.getTarget());
