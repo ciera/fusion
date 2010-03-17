@@ -11,6 +11,7 @@ import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -128,14 +129,14 @@ public class FusionEnvironment {
 	 * Find the potential substitutions for some bound specification variables.
 	 * @param variables The bound variables which we must produce aliasing substitutions for
 	 * @param fv The types of the specification variables
-	 * @return A pair of all potential substitutions
+	 * @return A pair of all potential substitutions.
 	 */
 	public SubPair findLabels(ConsList<Pair<SpecVar, Variable>> variables, FreeVars fv) {
 		SubPair baseCase = new SubPair();
 		baseCase.addDefiniteSub(new Substitution());
 			
 		SubPair pair = variables.foldl(findLabelsLambda, new Pair<SubPair, FreeVars>(baseCase, fv)).fst();
-		assert(pair.numberOfSubstitutions() != 0);
+//		assert(pair.numberOfSubstitutions() != 0); possible that there is no alias of the right subtype.
 		return pair;
 	}
 

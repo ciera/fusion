@@ -62,7 +62,7 @@ public class Relationship {
 	
 	@Override
 	public String toString() {
-		String str =  type.getName().substring(type.getName().lastIndexOf('.')) + "(";
+		String str =  type.getName().substring(type.getName().lastIndexOf('.') + 1) + "(";
 		int ndx = 0;
 		
 		for (ObjectLabel param : parameters) {

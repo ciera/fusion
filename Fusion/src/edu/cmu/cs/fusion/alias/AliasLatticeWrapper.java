@@ -1,30 +1,19 @@
-package edu.cmu.cs.fusion;
+package edu.cmu.cs.fusion.alias;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-
 import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
-import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
-import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 
-public class MayAliasWrapper implements AliasContext {
+@Deprecated
+public class AliasLatticeWrapper implements AliasContext {
 	
 	private TupleLatticeElement<Variable, AliasLE> lattice;
 
-	public MayAliasWrapper(TACInstruction instr, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> flowAnalysis) {
-		lattice = flowAnalysis.getResultsAfter(instr);
-	}
-
-	public MayAliasWrapper(ASTNode node, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> flowAnalysis) {
-		lattice = flowAnalysis.getResultsAfter(node);
-	}
-	
-	public MayAliasWrapper(TupleLatticeElement<Variable, AliasLE> lattice) {
+	public AliasLatticeWrapper(TupleLatticeElement<Variable, AliasLE> lattice) {
 		this.lattice = lattice;
 	}
 	
@@ -50,6 +39,11 @@ public class MayAliasWrapper implements AliasContext {
 		}
 		str += "}";
 		return str;
+	}
+
+	public Set<Variable> getVariables() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

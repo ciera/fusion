@@ -188,11 +188,44 @@ public class SchemaQueries {
 			Element node = (Element) nodes.item(ndx);
 			String name = node.getAttribute("name");
 			String type = node.getAttribute("type");
-			labels[ndx] = new XMLObjectLabel(name, type);
+			labels[ndx] = createLabel(name, type);
 			
 			if (!(types.isSubtypeCompatible(type, relTypes[ndx])))
 				throw new FusionTypeCheckException(relation, ndx, type, name);
 		}
 		return labels;
+	}
+
+	private ObjectLabel createLabel(String name, String type) {
+		if (type.equals("java.lang.String")) {
+			return new XMLLiteralLabel(name, type);
+		}
+		else if (type.indexOf('.') != -1) {
+			return new XMLObjectLabel(name, type);
+		}
+		else if (type.equals("int")) {
+			return new XMLLiteralLabel(Integer.parseInt(name), type);
+		}
+		else if (type.equals("double")) {
+			return new XMLLiteralLabel(Double.parseDouble(name), type);
+		}
+		else if (type.equals("char")) {
+			assert (name.length() == 1);
+			return new XMLLiteralLabel(name.charAt(0), type);
+		}
+		else if (type.equals("boolean")) {
+			return new XMLLiteralLabel(Boolean.parseBoolean(name), type);
+		}
+		else if (type.equals("short")) {
+			return new XMLLiteralLabel(Short.parseShort(name), type);
+		}
+		else if (type.equals("long")) {
+			return new XMLLiteralLabel(Long.parseLong(name), type);
+		}
+		else if (type.equals("float")) {
+			return new XMLLiteralLabel(Float.parseFloat(name), type);
+		}
+		else
+			return new XMLObjectLabel(name, type);
 	}
 }

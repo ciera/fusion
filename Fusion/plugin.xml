@@ -4,8 +4,22 @@
    <extension
          point="edu.cmu.cs.crystal.CrystalAnalysis">
       <analysis
-            class="edu.cmu.cs.fusion.FusionAnalysis"
-            name="FusionAnalysis">
+            class="edu.cmu.cs.fusion.FusionSoundAnalysis"
+            name="FusionSound">
+      </analysis>
+   </extension>
+   <extension
+         point="edu.cmu.cs.crystal.CrystalAnalysis">
+      <analysis
+            class="edu.cmu.cs.fusion.FusionCompleteAnalysis"
+            name="FusionComplete">
+      </analysis>
+   </extension>
+   <extension
+         point="edu.cmu.cs.crystal.CrystalAnalysis">
+      <analysis
+            class="edu.cmu.cs.fusion.FusionPragmaticAnalysis"
+            name="FusionPragmatic">
       </analysis>
    </extension>
  <extension
