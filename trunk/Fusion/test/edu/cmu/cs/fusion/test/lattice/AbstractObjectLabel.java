@@ -7,7 +7,7 @@ import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class AbstractObjectLabel implements ObjectLabel {
 	private String name;
-	private NamedTypeBinding binding;
+	private ITypeBinding binding;
 	
 	public AbstractObjectLabel(String name) {
 		this.name = name;
@@ -28,5 +28,9 @@ public class AbstractObjectLabel implements ObjectLabel {
 
 	public String toString() {
 		return name;
+	}
+
+	public void setType(ITypeBinding type) {
+		binding = type;
 	}
 }

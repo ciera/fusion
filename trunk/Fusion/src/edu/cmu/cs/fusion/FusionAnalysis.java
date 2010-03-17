@@ -13,8 +13,6 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
-import edu.cmu.cs.crystal.analysis.alias.AliasLE;
-import edu.cmu.cs.crystal.analysis.alias.MayAliasTransferFunction;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
@@ -23,6 +21,9 @@ import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
+import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.MayPointsToAliasContext;
+import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -35,7 +36,7 @@ import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
-	private TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> aliases;
+	private TACFlowAnalysis<MayPointsToAliasContext> aliases;
 	private TACFlowAnalysis<RelationshipContext> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
@@ -46,13 +47,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private TypeHierarchy types;
 	private boolean majorErrorOccured = false;
 	private XMLRetriever retriever;
-
-	/**
-	 * Default constructor which Crystal will use to create the entire analysis.
-	 */
-	public FusionAnalysis() {
-		this(new Variant(Variant.PRAGMATIC));
-	}
 
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -104,7 +98,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			if (project == null || !project.equals(compUnit.getJavaProject())) {
 				//we have a new project. reset the type hierarchy
 				project = compUnit.getJavaProject();
-//				IProgressMonitor monitor = getInput().getProgressMonitor().isNone() ? null : getInput().getProgressMonitor().unwrap();
 				types = new CachedTypeHierarchy(project, null);
 				FreeVars.setHierarchy(types);
 			}
@@ -131,9 +124,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types, retriever);
 			fa = new TACFlowAnalysis<RelationshipContext>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
-			MayAliasTransferFunction tfA = new MayAliasTransferFunction(this);
-			aliases = new TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>>(tfA, this.analysisInput.getComUnitTACs().unwrap());
-			
+			MayPointsToTransferFunctions pts = new MayPointsToTransferFunctions(retriever, types);
+			aliases = new TACFlowAnalysis<MayPointsToAliasContext>(pts, this.analysisInput.getComUnitTACs().unwrap());
+
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
 			
@@ -168,11 +161,15 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return fa.getResultsAfter(node);		
 	}
 
-	public TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> getAliasAnalysis() {
+	public TACFlowAnalysis<? extends AliasContext> getAliasAnalysis() {
 		return aliases;
 	}
 
 	public TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> getBooleanAnalysis() {
 		return constants;
+	}
+
+	public Variant getVariant() {
+		return variant;
 	}
 }

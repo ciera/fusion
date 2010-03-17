@@ -18,6 +18,7 @@ import edu.cmu.cs.crystal.IAnalysisReporter;
 import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
+import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.FusionErrorReport;
@@ -55,17 +56,19 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	public void endVisit(MethodDeclaration node) {
 		TACInstruction instr = new DefaultReturnInstruction();
 		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), fa.getAliasAnalysis());
-		AliasContext aliases = new MayAliasWrapper(node.getBody(), fa.getAliasAnalysis());
+		AliasContext aliases = fa.getAliasAnalysis().getResultsAfter(node.getBody());
 		RelationshipContext rels = fa.getResultsAfter(node.getBody());
 		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
 		for (FusionErrorReport err : errors) {
+			if (!(err.getVariant().contains(fa.getVariant())))
+				continue;
 			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
 			boolean hasStatements = node.getBody() != null && node.getBody().statements().size() > 0;
 			ASTNode reportOn = !hasStatements ? node : (ASTNode)node.getBody().statements().get(node.getBody().statements().size() - 1);
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, err.getVariant().toString(), sev);	
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, fa.getName(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
@@ -98,15 +101,17 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	private void check(ASTNode node) {
 		TACInstruction instr = tac.instruction(node);
 		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), fa.getAliasAnalysis());
-		AliasContext aliases = new MayAliasWrapper(node, fa.getAliasAnalysis());
+		AliasContext aliases = fa.getAliasAnalysis().getResultsAfter(node);
 		RelationshipContext rels = fa.getResultsBefore(node);
 		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
 		for (FusionErrorReport err : errors) {
+			if (!(err.getVariant().contains(fa.getVariant())))
+				continue;
 			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), node, err.getVariant().toString(), sev);	
+			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), node, fa.getName(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());

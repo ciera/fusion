@@ -42,6 +42,11 @@ public class Variant {
 	public boolean isPragmatic() {
 		return (val & 0x4) == PRAGMATIC;
 	}
+	
+	public boolean contains(Variant variant) {
+		return (val & variant.val) == variant.val;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -68,4 +73,5 @@ public class Variant {
 	public Variant merge(Variant variant) {
 		return new Variant(val | variant.val);
 	}
+
 }

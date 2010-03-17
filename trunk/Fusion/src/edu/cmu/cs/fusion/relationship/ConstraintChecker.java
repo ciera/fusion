@@ -106,6 +106,10 @@ public class ConstraintChecker {
 			return null;
 
 		SubPair pairs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
+		
+		if (pairs.numberOfSubstitutions() == 0)
+			return null;
+		
 		Iterator<Substitution> itr;
 		Variant err = new Variant(0);
 		List<Substitution> failingSubs = new LinkedList<Substitution>();

@@ -2,10 +2,10 @@ package edu.cmu.cs.fusion;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLatticeOps;
@@ -14,34 +14,35 @@ import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.model.AssignmentInstruction;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
+import edu.cmu.cs.fusion.alias.AliasContext;
 
 public class BooleanConstantWrapper implements BooleanContext {
 
 	private TupleLatticeElement<Variable, BooleanConstantLE> boolLattice;
-	private TupleLatticeElement<Variable, AliasLE> aliasLattice;
+	private AliasContext aliasLattice;
 	private Map<ObjectLabel, ThreeValue> cache;
 	
 	public BooleanConstantWrapper(TACInstruction instr,
-			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> aliasAnalysis) {
+			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<? extends AliasContext> aliasAnalysis) {
 		boolLattice = constants.getResultsBefore(instr);
 		aliasLattice = aliasAnalysis.getResultsBefore(instr);
 		cache = new HashMap<ObjectLabel, ThreeValue>();		
 	}
 
 	public BooleanConstantWrapper(ASTNode node,
-			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> aliasAnalysis) {
+			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<? extends AliasContext> aliasAnalysis) {
 		boolLattice = constants.getResultsBefore(node);
 		aliasLattice = aliasAnalysis.getResultsBefore(node);
 		cache = new HashMap<ObjectLabel, ThreeValue>();		
 	}
 
 	public BooleanConstantWrapper(AssignmentInstruction instr,
-			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<TupleLatticeElement<Variable, AliasLE>> aliasAnalysis, boolean resultValue) {
+			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, TACFlowAnalysis<? extends AliasContext> aliasAnalysis, boolean resultValue) {
 		this(instr, constants, aliasAnalysis);
 		
 		//Need to fill in the cache with the returned value as well as what we normally have (which uses before results
-		AliasLE retAliases = aliasAnalysis.getResultsAfter(instr).get(instr.getTarget());
-		for (ObjectLabel returnLabel : retAliases.getLabels()) {
+		Set<ObjectLabel> labels = aliasAnalysis.getResultsAfter(instr).getAliases(instr.getTarget());
+		for (ObjectLabel returnLabel : labels) {
 			cache.put(returnLabel, resultValue ? ThreeValue.TRUE : ThreeValue.FALSE);
 		}
 	}
@@ -53,8 +54,8 @@ public class BooleanConstantWrapper implements BooleanContext {
 			BooleanConstantLE labelConstant = BooleanConstantLE.BOTTOM;
 			BooleanConstantLatticeOps boolOps = new BooleanConstantLatticeOps();
 			
-			for (Variable var : aliasLattice.getKeySet()) {
-				if (aliasLattice.get(var).getLabels().contains(label)) {
+			for (Variable var : aliasLattice.getVariables()) {
+				if (aliasLattice.getAliases(var).contains(label)) {
 					BooleanConstantLE varConstant = boolLattice.get(var);
 					labelConstant = boolOps.join(labelConstant, varConstant);
 				}

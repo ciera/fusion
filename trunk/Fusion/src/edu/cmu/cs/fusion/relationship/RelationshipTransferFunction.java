@@ -4,26 +4,22 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import edu.cmu.cs.crystal.analysis.alias.AliasLE;
 import edu.cmu.cs.crystal.flow.BooleanLabel;
 import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.flow.LabeledResult;
 import edu.cmu.cs.crystal.flow.LabeledSingleResult;
-import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
-import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.BooleanConstantWrapper;
 import edu.cmu.cs.fusion.BooleanContext;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
-import edu.cmu.cs.fusion.MayAliasWrapper;
+import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.xml.XMLRetriever;
@@ -58,10 +54,17 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	 * Get the entry value based on the starting context received from the XML files.
 	 */
 	public RelationshipContext createEntryValue(MethodDeclaration method) {
-		Variable thisVar = getAnalysisContext().getThisVariable();
-		TupleLatticeElement<Variable, AliasLE> aliases = mainAnalysis.getAliasAnalysis().getStartResults(method);
+//		Variable thisVar = getAnalysisContext().getThisVariable();
+//		AliasContext aliases = mainAnalysis.getAliasAnalysis().getInitialAliasContext(method);
 		
-		RelationshipContext startingContext = retriever.getStartContext(thisVar, new MayAliasWrapper(aliases));
+		RelationshipContext startingContext = retriever.getStartContext();
+		
+		//TACInstruction instr = new EntryInstruction(method);
+		//BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis());
+		//FusionEnvironment env = new FusionEnvironment(aContext, startingContext, bContext, types, infers);
+		//RelationshipContext startingContext = checker.runGenericTransfer(env, instr);
+		//hmm, a lot of work just to apply some silly callbacks. Maybe better to just
+		//hack this in separately.
 		
 		return startingContext;
 	}
@@ -90,7 +93,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 		
 		
 		//run twice: once assuming return is false, and again assuming return is true.
-		AliasContext aContext = new MayAliasWrapper(instr, mainAnalysis.getAliasAnalysis());
+		AliasContext aContext = mainAnalysis.getAliasAnalysis().getResultsAfter(instr);
 		if (labels.contains(BooleanLabel.getBooleanLabel(true)) && labels.contains(BooleanLabel.getBooleanLabel(false))) {
 			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis(), true);
 			FusionEnvironment tEnv = new FusionEnvironment(aContext, value, tBContext, types, infers);
@@ -117,7 +120,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	@Override
 	public IResult<RelationshipContext> transfer(NewObjectInstruction instr,
 			List<ILabel> labels, RelationshipContext value) {
-		AliasContext aContext = new MayAliasWrapper(instr, mainAnalysis.getAliasAnalysis());
+		AliasContext aContext = mainAnalysis.getAliasAnalysis().getResultsAfter(instr);
 		BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), mainAnalysis.getAliasAnalysis());
 		FusionEnvironment env = new FusionEnvironment(aContext, value, bContext, types, infers);
 		RelationshipContext newContext = checker.runGenericTransfer(env, instr);

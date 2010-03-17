@@ -11,19 +11,19 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
  *
  */
 public class XMLObjectLabel implements ObjectLabel {
-	private String type;
+	private ITypeBinding type;
 	private String name;
 
 	public XMLObjectLabel(String name, String type) {
 		this.name = name;
-		this.type = type;
+		this.type = new NamedTypeBinding(type);
 	}
 
 	/**
 	 * @return a false ITypeBinding, which can only be used to get the fully qualified name.
 	 */
 	public ITypeBinding getType() {
-		return new NamedTypeBinding(type);
+		return type;
 	}
 
 	public boolean isSummary() {
@@ -64,5 +64,9 @@ public class XMLObjectLabel implements ObjectLabel {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+
+	public void setType(ITypeBinding type) {
+		this.type = type;
 	}
 }

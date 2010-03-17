@@ -29,14 +29,12 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
-import edu.cmu.cs.fusion.AliasContext;
 import edu.cmu.cs.fusion.FusionTypeCheckException;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.XMLContext;
-import edu.cmu.cs.fusion.relationship.FourPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
@@ -49,6 +47,7 @@ import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 public class XMLRetriever implements Observer, IResourceVisitor {
 	private RelationshipDelta delta;
 	private Set<ObjectLabel> topLabels;
+	private Set<ObjectLabel> allLabels;
 	private RelationsEnvironment rels;
 	private Map<String, SchemaQueries> queries;
 	private TypeHierarchy types;
@@ -114,8 +113,19 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 	public void retrieveRelationships(IResource resource, TypeHierarchy tHierarchy) throws CoreException {
 		delta = new RelationshipDelta();
 		topLabels = new HashSet<ObjectLabel>();
+		allLabels = new HashSet<ObjectLabel>();
 		types = tHierarchy;
+		
 		resource.accept(this);
+		
+		allLabels.addAll(topLabels);
+		
+		for (Entry<Relationship, ThreeValue> entry : delta) {
+			Relationship rel = entry.getKey();
+			int size = rel.getRelation().getFullyQualifiedTypes().length;
+			for (int ndx = 0; ndx < size; ndx++)
+				allLabels.add(rel.getParam(ndx));
+		}
 	}
 
 	/**
@@ -173,7 +183,7 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 	 * @param aliases The alias context to use for substitutions
 	 * @return A relationship context that is based on the data retrieved from the XML files, but bound according to aliases.
 	 */
-	public RelationshipContext getStartContext(Variable thisVar, AliasContext aliases) {
+/*	public RelationshipContext getStartContext(Variable thisVar, AliasContext aliases) {
 		RelationshipContext start = new RelationshipContext(false);
 		RelationshipDelta converted = new RelationshipDelta();
 		Map<ObjectLabel, ObjectLabel> bindings = new HashMap<ObjectLabel, ObjectLabel>();
@@ -194,6 +204,33 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 		}
 		return start.applyChangesFromDelta(converted);
 	}
+*/	
+	public Set<ObjectLabel> getStartingAliases(Variable var) {
+		Set<ObjectLabel> aliases = new HashSet<ObjectLabel>();
+		for (ObjectLabel possibleTop : topLabels) {
+			String thisType = var.resolveType().getQualifiedName();
+			String possibleTopType = possibleTop.getType().getQualifiedName();
+			if (types.isSubtypeCompatible(thisType, possibleTopType)) {
+				aliases.add(possibleTop);
+			}
+		}
+		return aliases;
+
+	}
+
+	public RelationshipContext getStartContext() {
+		return new RelationshipContext(false).applyChangesFromDelta(delta);
+	}
+	
+	/**
+	 * Make sure retrieveRelationships has already been called before calling this method.
+	 * 
+	 * Returns all of the ObjectLabels that are known, either by way of 
+	 */
+	public Set<ObjectLabel> getAllLabels() {
+		return allLabels;
+	}
+
 
 	private Relationship convertRelationship(Relationship original, Map<ObjectLabel, ObjectLabel> bindings) {
 		Relation relation = original.getRelation();
