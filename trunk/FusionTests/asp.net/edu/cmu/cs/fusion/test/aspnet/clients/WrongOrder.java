@@ -12,6 +12,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 )
 public class WrongOrder extends Page {
 	public void wrongOrder(DropDownList ctrl) {
+		//DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 
 		
 		newSel = ctrl.getItems().findByText("foo");

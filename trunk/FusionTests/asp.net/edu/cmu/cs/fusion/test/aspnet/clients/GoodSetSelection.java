@@ -11,6 +11,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 )
 public class GoodSetSelection extends Page {
 	public void goodSetSelection(DropDownList ctrl) {
+		//DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 
 		
 		oldSel = ctrl.getSelectedItem();

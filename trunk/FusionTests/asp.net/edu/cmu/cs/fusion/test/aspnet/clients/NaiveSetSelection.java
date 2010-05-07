@@ -12,6 +12,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 )
 public class NaiveSetSelection extends Page {
 	public void naiveSetSelection(DropDownList ctrl) {
+		//DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel; 
 		ListItemCollection coll;
 		
