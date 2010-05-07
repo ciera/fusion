@@ -4,8 +4,6 @@ import edu.cmu.cs.crystal.annotations.PassingTest;
 import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
-@PassingTest
-@UseAnalyses("FusionPragmatic")
 public class GoodLoginView extends Page {
 	LoginView myView;
 	public void goodSetSelection() {

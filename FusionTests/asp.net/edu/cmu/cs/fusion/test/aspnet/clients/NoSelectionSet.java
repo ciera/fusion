@@ -11,6 +11,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 )
 public class NoSelectionSet extends Page {
 	public void noSelectionSet(DropDownList ctrl) {
+		//DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel; 
 
 		newSel = ctrl.getSelectedItem();
