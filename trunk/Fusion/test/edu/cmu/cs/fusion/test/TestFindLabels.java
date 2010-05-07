@@ -10,10 +10,9 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -98,7 +97,7 @@ public class TestFindLabels {
 	public void testEmptyFindLabels() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar(), "Foo").addVar(new SpecVar(), "Bar");
-		ConsList<Pair<SpecVar, Variable>> emptyList = ConsList.empty();
+		ConsList<Binding> emptyList = ConsList.empty();
 		SubPair pair = env.findLabels(emptyList, fv);
 		
 		Iterator<Substitution> itr = pair.getPossibleSubstitutions();
@@ -114,10 +113,10 @@ public class TestFindLabels {
 	public void testFindLabelsOneOption() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
-		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
+		ConsList<Binding> list = ConsList.empty();
 		
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("a"), vars[0]), list);
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("b"), vars[1]), list);
+		list = ConsList.cons(new Binding(new SpecVar("a"), vars[0]), list);
+		list = ConsList.cons(new Binding(new SpecVar("b"), vars[1]), list);
 		
 		SubPair pair = env.findLabels(list, fv);
 		
@@ -140,10 +139,10 @@ public class TestFindLabels {
 	public void testFindLabelsAliasesAllDefinite() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
-		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
+		ConsList<Binding> list = ConsList.empty();
 		
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("a"), vars[2]), list);
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("b"), vars[1]), list);
+		list = ConsList.cons(new Binding(new SpecVar("a"), vars[2]), list);
+		list = ConsList.cons(new Binding(new SpecVar("b"), vars[1]), list);
 		
 		SubPair pair = env.findLabels(list, fv);
 		
@@ -177,10 +176,10 @@ public class TestFindLabels {
 	public void testFindLabelsPossibleFromSuperTypes() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "SnaFu").addVar(new SpecVar("b"), "Baz");
-		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
+		ConsList<Binding> list = ConsList.empty();
 		
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("a"), vars[3]), list);
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("b"), vars[4]), list);
+		list = ConsList.cons(new Binding(new SpecVar("a"), vars[3]), list);
+		list = ConsList.cons(new Binding(new SpecVar("b"), vars[4]), list);
 		
 		SubPair pair = env.findLabels(list, fv);
 		
@@ -214,10 +213,10 @@ public class TestFindLabels {
 	public void testFindLabelsDefAndPoss() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "SnaFu").addVar(new SpecVar("b"), "Bazar");
-		ConsList<Pair<SpecVar, Variable>> list = ConsList.empty();
+		ConsList<Binding> list = ConsList.empty();
 		
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("a"), vars[2]), list);
-		list = ConsList.cons(new Pair<SpecVar, Variable>(new SpecVar("b"), vars[4]), list);
+		list = ConsList.cons(new Binding(new SpecVar("a"), vars[2]), list);
+		list = ConsList.cons(new Binding(new SpecVar("b"), vars[4]), list);
 		
 		SubPair pair = env.findLabels(list, fv);
 		

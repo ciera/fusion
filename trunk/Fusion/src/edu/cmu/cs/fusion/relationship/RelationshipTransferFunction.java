@@ -37,6 +37,7 @@ import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.BooleanConstantWrapper;
 import edu.cmu.cs.fusion.BooleanContext;
+import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -46,7 +47,6 @@ import edu.cmu.cs.fusion.alias.MayPointsToLatticeOps;
 import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
-import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTransferFunction<Pair<MayPointsToAliasContext, RelationshipContext>> {
@@ -55,7 +55,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	protected TypeHierarchy types;
 	private InferenceEnvironment infers;
 	private ConstraintChecker checker;
-	private XMLRetriever retriever;
+	private DeclarativeRetriever retriever;
 	private MayPointsToTransferFunctions aliasTF;
 	private MayPointsToLatticeOps aliasOps;
 	
@@ -65,15 +65,15 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 	 */
 	public RelationshipTransferFunction(FusionAnalysis relAnalysis) throws FusionException {
 		mainAnalysis = relAnalysis;
-		checker = new ConstraintChecker(null, null);
+		checker = new ConstraintChecker(null, null, relAnalysis.getVariant());
 		this.aliasTF = new MayPointsToTransferFunctions(null, null);
 	}
 	
-	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, TypeHierarchy types, XMLRetriever retriever) throws FusionException {
+	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, TypeHierarchy types, DeclarativeRetriever retriever) throws FusionException {
 		mainAnalysis = relAnalysis;
 		this.infers = inf;
 		this.types = types;
-		checker = new ConstraintChecker(constraints, types);
+		checker = new ConstraintChecker(constraints, types, relAnalysis.getVariant());
 		this.retriever = retriever;
 		this.aliasTF = new MayPointsToTransferFunctions(retriever, types);
 		this.aliasOps = new MayPointsToLatticeOps(types);

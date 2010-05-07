@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
+import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
@@ -31,7 +32,6 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
-import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
@@ -45,7 +45,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private IJavaProject project;
 	private TypeHierarchy types;
 	private boolean majorErrorOccured = false;
-	private XMLRetriever retriever;
+	private DeclarativeRetriever retriever;
 
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -62,7 +62,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		rels = new RelationsEnvironment();
 		constraints = new ConstraintEnvironment(rels);
 		infers = new InferenceEnvironment(rels);
-		retriever = new XMLRetriever(rels);
+		retriever = new DefaultRetriever(); //new XMLRetriever(rels);
 		majorErrorOccured = false;
 		try {
 			ReportingUtility.clearMarkers(ResourcesPlugin.getWorkspace().getRoot());
@@ -128,13 +128,13 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
-			StatementRelationshipVisitor debugger = new StatementRelationshipVisitor(this);
-			methodDecl.accept(debugger);
-			log.log(Level.INFO, debugger.getResult());
-			
 			EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, new ConstraintChecker(constraints, types), reporter, tac, log);
+			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, new ConstraintChecker(constraints, types, variant), reporter, tac, log);
 			methodDecl.accept(errVisitor);
+			
+			StatementRelationshipVisitor printer = new StatementRelationshipVisitor(this);
+			methodDecl.accept(printer);
+			log.log(Level.INFO, printer.getResult());
 		
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
@@ -157,12 +157,20 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return fa.getResultsAfter(node).fst();		
 	}
 
+	public RelationshipContext geStartingResults(MethodDeclaration d) {
+		return fa.getStartResults(d).snd();
+	}
+	
 	public RelationshipContext getRelResultsBefore(ASTNode node) {
 		return fa.getResultsBefore(node).snd();
 	}
 	
 	public RelationshipContext getRelResultsAfter(ASTNode node) {
 		return fa.getResultsAfter(node).snd();		
+	}
+
+	public RelationshipContext getSpecificRelResultsAfter(ASTNode node, ILabel label) {
+		return fa.getLabeledResultsAfter(node).get(label).snd();
 	}
 
 	public TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> getBooleanAnalysis() {

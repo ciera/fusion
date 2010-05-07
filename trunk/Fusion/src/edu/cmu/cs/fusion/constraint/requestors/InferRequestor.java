@@ -14,9 +14,9 @@ import org.eclipse.jdt.core.search.TypeReferenceMatch;
 
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.ReportingUtility;
-import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferredRel;
 import edu.cmu.cs.fusion.constraint.Predicate;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
@@ -66,7 +66,7 @@ public class InferRequestor extends SearchRequestor {
 		
 		FPLParser parser = new FPLParser(rels, contextType);
 		Predicate trigger;
-		List<Effect> effects = new LinkedList<Effect>();
+		List<RelEffect> effects = new LinkedList<RelEffect>();
 		
 		try {			
 			parser.reset(trgString);
@@ -75,7 +75,7 @@ public class InferRequestor extends SearchRequestor {
 			
 			for (String eString : effStrings) {
 				parser.reset(eString);
-				effects.add(parser.effect());
+				effects.add(parser.relEffect());
 			}
 			
 			inferRules.add(new InferredRel(trigger, effects));

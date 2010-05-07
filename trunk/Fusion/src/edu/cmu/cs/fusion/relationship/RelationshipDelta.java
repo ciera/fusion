@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.constraint.SpecVar;
 
 /**
  * Represents the delta lattice. These are the changes to make to the final lattice.
@@ -29,6 +31,14 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		rels = new HashMap<Relationship, ThreeValue>();
 	}
 	
+	public RelationshipDelta addUpdate(SpecVar var, ObjectLabel label) {return this;}
+	
+	public Map<SpecVar, Set<ObjectLabel>> getUpdates() {return null;}
+
+	/**
+	 * 
+	 * @return Number of relationship changes. Does not count alias updates!
+	 */
 	public int numberOfChanges() {
 		return rels.size();
 	}
@@ -47,7 +57,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		else
 			rels.remove(rel);
 	}
-	
+
 	/**
 	 * Polarizing function.
 	 * 
@@ -206,6 +216,25 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		}
 		
 		return strictlyMore;
+	}
+
+	public RelationshipDelta replaceLabels(ObjectLabel replacer,
+			ObjectLabel replacee) {
+		RelationshipDelta newDelta = new RelationshipDelta();
+		
+		for (Entry<Relationship, ThreeValue> entry : rels.entrySet()) {
+			Relationship rel = entry.getKey();
+			int size = rel.getRelation().getFullyQualifiedTypes().length;
+			ObjectLabel[] newLabels = new ObjectLabel[size];
+			for (int ndx = 0; ndx < size; ndx++) {
+				if (rel.getParam(ndx).equals(replacee))
+					newLabels[ndx] = replacer;
+				else
+					newLabels[ndx] = rel.getParam(ndx);
+			}
+			newDelta.rels.put(new Relationship(rel.getRelation(), newLabels), entry.getValue());
+		}
+		return newDelta;
 	}
 
 }

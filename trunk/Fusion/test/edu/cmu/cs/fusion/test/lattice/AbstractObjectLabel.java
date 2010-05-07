@@ -29,8 +29,4 @@ public class AbstractObjectLabel implements ObjectLabel {
 	public String toString() {
 		return name;
 	}
-
-	public void setType(ITypeBinding type) {
-		binding = type;
-	}
 }

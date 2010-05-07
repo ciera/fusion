@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -22,13 +21,13 @@ import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.test.TestAliasContext;
 import edu.cmu.cs.fusion.test.TestUtils;
-import edu.cmu.cs.fusion.test.constraint.operations.StubMethodCallInstruction;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
 
@@ -49,8 +48,8 @@ public class TestPartialBound extends ConstraintChecker{
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Foo"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(2), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
-		effects.add(Effect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
+		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
+		effects.add(RelEffect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
 		
 		cons = new Constraint(op, trigger, req, effects);
 		
@@ -65,7 +64,7 @@ public class TestPartialBound extends ConstraintChecker{
 	}
 
 	public TestPartialBound() {
-		super(null, null);
+		super(null, null, Variant.PRAGMATIC_VARIANT);
 		types = new TypeHierarchy() {
 			public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
 				if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
@@ -112,12 +111,13 @@ public class TestPartialBound extends ConstraintChecker{
 		aliases.addAlias(new StubVariable(), labels[3]);
 		aliases.addAlias(new StubVariable(), labels[4]);
 
+		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons);
+		List<Substitution> errs = checkPartialBound(env, partialSub, cons);
 
 		assertEquals(0, delta.numberOfChanges());	
-		assertTrue(errs.fst().noError());			
+		assertTrue(errs.isEmpty());			
 	}
 	
 	@Test
@@ -141,9 +141,10 @@ public class TestPartialBound extends ConstraintChecker{
 		aliases.addAlias(new StubVariable(), labels[5]);
 		aliases.addAlias(new StubVariable(), labels[6]);
 
+		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons);
+		List<Substitution> errs = checkPartialBound(env, partialSub, cons);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -151,7 +152,7 @@ public class TestPartialBound extends ConstraintChecker{
 		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
 		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
 		
-		assertTrue(!errs.fst().isPragmatic());			
+		assertTrue(errs.isEmpty());			
 	}
 	
 	@Test
@@ -172,9 +173,10 @@ public class TestPartialBound extends ConstraintChecker{
 		aliases.addAlias(new StubVariable(), labels[4]);
 		aliases.addAlias(new StubVariable(), labels[2]);
 
+		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons);
+		List<Substitution> errs = checkPartialBound(env, partialSub, cons);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -182,7 +184,7 @@ public class TestPartialBound extends ConstraintChecker{
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertTrue(!errs.fst().isComplete());			
+		assertTrue(errs.isEmpty());			
 	}
 	
 	@Test
@@ -205,9 +207,10 @@ public class TestPartialBound extends ConstraintChecker{
 		aliases.addAlias(new StubVariable(), labels[6]);
 		aliases.addAlias(new StubVariable(), labels[2]);
 
+		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
-		Pair<Variant, List<Substitution>> errs = checkPartialBound(env, partialSub, cons, new StubMethodCallInstruction());
+		RelationshipDelta delta = runPartialBound(env, partialSub, cons);
+		List<Substitution> errs = checkPartialBound(env, partialSub, cons);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[0]});
 		Relationship eff2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[0], labels[0]});
 
@@ -215,6 +218,6 @@ public class TestPartialBound extends ConstraintChecker{
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
 		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
 		
-		assertTrue(!errs.fst().isComplete());			
+		assertTrue(errs.isEmpty());			
 	}
 }

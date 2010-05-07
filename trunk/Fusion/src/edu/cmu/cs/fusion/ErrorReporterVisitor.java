@@ -63,14 +63,12 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
 		for (FusionErrorReport err : errors) {
-			if (!(err.getVariant().contains(fa.getVariant())))
-				continue;
-			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
 			boolean hasStatements = node.getBody() != null && node.getBody().statements().size() > 0;
 			ASTNode reportOn = !hasStatements ? node : (ASTNode)node.getBody().statements().get(node.getBody().statements().size() - 1);
 			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, fa.getName(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
-			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
+			log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
 			for (Substitution failure : err.getFailingVars())
 				log.log(Level.INFO, "Failing subtitution " + failure.toString());
@@ -108,12 +106,10 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
 		for (FusionErrorReport err : errors) {
-			if (!(err.getVariant().contains(fa.getVariant())))
-				continue;
-			SEVERITY sev = err.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
 			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), node, fa.getName(), sev);	
 			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
-			log.log(Level.INFO, "Variant:" + err.getVariant().toString());			
+			log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			
 			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
 			for (Substitution failure : err.getFailingVars())
 				log.log(Level.INFO, "Failing subtitution " + failure.toString());

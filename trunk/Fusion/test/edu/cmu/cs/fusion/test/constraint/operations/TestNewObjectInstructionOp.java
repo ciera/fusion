@@ -11,9 +11,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -57,7 +56,7 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 
 		assertTrue(map == null);
 	}
@@ -68,7 +67,7 @@ public class TestNewObjectInstructionOp {
 		
 		ConstructorOp op = new ConstructorOp("Baz", new SpecVar[] {utils.getVar(1)}, new String[] {"Bar"});
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 	}
@@ -79,7 +78,7 @@ public class TestNewObjectInstructionOp {
 
 		ConstructorOp op = new ConstructorOp("Foo", new SpecVar[] {utils.getVar(1)}, new String[] {"Baz"});
 		
-		ConsList<Pair<SpecVar,Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);	
 	}
@@ -92,7 +91,7 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Pair<SpecVar,Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 		
@@ -108,11 +107,11 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RESULT, target)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(0), param)));
+		assertTrue(list.contains(new Binding(Constraint.RESULT, target)));
+		assertTrue(list.contains(new Binding(utils.getVar(0), param)));
 		
 		assertEquals(2, list.size());
 	}	
@@ -126,11 +125,11 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RESULT, target)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(0), target)));
+		assertTrue(list.contains(new Binding(Constraint.RESULT, target)));
+		assertTrue(list.contains(new Binding(utils.getVar(0), target)));
 		
 		assertEquals(2, list.size());
 

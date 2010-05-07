@@ -5,8 +5,8 @@ import org.junit.Test;
 
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
-import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
@@ -21,9 +21,9 @@ public class ParseEffect {
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
 		FPLParser parser = new FPLParser(string, env, new StubIType());
-		Effect effect = parser.effect();
+		RelEffect effect = parser.relEffect();
 		
-		Assert.assertEquals("Effect type is wrong", Effect.EffectType.ADD, effect.getType());
+		Assert.assertEquals("Effect type is wrong", RelEffect.EffectType.ADD, effect.getType());
 		Assert.assertEquals("Effect relation is wrong", "Foo", effect.getRelation().getName());
 		
 		FreeVars vars = effect.getFreeVariables();
@@ -39,9 +39,9 @@ public class ParseEffect {
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
 		FPLParser parser = new FPLParser(string, env, new StubIType());
-		Effect effect = parser.effect();
+		RelEffect effect = parser.relEffect();
 		
-		Assert.assertEquals("Effect type is wrong", Effect.EffectType.REMOVE, effect.getType());
+		Assert.assertEquals("Effect type is wrong", RelEffect.EffectType.REMOVE, effect.getType());
 		Assert.assertEquals("Effect relation is wrong", "Foo", effect.getRelation().getName());
 		
 		FreeVars vars = effect.getFreeVariables();
@@ -57,9 +57,9 @@ public class ParseEffect {
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
 		FPLParser parser = new FPLParser(string, env, new StubIType());
-		Effect effect = parser.effect();
+		RelEffect effect = parser.relEffect();
 		
-		Assert.assertEquals("Effect type is wrong", Effect.EffectType.REMOVE, effect.getType());
+		Assert.assertEquals("Effect type is wrong", RelEffect.EffectType.REMOVE, effect.getType());
 		Assert.assertEquals("Effect relation is wrong", "Foo", effect.getRelation().getName());
 		
 		FreeVars vars = effect.getFreeVariables();
@@ -81,13 +81,13 @@ public class ParseEffect {
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
 		FPLParser parser = new FPLParser(string, env, new StubIType());
-		Effect effect = parser.effect();
+		RelEffect effect = parser.relEffect();
 		
-		Assert.assertEquals("Effect type is wrong", Effect.EffectType.TEST, effect.getType());
+		Assert.assertEquals("Effect type is wrong", RelEffect.EffectType.TEST, effect.getType());
 		Assert.assertEquals("Effect relation is wrong", "Foo", effect.getRelation().getName());
 		
 		FreeVars vars = effect.getFreeVariables();
-		Assert.assertEquals("Should only contain two free variables", 3, vars.size());
+		Assert.assertEquals("Should only contain three free variables", 3, vars.size());
 		Assert.assertEquals("a should have a Bar type", "Bar", vars.getType(new SpecVar("a")));		
 		Assert.assertEquals("b should have a Baz type", "Baz", vars.getType(new SpecVar("b")));		
 		Assert.assertEquals("c should have a boolean type", "boolean", vars.getType(new SpecVar("c")));		
@@ -100,17 +100,15 @@ public class ParseEffect {
 		env.addRelation(new Relation("Foo", new String[] {"Bar", "Baz"}));
 		
 		FPLParser parser = new FPLParser(string, env, new StubIType());
-		Effect effect = parser.effect();
+		RelEffect effect = parser.relEffect();
 		
-		Assert.assertEquals("Effect type is wrong", Effect.EffectType.NEG_TEST, effect.getType());
+		Assert.assertEquals("Effect type is wrong", RelEffect.EffectType.NEG_TEST, effect.getType());
 		Assert.assertEquals("Effect relation is wrong", "Foo", effect.getRelation().getName());
 		
 		FreeVars vars = effect.getFreeVariables();
-		Assert.assertEquals("Should only contain two free variables", 3, vars.size());
+		Assert.assertEquals("Should only contain three free variables", 3, vars.size());
 		Assert.assertEquals("a should have a Bar type", "Bar", vars.getType(new SpecVar("a")));		
 		Assert.assertEquals("b should have a Baz type", "Baz", vars.getType(new SpecVar("b")));		
 		Assert.assertEquals("c should have a boolean type", "boolean", vars.getType(new SpecVar("c")));		
 	}
-
-
 }

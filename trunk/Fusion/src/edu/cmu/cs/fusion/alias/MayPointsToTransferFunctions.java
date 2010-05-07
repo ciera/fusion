@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
 import edu.cmu.cs.crystal.analysis.alias.DefaultObjectLabel;
-import edu.cmu.cs.crystal.analysis.alias.LiteralLabel;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.metrics.LoopCounter;
 import edu.cmu.cs.crystal.flow.ILabel;
@@ -35,12 +34,12 @@ import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
 import edu.cmu.cs.crystal.tac.model.UnaryOperation;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.xml.NamedTypeBinding;
-import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTransferFunction<MayPointsToAliasContext> {
 	private ILatticeOperations<MayPointsToAliasContext> ops;
-	private XMLRetriever retriever;
+	private DeclarativeRetriever retriever;
 	private LoopCounter loopCounter;
 	protected Map<Object, ObjectLabel> knownLiterals;
 	private TypeHierarchy types;
@@ -49,10 +48,9 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	//This caches the result of the aliasing when going through a loop, so
 	//we don't create a new variable a second time.
 	//really then, should only store the cache when we are, in fact, in a loop.
-	//and, it should be a set of object labels, not just one.
 	private Map<Variable, Set<ObjectLabel>> loopedVariables;
 
-	public MayPointsToTransferFunctions(XMLRetriever retriever, TypeHierarchy types) {
+	public MayPointsToTransferFunctions(DeclarativeRetriever retriever, TypeHierarchy types) {
 		ops = new MayPointsToLatticeOps(types);
 		loopCounter = new LoopCounter();
 		this.retriever = retriever;
@@ -67,30 +65,37 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		Variable thisVar = this.getAnalysisContext().getThisVariable();
 		
 		if (thisVar != null) {
-//			Set<ObjectLabel> thisAliases = retriever.getStartingAliases(thisVar);
+			Set<ObjectLabel> thisAliases = retriever.getStartingAliases(thisVar);
 			
-//			if (thisAliases.isEmpty()) {
+			if (thisAliases.isEmpty()) {
 				ObjectLabel fresh = new DefaultObjectLabel(thisVar.resolveType(), false);
 				entry.addPointsTo(thisVar, fresh);
 				entry.addLabel(fresh);
-//			}
-//			else
-//				entry.addPointsTo(thisVar, thisAliases);
+			}
+			else
+				entry.addPointsTo(thisVar, thisAliases);
 		}
 		
 		entry.addLabel(voidLabel);
+		entry.addLabels(retriever.getAllLabels());
 		
-//		entry.addLabels(retriever.getAllLabels());
-		
+		//first, create fresh variables for all the parameters
 		Iterator itr = method.parameters().iterator();
 		while (itr.hasNext()) {
 			SingleVariableDeclaration param = (SingleVariableDeclaration) itr.next();
 			Variable paramVar = getAnalysisContext().getSourceVariable(param.resolveBinding());
 			
-//			entry.addPointsToAnySubtype(paramVar, param.getType().resolveBinding());
 			ObjectLabel fresh = new DefaultObjectLabel(param.getType().resolveBinding(), false);
 			entry.addPointsTo(paramVar, fresh);
 			entry.addLabel(fresh);
+		}
+
+		//once we have all starting variables, figure out who might point to who
+		itr = method.parameters().iterator();
+		while (itr.hasNext()) {
+			SingleVariableDeclaration param = (SingleVariableDeclaration) itr.next();
+			Variable paramVar = getAnalysisContext().getSourceVariable(param.resolveBinding());
+			entry.addPointsToAnySubtype(paramVar, param.getType().resolveBinding());
 		}
 		
 		return entry;
@@ -232,13 +237,6 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	public IResult<MayPointsToAliasContext> transfer(
 			MethodCallInstruction instr, List<ILabel> labels,
 			MayPointsToAliasContext value) {
-		/*
-		if (instr.getTarget().resolveType().getName().equals("void")) {
-			MayPointsToAliasContext newVal = value.clone();
-			newVal.addPointsTo(instr.getTarget(), voidLabel);
-			return LabeledSingleResult.createResult(newVal, labels);
-		}
-		*/
 		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
 	}
 
