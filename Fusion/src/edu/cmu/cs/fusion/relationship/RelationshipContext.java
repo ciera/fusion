@@ -2,6 +2,7 @@ package edu.cmu.cs.fusion.relationship;
 
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -23,7 +24,7 @@ import edu.cmu.cs.fusion.ThreeValue;
  * @author ciera
  *
  */
-public class RelationshipContext {
+public class RelationshipContext implements Iterable<Relationship> {
 
 	private Set<Relationship> trueRels;
 	private Set<Relationship> falseRels;
@@ -41,6 +42,15 @@ public class RelationshipContext {
 		falseRels = new HashSet<Relationship>(copy.falseRels);
 	}
 
+	
+	public Iterator<Relationship> iterator() {
+		HashSet<Relationship> tAndf = new HashSet<Relationship>();
+		tAndf.addAll(trueRels);
+		tAndf.addAll(falseRels);
+		return tAndf.iterator();
+	}
+
+	
 	public ThreeValue getRelationship(Relationship rel) {
 		assert !isBottom : "Shouldn't be possible as the flow analysis will only use a bottom lattice to join from univisited nodes";
 		if (trueRels.contains(rel))
@@ -201,5 +211,4 @@ public class RelationshipContext {
 		
 		return str;
 	}
-
 }

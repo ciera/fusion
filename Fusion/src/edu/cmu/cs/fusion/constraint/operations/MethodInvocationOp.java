@@ -4,10 +4,9 @@ import org.eclipse.jdt.core.dom.IMethodBinding;
 
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
@@ -37,7 +36,7 @@ public class MethodInvocationOp implements Operation {
 		return new FreeVars(params, paramTypes).addVar(thisVar, thisType).addVar(retVar, retType);
 	}
 
-	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr) {
+	public ConsList<Binding> matches(TypeHierarchy types, TACInstruction instr) {
 		if (!(instr instanceof MethodCallInstruction))
 			return null;
 
@@ -59,13 +58,13 @@ public class MethodInvocationOp implements Operation {
 			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
-		ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
+		ConsList<Binding> vars = ConsList.empty();
 		
-		vars = ConsList.cons(new Pair<SpecVar, Variable>(thisVar, invoke.getReceiverOperand()), vars);
-		vars = ConsList.cons(new Pair<SpecVar, Variable>(retVar, invoke.getTarget()), vars);
+		vars = ConsList.cons(new Binding(thisVar, invoke.getReceiverOperand()), vars);
+		vars = ConsList.cons(new Binding(retVar, invoke.getTarget()), vars);
 		
 		for (int ndx = 0; ndx < params.length; ndx++)
-			vars = ConsList.cons(new Pair<SpecVar, Variable>(params[ndx], invoke.getArgOperands().get(ndx)), vars);
+			vars = ConsList.cons(new Binding(params[ndx], invoke.getArgOperands().get(ndx)), vars);
 
 		return vars;
 	}

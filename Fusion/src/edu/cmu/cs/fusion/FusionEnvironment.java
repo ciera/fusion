@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;
@@ -131,7 +130,7 @@ public class FusionEnvironment {
 	 * @param fv The types of the specification variables
 	 * @return A pair of all potential substitutions.
 	 */
-	public SubPair findLabels(ConsList<Pair<SpecVar, Variable>> variables, FreeVars fv) {
+	public SubPair findLabels(ConsList<Binding> variables, FreeVars fv) {
 		SubPair baseCase = new SubPair();
 		baseCase.addDefiniteSub(new Substitution());
 			
@@ -140,14 +139,14 @@ public class FusionEnvironment {
 		return pair;
 	}
 
-	private Lambda2<Pair<SpecVar, Variable>, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>> findLabelsLambda =
-	 new Lambda2<Pair<SpecVar, Variable>, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>>(){
-		public Pair<SubPair, FreeVars> call(Pair<SpecVar, Variable> boundVar, Pair<SubPair, FreeVars> restAndVars) {
+	private Lambda2<Binding, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>> findLabelsLambda =
+	 new Lambda2<Binding, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>>(){
+		public Pair<SubPair, FreeVars> call(Binding boundVar, Pair<SubPair, FreeVars> restAndVars) {
 			FreeVars fv = restAndVars.snd();
 			SubPair otherSubs = restAndVars.fst();
-			Set<ObjectLabel> labels = alias.getAliases(boundVar.snd());
-			String typeToFind = fv.getType(boundVar.fst());
-			SubPair subs = generateNewSubPair(boundVar.fst(), typeToFind, labels, otherSubs);
+			Set<ObjectLabel> labels = alias.getAliases(boundVar.getSource());
+			String typeToFind = fv.getType(boundVar.getSpec());
+			SubPair subs = generateNewSubPair(boundVar.getSpec(), typeToFind, labels, otherSubs);
 			return new Pair<SubPair, FreeVars>(subs, fv);
 		}
 	};

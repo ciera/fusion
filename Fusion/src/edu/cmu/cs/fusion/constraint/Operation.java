@@ -1,10 +1,9 @@
 package edu.cmu.cs.fusion.constraint;
 
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.Binding;
 
 public interface Operation {
 	/**
@@ -18,7 +17,7 @@ public interface Operation {
 	 * may point to the same variable if that is what the instruction
 	 * maps them too.
 	 */
-	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr);
+	public ConsList<Binding> matches(TypeHierarchy types, TACInstruction instr);
 	
 	/**
 	 * @return A collection of the free variables and their types

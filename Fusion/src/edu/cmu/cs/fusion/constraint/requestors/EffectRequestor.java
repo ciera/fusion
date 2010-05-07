@@ -21,6 +21,7 @@ import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.Operation;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
@@ -126,8 +127,8 @@ public class EffectRequestor extends SearchRequestor {
 		return rels.findRelation(qName);
 	}
 	
-	private Effect parseEffect(IAnnotation effectAnno, Relation rel, IMethod method) throws JavaModelException {
-		Effect effect = null;
+	private RelEffect parseEffect(IAnnotation effectAnno, Relation rel, IMethod method) throws JavaModelException {
+		RelEffect effect = null;
 		IMemberValuePair paramsPair = null;
 		IMemberValuePair actEffectPair = null;
 		IMemberValuePair testPair = null;
@@ -213,14 +214,14 @@ public class EffectRequestor extends SearchRequestor {
 		
 		switch (actualEffect) {
 		case ADD:
-			effect = Effect.createAddEffect(rel, params);
+			effect = RelEffect.createAddEffect(rel, params);
 			break;
 		case REMOVE:
-			effect = Effect.createRemoveEffect(rel, params);
+			effect = RelEffect.createRemoveEffect(rel, params);
 			break;
 		case TEST:
 			test = (String) testPair.getValue();
-			effect = Effect.createTestEffect(rel, params, new SpecVar(test));
+			effect = RelEffect.createTestEffect(rel, params, new SpecVar(test));
 			break;
 		}
 		return effect;

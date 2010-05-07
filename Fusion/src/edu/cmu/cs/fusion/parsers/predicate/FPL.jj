@@ -18,6 +18,8 @@ import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.AliasEffect;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Predicate;
@@ -74,6 +76,7 @@ TOKEN : /* Operation Tokens */
 	< EOM: "EOM" > 
 |   < DOT : "." >
 |   < WC : "*" >
+|   < UPDATE : "update" >
 }
 
 
@@ -281,9 +284,15 @@ Predicate boolLiteral() :
 * Parsing of Effects
 *
 **/
-
-
 Effect effect():
+{
+	Effect e;
+}
+{
+e = relEffect() {return e;} 
+}
+
+RelEffect relEffect():
 {
   Relation rel;
   int numParams;
@@ -301,9 +310,9 @@ Effect effect():
   }  vars = wcParams(numParams, name)
   {
     if (isPos)
-    	return Effect.createAddEffect(rel, vars);
+    	return RelEffect.createAddEffect(rel, vars);
     else
-    	return Effect.createRemoveEffect(rel, vars);  }
+    	return RelEffect.createRemoveEffect(rel, vars);  }
 |
   <TEST >
   [< NEG >{isPos = false;	}]
@@ -316,9 +325,9 @@ Effect effect():
   < TEST_SEP >
   testVar = param()
   {    if (isPos)
-    	return Effect.createTestEffect(rel, vars, testVar);
+    	return RelEffect.createTestEffect(rel, vars, testVar);
     else
-    	return Effect.createNegatedTestEffect(rel, vars, testVar);
+    	return RelEffect.createNegatedTestEffect(rel, vars, testVar); 
   }
 }
 

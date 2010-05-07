@@ -16,7 +16,7 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.InferredRel;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -112,8 +112,8 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("a"), new SpecVar("b")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("a"), new SpecVar("b")}));
 		
 		InferredRel inf = new InferredRel(trigger, eff);
 		infEnv.addRule(inf);
@@ -137,8 +137,8 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createAddEffect(relations[0], new SpecVar[] {new SpecVar("b"), new SpecVar("a")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createAddEffect(relations[0], new SpecVar[] {new SpecVar("b"), new SpecVar("a")}));
 		
 		InferredRel inf = new InferredRel(trigger, eff);
 		infEnv.addRule(inf);
@@ -162,8 +162,8 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createRemoveEffect(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("a")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createRemoveEffect(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("a")}));
 		
 		InferredRel inf = new InferredRel(trigger, eff);
 		infEnv.addRule(inf);
@@ -187,9 +187,9 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createRemoveEffect(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")}));
-		eff.add(Effect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createRemoveEffect(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")}));
+		eff.add(RelEffect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
 		
 		InferredRel inf = new InferredRel(trigger, eff);
 		infEnv.addRule(inf);
@@ -212,8 +212,8 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createAddEffect(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createAddEffect(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
 		
 		InferredRel inf = new InferredRel(trigger, eff);
 		infEnv.addRule(inf);
@@ -240,8 +240,8 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
 		
 		InferredRel inf = new InferredRel(trigger, eff);
 		infEnv.addRule(inf);
@@ -269,14 +269,14 @@ public class TestGetInferredDelta {
 		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
-		List<Effect> eff = new LinkedList<Effect>();
-		eff.add(Effect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
+		List<RelEffect> eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createAddEffect(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
 		
 		infEnv.addRule(new InferredRel(trigger, eff));
 		
 		trigger = new RelationshipPredicate(relations[1], new SpecVar[] {new SpecVar("x"), new SpecVar("x")});
-		eff = new LinkedList<Effect>();
-		eff.add(Effect.createAddEffect(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
+		eff = new LinkedList<RelEffect>();
+		eff.add(RelEffect.createAddEffect(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("x")}));
 		
 		infEnv.addRule(new InferredRel(trigger, eff));
 		

@@ -26,6 +26,9 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
+import edu.cmu.cs.crystal.flow.BooleanLabel;
+import edu.cmu.cs.crystal.flow.IteratorLabel;
+
 public class StatementRelationshipVisitor extends ASTVisitor {
 
 	private FusionAnalysis fusionAnalysis;
@@ -76,12 +79,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(DoStatement node) {
 		buff.append("do {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(true)).toString());
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("} while (" + node.getExpression() + ")");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(false)).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -97,14 +100,15 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 
 	@Override
 	public boolean visit(EnhancedForStatement node) {
+		buff.append(fusionAnalysis.getRelResultsBefore(node.getExpression()).toString());
 		buff.append("for(" + node.getParameter() + " : " + node.getExpression() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node, IteratorLabel.getItrLabel(false)).toString());
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node, IteratorLabel.getItrLabel(true)).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -119,15 +123,15 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	}
 
 	@Override
-	public boolean visit(ForStatement node) {
+	public boolean visit(ForStatement node) {				
 		buff.append("for(" + node.initializers() + "; " + node.getExpression() + "; " + node.updaters() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(true)).toString());
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(false)).toString());
 		buff.append("\n");
 		return false;
 	}
@@ -136,7 +140,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(IfStatement node) {
 		buff.append("if (" + node.getExpression() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node.getThenStatement()).toString());		
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node, BooleanLabel.getBooleanLabel(true)).toString());
 		buff.append("\n");
 		node.getThenStatement().accept(this);
 		buff.append("}");
@@ -144,7 +148,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		if (node.getElseStatement() != null) {
 			buff.append("else {");
 			buff.append("\n");
-			buff.append(fusionAnalysis.getRelResultsBefore(node.getElseStatement()).toString());		
+			buff.append(fusionAnalysis.getSpecificRelResultsAfter(node, BooleanLabel.getBooleanLabel(false)).toString());
 			buff.append("\n");
 			node.getElseStatement().accept(this);
 			buff.append("}");
@@ -159,7 +163,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration node) {
 		buff.append(node.getName() + "{");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node).toString());
+		buff.append(fusionAnalysis.geStartingResults(node).toString());
 		buff.append("\n");
 		
 		if (node.getBody() != null) {
@@ -167,6 +171,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		}
 		buff.append("}");
 		buff.append("\n");
+		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
 		buff.append("//" + node.getName());
 		buff.append("\n");
 		return false;
@@ -186,10 +191,9 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		buff.append("switch (" + node.getExpression() + ") {");
 		buff.append("\n");
 		
-		if (!node.statements().isEmpty()) {
-			buff.append(fusionAnalysis.getRelResultsBefore((Statement)node.statements().get(0)).toString());		
-			buff.append("\n");
-		}
+		buff.append(fusionAnalysis.getRelResultsAfter(node.getExpression()).toString());		
+		buff.append("\n");
+
 		for (Statement statement : (List<Statement>)node.statements()) {
 			statement.accept(this);
 		}
@@ -214,15 +218,11 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(TryStatement node) {
 		buff.append("try {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
-		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
 		for (CatchClause catcher : (List<CatchClause>)node.catchClauses()) {
 			buff.append("catch (" + catcher.getException() + ") {");
-			buff.append("\n");
-			buff.append(fusionAnalysis.getRelResultsBefore(catcher.getBody()).toString());		
 			catcher.getBody().accept(this);
 			buff.append("\n");
 			buff.append("}");
@@ -231,8 +231,6 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 		
 		if (node.getFinally() != null) {
 			buff.append("finally {");
-			buff.append("\n");
-			buff.append(fusionAnalysis.getRelResultsBefore(node.getFinally()).toString());		
 			buff.append("\n");
 			node.getFinally().accept(this);
 		}
@@ -265,12 +263,12 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(WhileStatement node) {
 		buff.append("while (" + node.getExpression() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsBefore(node.getBody()).toString());		
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(true)).toString());
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getRelResultsAfter(node).toString());
+		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(false)).toString());
 		buff.append("\n");
 		return false;
 	}

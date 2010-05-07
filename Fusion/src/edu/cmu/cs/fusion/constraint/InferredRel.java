@@ -8,9 +8,9 @@ import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 public class InferredRel {
 
 	private Predicate pred;
-	private List<Effect> effects;
+	private List<RelEffect> effects;
 	
-	public InferredRel(Predicate trigger, List<Effect> effects) {
+	public InferredRel(Predicate trigger, List<RelEffect> effects) {
 		pred = trigger;
 		this.effects = effects;
 	}
@@ -25,7 +25,7 @@ public class InferredRel {
 	 */
 	public List<Substitution> canProduce(RelationshipPredicate rel, Substitution relSub) {
 		List<Substitution> subs = new LinkedList<Substitution>();
-		for (Effect eff : effects) {		
+		for (RelEffect eff : effects) {		
 			if (!eff.getRelation().equals(rel.getRelation()))
 				continue;
 			
@@ -56,7 +56,7 @@ public class InferredRel {
 		return pred;
 	}
 
-	public List<Effect> getEffects() {
+	public List<RelEffect> getEffects() {
 		return effects;
 	}
 	

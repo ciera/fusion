@@ -1,6 +1,6 @@
 package edu.cmu.cs.fusion.xml;
 
-import edu.cmu.cs.crystal.analysis.alias.LiteralLabel;
+import edu.cmu.cs.fusion.alias.LiteralLabel;
 
 /**
  * An ObjectLabel which was generated from XML, rather than from an alias analysis or as a dummy node.

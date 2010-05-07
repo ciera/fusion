@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -29,6 +28,7 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionTypeCheckException;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
@@ -44,7 +44,7 @@ import edu.cmu.cs.fusion.relationship.RelationshipDelta;
  * @author ciera
  *
  */
-public class XMLRetriever implements Observer, IResourceVisitor {
+public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 	private RelationshipDelta delta;
 	private Set<ObjectLabel> topLabels;
 	private Set<ObjectLabel> allLabels;
@@ -60,9 +60,6 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 		queries = new HashMap<String, SchemaQueries>();
 	}
 	
-	/**
-	 * Will receive a callback for every fusion file found.
-	 */
 	public void update(Observable o, Object arg) {
 		Triple<IResource, Document, XMLContext> triple = (Triple<IResource, Document, XMLContext>)arg;
 		NodeList consNodes = triple.snd().getDocumentElement().getElementsByTagName("XMLSchema");
@@ -99,16 +96,8 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 		queries.put(schemaName, new SchemaQueries(context, rels, topElement, localVal, queryStrings));
 	}
 	
-	/**
-	 * Retrieves the relationships for all the XML files in the resource. This must be called before
-	 * calling getStartContext. For each XML file found, it will find the schema to use to retrieve the relationships
-	 * and load them up.
-	 * 
-	 * Every call to this will reset the loaded data. It should be reloaded whenever the type hierarchy changes.
-	 * 
-	 * @param resource the top of a resource tree
-	 * @param tHierarchy the type hierarchy to use
-	 * @throws CoreException
+	/* (non-Javadoc)
+	 * @see edu.cmu.cs.fusion.xml.DeclarativeRetriever#retrieveRelationships(org.eclipse.core.resources.IResource, edu.cmu.cs.crystal.util.TypeHierarchy)
 	 */
 	public void retrieveRelationships(IResource resource, TypeHierarchy tHierarchy) throws CoreException {
 		delta = new RelationshipDelta();
@@ -128,8 +117,8 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 		}
 	}
 
-	/**
-	 * Callback for retrieveRelationships. Do not call externally.
+	/* (non-Javadoc)
+	 * @see edu.cmu.cs.fusion.xml.DeclarativeRetriever#visit(org.eclipse.core.resources.IResource)
 	 */
 	public boolean visit(IResource resource) throws CoreException {
 		try {
@@ -172,39 +161,9 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 		}	
 	}
 
-	/**
-	 * Make sure retrieveRelationships has already been called before calling this method.
-	 * 
-	 * Using the loaded data, this will create an appropriate starting context based on the parameters. It will use
-	 * aliases to substitute in the appropriate ObjectLabels for any known variable that should be bound (right now,
-	 * this is only thisVar). All other labels will remain in the context.
-	 * 
-	 * @param thisVar A this variable to bind to.
-	 * @param aliases The alias context to use for substitutions
-	 * @return A relationship context that is based on the data retrieved from the XML files, but bound according to aliases.
+	/* (non-Javadoc)
+	 * @see edu.cmu.cs.fusion.xml.DeclarativeRetriever#getStartingAliases(edu.cmu.cs.crystal.tac.model.Variable)
 	 */
-/*	public RelationshipContext getStartContext(Variable thisVar, AliasContext aliases) {
-		RelationshipContext start = new RelationshipContext(false);
-		RelationshipDelta converted = new RelationshipDelta();
-		Map<ObjectLabel, ObjectLabel> bindings = new HashMap<ObjectLabel, ObjectLabel>();
-		
-		for (ObjectLabel possibleTop : topLabels) {
-			String thisType = thisVar.resolveType().getQualifiedName();
-			String possibleTopType = possibleTop.getType().getQualifiedName();
-			if (types.isSubtypeCompatible(thisType, possibleTopType)) {
-				Set<ObjectLabel> thisAliases = aliases.getAliases(thisVar);
-				assert (thisAliases.size() == 1);
-				bindings.put(possibleTop, thisAliases.iterator().next());
-			}
-		}
-		
-		for (Entry<Relationship, ThreeValue> entry : delta) {
-			Relationship convDelta = convertRelationship(entry.getKey(), bindings);
-			converted.setRelationship(convDelta, FourPointLattice.convert(entry.getValue()));
-		}
-		return start.applyChangesFromDelta(converted);
-	}
-*/	
 	public Set<ObjectLabel> getStartingAliases(Variable var) {
 		Set<ObjectLabel> aliases = new HashSet<ObjectLabel>();
 		for (ObjectLabel possibleTop : topLabels) {
@@ -218,14 +177,15 @@ public class XMLRetriever implements Observer, IResourceVisitor {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.cmu.cs.fusion.xml.DeclarativeRetriever#getStartContext()
+	 */
 	public RelationshipContext getStartContext() {
 		return new RelationshipContext(false).applyChangesFromDelta(delta);
 	}
 	
-	/**
-	 * Make sure retrieveRelationships has already been called before calling this method.
-	 * 
-	 * Returns all of the ObjectLabels that are known, either by way of 
+	/* (non-Javadoc)
+	 * @see edu.cmu.cs.fusion.xml.DeclarativeRetriever#getAllLabels()
 	 */
 	public Set<ObjectLabel> getAllLabels() {
 		return allLabels;

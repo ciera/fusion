@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 
+
 /**
  * An ObjectLabel which was generated from XML, rather than from an alias analysis or as a dummy node.
  * These labels
@@ -64,9 +65,5 @@ public class XMLObjectLabel implements ObjectLabel {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
-	}
-
-	public void setType(ITypeBinding type) {
-		this.type = type;
 	}
 }

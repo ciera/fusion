@@ -4,10 +4,9 @@ import org.eclipse.jdt.core.dom.IMethodBinding;
 
 import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
@@ -30,7 +29,7 @@ public class ConstructorOp implements Operation {
 		return new FreeVars(params, paramTypes).addVar(ret, type);
 	}
 
-	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr) {
+	public ConsList<Binding> matches(TypeHierarchy types, TACInstruction instr) {
 		if (!(instr instanceof NewObjectInstruction))
 			return null;
 
@@ -48,12 +47,12 @@ public class ConstructorOp implements Operation {
 			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
-		ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
+		ConsList<Binding> vars = ConsList.empty();
 		
-		vars = ConsList.cons(new Pair<SpecVar, Variable>(ret, newObj.getTarget()), vars);
+		vars = ConsList.cons(new Binding(ret, newObj.getTarget()), vars);
 		
 		for (int ndx = 0; ndx < params.length; ndx++)
-			vars = ConsList.cons(new Pair<SpecVar, Variable>(params[ndx], newObj.getArgOperands().get(ndx)), vars);
+			vars = ConsList.cons(new Binding(params[ndx], newObj.getArgOperands().get(ndx)), vars);
 
 		return vars;
 	}

@@ -11,9 +11,8 @@ import org.junit.Test;
 
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
@@ -56,7 +55,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "void");
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 
 		assertTrue(map == null);
 	}
@@ -72,7 +71,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 	}
@@ -88,7 +87,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo2", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 	}
@@ -104,7 +103,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz2"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);	
 	}
@@ -121,7 +120,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz", "blah"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(map == null);
 		
@@ -144,13 +143,13 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RESULT, tVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RECEIVER, rVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(0), p1)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(1), p2)));
+		assertTrue(list.contains(new Binding(Constraint.RESULT, tVar)));
+		assertTrue(list.contains(new Binding(Constraint.RECEIVER, rVar)));
+		assertTrue(list.contains(new Binding(utils.getVar(0), p1)));
+		assertTrue(list.contains(new Binding(utils.getVar(1), p2)));
 		
 		assertEquals(4, list.size());
 	}	
@@ -168,13 +167,13 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list != null);
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RESULT, tVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(Constraint.RECEIVER, rVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(0), rVar)));
-		assertTrue(list.contains(new Pair<SpecVar, Variable>(utils.getVar(1), tVar)));
+		assertTrue(list.contains(new Binding(Constraint.RESULT, tVar)));
+		assertTrue(list.contains(new Binding(Constraint.RECEIVER, rVar)));
+		assertTrue(list.contains(new Binding(utils.getVar(0), rVar)));
+		assertTrue(list.contains(new Binding(utils.getVar(1), tVar)));
 		
 		assertEquals(4, list.size());
 

@@ -3,14 +3,12 @@ package edu.cmu.cs.fusion.constraint.operations;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
-import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.relationship.EntryInstruction;
 
 public class BeginOfMethodOp implements Operation {
@@ -20,7 +18,7 @@ public class BeginOfMethodOp implements Operation {
 		return new FreeVars().addVar(Constraint.RECEIVER, type);
 	}
 
-	public ConsList<Pair<SpecVar, Variable>> matches(TypeHierarchy types, TACInstruction instr) {
+	public ConsList<Binding> matches(TypeHierarchy types, TACInstruction instr) {
 		if (!(instr instanceof EntryInstruction))
 			return null;
 
@@ -38,7 +36,7 @@ public class BeginOfMethodOp implements Operation {
 //			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
 //				return null;
 		
-		ConsList<Pair<SpecVar, Variable>> vars = ConsList.empty();
+		ConsList<Binding> vars = ConsList.empty();
 		
 //		vars = ConsList.cons(new Pair<SpecVar, Variable>(thisVar, invoke.getReceiverOperand()), vars);
 //		vars = ConsList.cons(new Pair<SpecVar, Variable>(retVar, invoke.getTarget()), vars);

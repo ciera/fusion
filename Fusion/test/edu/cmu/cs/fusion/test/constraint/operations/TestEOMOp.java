@@ -10,11 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.cs.crystal.tac.model.ReturnInstruction;
-import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
-import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.FreeVars;
-import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.EndOfMethodOp;
 import edu.cmu.cs.fusion.test.EqualityOnlyTypeHierarchy;
 import edu.cmu.cs.fusion.test.TestUtils;
@@ -50,7 +48,7 @@ public class TestEOMOp {
 		
 		EndOfMethodOp op = new EndOfMethodOp();
 		
-		ConsList<Pair<SpecVar, Variable>> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 
 		assertTrue(map == null);
 	}
@@ -60,7 +58,7 @@ public class TestEOMOp {
 		ReturnInstruction instr = new DefaultReturnInstruction();
 		EndOfMethodOp op = new EndOfMethodOp();
 
-		ConsList<Pair<SpecVar,Variable>> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
 		
 		assertTrue(list.isEmpty());
 	}	

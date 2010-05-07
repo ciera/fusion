@@ -15,11 +15,13 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
@@ -50,8 +52,8 @@ public class TestSingleConstraint extends ConstraintChecker {
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"}, "Foo");
 		trigger = new TruePredicate();
 		req = new TruePredicate();
-		effects.add(Effect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {Constraint.RECEIVER, utils.getVar(0)}));
-		effects.add(Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
+		effects.add(RelEffect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {Constraint.RECEIVER, utils.getVar(0)}));
+		effects.add(RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
 		
 		cons = new Constraint(op, trigger, req, effects);
 		
@@ -67,7 +69,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 	}
 	
 	public TestSingleConstraint() {
-		super(null, null);
+		super(null, null, Variant.PRAGMATIC_VARIANT);
 		types = new TypeHierarchy() {
 			public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
 				if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
@@ -103,7 +105,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 	@Test
 	/**
 	 * Notice that the only way for there to be absolutely no matches is for the types to not match. If the types match, then
-	 * there has to be some aliasing possible because at runtime, those varaibles are going to bind to at least one possible
+	 * there has to be some aliasing possible because at runtime, those variables are going to bind to at least one possible
 	 * aliasing configuration!
 	 */
 	public void testNoMatches() throws FusionException {
@@ -148,8 +150,8 @@ public class TestSingleConstraint extends ConstraintChecker {
 		
 		Operation op = new ConstructorOp("Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"});
 		List<Effect> effects = new LinkedList<Effect>();
-		effects.add(Effect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
-		effects.add(Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
+		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
+		effects.add(RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
 		
 		Constraint cons = new Constraint(op, new TruePredicate(), new TruePredicate(), effects);
 

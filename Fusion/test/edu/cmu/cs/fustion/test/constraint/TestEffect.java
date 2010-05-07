@@ -12,6 +12,7 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.relationship.FourPointLattice;
@@ -29,7 +30,7 @@ public class TestEffect {
 
 	@Test
 	public void testFreeVarsNormal() {
-		Effect eff = Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
+		Effect eff = RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		String[] types = utils.getRelation(0).getFullyQualifiedTypes();
 		FreeVars fv = eff.getFreeVariables();
 		
@@ -41,7 +42,7 @@ public class TestEffect {
 	
 	@Test
 	public void testFreeVarsTest() {
-		Effect eff = Effect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		String[] types = utils.getRelation(0).getFullyQualifiedTypes();
 		FreeVars fv = eff.getFreeVariables();
 		
@@ -54,7 +55,7 @@ public class TestEffect {
 	
 	@Test
 	public void testMakeEffectsAdd() {
-		Effect eff = Effect.createAddEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
+		Effect eff = RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		TestEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
@@ -67,7 +68,7 @@ public class TestEffect {
 	
 	@Test
 	public void testMakeEffectsRemove() {
-		Effect eff = Effect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
+		Effect eff = RelEffect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		TestEnvironment env = new TestEnvironment(utils.getContext(0));
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
@@ -80,7 +81,7 @@ public class TestEffect {
 	
 	@Test
 	public void testMakeEffectsTestTrue() {
-		Effect eff = Effect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
 		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
 		
@@ -96,7 +97,7 @@ public class TestEffect {
 	
 	@Test
 	public void testMakeEffectsTestFalse() {
-		Effect eff = Effect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
 		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
 		
@@ -112,7 +113,7 @@ public class TestEffect {
 	
 	@Test
 	public void testMakeEffectsTestUnk() {
-		Effect eff = Effect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
 		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
 		
@@ -128,7 +129,7 @@ public class TestEffect {
 
 	@Test
 	public void testMakeEffectsTestNegFalse() {
-		Effect eff = Effect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
 		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
 		
@@ -144,7 +145,7 @@ public class TestEffect {
 
 	@Test
 	public void testMakeEffectsTestNegTrue() {
-		Effect eff = Effect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
 		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
 		
@@ -160,7 +161,7 @@ public class TestEffect {
 
 	@Test
 	public void testMakeEffectsTestNegUnk() {
-		Effect eff = Effect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
+		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
 		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
 		

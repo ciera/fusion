@@ -77,7 +77,7 @@ public class InferenceEnvironment implements Iterable<InferredRel>, Observer{
 		try {
 			NodeList consParts = item.getChildNodes();
 			Predicate trigger = null;
-			List<Effect> effects = new LinkedList<Effect>();
+			List<RelEffect> effects = new LinkedList<RelEffect>();
 			
 			FPLParser parser = new FPLParser(rels, context);
 			
@@ -94,7 +94,7 @@ public class InferenceEnvironment implements Iterable<InferredRel>, Observer{
 				}
 				else if (name.equals("eff")) {
 					parser.reset(node.getTextContent());
-					effects.add(parser.effect());
+					effects.add(parser.relEffect());
 				}
 			}
 			assert (trigger != null);
