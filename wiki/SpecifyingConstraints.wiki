@@ -17,7 +17,7 @@ Constraints are written as a class-level Java 5 annotation called `Constraint`. 
 
 {{{
 @Constraint(
-	op="EOM(x)",
+	op="EOM",
 	trigger = "!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList",
 	requires = "FALSE",
 	effects = {}
@@ -44,23 +44,21 @@ Constraints are written as a class-level Java 5 annotation called `Constraint`. 
 
 =Syntax=
 A constraint has 4 parts:
-  # The operator being constrained
-  # The trigger predicate
-  # The requires predicate
-  # The effects list
+  # The operator being constrained (Operator)
+  # The trigger predicate (Predicate)
+  # The requires predicate (Predicate)
+  # The effects list (Effects)
 
-The first 3 parts are written as Strings, and the last is an array of Strings. (While not ideal, this is due to the limitations of Java 5 annotations.) The syntax of these strings is described below. *Bold text* is used to describe required syntax, while _italic text_ is used to describe a 0-n comma separated list.
+The first 3 parts are written as Strings, and the last is an array of Strings. The syntax of these strings is described below. *Bold text* is used to describe required syntax, while _italic text_ is used to describe a 0-n comma separated list.
+
+Notice that the effects list is *not* a predicate; you cannot specify logical operators. It is simply a list of effects. This is because it makes little sense to specify an effect with a disjunction or an implication. Additionally, the effects can only be relationships, not type checks or equality checks.
 
 == Operator syntax ==
 Operator ::= !MethodCall | Constructor | EOM<br>
 !MethodCall ::= Type*.methodName(*_Type var_ *):* Type<br>
 Constructor ::= Type*(*_Type var_*)*<br>
-EOM ::= *eom(* var *)* | *eom*<br>
+EOM ::=  | *eom*<br>
 Type ::= elementalType | typeName<br>
-
-*Note: EOM doesn't  yet work*
-
- While it will parse, it will not yet match to anything. There is an issue in Crystal that must be fixed first. [http://code.google.com/p/fusion/issues/detail?id=7 Issue 7] has the relevant details.
 
 == Predicate syntax ==
 Both the trigger predicate and the requires predicate have the same syntax.
