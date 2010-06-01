@@ -6,14 +6,18 @@ import java.util.List;
 
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.util.ConsList;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.Variant;
+import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.AliasDelta;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
+import edu.cmu.cs.fusion.constraint.SpecDelta;
 import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
@@ -35,19 +39,22 @@ public class ConstraintChecker {
 	 * @param instr
 	 * @return The new relationship lattice.
 	 */
-	public RelationshipContext runGenericTransfer(FusionEnvironment env, TACInstruction instr) {
-		List<RelationshipDelta> consDeltas = new LinkedList<RelationshipDelta>();
-		RelationshipDelta delta;
+	public Pair<RelationshipContext, AliasContext> runGenericTransfer(FusionEnvironment env, TACInstruction instr) {
+		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
+		List<AliasDelta> aliasDeltas = new LinkedList<AliasDelta>();
 		
 		for (Constraint cons : constraints) {
-			if (!cons.getEffects().isEmpty()) {
-				delta = runSingleConstraint(env, cons, instr);
-				consDeltas.add(delta);
-			}
+			Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+			relDeltas.add(deltas.fst());
+			aliasDeltas.add(deltas.snd());
 		}
 		
-		delta = RelationshipDelta.join(consDeltas);
-		return env.getContext().applyChangesFromDelta(delta);
+		RelationshipDelta relDelta = RelationshipDelta.join(relDeltas, true);
+		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);
+		
+		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
+		AliasContext aliasContext = env.makeNewAliases(aliasDelta);
+		return new Pair<RelationshipContext, AliasContext>(relContext, aliasContext);
 	}
 
 	public List<FusionErrorReport> checkForErrors(FusionEnvironment env, TACInstruction instr) {
@@ -72,32 +79,69 @@ public class ConstraintChecker {
 	 * @return a relationship delta for all possible aliasing configurations, assuming the constraint
 	 * triggers.
 	 */
-	protected RelationshipDelta runSingleConstraint(FusionEnvironment env,
+	protected Pair<RelationshipDelta, AliasDelta> runSingleConstraint(FusionEnvironment env,
 			Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, instr);
-		List<RelationshipDelta> deltas = new LinkedList<RelationshipDelta>();
-		RelationshipDelta delta;
+		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
+		List<AliasDelta> specDeltas = new LinkedList<AliasDelta>();
 		
 		if (boundVars == null)
-			return new RelationshipDelta();
+			return new Pair<RelationshipDelta, AliasDelta>(new RelationshipDelta(), new AliasDelta());
 		
-		SubPair pairs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
-		Iterator<Substitution> itr;
+		List<Substitution> subs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
 		
-		itr = pairs.getDefiniteSubstitutions();
-		while (itr.hasNext()) {
-			delta = runPartialBound(env, itr.next(), cons);
-			deltas.add(delta);
-		}
-
-		itr = pairs.getPossibleSubstitutions();
-		while (itr.hasNext()) {
-			delta = runPartialBound(env, itr.next(), cons);
-			deltas.add(delta.polarize());
+		for (Substitution sub : subs) {
+			Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, sub, cons);
+			relDeltas.add(deltas.fst());
+			specDeltas.add(deltas.snd().turnToSource(boundVars));
 		}
 		
-		return RelationshipDelta.equalityJoin(deltas);
+		RelationshipDelta relDelta = RelationshipDelta.join(relDeltas, false);
+		AliasDelta specDelta = AliasDelta.join(specDeltas);
+		
+		return new Pair<RelationshipDelta, AliasDelta>(relDelta, specDelta);
 	}
+
+	/**
+	 * Check a constraint with the fully bound substitutions
+	 * @param env The stating lattices
+	 * @param partialSubs The substitutions for FV(cons) - FV(req)
+	 * @param cons The constraint to check
+	 * @param instr The instruction to report errors on
+	 * @return Any change effects
+	 */
+	protected Pair<RelationshipDelta, SpecDelta> runFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons) {	
+		
+		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
+		
+		if (trigger == ThreeValue.FALSE) {
+			return new Pair<RelationshipDelta, SpecDelta>(new RelationshipDelta(), SpecDelta.createBottomSpecDelta(partialSubs));
+		}
+		else  {
+			RelationshipDelta delta = new RelationshipDelta();
+			SpecDelta specs;
+			
+			//now make the effects
+			for (Effect effect : cons.getEffects())
+				delta.override(effect.makeEffects(env, partialSubs));
+			
+			if (trigger == ThreeValue.TRUE) {
+				specs = SpecDelta.createSubstitutionSpecDelta(partialSubs);
+			}
+			else {
+				delta = delta.polarize();
+			
+				if (variant.isSound())
+					specs = SpecDelta.createTopSpecDelta(partialSubs);
+				else
+					specs = SpecDelta.createBottomSpecDelta(partialSubs);
+			}
+			
+			return new Pair<RelationshipDelta, SpecDelta>(delta, specs);
+		}
+	}
+	
+	
 	
 	protected FusionErrorReport checkSingleConstraint(FusionEnvironment env, Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, instr);
@@ -105,24 +149,16 @@ public class ConstraintChecker {
 		if (boundVars == null)
 			return null;
 
-		SubPair pairs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
+		List<Substitution> subs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
 		
-		if (pairs.numberOfSubstitutions() == 0)
+		if (subs.isEmpty())
 			return null;
 		
-		Iterator<Substitution> itr;
 		List<Substitution> failingSubs = new LinkedList<Substitution>();
 		
-		itr = pairs.getDefiniteSubstitutions();
-		while (itr.hasNext()) {
-			List<Substitution> fails = checkPartialBound(env, itr.next(), cons);
-			failingSubs.addAll(fails);
-		}
-
-		itr = pairs.getPossibleSubstitutions();
-		while (itr.hasNext()) {
-			List<Substitution> fails = checkPartialBound(env, itr.next(), cons);
-			failingSubs.addAll(fails);
+		for (Substitution sub : subs) {
+			if (checkFullyBound(env, sub, cons))
+				failingSubs.add(sub);
 		}
 		
 		if (!failingSubs.isEmpty())
@@ -130,37 +166,12 @@ public class ConstraintChecker {
 		else
 			return null;
 	}
-	
-	protected List<Substitution> checkPartialBound(FusionEnvironment env,
-			Substitution boundSubs, Constraint cons) {
-		
-		List<Substitution> failingSubs = new LinkedList<Substitution>();
-		SubPair pair = env.allValidSubs(boundSubs, cons.getFreeVarsExceptReqs());
 
-		Iterator<Substitution> itr;
-		
-		itr = pair.getDefiniteSubstitutions();
-		while (itr.hasNext()) {
-			Substitution error = checkFullyBound(env, itr.next(), cons);
-			if (error != null)
-				failingSubs.add(error);
-		}
-
-		itr = pair.getPossibleSubstitutions();
-		while (itr.hasNext()) {
-			Substitution error = checkFullyBound(env, itr.next(), cons);
-			if (error != null)
-				failingSubs.add(error);
-		}
-		
-		return failingSubs;
-	}
-
-	protected Substitution checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons) {		
+	protected boolean checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons) {		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 		
 		if (trigger == ThreeValue.FALSE) {
-			return null;
+			return false;
 		}
 		else if (trigger == ThreeValue.TRUE) {
 			if (variant.isComplete()) {
@@ -172,7 +183,7 @@ public class ConstraintChecker {
 		}
 		else {
 			if (variant.isComplete() || variant.isPragmatic()) {
-				return null;
+				return false;
 			}
 			else {
 				return checkSoundly(env, partialSubs, cons);
@@ -180,7 +191,7 @@ public class ConstraintChecker {
 		}
 	}
 
-	private Substitution checkSoundly(FusionEnvironment env,
+	private boolean checkSoundly(FusionEnvironment env,
 			Substitution partialSubs, Constraint cons) {
 		SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 		
@@ -189,12 +200,12 @@ public class ConstraintChecker {
 			Substitution fullSub = itr.next();
 			ThreeValue req = cons.getRequires().getTruth(env, fullSub);
 			if (req == ThreeValue.TRUE) 
-				return null;
+				return false;
 		}
-		return partialSubs;
+		return true;
 	}
 
-	private Substitution checkCompletely(FusionEnvironment env,
+	private boolean checkCompletely(FusionEnvironment env,
 			Substitution partialSubs, Constraint cons) {
 		SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 		
@@ -203,77 +214,17 @@ public class ConstraintChecker {
 			Substitution fullSub = itr.next();
 			ThreeValue req = cons.getRequires().getTruth(env, fullSub);
 			if (req != ThreeValue.FALSE) 
-				return null;
+				return false;
 		}
 		itr = pair.getPossibleSubstitutions();
 		while (itr.hasNext()) {
 			Substitution fullSub = itr.next();
 			ThreeValue req = cons.getRequires().getTruth(env, fullSub);
 			if (req != ThreeValue.FALSE) 
-				return null;
+				return false;
 		}
-		return partialSubs;
+		return true;
 	}
 
-	protected RelationshipDelta runPartialBound(FusionEnvironment env, Substitution boundSubs, Constraint cons) {
-		
-		List<RelationshipDelta> deltas = new LinkedList<RelationshipDelta>();
-		RelationshipDelta delta;
-		SubPair pair = env.allValidSubs(boundSubs, cons.getFreeVarsExceptReqs());
 
-		Iterator<Substitution> itr;
-		
-		itr = pair.getDefiniteSubstitutions();
-		while (itr.hasNext()) {
-			delta = runFullyBound(env, itr.next(), cons);
-			deltas.add(delta);
-		}
-
-		itr = pair.getPossibleSubstitutions();
-		while (itr.hasNext()) {
-			delta = runFullyBound(env, itr.next(), cons);
-			deltas.add(delta.polarize());
-		}
-		
-		return RelationshipDelta.equalityJoin(deltas);
-	}
-
-	/**
-	 * Check a constraint with the fully bound substitutions
-	 * @param env The stating lattices
-	 * @param partialSubs The substitutions for FV(cons) - FV(req)
-	 * @param cons The constraint to check
-	 * @param instr The instruction to report errors on
-	 * @return Any change effects
-	 */
-	protected RelationshipDelta runFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons) {	
-		
-		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
-		
-		if (trigger == ThreeValue.FALSE) {
-			return new RelationshipDelta();
-		}
-		else  {
-			RelationshipDelta delta;
-			//instead of below:
-			//if (trigger == ThreeValue.TRUE)
-			//	make effects, including aliasing
-			//if (trigger == UNKNOWN
-			// make effects, no aliasing
-			//	if sound
-			//		make aliasing
-			
-			
-			//now make the effects
-			List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
-			for (Effect effect : cons.getEffects())
-				eDeltas.add(effect.makeEffects(env, partialSubs));
-			delta = RelationshipDelta.join(eDeltas);
-			
-			if (trigger == ThreeValue.UNKNOWN)
-				delta = delta.polarize(); //polarize should also remove any update changes
-			
-			return delta;
-		}
-	}
 }

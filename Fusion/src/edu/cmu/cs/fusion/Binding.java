@@ -51,4 +51,9 @@ public class Binding {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return spec.toString() + "->" + source.toString();
+	}
 }

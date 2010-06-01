@@ -18,7 +18,6 @@ import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
-import edu.cmu.cs.fusion.constraint.AliasEffect;
 import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;

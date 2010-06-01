@@ -12,10 +12,10 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.Effect;
-import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
-import edu.cmu.cs.fusion.relationship.FourPointLattice;
+import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
@@ -60,8 +60,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.TRU, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.TRU, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -73,8 +73,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.FAL, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.FAL, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -89,8 +89,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.TRU, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.TRU, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -105,8 +105,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.FAL, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.FAL, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -121,8 +121,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.UNK, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.UNK, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -137,8 +137,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.FAL, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.FAL, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -153,8 +153,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.TRU, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.TRU, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	}
@@ -169,8 +169,8 @@ public class TestEffect {
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
-		FourPointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
-		assertEquals(FourPointLattice.UNK, val);
+		FivePointLattice val = delta.getValue(new Relationship(utils.getRelation(0), labels));
+		assertEquals(FivePointLattice.UNK, val);
 		
 		assertEquals(1, delta.numberOfChanges());
 	

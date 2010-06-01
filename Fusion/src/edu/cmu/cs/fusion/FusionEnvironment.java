@@ -11,6 +11,7 @@ import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.AliasDelta;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -85,7 +86,7 @@ public class FusionEnvironment {
 					List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
 					for (Effect effect : inf.getEffects())
 						eDeltas.add(effect.makeEffects(this, finalSub));
-					delta = RelationshipDelta.join(eDeltas);
+					delta = RelationshipDelta.join(eDeltas, false);
 					
 					//if it doesn't conflict AND it makes some change, return it!
 					if (delta.isStrictlyMorePrecise(context)) {
@@ -123,40 +124,58 @@ public class FusionEnvironment {
 		}
 		return true;
 	}
+	
+	public List<Substitution> findLabels(ConsList<Binding> variables, FreeVars fv) {
+		List<Substitution> baseCase = new LinkedList<Substitution>();
+		baseCase.add(new Substitution());
+		
+		//first, get a list of sigmas, with bindings according to variables.
+		List<Substitution> boundSubs = variables.foldl(findLabelsLambda, new Pair<List<Substitution>, FreeVars>(baseCase, fv)).fst();
+		
+		//then, pass each one into allValidSubs
+		List<Substitution> includeFV = new LinkedList<Substitution>();
+		for (Substitution sub : boundSubs) {
+			SubPair pair = allValidSubs(sub, fv);
 
-	/**
-	 * Find the potential substitutions for some bound specification variables.
-	 * @param variables The bound variables which we must produce aliasing substitutions for
-	 * @param fv The types of the specification variables
-	 * @return A pair of all potential substitutions.
-	 */
-	public SubPair findLabels(ConsList<Binding> variables, FreeVars fv) {
-		SubPair baseCase = new SubPair();
-		baseCase.addDefiniteSub(new Substitution());
-			
-		SubPair pair = variables.foldl(findLabelsLambda, new Pair<SubPair, FreeVars>(baseCase, fv)).fst();
-//		assert(pair.numberOfSubstitutions() != 0); possible that there is no alias of the right subtype.
-		return pair;
-	}
-
-	private Lambda2<Binding, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>> findLabelsLambda =
-	 new Lambda2<Binding, Pair<SubPair, FreeVars>, Pair<SubPair, FreeVars>>(){
-		public Pair<SubPair, FreeVars> call(Binding boundVar, Pair<SubPair, FreeVars> restAndVars) {
-			FreeVars fv = restAndVars.snd();
-			SubPair otherSubs = restAndVars.fst();
-			Set<ObjectLabel> labels = alias.getAliases(boundVar.getSource());
-			String typeToFind = fv.getType(boundVar.getSpec());
-			SubPair subs = generateNewSubPair(boundVar.getSpec(), typeToFind, labels, otherSubs);
-			return new Pair<SubPair, FreeVars>(subs, fv);
+			Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
+			while (itr.hasNext())
+				includeFV.add(itr.next());
+			itr = pair.getPossibleSubstitutions();
+			while (itr.hasNext())
+				includeFV.add(itr.next());
 		}
-	};
+		return includeFV;
+	}
+	
+	private Lambda2<Binding, Pair<List<Substitution>, FreeVars>, Pair<List<Substitution>, FreeVars>> findLabelsLambda =
+		 new Lambda2<Binding, Pair<List<Substitution>, FreeVars>, Pair<List<Substitution>, FreeVars>>(){
+			public Pair<List<Substitution>, FreeVars> call(Binding boundVar, Pair<List<Substitution>, FreeVars> restAndVars) {
+				FreeVars fv = restAndVars.snd();
+				List<Substitution> otherSubs = restAndVars.fst();
+				Set<ObjectLabel> labels = alias.getAliases(boundVar.getSource());
+				SpecVar spec = boundVar.getSpec();
+				String specType = fv.getType(spec);
+						
+				List<Substitution> newSubs = new LinkedList<Substitution>();
+				for (Substitution sub : otherSubs){
+					for (ObjectLabel label : labels) {
+						MatchType mType = checkTypes(label, specType);
+						if (mType != MatchType.NONE) {
+							newSubs.add(sub.addSub(spec, label));
+						}
+					}				
+				}
+
+				return new Pair<List<Substitution>, FreeVars>(newSubs, fv);
+			}
+		};
 			
 
 	/**
 	 * Find all possible substitutions for the specification variables in fv, with the starting substitutions given
 	 * @param existing The existing substitutions, which must correspond to the free variables passed in
 	 * @param fv The free variables to get substitutions for
-	 * @return A SubPair of possible substutitions, where each sub contains existing and the domain of the sub is equal to the domain of freevars
+	 * @return A SubPair of possible substitutions, where each sub contains existing and the domain of the sub is equal to the domain of freevars
 	 */
 	public SubPair allValidSubs(Substitution existing, FreeVars fv) {
 		FreeVars actualFreeVars = new FreeVars();
@@ -178,39 +197,39 @@ public class FusionEnvironment {
 	private Lambda2<Pair<SpecVar, String>, SubPair, SubPair> validSubsLambda =
 	 new Lambda2<Pair<SpecVar, String>, SubPair, SubPair>(){
 		public SubPair call(Pair<SpecVar, String> freeVar, SubPair otherPairs) {
-			return generateNewSubPair(freeVar.fst(), freeVar.snd(), alias.getAllAliases(), otherPairs);
+			SpecVar spec = freeVar.fst();
+			String specType = freeVar.snd();
+			Set<ObjectLabel> aliases = alias.getAllAliases();
+			SubPair newPair = new SubPair();
+			
+			Iterator<Substitution> itr =  otherPairs.getDefiniteSubstitutions();
+			while (itr.hasNext()){
+				Substitution tSub = itr.next();	
+				for (ObjectLabel label : aliases) {
+					MatchType mType = checkTypes(label, specType);
+					if (mType == MatchType.DEF) {
+						newPair.addDefiniteSub(tSub.addSub(spec, label));
+					}
+					else if (mType == MatchType.POS){
+						newPair.addPossibleSub(tSub.addSub(spec, label));
+					}
+				}				
+			}
+
+			itr =  otherPairs.getPossibleSubstitutions();
+			while (itr.hasNext()){
+				Substitution uSub = itr.next();
+				for (ObjectLabel label : aliases) {
+					MatchType mType = checkTypes(label, specType);
+					if (mType != MatchType.NONE) {
+						newPair.addPossibleSub(uSub.addSub(spec, label));
+					}
+				}				
+			}			
+			return newPair;
+
 		}
 	};
-		
-	private SubPair generateNewSubPair(SpecVar spec, String specType, Set<ObjectLabel> aliases, SubPair otherPairs) {
-		SubPair newPair = new SubPair();
-		
-		Iterator<Substitution> itr =  otherPairs.getDefiniteSubstitutions();
-		while (itr.hasNext()){
-			Substitution tSub = itr.next();	
-			for (ObjectLabel label : aliases) {
-				MatchType mType = checkTypes(label, specType);
-				if (mType == MatchType.DEF) {
-					newPair.addDefiniteSub(tSub.addSub(spec, label));
-				}
-				else if (mType == MatchType.POS){
-					newPair.addPossibleSub(tSub.addSub(spec, label));
-				}
-			}				
-		}
-
-		itr =  otherPairs.getPossibleSubstitutions();
-		while (itr.hasNext()){
-			Substitution uSub = itr.next();
-			for (ObjectLabel label : aliases) {
-				MatchType mType = checkTypes(label, specType);
-				if (mType != MatchType.NONE) {
-					newPair.addPossibleSub(uSub.addSub(spec, label));
-				}
-			}				
-		}			
-		return newPair;
-	}
 		
 	private MatchType checkTypes(ObjectLabel label, String type) {
 		if (tHierarchy.isSubtypeCompatible(label.getType().getQualifiedName(), type)) {
@@ -223,7 +242,7 @@ public class FusionEnvironment {
 			return MatchType.NONE;
 	}
 
-
+	//TODO: Consider removing this method. Replace with utility methods?
 	public RelationshipContext getContext() {
 		return context;
 	}
@@ -244,5 +263,10 @@ public class FusionEnvironment {
 	
 	public String printAllAliases() {
 		return alias.toString();
+	}
+
+	public AliasContext makeNewAliases(AliasDelta aliasDelta) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

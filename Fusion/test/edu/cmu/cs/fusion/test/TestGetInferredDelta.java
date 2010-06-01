@@ -16,13 +16,14 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.constraint.RelEffect;
+import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.InferredRel;
+import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
-import edu.cmu.cs.fusion.relationship.FourPointLattice;
+import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
@@ -97,8 +98,10 @@ public class TestGetInferredDelta {
 		
 		ctx = new RelationshipContext(false);
 		RelationshipDelta delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[1]}), FourPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[1]}), FivePointLattice.TRU);
 		ctx = ctx.applyChangesFromDelta(delta);
+		
+		FreeVars.setHierarchy(testH);
 	}
 
 	/**
@@ -224,8 +227,8 @@ public class TestGetInferredDelta {
 		
 		RelationshipDelta delta = env.getInferredDelta(find, sub);
 		assertNotNull(delta);
-		FourPointLattice val = delta.getValue(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[0]}));
-		assertEquals(FourPointLattice.TRU, val);
+		FivePointLattice val = delta.getValue(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[0]}));
+		assertEquals(FivePointLattice.TRU, val);
 		assertEquals(1, delta.numberOfChanges());	
 	}
 
@@ -252,8 +255,8 @@ public class TestGetInferredDelta {
 		
 		RelationshipDelta delta = env.getInferredDelta(find, sub);
 		assertNotNull(delta);
-		FourPointLattice val = delta.getValue(new Relationship(relations[1], new ObjectLabel[] {labels[0], labels[0]}));
-		assertEquals(FourPointLattice.TRU, val);
+		FivePointLattice val = delta.getValue(new Relationship(relations[1], new ObjectLabel[] {labels[0], labels[0]}));
+		assertEquals(FivePointLattice.TRU, val);
 		assertEquals(1, delta.numberOfChanges());		
 	}
 
@@ -286,8 +289,8 @@ public class TestGetInferredDelta {
 		
 		RelationshipDelta delta = env.getInferredDelta(find, sub);
 		assertNotNull(delta);
-		FourPointLattice val = delta.getValue(new Relationship(relations[1], new ObjectLabel[] {labels[0], labels[0]}));
-		assertEquals(FourPointLattice.TRU, val);
+		FivePointLattice val = delta.getValue(new Relationship(relations[1], new ObjectLabel[] {labels[0], labels[0]}));
+		assertEquals(FivePointLattice.TRU, val);
 		assertEquals(1, delta.numberOfChanges());		
 		
 	}

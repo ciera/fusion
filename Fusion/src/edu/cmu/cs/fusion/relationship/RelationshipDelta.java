@@ -8,10 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
-import edu.cmu.cs.fusion.constraint.SpecVar;
 
 /**
  * Represents the delta lattice. These are the changes to make to the final lattice.
@@ -21,19 +19,15 @@ import edu.cmu.cs.fusion.constraint.SpecVar;
  * @author ciera
  *
  */
-public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValue>> {
-	private Map<Relationship, ThreeValue> rels;
+public class RelationshipDelta implements Iterable<Entry<Relationship, FivePointLattice>> {
+	private Map<Relationship, FivePointLattice> rels;
 	
 	/**
 	 * Creates a new delta where everything maps to bottom.
 	 */
 	public RelationshipDelta() {
-		rels = new HashMap<Relationship, ThreeValue>();
+		rels = new HashMap<Relationship, FivePointLattice>();
 	}
-	
-	public RelationshipDelta addUpdate(SpecVar var, ObjectLabel label) {return this;}
-	
-	public Map<SpecVar, Set<ObjectLabel>> getUpdates() {return null;}
 
 	/**
 	 * 
@@ -43,90 +37,68 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		return rels.size();
 	}
 	
-	public FourPointLattice getValue(Relationship rel) {
-		return FourPointLattice.convert(rels.get(rel));
+	public FivePointLattice getValue(Relationship rel) {
+		return rels.get(rel);
 	}
 
-	public void setRelationship(Relationship rel, FourPointLattice fp) {
-		if (fp == FourPointLattice.TRU)
-			rels.put(rel, ThreeValue.TRUE);
-		else if (fp == FourPointLattice.FAL)
-			rels.put(rel, ThreeValue.FALSE);
-		else if (fp == FourPointLattice.UNK)
-			rels.put(rel, ThreeValue.UNKNOWN);
-		else
-			rels.remove(rel);
+	public void setRelationship(Relationship rel, FivePointLattice fp) {
+		rels.put(rel, fp);
 	}
 
-	/**
-	 * Polarizing function.
-	 * 
-	 * B | B 
-	 * T | U 
-	 * F | U 
-	 * U | U 
-	 */
 	public RelationshipDelta polarize() {
 		RelationshipDelta polar = new RelationshipDelta();
 		
-		for (Relationship rel : rels.keySet())
-			polar.setRelationship(rel, FourPointLattice.UNK);
+		for (Entry<Relationship, FivePointLattice> entry : rels.entrySet())
+			polar.setRelationship(entry.getKey(), entry.getValue().polarize());
 		return polar;
 	}
 
-	/**
-	 * Joins together a list of deltas into a single delta.
-	 *    
-	 *   __B_T_F_U_ 
-	 * B | B T F U
-	 * T | T T U U
-	 * F | F U F U
-	 * U | U U U U
-	 */
-	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
+	static public RelationshipDelta join(List<RelationshipDelta> deltas, boolean ignoreAsBot) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();
 		
 		if (deltas.isEmpty())
 			return joined;
 		
-		joined.rels = new HashMap<Relationship, ThreeValue>(itr.next().rels);
+		joined.rels = new HashMap<Relationship, FivePointLattice>(itr.next().rels);
 		
 		while (itr.hasNext()) {
-			joined.join(itr.next(), false);
+			if (ignoreAsBot)
+				joined.joinStar(itr.next());
+			else
+				joined.join(itr.next());
 		}
 		return joined;
 	}
-	
-	/**
-	 * Join two deltas together. Convenience method for use instead of join(List<RelationshipDelta>).
-	 */
-	static public RelationshipDelta join(RelationshipDelta d1, RelationshipDelta d2) {
-		RelationshipDelta joined = new RelationshipDelta();
 		
-		joined.rels = new HashMap<Relationship, ThreeValue>(d1.rels);
-		joined.join(d2, false);
-		
-		return joined;
-	}
-	
-	
-	private void join(RelationshipDelta other, boolean isEquality) {
+	private void joinStar(RelationshipDelta other) {
 		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
 		combinedRels.addAll(other.rels.keySet());
 		
 		for (Relationship rel : combinedRels) {
-			ThreeValue myVal = rels.get(rel);
-			ThreeValue otherVal = other.rels.get(rel);
-			if (myVal == null && otherVal != null) {
-				rels.put(rel, isEquality ? ThreeValue.UNKNOWN : otherVal);
+			FivePointLattice myVal = rels.get(rel);
+			FivePointLattice otherVal = other.rels.get(rel);
+			if (myVal == null)
+				rels.put(rel, otherVal);
+			else if (otherVal != null && myVal != otherVal) {
+				rels.put(rel, myVal.join(otherVal));
 			}
-			else if (myVal != null && otherVal == null) {
-				if (isEquality)
-					rels.put(rel, ThreeValue.UNKNOWN);
-			}
+		}
+	}
+	
+	private void join(RelationshipDelta other) {
+		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
+		combinedRels.addAll(other.rels.keySet());
+		
+		for (Relationship rel : combinedRels) {
+			FivePointLattice myVal = rels.get(rel);
+			FivePointLattice otherVal = other.rels.get(rel);
+			if (myVal == null && otherVal != null)
+				rels.put(rel, otherVal.polarize());
+			else if (otherVal == null && myVal != null)
+				rels.put(rel, myVal.polarize());
 			else if (myVal != otherVal) {
-				rels.put(rel, ThreeValue.UNKNOWN);
+				rels.put(rel, myVal.join(otherVal));
 			}
 			else {
 				//if vals are equal then leave it be
@@ -134,29 +106,6 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		}
 	}
 
-	/**
-	 * Equality joins a list of deltas. The equality join maps any differences to unknown. 
-	 * 
-	 *   __B_T_F_U_ 
-	 * B | B U U U
-	 * T | U T U U
-	 * F | U U F U
-	 * U | U U U U
-	 */
-	static public RelationshipDelta equalityJoin(List<RelationshipDelta> deltas) {
-		Iterator<RelationshipDelta> itr = deltas.iterator();
-		RelationshipDelta joined = new RelationshipDelta();
-		
-		if (deltas.isEmpty())
-			return joined;
-		
-		joined.rels = new HashMap<Relationship, ThreeValue>(itr.next().rels);
-		
-		while (itr.hasNext()) {
-			joined.join(itr.next(), true);
-		}
-		return joined;
-	}
 
 	@Override
 	public int hashCode() {
@@ -188,7 +137,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 	public String toString() {
 		String str = "<";
 		
-		for (Entry<Relationship, ThreeValue> entry : rels.entrySet()) {
+		for (Entry<Relationship, FivePointLattice> entry : rels.entrySet()) {
 			str += entry.getKey() + "->" + entry.getValue() + ", ";
 		}
 
@@ -197,7 +146,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		return str;
 	}
 
-	public Iterator<Entry<Relationship, ThreeValue>> iterator() {
+	public Iterator<Entry<Relationship, FivePointLattice>> iterator() {
 		return rels.entrySet().iterator();
 	}
 
@@ -205,36 +154,22 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, ThreeValu
 		boolean strictlyMore = false;
 		if (rels.isEmpty())
 			return false;
-		for (Entry<Relationship, ThreeValue> entry : rels.entrySet()) {
+		for (Entry<Relationship, FivePointLattice> entry : rels.entrySet()) {
 			ThreeValue contextVal = context.getRelationship(entry.getKey());
 			//all most be more precise or equal to
-			if (contextVal != ThreeValue.UNKNOWN && contextVal != entry.getValue())
+			if (!entry.getValue().isAtLeastAsPrecise(contextVal))
 				return false;
 			//and one must be more precise
-			if (contextVal == ThreeValue.UNKNOWN && entry.getValue() != ThreeValue.UNKNOWN)
+			if (contextVal == ThreeValue.UNKNOWN && (entry.getValue() == FivePointLattice.TRU || entry.getValue() == FivePointLattice.FAL))
 				strictlyMore = true;
 		}
 		
 		return strictlyMore;
 	}
 
-	public RelationshipDelta replaceLabels(ObjectLabel replacer,
-			ObjectLabel replacee) {
-		RelationshipDelta newDelta = new RelationshipDelta();
-		
-		for (Entry<Relationship, ThreeValue> entry : rels.entrySet()) {
-			Relationship rel = entry.getKey();
-			int size = rel.getRelation().getFullyQualifiedTypes().length;
-			ObjectLabel[] newLabels = new ObjectLabel[size];
-			for (int ndx = 0; ndx < size; ndx++) {
-				if (rel.getParam(ndx).equals(replacee))
-					newLabels[ndx] = replacer;
-				else
-					newLabels[ndx] = rel.getParam(ndx);
-			}
-			newDelta.rels.put(new Relationship(rel.getRelation(), newLabels), entry.getValue());
+	public void override(RelationshipDelta makeEffects) {
+		for (Entry<Relationship, FivePointLattice> entry : makeEffects) {
+			this.rels.put(entry.getKey(), entry.getValue());
 		}
-		return newDelta;
 	}
-
 }
