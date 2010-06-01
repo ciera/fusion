@@ -33,8 +33,8 @@ import edu.cmu.cs.fusion.FusionTypeCheckException;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.XMLContext;
+import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
@@ -109,7 +109,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		
 		allLabels.addAll(topLabels);
 		
-		for (Entry<Relationship, ThreeValue> entry : delta) {
+		for (Entry<Relationship, FivePointLattice> entry : delta) {
 			Relationship rel = entry.getKey();
 			int size = rel.getRelation().getFullyQualifiedTypes().length;
 			for (int ndx = 0; ndx < size; ndx++)
@@ -156,7 +156,10 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		
 		if (sQueries != null) {
 			RelationshipDelta result = sQueries.runQueries(file, types);
-			delta = RelationshipDelta.join(delta, result);
+			List<RelationshipDelta> list = new LinkedList<RelationshipDelta>();
+			list.add(delta);
+			list.add(result);
+			delta = RelationshipDelta.join(list, false);
 			topLabels.addAll(sQueries.findTopObjects(file, types));
 		}	
 	}

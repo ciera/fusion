@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.relationship;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -22,6 +24,7 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.RelEffect;
+import edu.cmu.cs.fusion.constraint.SpecDelta;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
@@ -147,8 +150,8 @@ public class TestFullyBound extends ConstraintChecker {
 
 		
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		//R0(0, 1) R1(1, 6)
@@ -161,11 +164,11 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, noEffectCons);
-		Substitution error = checkFullyBound(env, partialSub, noEffectCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, noEffectCons);
 		
-		assertEquals(0, delta.numberOfChanges());
-		assertTrue(error == null);
+		assertEquals(0, deltas.fst().numberOfChanges());
+		assertFalse(checkFullyBound(env, partialSub, noEffectCons));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 	}
 
 	@Test
@@ -184,8 +187,8 @@ public class TestFullyBound extends ConstraintChecker {
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -196,17 +199,17 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, severalEffectCons);
-		Substitution error = checkFullyBound(env, partialSub, severalEffectCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, severalEffectCons);
 
 		Relationship eRel1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 		Relationship eRel2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
 
-		assertEquals(2, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel1));
-		assertEquals(FourPointLattice.TRU, delta.getValue(eRel2));
+		assertEquals(2, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel1));
+		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eRel2));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 	
-		assertTrue(error == null);
+		assertFalse(checkFullyBound(env, partialSub, severalEffectCons));
 	}
 
 	@Test
@@ -225,8 +228,8 @@ public class TestFullyBound extends ConstraintChecker {
 		Constraint severalEffectCons = new Constraint(op, trigger, req, effects);
 
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -237,22 +240,22 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, severalEffectCons);
-		Substitution error = checkFullyBound(env, partialSub, severalEffectCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, severalEffectCons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 	
-		assertTrue(error == null);
+		assertFalse(checkFullyBound(env, partialSub, severalEffectCons));
 	}
 	
 	@Test
 	public void testPragmaticTrueTrue() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -263,21 +266,21 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 		
-		assertTrue(error == null);
+		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testPragmaticTrueErrorU() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -290,21 +293,21 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 		
-		assertTrue(error != null);
+		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testPragmaticTrueErrorF() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FivePointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -317,33 +320,33 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 		
-		assertTrue(error != null);
+		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testPragmaticFalse() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		this.variant = Variant.PRAGMATIC_VARIANT;
-		RelationshipDelta delta = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
-		Substitution error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
 
-		assertEquals(0, delta.numberOfChanges());
-		assertTrue(error == null);
+		assertEquals(0, deltas.fst().numberOfChanges());
+		assertFalse(checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons));
+		assertEquals(SpecDelta.createBottomSpecDelta(utils.getSub(1)), deltas.snd());
 	}
 
 	@Test
 	public void testPragmaticUnknown() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.UNK);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.UNK);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -354,22 +357,22 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createBottomSpecDelta(partialSub), deltas.snd());
+	
+		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testSoundTrueTrue() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -380,21 +383,21 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
-
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testSoundTrueErrorU() throws FusionException {	
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -407,21 +410,21 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error != null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testSoundTrueErrorF() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FivePointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -434,33 +437,33 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 		
-		assertTrue(error != null);
+		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testSoundFalse() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		this.variant = Variant.SOUND_VARIANT;
-		RelationshipDelta delta = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
-		Substitution error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
 
-		assertEquals(0, delta.numberOfChanges());
-		assertTrue(error == null);
+		assertEquals(0, deltas.fst().numberOfChanges());
+		assertFalse(checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons));
+		assertEquals(SpecDelta.createBottomSpecDelta(utils.getSub(1)), deltas.snd());
 	}
 
 	@Test
 	public void testSoundUnknownTrue() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -471,15 +474,15 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createTopSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
@@ -496,20 +499,20 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
-		
-		assertTrue(error != null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createTopSpecDelta(partialSub), deltas.snd());
+
+		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
 
 	@Test
 	public void testSoundUnknownErrorF() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
-		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]}), FivePointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -522,21 +525,21 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
-		
-		assertTrue(error != null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createTopSpecDelta(partialSub), deltas.snd());
+
+		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
 
 	
 	@Test
 	public void testCompleteTrueTrueDefinite() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -547,22 +550,22 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, possCons);
-		Substitution error = checkFullyBound(env, partialSub, possCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
 
 	@Test
 	public void testCompleteTrueTruePossible() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[2]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[2]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -573,21 +576,21 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, possCons);
-		Substitution error = checkFullyBound(env, partialSub, possCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
 
 	@Test
 	public void testCompleteTrueUnkown() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -600,22 +603,22 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, possCons);
-		Substitution error = checkFullyBound(env, partialSub, possCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
 	
 	@Test
 	public void testCompleteTrueSomeFail() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[2]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[1]}), FivePointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[2]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -628,23 +631,23 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, possCons);
-		Substitution error = checkFullyBound(env, partialSub, possCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
 
 
 	@Test
 	public void testCompleteTrueErrorF() throws FusionException {	
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.TRU);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[1]}), FourPointLattice.FAL);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[2]}), FourPointLattice.FAL);
-		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[6]}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.TRU);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[1]}), FivePointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[2]}), FivePointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(2), new ObjectLabel[]{labels[1], labels[6]}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -657,33 +660,34 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, possCons);
-		Substitution error = checkFullyBound(env, partialSub, possCons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eRel));
-		
-		assertTrue(error != null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+
+		assertTrue(checkFullyBound(env, partialSub, possCons));
 	}
 
 	@Test
 	public void testCompleteFalse() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FourPointLattice.FAL);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{utils.getLabel(0), utils.getLabel(2)}), FivePointLattice.FAL);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		this.variant = Variant.COMPLETE_VARIANT;
-		RelationshipDelta delta = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
-		Substitution error = checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(new TestEnvironment(rels), utils.getSub(1), cons);
 
-		assertEquals(0, delta.numberOfChanges());
-		assertTrue(error == null);
+		assertEquals(0, deltas.fst().numberOfChanges());
+		assertFalse(checkFullyBound(new TestEnvironment(rels), utils.getSub(1), cons));
+		assertEquals(SpecDelta.createBottomSpecDelta(utils.getSub(1)), deltas.snd());
+
 	}
 
 	@Test
 	public void testCompleteUnknown() throws FusionException {
 		RelationshipDelta startRels = new RelationshipDelta();
-		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FourPointLattice.UNK);
+		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), FivePointLattice.UNK);
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 
 		Substitution partialSub = new Substitution();
@@ -694,14 +698,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runFullyBound(env, partialSub, cons);
-		Substitution error = checkFullyBound(env, partialSub, cons);
+		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eRel));
-		
-		assertTrue(error == null);
+		assertEquals(1, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eRel));
+		assertEquals(SpecDelta.createBottomSpecDelta(partialSub), deltas.snd());
+
+		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
 }

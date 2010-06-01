@@ -52,7 +52,7 @@ public class RelationshipContext implements Iterable<Relationship> {
 
 	
 	public ThreeValue getRelationship(Relationship rel) {
-		assert !isBottom : "Shouldn't be possible as the flow analysis will only use a bottom lattice to join from univisited nodes";
+//		assert !isBottom : "Shouldn't be possible as the flow analysis will only use a bottom lattice to join from univisited nodes";
 		if (trueRels.contains(rel))
 			return ThreeValue.TRUE;
 		else if (falseRels.contains(rel))
@@ -158,8 +158,10 @@ public class RelationshipContext implements Iterable<Relationship> {
 		RelationshipContext changed = new RelationshipContext(this);
 		changed.isBottom = isBottom && delta.numberOfChanges() == 0;
 		
-		for (Entry<Relationship, ThreeValue> entry : delta)
-			changed.setRelationship(entry.getKey(), entry.getValue());
+		for (Entry<Relationship, FivePointLattice> entry : delta) {
+			Relationship rel = entry.getKey();
+			changed.setRelationship(rel, entry.getValue().override(getRelationship(rel)));
+		}
 		
 		return changed;
 	}

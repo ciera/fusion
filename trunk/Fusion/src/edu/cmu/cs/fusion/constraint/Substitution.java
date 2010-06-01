@@ -11,7 +11,7 @@ import edu.cmu.cs.crystal.util.Pair;
  * @author ciera
  *
  */
-public class Substitution {// implements Cloneable {
+public class Substitution {
 	ConsList<Pair<SpecVar, ObjectLabel>> subs;
 	
 	public Substitution() {
@@ -53,19 +53,29 @@ public class Substitution {// implements Cloneable {
 	}
 
 	public String toString() {return subs.toString();}
-	
-//	@Override
-	/**
-	 * Will depply copy the subsitituion list, but not the substutions themselves.
-	 */
-/*	public Substitution clone() {
-		Substitution cloned = new Substitution();
-		
-		for (Pair<SpecVar, ObjectLabel> pair : this.subs) {
-			cloned.subs = ConsList.cons(pair, cloned.subs);
-		}
-		
-		return cloned;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((subs == null) ? 0 : subs.hashCode());
+		return result;
 	}
-*/
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Substitution other = (Substitution) obj;
+		if (subs == null) {
+			if (other.subs != null)
+				return false;
+		} else if (!subs.equals(other.subs))
+			return false;
+		return true;
+	}
 }

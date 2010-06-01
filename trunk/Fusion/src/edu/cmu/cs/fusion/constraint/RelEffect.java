@@ -6,7 +6,7 @@ import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
-import edu.cmu.cs.fusion.relationship.FourPointLattice;
+import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
 /**
@@ -88,12 +88,12 @@ public class RelEffect implements Effect {
 	public RelationshipDelta makeEffects(FusionEnvironment env,
 			Substitution subs) {
 		RelationshipDelta delta = new RelationshipDelta();
-		FourPointLattice effect = FourPointLattice.TRU;
+		FivePointLattice effect = FivePointLattice.TRU;
 		
 		//determine the effect for the test case. This variable cannot be wildcarded, so safe to acccess here.
 		if (test != null) {
 			ObjectLabel testLabel = subs.getSub(test);
-			effect = FourPointLattice.convert(env.getBooleanValue(testLabel));
+			effect = FivePointLattice.convert(env.getBooleanValue(testLabel));
 		}
 
 		//now, fill in the wildcards and get the real substitutions.
@@ -107,12 +107,12 @@ public class RelEffect implements Effect {
 		//for possible only, must go to unknown
 		Iterator<Substitution> poss = allSubs.getPossibleSubstitutions();
 		while (poss.hasNext())
-			makeEffectChange(poss.next(), delta, FourPointLattice.UNK);
+			makeEffectChange(poss.next(), delta, FivePointLattice.UNK);
 		
 		return delta;
 	}
 	
-	private void makeEffectChange(Substitution subs, RelationshipDelta delta, FourPointLattice effect) {
+	private void makeEffectChange(Substitution subs, RelationshipDelta delta, FivePointLattice effect) {
 		ObjectLabel[] labels = new ObjectLabel[vars.length];
 		Relationship rel;
 
@@ -124,10 +124,10 @@ public class RelEffect implements Effect {
 		
 		
 		if (negate) {
-			if (effect == FourPointLattice.TRU)
-				effect = FourPointLattice.FAL;
-			else if (effect == FourPointLattice.FAL)
-				effect = FourPointLattice.TRU;
+			if (effect == FivePointLattice.TRU)
+				effect = FivePointLattice.FAL;
+			else if (effect == FivePointLattice.FAL)
+				effect = FivePointLattice.TRU;
 		}
 		
 		delta.setRelationship(rel, effect);

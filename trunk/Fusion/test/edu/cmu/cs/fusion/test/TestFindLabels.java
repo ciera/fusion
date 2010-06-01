@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +18,6 @@ import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
-import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
@@ -96,14 +96,11 @@ public class TestFindLabels {
 	@Test
 	public void testEmptyFindLabels() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
-		FreeVars fv = new FreeVars().addVar(new SpecVar(), "Foo").addVar(new SpecVar(), "Bar");
+		FreeVars fv = new FreeVars();
 		ConsList<Binding> emptyList = ConsList.empty();
-		SubPair pair = env.findLabels(emptyList, fv);
+		List<Substitution> subs = env.findLabels(emptyList, fv);
 		
-		Iterator<Substitution> itr = pair.getPossibleSubstitutions();
-		assertTrue(!itr.hasNext());
-		
-		itr = pair.getDefiniteSubstitutions();
+		Iterator<Substitution> itr = subs.iterator();
 		assertTrue(itr.hasNext());
 		assertEquals(0, itr.next().size());
 		assertTrue(!itr.hasNext());
@@ -118,12 +115,9 @@ public class TestFindLabels {
 		list = ConsList.cons(new Binding(new SpecVar("a"), vars[0]), list);
 		list = ConsList.cons(new Binding(new SpecVar("b"), vars[1]), list);
 		
-		SubPair pair = env.findLabels(list, fv);
+		List<Substitution> subs = env.findLabels(list, fv);
 		
-		Iterator<Substitution> itr = pair.getPossibleSubstitutions();
-		assertTrue(!itr.hasNext());
-		
-		itr = pair.getDefiniteSubstitutions();
+		Iterator<Substitution> itr = subs.iterator();
 		assertTrue(itr.hasNext());
 		Substitution sub = itr.next();
 		
@@ -144,12 +138,9 @@ public class TestFindLabels {
 		list = ConsList.cons(new Binding(new SpecVar("a"), vars[2]), list);
 		list = ConsList.cons(new Binding(new SpecVar("b"), vars[1]), list);
 		
-		SubPair pair = env.findLabels(list, fv);
+		List<Substitution> subs = env.findLabels(list, fv);
 		
-		Iterator<Substitution> itr = pair.getPossibleSubstitutions();
-		assertTrue(!itr.hasNext());
-		
-		itr = pair.getDefiniteSubstitutions();
+		Iterator<Substitution> itr = subs.iterator();
 		assertTrue(itr.hasNext());
 		Substitution subA = itr.next();
 		assertTrue(itr.hasNext());
@@ -181,12 +172,9 @@ public class TestFindLabels {
 		list = ConsList.cons(new Binding(new SpecVar("a"), vars[3]), list);
 		list = ConsList.cons(new Binding(new SpecVar("b"), vars[4]), list);
 		
-		SubPair pair = env.findLabels(list, fv);
+		List<Substitution> subs = env.findLabels(list, fv);
 		
-		Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
-		assertTrue(!itr.hasNext());
-		
-		itr = pair.getPossibleSubstitutions();
+		Iterator<Substitution> itr = subs.iterator();
 		assertTrue(itr.hasNext());
 		Substitution subA = itr.next();
 		assertTrue(itr.hasNext());
@@ -218,27 +206,22 @@ public class TestFindLabels {
 		list = ConsList.cons(new Binding(new SpecVar("a"), vars[2]), list);
 		list = ConsList.cons(new Binding(new SpecVar("b"), vars[4]), list);
 		
-		SubPair pair = env.findLabels(list, fv);
+		List<Substitution> subs = env.findLabels(list, fv);
 		
-		Iterator<Substitution> itr = pair.getDefiniteSubstitutions();
-		assertTrue(itr.hasNext());
-		Substitution sub = itr.next();
-		assertEquals(2, sub.size());
-		assertEquals(labels[4], sub.getSub(new SpecVar("a")));			
-		assertEquals(labels[6], sub.getSub(new SpecVar("b")));			
-		assertTrue(!itr.hasNext());
-		
-		itr = pair.getPossibleSubstitutions();
+		Iterator<Substitution> itr = subs.iterator();
 		assertTrue(itr.hasNext());
 		Substitution subA = itr.next();
 		assertTrue(itr.hasNext());
 		Substitution subB = itr.next();
 		assertTrue(itr.hasNext());
 		Substitution subC = itr.next();
+		assertTrue(itr.hasNext());
+		Substitution subD = itr.next();
 		assertTrue(!itr.hasNext());		
 		
 		assertEquals(2, subA.size());
 		assertEquals(2, subB.size());
 		assertEquals(2, subC.size());	
+		assertEquals(2, subD.size());
 	}
 }

@@ -116,13 +116,13 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			MayPointsToAliasContext aAfterContextTrue = aliasResults.get(trueLabel);
 			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextTrue, true);
 			FusionEnvironment tEnv = new FusionEnvironment(aAfterContextTrue, relsContext, tBContext, types, infers);
-			RelationshipContext tNewContext = checker.runGenericTransfer(tEnv, instr);
+			RelationshipContext tNewContext = checker.runGenericTransfer(tEnv, instr).fst();
 			
 			//false branch
 			MayPointsToAliasContext aAfterContextFalse = aliasResults.get(falseLabel);
 			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextFalse, false);
 			FusionEnvironment fEnv = new FusionEnvironment(aAfterContextFalse, relsContext, fBContext, types, infers);
-			RelationshipContext fNewContext = checker.runGenericTransfer(fEnv, instr);
+			RelationshipContext fNewContext = checker.runGenericTransfer(fEnv, instr).fst();
 			
 			Pair<MayPointsToAliasContext, RelationshipContext> defPair = new Pair<MayPointsToAliasContext, RelationshipContext>(aliasResults.get(NormalLabel.getNormalLabel()), new RelationshipContext(false));
 			Pair<MayPointsToAliasContext, RelationshipContext> tPair = new Pair<MayPointsToAliasContext, RelationshipContext>(aAfterContextTrue, tNewContext);
@@ -137,7 +137,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 			MayPointsToAliasContext aAfterContext = aliasResults.get(NormalLabel.getNormalLabel());
 			BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
 			FusionEnvironment env = new FusionEnvironment(aAfterContext, relsContext, bContext, types, infers);
-			RelationshipContext newContext = checker.runGenericTransfer(env, instr);
+			RelationshipContext newContext = checker.runGenericTransfer(env, instr).fst();
 			Pair<MayPointsToAliasContext, RelationshipContext> pair = new Pair<MayPointsToAliasContext, RelationshipContext>(aAfterContext, newContext);
 
 			return LabeledSingleResult.createResult(pair, labels);
@@ -156,7 +156,7 @@ public class RelationshipTransferFunction extends AbstractTACBranchSensitiveTran
 
 		BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
 		FusionEnvironment env = new FusionEnvironment(aAfterContext, relsContext, bContext, types, infers);
-		RelationshipContext newContext = checker.runGenericTransfer(env, instr);
+		RelationshipContext newContext = checker.runGenericTransfer(env, instr).fst();
 	
 		Pair<MayPointsToAliasContext, RelationshipContext> pair = new Pair<MayPointsToAliasContext, RelationshipContext>(aAfterContext, newContext);
 

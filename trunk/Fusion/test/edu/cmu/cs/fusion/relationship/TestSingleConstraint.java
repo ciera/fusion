@@ -11,11 +11,13 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.Variant;
+import edu.cmu.cs.fusion.alias.AliasDelta;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -126,10 +128,11 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		
-		assertEquals(0, delta.numberOfChanges());	
+		assertEquals(0, deltas.fst().numberOfChanges());	
+		assertEquals(new AliasDelta(), deltas.snd());
 		assertNull(error);
 	}
 	
@@ -147,6 +150,9 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getTarget(), labels[3]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
 		
+		AliasDelta expected = new AliasDelta();
+		expected.addChange(instr.getTarget(), labels[3]);
+		expected.addChange(instr.getArgOperands().get(0), labels[5]);	
 		
 		Operation op = new ConstructorOp("Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"});
 		List<Effect> effects = new LinkedList<Effect>();
@@ -155,17 +161,18 @@ public class TestSingleConstraint extends ConstraintChecker {
 		
 		Constraint cons = new Constraint(op, new TruePredicate(), new TruePredicate(), effects);
 
-
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[5], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
-		assertEquals(2, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
-		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
+		assertEquals(2, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eff2));
 		
+		assertEquals(expected, deltas.snd());
+
 		assertNull(error);			
 	}
 
@@ -184,16 +191,24 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
 		aliases.addAlias(instr.getTarget(), labels[3]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
+		
+		AliasDelta expected = new AliasDelta();
+		expected.addChange(instr.getReceiverOperand(), labels[0]);
+		expected.addChange(instr.getTarget(), labels[3]);
+		expected.addChange(instr.getArgOperands().get(0), labels[5]);	
+
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
-		assertEquals(2, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
-		assertEquals(FourPointLattice.TRU, delta.getValue(eff2));
+		assertEquals(2, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eff2));
+		
+		assertEquals(expected, deltas.snd());
 		
 		assertNull(error);			
 	}
@@ -212,17 +227,23 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
 		aliases.addAlias(instr.getTarget(), labels[3]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[2]);
+		
+		AliasDelta expected = new AliasDelta();
+		expected.addChange(instr.getReceiverOperand(), labels[0]);
+		expected.addChange(instr.getTarget(), labels[3]);
+		expected.addChange(instr.getArgOperands().get(0), labels[2]);	
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
-		assertEquals(2, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
-		
+		assertEquals(2, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eff2));
+		assertEquals(expected, deltas.snd());
+	
 		assertNull(error);			
 	}
 	
@@ -241,19 +262,26 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getTarget(), labels[3]);
 		aliases.addAlias(instr.getTarget(), labels[4]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[5]);
+		
+		AliasDelta expected = new AliasDelta();
+		expected.addChange(instr.getReceiverOperand(), labels[0]);
+		expected.addChange(instr.getTarget(), labels[3]);
+		expected.addChange(instr.getTarget(), labels[4]);
+		expected.addChange(instr.getArgOperands().get(0), labels[5]);	
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[4], labels[5]});
 
-		assertEquals(3, delta.numberOfChanges());
-		assertEquals(FourPointLattice.FAL, delta.getValue(eff1));
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
-		
+		assertEquals(3, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff2));
+		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff3));
+		assertEquals(expected, deltas.snd());
+
 		assertNull(error);			
 	}
 
@@ -273,20 +301,27 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getArgOperands().get(0), labels[1]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[2]);
 
+		AliasDelta expected = new AliasDelta();
+		expected.addChange(instr.getReceiverOperand(), labels[0]);
+		expected.addChange(instr.getTarget(), labels[3]);
+		expected.addChange(instr.getArgOperands().get(0), labels[1]);	
+		expected.addChange(instr.getArgOperands().get(0), labels[2]);	
+
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
-		RelationshipDelta delta = runSingleConstraint(env, cons, instr);
+		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[1]});
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
 		Relationship eff4 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
-		assertEquals(4, delta.numberOfChanges());
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff1));
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff2));
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff3));
-		assertEquals(FourPointLattice.UNK, delta.getValue(eff4));
-		
+		assertEquals(4, deltas.fst().numberOfChanges());
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eff1));
+		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff2));
+		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eff3));
+		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff4));
+		assertEquals(expected, deltas.snd());
+
 		assertNull(error);			
 	}
 }

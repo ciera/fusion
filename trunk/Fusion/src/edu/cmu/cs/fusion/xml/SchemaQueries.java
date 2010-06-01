@@ -28,7 +28,7 @@ import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.annot.Relation.Effect;
 import edu.cmu.cs.fusion.constraint.XMLContext;
-import edu.cmu.cs.fusion.relationship.FourPointLattice;
+import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
 /**
@@ -100,7 +100,7 @@ public class SchemaQueries {
 		} catch (XPathException e) {
 			e.printStackTrace();
 		}
-		return RelationshipDelta.join(deltas);		
+		return RelationshipDelta.join(deltas, false);		
 	}
 	
 	/**
@@ -167,7 +167,7 @@ public class SchemaQueries {
 			ObjectLabel[] labArr = getLabels(relElement, relType, types);
 			Relationship rel = new Relationship(relType, labArr);
 			
-			delta.setRelationship(rel, effect == Effect.ADD ? FourPointLattice.TRU : FourPointLattice.FAL);
+			delta.setRelationship(rel, effect == Effect.ADD ? FivePointLattice.TRU : FivePointLattice.FAL);
 		}
 		return delta;
 	}
