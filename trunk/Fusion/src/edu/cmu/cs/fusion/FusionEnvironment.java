@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
@@ -13,6 +12,7 @@ import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.alias.AliasDelta;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -280,6 +280,8 @@ public class FusionEnvironment<AC extends AliasContext> {
 				newContext.reset(var, labels);
 			}
 		}
+		newContext.cleanPotentialLabels();
+		
 		return newContext;
 	}
 }

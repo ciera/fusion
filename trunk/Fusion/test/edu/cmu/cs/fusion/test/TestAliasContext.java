@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 public class TestAliasContext implements AliasContext {
 	public Set<ObjectLabel> objectLabels;
@@ -47,6 +47,9 @@ public class TestAliasContext implements AliasContext {
 	
 	public Object clone() {
 		return this;
+	}
+
+	public void cleanPotentialLabels() {
 	}
 
 }

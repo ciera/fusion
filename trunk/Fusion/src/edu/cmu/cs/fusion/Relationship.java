@@ -2,7 +2,7 @@ package edu.cmu.cs.fusion;
 
 import java.util.Arrays;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 /**
  * Represents a single dynamic relationship. These can be mapped to any value (true, false or unknown).

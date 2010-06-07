@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLatticeOps;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
@@ -15,6 +14,7 @@ import edu.cmu.cs.crystal.tac.model.AssignmentInstruction;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 public class BooleanConstantWrapper implements BooleanContext {
 

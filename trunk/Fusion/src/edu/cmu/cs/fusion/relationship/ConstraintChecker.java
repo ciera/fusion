@@ -54,6 +54,7 @@ public class ConstraintChecker {
 		
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
 		AC aliasContext = env.makeNewAliases(aliasDelta);
+		
 		return new Pair<AC, RelationshipContext>(aliasContext, relContext);
 	}
 

@@ -7,9 +7,9 @@ import java.util.Set;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 public interface DeclarativeRetriever extends Observer {

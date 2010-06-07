@@ -24,7 +24,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
@@ -33,6 +32,7 @@ import edu.cmu.cs.fusion.FusionTypeCheckException;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.XMLContext;
 import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;

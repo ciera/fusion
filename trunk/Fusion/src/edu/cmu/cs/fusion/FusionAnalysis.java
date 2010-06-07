@@ -138,9 +138,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, new ConstraintChecker(constraints, types, variant), reporter, tac, log);
 			methodDecl.accept(errVisitor);
 			
-			StatementRelationshipVisitor printer = new StatementRelationshipVisitor(this);
-			methodDecl.accept(printer);
-			log.log(Level.INFO, printer.getResult());
+//			StatementRelationshipVisitor printer = new StatementRelationshipVisitor(this);
+//			methodDecl.accept(printer);
+//			log.log(Level.INFO, printer.getResult());
 		
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);

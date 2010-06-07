@@ -9,8 +9,6 @@ import java.util.Set;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
-import edu.cmu.cs.crystal.analysis.alias.DefaultObjectLabel;
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.analysis.metrics.LoopCounter;
 import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;

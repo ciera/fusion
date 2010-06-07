@@ -2,7 +2,6 @@ package edu.cmu.cs.fusion.alias;
 
 import java.util.Set;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 
 /**
@@ -29,7 +28,7 @@ public interface AliasContext extends Cloneable {
 	
 	//requires that object labels be somehow marked as whether they are definite or only have "potential" of being used
 	//anything that is "potential" at this point is definite if it is used, and completely removed otherwise
-	//public void cleanPotentialLabels();
+	public void cleanPotentialLabels();
 	
 	public Object clone();
 }

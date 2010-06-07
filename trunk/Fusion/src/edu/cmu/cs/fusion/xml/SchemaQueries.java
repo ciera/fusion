@@ -19,13 +19,13 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.Utilities;
 import edu.cmu.cs.fusion.FusionTypeCheckException;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.annot.Relation.Effect;
 import edu.cmu.cs.fusion.constraint.XMLContext;
 import edu.cmu.cs.fusion.relationship.FivePointLattice;

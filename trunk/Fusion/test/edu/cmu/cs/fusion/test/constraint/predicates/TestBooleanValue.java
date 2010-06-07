@@ -8,9 +8,9 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.predicates.BooleanValue;
