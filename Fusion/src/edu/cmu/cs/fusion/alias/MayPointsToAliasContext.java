@@ -3,13 +3,14 @@ package edu.cmu.cs.fusion.alias;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 
@@ -121,5 +122,24 @@ public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Var
 	
 	public String toString() {
 		return "All labels: " + allLabels.toString() + "\nPoints-to: " + pointsTo.toString();
+	}
+
+	public void cleanPotentialLabels() {
+		List<ObjectLabel> toRemove = new LinkedList<ObjectLabel>();
+		
+		OUTER: for (ObjectLabel label : allLabels) {
+			if (!label.isTemporary())
+				continue OUTER;
+			INNER: for (Set<ObjectLabel> pointedTo : pointsTo.values()) {
+				if (pointedTo.contains(label)) {
+					label.makePermanent();
+					continue OUTER;
+				}
+			}
+			toRemove.add(label);
+		}
+		
+		for (ObjectLabel label : toRemove)
+			allLabels.remove(label);
 	}
 }

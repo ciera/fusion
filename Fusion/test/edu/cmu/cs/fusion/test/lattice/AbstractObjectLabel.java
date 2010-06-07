@@ -2,7 +2,7 @@ package edu.cmu.cs.fusion.test.lattice;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class AbstractObjectLabel implements ObjectLabel {
@@ -28,5 +28,12 @@ public class AbstractObjectLabel implements ObjectLabel {
 
 	public String toString() {
 		return name;
+	}
+
+	public boolean isTemporary() {
+		return false;
+	}
+
+	public void makePermanent() {
 	}
 }

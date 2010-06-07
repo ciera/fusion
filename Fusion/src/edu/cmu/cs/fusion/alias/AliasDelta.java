@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 
 public class AliasDelta implements Iterable<Variable> {

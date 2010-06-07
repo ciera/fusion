@@ -21,48 +21,51 @@ package edu.cmu.cs.fusion.alias;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-
-public class LiteralLabel implements ObjectLabel {
-	private Object literal;
+public class DefaultObjectLabel implements ObjectLabel {
+	private static int LABELINDEX = 0;
+	private int label;
 	private ITypeBinding type;
+	private boolean isSummary;
+	private boolean isTemp;
 	
-	public LiteralLabel(Object literal, ITypeBinding type) {
-		this.type = type;
-		this.literal = literal;
+	public DefaultObjectLabel(ITypeBinding type, boolean isSummaryLabel) {
+		this(type, isSummaryLabel, true);
 	}
 
-	/**
-	 * A literal label is never a summary node. It is what it is....
+	public DefaultObjectLabel(ITypeBinding type, boolean isSummaryLabel, boolean isTemp) {
+		label = ++LABELINDEX;
+		this.isSummary = isSummaryLabel;
+		this.type = type;
+		this.isTemp = isTemp;
+	}
+	/* (non-Javadoc)
+	 * @see edu.cmu.cs.crystal.analysis.alias.ObjectLabel#isSummary()
 	 */
-	public boolean isSummary() {return false;}
+	public boolean isSummary() {return isSummary;}
 	
-	public String toString() {return literal.toString();}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((literal == null) ? 0 : literal.hashCode());
+		result = prime * result + label;
 		return result;
 	}
 
+	public String toString() {return "L" + Integer.toString(label);}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof LiteralLabel))
+		if (getClass() != obj.getClass())
 			return false;
-		LiteralLabel other = (LiteralLabel) obj;
-		if (literal == null) {
-			if (other.literal != null)
-				return false;
-		} else if (!literal.equals(other.literal))
-			return false;
-		return true;
+		final DefaultObjectLabel other = (DefaultObjectLabel) obj;
+		return label == other.label;
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see edu.cmu.cs.crystal.analysis.alias.ObjectLabel#getType()
 	 */
@@ -70,17 +73,11 @@ public class LiteralLabel implements ObjectLabel {
 		return type;
 	}
 
-	/**
-	 * @return
-	 */
-	public Object getLiteral() {
-		return literal;
-	}
-
 	public boolean isTemporary() {
-		return false;
+		return isTemp;
 	}
 
 	public void makePermanent() {
+		isTemp = false;
 	}
 }

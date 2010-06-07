@@ -1,8 +1,8 @@
 package edu.cmu.cs.fusion.constraint;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 /**
  * Represents a single substitution from spec variables to object labels.

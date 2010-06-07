@@ -2,7 +2,7 @@ package edu.cmu.cs.fusion.xml;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 
 /**
@@ -65,5 +65,12 @@ public class XMLObjectLabel implements ObjectLabel {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+
+	public boolean isTemporary() {
+		return false;
+	}
+
+	public void makePermanent() {
 	}
 }
