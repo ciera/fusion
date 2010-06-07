@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asp:Page xmlns:asp="aspx" ID="MyPage" codebehind="edu.cmu.cs.fusion.test.aspnet.api.Page">
-	<asp:LoginView ID="LoginScreen">
-	<AnonymousTemplate>
-		<asp:DropDownList ID="AnonymousDDL"/>
-	</AnonymousTemplate>
-	<LoggedInTemplate>
-		<asp:DropDownList ID="LoggedInDDL"/>
-	</LoggedInTemplate>
-	</asp:LoginView>
 	<asp:DropDownList ID="DDL"/>
 </asp:Page>

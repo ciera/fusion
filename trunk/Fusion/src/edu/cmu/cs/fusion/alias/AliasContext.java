@@ -10,7 +10,7 @@ import edu.cmu.cs.crystal.tac.model.Variable;
  * @author ciera
  *
  */
-public interface AliasContext {
+public interface AliasContext extends Cloneable {
 	/**
 	 * @param var the variable to get aliases for
 	 * @return the possible object labels. May be null if this variable is unknown to the lattice.
@@ -25,4 +25,11 @@ public interface AliasContext {
 
 	public Set<Variable> getVariables();
 	
+	public void reset(Variable var, Set<ObjectLabel> labels);
+	
+	//requires that object labels be somehow marked as whether they are definite or only have "potential" of being used
+	//anything that is "potential" at this point is definite if it is used, and completely removed otherwise
+	//public void cleanPotentialLabels();
+	
+	public Object clone();
 }

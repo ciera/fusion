@@ -25,6 +25,8 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.alias.MayPointsToAliasContext;
+import edu.cmu.cs.fusion.alias.MayPointsToLatticeOps;
+import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -32,6 +34,7 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
+import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
@@ -62,7 +65,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		rels = new RelationsEnvironment();
 		constraints = new ConstraintEnvironment(rels);
 		infers = new InferenceEnvironment(rels);
-		retriever = new DefaultRetriever(); //new XMLRetriever(rels);
+		retriever = new XMLRetriever(rels);
 		majorErrorOccured = false;
 		try {
 			ReportingUtility.clearMarkers(ResourcesPlugin.getWorkspace().getRoot());
@@ -120,7 +123,10 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			return;
 		}
 		try {
-			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types, retriever);
+			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
+			MayPointsToLatticeOps ops = new MayPointsToLatticeOps(types);
+			
+			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types, retriever, aliasTF, ops);
 			fa = new TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();

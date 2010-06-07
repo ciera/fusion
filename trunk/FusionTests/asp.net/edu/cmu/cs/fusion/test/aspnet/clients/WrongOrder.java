@@ -11,8 +11,8 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=3, analysis="FusionSound")}
 )
 public class WrongOrder extends Page {
-	public void wrongOrder(DropDownList ctrl) {
-		//DropDownList ctrl = (DropDownList) findControl("DDL");
+	public void wrongOrder() {//DropDownList ctrl) {
+		DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 
 		
 		newSel = ctrl.getItems().findByText("foo");

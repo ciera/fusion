@@ -8,11 +8,11 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
 		pass={@PassingTest(analysis="FusionComplete")},
-		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=1, analysis="FusionSound")}
+		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
 )
 public class NaiveSetSelection extends Page {
-	public void naiveSetSelection(DropDownList ctrl) {
-		//DropDownList ctrl = (DropDownList) findControl("DDL");
+	public void naiveSetSelection() { //DropDownList ctrl) {
+		DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel; 
 		ListItemCollection coll;
 		

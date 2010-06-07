@@ -100,7 +100,7 @@ public class SchemaQueries {
 		} catch (XPathException e) {
 			e.printStackTrace();
 		}
-		return RelationshipDelta.join(deltas, false);		
+		return RelationshipDelta.join(deltas, true);		
 	}
 	
 	/**

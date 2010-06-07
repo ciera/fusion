@@ -32,9 +32,10 @@ public class InstanceOfPredicate implements NegatablePredicate {
 		ObjectLabel obj = sub.getSub(variable);
 		if (env.isSubtypeCompatible(obj.getType().getQualifiedName(), type))
 			return isPositive ? ThreeValue.TRUE : ThreeValue.FALSE;
+		else if (env.existsPossibleSubtype(obj.getType().getQualifiedName(), type))
+			return ThreeValue.UNKNOWN;
 		else
 			return isPositive ? ThreeValue.FALSE : ThreeValue.TRUE;
-				
 	}
 
 	public boolean isPositive() {
