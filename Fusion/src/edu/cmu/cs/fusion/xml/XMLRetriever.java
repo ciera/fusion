@@ -159,7 +159,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 			List<RelationshipDelta> list = new LinkedList<RelationshipDelta>();
 			list.add(delta);
 			list.add(result);
-			delta = RelationshipDelta.join(list, false);
+			delta = RelationshipDelta.join(list, true);
 			topLabels.addAll(sQueries.findTopObjects(file, types));
 		}	
 	}

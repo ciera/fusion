@@ -2,6 +2,7 @@ package edu.cmu.cs.fusion.alias;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -9,7 +10,7 @@ import java.util.Map.Entry;
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
 import edu.cmu.cs.crystal.tac.model.Variable;
 
-public class AliasDelta {
+public class AliasDelta implements Iterable<Variable> {
 	public HashMap<Variable, Element> aliases = new HashMap<Variable, Element>();
 	
 	private static class Element {
@@ -35,6 +36,18 @@ public class AliasDelta {
 		public String toString() {
 			return set.toString();
 		}
+	}
+	
+	public Iterator<Variable> iterator() {
+		return aliases.keySet().iterator();
+	}
+	
+	public Set<ObjectLabel> getChanges(Variable variable) {
+		Element element = aliases.get(variable);
+		if (element == null || element == TOP_ELEMENT || element == BOT_ELEMENT)
+			return null;
+		else
+			return new HashSet<ObjectLabel>(element.set);
 	}
 	
 	static private Element TOP_ELEMENT = new Element();

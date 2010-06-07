@@ -53,7 +53,7 @@ public class LiteralLabel implements ObjectLabel {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof LiteralLabel))
 			return false;
 		LiteralLabel other = (LiteralLabel) obj;
 		if (literal == null) {

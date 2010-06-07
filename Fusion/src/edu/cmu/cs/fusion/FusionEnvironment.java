@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.cmu.cs.crystal.analysis.alias.ObjectLabel;
+import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
 import edu.cmu.cs.crystal.util.Pair;
@@ -23,20 +24,20 @@ import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
-public class FusionEnvironment {
+public class FusionEnvironment<AC extends AliasContext> {
 	private enum MatchType {
 		DEF, POS, NONE
 	}
 
 	private RelationshipContext context;
 	private BooleanContext bools;
-	private AliasContext alias;
+	private AC alias;
 	private TypeHierarchy tHierarchy;
 	private InferenceEnvironment inference;
 	
 	private ConsList<Pair<RelationshipPredicate, Substitution>> continuation;
 	
-	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf) {
+	public FusionEnvironment(AC aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf) {
 		context = relLattice;
 		alias = aliasLattice;
 		bools = boolLattice;
@@ -46,7 +47,7 @@ public class FusionEnvironment {
 	}
 
 	@Deprecated
-	public FusionEnvironment(AliasContext aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types) {
+	public FusionEnvironment(AC aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types) {
 		context = relLattice;
 		alias = aliasLattice;
 		bools = boolLattice;
@@ -86,7 +87,7 @@ public class FusionEnvironment {
 					List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
 					for (Effect effect : inf.getEffects())
 						eDeltas.add(effect.makeEffects(this, finalSub));
-					delta = RelationshipDelta.join(eDeltas, false);
+					delta = RelationshipDelta.join(eDeltas, true);
 					
 					//if it doesn't conflict AND it makes some change, return it!
 					if (delta.isStrictlyMorePrecise(context)) {
@@ -255,8 +256,12 @@ public class FusionEnvironment {
 		return tHierarchy.isSubtypeCompatible(subType, superType);
 	}
 
-	public FusionEnvironment copy(RelationshipContext newContext) {
-		FusionEnvironment env = new FusionEnvironment(alias, newContext, bools, tHierarchy, inference);
+	public boolean existsPossibleSubtype(String subType, String superType) {
+		return tHierarchy.existsCommonSubtype(subType, superType);
+	}
+
+	public FusionEnvironment<AC> copy(RelationshipContext newContext) {
+		FusionEnvironment<AC> env = new FusionEnvironment<AC>(alias, newContext, bools, tHierarchy, inference);
 		env.continuation = continuation;
 		return env;
 	}
@@ -265,8 +270,16 @@ public class FusionEnvironment {
 		return alias.toString();
 	}
 
-	public AliasContext makeNewAliases(AliasDelta aliasDelta) {
-		// TODO Auto-generated method stub
-		return null;
+	public AC makeNewAliases(AliasDelta aliasDelta) {
+		AC newContext = (AC) alias.clone();
+		
+		for (Variable var : aliasDelta) {
+			Set<ObjectLabel> labels = aliasDelta.getChanges(var);
+			if (labels != null) {
+				assert(newContext.getAliases(var).containsAll(labels));
+				newContext.reset(var, labels);
+			}
+		}
+		return newContext;
 	}
 }

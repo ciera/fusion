@@ -39,7 +39,7 @@ public class ConstraintChecker {
 	 * @param instr
 	 * @return The new relationship lattice.
 	 */
-	public Pair<RelationshipContext, AliasContext> runGenericTransfer(FusionEnvironment env, TACInstruction instr) {
+	public <AC extends AliasContext> Pair<AC, RelationshipContext> runGenericTransfer(FusionEnvironment<AC> env, TACInstruction instr) {
 		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
 		List<AliasDelta> aliasDeltas = new LinkedList<AliasDelta>();
 		
@@ -53,11 +53,11 @@ public class ConstraintChecker {
 		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);
 		
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
-		AliasContext aliasContext = env.makeNewAliases(aliasDelta);
-		return new Pair<RelationshipContext, AliasContext>(relContext, aliasContext);
+		AC aliasContext = env.makeNewAliases(aliasDelta);
+		return new Pair<AC, RelationshipContext>(aliasContext, relContext);
 	}
 
-	public List<FusionErrorReport> checkForErrors(FusionEnvironment env, TACInstruction instr) {
+	public List<FusionErrorReport> checkForErrors(FusionEnvironment<?> env, TACInstruction instr) {
 		List<FusionErrorReport> errors = new LinkedList<FusionErrorReport>();
 		FusionErrorReport err;
 		
@@ -79,7 +79,7 @@ public class ConstraintChecker {
 	 * @return a relationship delta for all possible aliasing configurations, assuming the constraint
 	 * triggers.
 	 */
-	protected Pair<RelationshipDelta, AliasDelta> runSingleConstraint(FusionEnvironment env,
+	protected Pair<RelationshipDelta, AliasDelta> runSingleConstraint(FusionEnvironment<?> env,
 			Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, instr);
 		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
@@ -110,7 +110,7 @@ public class ConstraintChecker {
 	 * @param instr The instruction to report errors on
 	 * @return Any change effects
 	 */
-	protected Pair<RelationshipDelta, SpecDelta> runFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons) {	
+	protected Pair<RelationshipDelta, SpecDelta> runFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {	
 		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 		
@@ -143,7 +143,7 @@ public class ConstraintChecker {
 	
 	
 	
-	protected FusionErrorReport checkSingleConstraint(FusionEnvironment env, Constraint cons, TACInstruction instr) {
+	protected FusionErrorReport checkSingleConstraint(FusionEnvironment<?> env, Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, instr);
 
 		if (boundVars == null)
@@ -167,7 +167,7 @@ public class ConstraintChecker {
 			return null;
 	}
 
-	protected boolean checkFullyBound(FusionEnvironment env, Substitution partialSubs, Constraint cons) {		
+	protected boolean checkFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 		
 		if (trigger == ThreeValue.FALSE) {
@@ -191,7 +191,7 @@ public class ConstraintChecker {
 		}
 	}
 
-	private boolean checkSoundly(FusionEnvironment env,
+	private boolean checkSoundly(FusionEnvironment<?> env,
 			Substitution partialSubs, Constraint cons) {
 		SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 		
@@ -205,7 +205,7 @@ public class ConstraintChecker {
 		return true;
 	}
 
-	private boolean checkCompletely(FusionEnvironment env,
+	private boolean checkCompletely(FusionEnvironment<?> env,
 			Substitution partialSubs, Constraint cons) {
 		SubPair pair = env.allValidSubs(partialSubs, cons.getFreeVars());
 		

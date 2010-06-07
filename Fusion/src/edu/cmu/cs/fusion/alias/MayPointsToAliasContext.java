@@ -18,7 +18,7 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
  * @author ciera
  *
  */
-public class MayPointsToAliasContext implements AliasContext, Cloneable, Iterable<Entry<Variable, Set<ObjectLabel>>> {
+public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Variable, Set<ObjectLabel>>> {
 	private Map<Variable, Set<ObjectLabel>> pointsTo;
 	private Set<ObjectLabel> allLabels;
 	private TypeHierarchy types;
@@ -51,6 +51,18 @@ public class MayPointsToAliasContext implements AliasContext, Cloneable, Iterabl
 		}
 		labels.add(label);
 	}
+
+	public void reset(Variable var, Set<ObjectLabel> labels) {
+		Set<ObjectLabel> varLabels = pointsTo.get(var);
+		if (varLabels != null)
+			pointsTo.get(var).clear();
+		else {
+			varLabels = new HashSet<ObjectLabel>();
+			pointsTo.put(var, varLabels);
+		}
+		varLabels.addAll(labels);
+	}
+	
 
 	public void resetPointsTo(Variable var) {
 		Set<ObjectLabel> labels = pointsTo.get(var);

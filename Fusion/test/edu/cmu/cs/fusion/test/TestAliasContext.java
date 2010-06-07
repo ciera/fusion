@@ -41,4 +41,12 @@ public class TestAliasContext implements AliasContext {
 		return aliases.keySet();
 	}
 
+	public void reset(Variable var, Set<ObjectLabel> labels) {
+		aliases.put(var, labels);
+	}
+	
+	public Object clone() {
+		return this;
+	}
+
 }
