@@ -36,7 +36,7 @@ public class LiteralLabel implements ObjectLabel {
 	 */
 	public boolean isSummary() {return false;}
 	
-	public String toString() {return literal.toString();}
+	public String toString() {return literal == null ? "null" : literal.toString();}
 
 	@Override
 	public int hashCode() {
