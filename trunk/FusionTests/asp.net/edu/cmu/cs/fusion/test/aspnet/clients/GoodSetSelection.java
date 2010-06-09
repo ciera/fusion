@@ -10,7 +10,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=2, analysis="FusionSound")}
 )
 public class GoodSetSelection extends Page {
-	public void goodSetSelection() { //DropDownList ctrl) {
+	public void goodSetSelection() {
 		DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 
 		

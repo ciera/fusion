@@ -10,7 +10,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=1, analysis="FusionSound")}
 )
 public class NoSelectionSet extends Page {
-	public void noSelectionSet() {//DropDownList ctrl) {
+	public void noSelectionSet() {
 		DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel; 
 
