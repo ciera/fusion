@@ -9,7 +9,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=2, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
 )
 public class RandomDeselect extends Page {
-	public void noSelectionSet() {// DropDownList ctrl) {
+	public void noSelectionSet() {
 		DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel; 
 		ListItemCollection coll;

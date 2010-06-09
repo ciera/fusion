@@ -10,21 +10,20 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 	op="ListItem.setSelected(boolean selected) : void",
 	trigger = "selected AND Child(target, ctrl) AND ctrl instanceof DropDownList",
 	requires = "!CorrectlySelected(ctrl)",
-	effects = {"CorrectlySelected(ctrl)"}
+	effects = {"CorrectlySelected(ctrl)", "SelChanged(ctrl)"}
 ),
 @Constraint(
 	op="ListItem.setSelected(boolean selected) : void",
 	trigger = "!selected AND Child(target, ctrl) AND ctrl instanceof DropDownList",
 	requires = "Selected(target)",
-	effects = {"!CorrectlySelected(ctrl)"}
+	effects = {"!CorrectlySelected(ctrl)", "SelChanged(ctrl)"}
 ),
 @Constraint(
 		op="EOM",
-		trigger = "!CorrectlySelected(ctrl) AND ctrl instanceof DropDownList",
-		requires = "FALSE",
+		trigger = "SelChanged(ctrl) AND ctrl instanceof DropDownList",
+		requires = "CorrectlySelected(ctrl)",
 		effects = {}
 	)})
-
 public class DropDownList extends ListControl {
 
 }

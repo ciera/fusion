@@ -11,7 +11,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
 )
 public class NaiveSetSelection extends Page {
-	public void naiveSetSelection() { //DropDownList ctrl) {
+	public void naiveSetSelection() { 
 		DropDownList ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel; 
 		ListItemCollection coll;
