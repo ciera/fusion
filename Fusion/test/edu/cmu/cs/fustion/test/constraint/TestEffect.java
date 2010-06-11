@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.Effect;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -56,7 +57,7 @@ public class TestEffect {
 	@Test
 	public void testMakeEffectsAdd() {
 		Effect eff = RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
-		TestEnvironment env = new TestEnvironment(utils.getContext(0));
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), Variant.SOUND_VARIANT);
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
@@ -69,7 +70,7 @@ public class TestEffect {
 	@Test
 	public void testMakeEffectsRemove() {
 		Effect eff = RelEffect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
-		TestEnvironment env = new TestEnvironment(utils.getContext(0));
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), Variant.SOUND_VARIANT);
 		
 		RelationshipDelta delta = eff.makeEffects(env, utils.getSub(0));
 		ObjectLabel[] labels = new ObjectLabel[] {utils.getSub(0).getSub(utils.getVar(0)), utils.getSub(0).getSub(utils.getVar(1))};
@@ -83,7 +84,7 @@ public class TestEffect {
 	public void testMakeEffectsTestTrue() {
 		Effect eff = RelEffect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
-		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), map, Variant.SOUND_VARIANT);
 		
 		map.put(utils.getSub(0).getSub(utils.getVar(2)), ThreeValue.TRUE);
 		
@@ -99,7 +100,7 @@ public class TestEffect {
 	public void testMakeEffectsTestFalse() {
 		Effect eff = RelEffect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
-		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), map, Variant.SOUND_VARIANT);
 		
 		map.put(utils.getSub(0).getSub(utils.getVar(2)), ThreeValue.FALSE);
 		
@@ -115,7 +116,7 @@ public class TestEffect {
 	public void testMakeEffectsTestUnk() {
 		Effect eff = RelEffect.createTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
-		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), map, Variant.SOUND_VARIANT);
 		
 		map.put(utils.getSub(0).getSub(utils.getVar(2)), ThreeValue.UNKNOWN);
 		
@@ -131,7 +132,7 @@ public class TestEffect {
 	public void testMakeEffectsTestNegFalse() {
 		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
-		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), map, Variant.SOUND_VARIANT);
 		
 		map.put(utils.getSub(0).getSub(utils.getVar(2)), ThreeValue.TRUE);
 		
@@ -147,7 +148,7 @@ public class TestEffect {
 	public void testMakeEffectsTestNegTrue() {
 		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
-		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), map, Variant.SOUND_VARIANT);
 		
 		map.put(utils.getSub(0).getSub(utils.getVar(2)), ThreeValue.FALSE);
 		
@@ -163,7 +164,7 @@ public class TestEffect {
 	public void testMakeEffectsTestNegUnk() {
 		Effect eff = RelEffect.createNegatedTestEffect(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)}, utils.getVar(2));
 		Map<ObjectLabel, ThreeValue> map = new HashMap<ObjectLabel, ThreeValue>();
-		TestEnvironment env = new TestEnvironment(utils.getContext(0), map);
+		TestEnvironment env = new TestEnvironment(utils.getContext(0), map, Variant.SOUND_VARIANT);
 		
 		map.put(utils.getSub(0).getSub(utils.getVar(2)), ThreeValue.UNKNOWN);
 		

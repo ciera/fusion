@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Predicate;
@@ -40,7 +41,7 @@ public class TestBooleanValue {
 		Predicate bv = new BooleanValue(utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		assertEquals(ThreeValue.FALSE, bv.getTruth(env, utils.getSub(0)));
 	}
@@ -50,7 +51,7 @@ public class TestBooleanValue {
 		Predicate bv = new BooleanValue(utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		assertEquals(ThreeValue.TRUE, bv.getTruth(env, utils.getSub(0)));
 	}
@@ -60,7 +61,7 @@ public class TestBooleanValue {
 		Predicate bv = new BooleanValue(utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.UNKNOWN);
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		assertEquals(ThreeValue.UNKNOWN, bv.getTruth(env, utils.getSub(0)));
 	}
@@ -71,7 +72,7 @@ public class TestBooleanValue {
 		bv.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		assertEquals(ThreeValue.TRUE, bv.getTruth(env, utils.getSub(0)));
 	}
@@ -82,7 +83,7 @@ public class TestBooleanValue {
 		bv.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		assertEquals(ThreeValue.FALSE, bv.getTruth(env, utils.getSub(0)));
 	}
@@ -93,7 +94,7 @@ public class TestBooleanValue {
 		bv.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.UNKNOWN);
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		assertEquals(ThreeValue.UNKNOWN, bv.getTruth(env, utils.getSub(0)));
 	}

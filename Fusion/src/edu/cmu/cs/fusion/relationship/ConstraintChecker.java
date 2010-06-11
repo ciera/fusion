@@ -49,7 +49,7 @@ public class ConstraintChecker {
 			aliasDeltas.add(deltas.snd());
 		}
 		
-		RelationshipDelta relDelta = RelationshipDelta.join(relDeltas, true);
+		RelationshipDelta relDelta = RelationshipDelta.joinAlt(relDeltas);
 		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);
 		
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
@@ -97,7 +97,7 @@ public class ConstraintChecker {
 			specDeltas.add(deltas.snd().turnToSource(boundVars));
 		}
 		
-		RelationshipDelta relDelta = RelationshipDelta.join(relDeltas, false);
+		RelationshipDelta relDelta = RelationshipDelta.join(relDeltas);
 		AliasDelta specDelta = AliasDelta.join(specDeltas);
 		
 		return new Pair<RelationshipDelta, AliasDelta>(relDelta, specDelta);

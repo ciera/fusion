@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.predicates.FalsePredicate;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
@@ -34,7 +35,7 @@ public class TestSimplePred {
 	@Test
 	public void testTruthFalse() {
 		Predicate fPred = new FalsePredicate();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), Variant.SOUND_VARIANT);
 		
 		assertEquals(fPred.getTruth(env, utils.getSub(0)), ThreeValue.FALSE);
 	}
@@ -42,7 +43,7 @@ public class TestSimplePred {
 	@Test
 	public void testTruthTrue() {
 		Predicate tPred = new TruePredicate();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0));
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), Variant.SOUND_VARIANT);
 		
 		assertEquals(tPred.getTruth(env, utils.getSub(0)), ThreeValue.TRUE);
 	}

@@ -4,13 +4,18 @@ import edu.cmu.cs.fusion.ThreeValue;
 
 
 /**
- * The four point lattice, including bottom.
+ * The six point lattice, not including a bottom.
  * @author ciera
  *
  */
 public enum FivePointLattice {
-	TRU, FAL, UNK, TRU_STAR, FAL_STAR;
+	TRU, FAL, UNK, TRU_STAR, FAL_STAR, STAR;
 	
+	/**
+	 * This is a polarizing operation. TRU goes to TRU_STAR, and FAL goes to FAL_STAR.
+	 * All other enums return themselves.
+	 * @return
+	 */
 	public FivePointLattice polarize() {
 		if (this == TRU)
 			return TRU_STAR;
@@ -20,16 +25,67 @@ public enum FivePointLattice {
 			return this;
 	}
 	
+	/**
+	 * The expected join operation.
+	 * @param other
+	 * @return
+	 */
 	public FivePointLattice join(FivePointLattice other) {
 		if (this == UNK || other == UNK)
 			return UNK;
 		else if (this == other)
 			return this;
+		else if (this == STAR || other == STAR) {
+			if (this == TRU || this == TRU_STAR || other == TRU || other == TRU_STAR)
+				return TRU_STAR;
+			else
+				return FAL_STAR;
+		}
 		else if (this == TRU || this == TRU_STAR)
 			return (other == TRU || other == TRU_STAR) ? TRU_STAR : UNK;
 		return (other == FAL || other == FAL_STAR) ? FAL_STAR : UNK;	
 	}
 	
+	/**
+	 * This join operation works a little differently. It will
+	 * place TRU and FAL above TRU_STAR and FAL_STAR respectively. This will in turn
+	 * cause STAR to be bottom.
+	 * @param other
+	 * @return
+	 */
+	public FivePointLattice joinAlt(FivePointLattice other) {
+		if (this == UNK || other == UNK)
+			return UNK;
+		else if (this == other)
+			return this;
+		else if (this == STAR)
+			return other;
+		else if (other == STAR)
+			return this;
+		else if (this == TRU || this == TRU_STAR)
+			return (other == TRU || other == TRU_STAR) ? TRU : UNK;
+		return (other == FAL || other == FAL_STAR) ? FAL : UNK;	
+	}
+	
+	
+	/**
+	 * The overriding operator for the main lattice. This is particularly used when
+	 * creating effects that need to be combined in order of appearance.
+	 * @param other
+	 * @return
+	 */
+	public FivePointLattice override(FivePointLattice override) {
+		if (override != STAR)
+			return override;
+		else
+			return this;
+	}
+
+	/**
+	 * The overriding operator for three values.
+	 * @param initial
+	 * @return
+	 */
 	public ThreeValue override(ThreeValue initial) {
 		if (this == UNK)
 			return ThreeValue.UNKNOWN;

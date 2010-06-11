@@ -6,8 +6,8 @@ import edu.cmu.cs.crystal.annotations.AnalysisTests;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
-		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmatic")},
-		fail={@FailingTest(value=2, analysis="FusionSound")}
+		pass={@PassingTest(analysis="FusionComplete")},
+		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
 )
 public class GoodSetSelection extends Page {
 	public void goodSetSelection() {

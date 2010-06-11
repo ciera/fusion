@@ -127,7 +127,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getTarget(), labels[0]);
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		
@@ -161,7 +161,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		
 		Constraint cons = new Constraint(op, new TruePredicate(), new TruePredicate(), effects);
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[5], labels[5]});
@@ -198,7 +198,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getArgOperands().get(0), labels[5]);	
 
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
@@ -233,7 +233,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getTarget(), labels[3]);
 		expected.addChange(instr.getArgOperands().get(0), labels[2]);	
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
@@ -269,7 +269,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getTarget(), labels[4]);
 		expected.addChange(instr.getArgOperands().get(0), labels[5]);	
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
@@ -307,7 +307,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getArgOperands().get(0), labels[1]);	
 		expected.addChange(instr.getArgOperands().get(0), labels[2]);	
 
-		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment());		
+		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]});

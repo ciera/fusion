@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Predicate;
@@ -47,7 +48,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
@@ -58,7 +59,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
@@ -70,7 +71,7 @@ public class TestTestPredicate {
 		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
 		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
@@ -82,7 +83,7 @@ public class TestTestPredicate {
 		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
 		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
 		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
@@ -94,7 +95,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
 		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
@@ -105,7 +106,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.FALSE, pred.getTruth(env, utils.getSub(0)));
@@ -117,7 +118,7 @@ public class TestTestPredicate {
 		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
 		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.FALSE);
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
@@ -129,7 +130,7 @@ public class TestTestPredicate {
 		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
 		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
@@ -140,7 +141,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(2)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.UNKNOWN);
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
@@ -151,7 +152,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(2), utils.getVar(3)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
@@ -163,7 +164,7 @@ public class TestTestPredicate {
 		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
 		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.UNKNOWN);
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
@@ -175,7 +176,7 @@ public class TestTestPredicate {
 		TestPredicate pred = new TestPredicate(relPred, utils.getVar(0));
 		pred.setPositive(false);
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs);
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
 		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));

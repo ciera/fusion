@@ -7,7 +7,8 @@ import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
-		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=1, analysis="FusionSound")}
+		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmatic")},
+		fail={@FailingTest(value=1, analysis="FusionSound")}
 )
 public class NoSelectionSet extends Page {
 	public void noSelectionSet() {

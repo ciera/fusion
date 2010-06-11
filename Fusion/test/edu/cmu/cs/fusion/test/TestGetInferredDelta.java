@@ -15,6 +15,7 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -112,7 +113,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testNoMatchForProduce() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -137,7 +138,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testNoVariablesWork() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -162,7 +163,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testWrongValue() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -187,7 +188,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testThrashes() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -212,7 +213,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testWorksSingleStepSame() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -240,7 +241,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testWorksSingleStepDiff() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -269,7 +270,7 @@ public class TestGetInferredDelta {
 	@Test
 	public void testWorksTwoSteps() {
 		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv);
+		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();

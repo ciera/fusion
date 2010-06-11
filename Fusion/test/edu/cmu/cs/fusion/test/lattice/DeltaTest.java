@@ -88,7 +88,7 @@ public class DeltaTest {
 		list = new LinkedList<RelationshipDelta>();
 		list.add(d1);
 		list.add(d2);
-		join = RelationshipDelta.join(list, false);
+		join = RelationshipDelta.join(list);
 		
 		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU);
 		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == FivePointLattice.FAL_STAR);
@@ -99,7 +99,7 @@ public class DeltaTest {
 		list = new LinkedList<RelationshipDelta>();
 		list.add(d2);
 		list.add(d4);
-		join = RelationshipDelta.join(list, false);
+		join = RelationshipDelta.join(list);
 		
 		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU_STAR);
 		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == FivePointLattice.UNK);
@@ -112,7 +112,7 @@ public class DeltaTest {
 		list.add(d2);
 		list.add(d3);
 		list.add(d4);
-		join = RelationshipDelta.join(list, false);
+		join = RelationshipDelta.join(list);
 		
 		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU_STAR);
 		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == FivePointLattice.UNK);

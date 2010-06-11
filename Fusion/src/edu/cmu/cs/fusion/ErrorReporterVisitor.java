@@ -58,7 +58,7 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		AliasContext aliases = fa.getPointsToResultsAfter(node.getBody());
 		RelationshipContext rels = fa.getRelResultsAfter(node.getBody());
 		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), aliases);
-		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
+		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
@@ -101,7 +101,7 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		AliasContext aliases = fa.getPointsToResultsAfter(node);
 		RelationshipContext rels = fa.getRelResultsBefore(node);
 		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), aliases);
-		FusionEnvironment env = new FusionEnvironment(aliases, rels , bools, fa.getHierarchy(), fa.getInfers());
+		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		

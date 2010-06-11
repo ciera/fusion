@@ -113,13 +113,13 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			//true branch
 			AC aAfterContextTrue = aliasResults.get(trueLabel);
 			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextTrue, true);
-			FusionEnvironment<AC> tEnv = new FusionEnvironment<AC>(aAfterContextTrue, relsContext, tBContext, types, infers);
+			FusionEnvironment<AC> tEnv = new FusionEnvironment<AC>(aAfterContextTrue, relsContext, tBContext, types, infers, mainAnalysis.getVariant());
 			Pair<AC, RelationshipContext> tPair = checker.runGenericTransfer(tEnv, instr);
 			
 			//false branch
 			AC aAfterContextFalse = aliasResults.get(falseLabel);
 			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextFalse, false);
-			FusionEnvironment<AC> fEnv = new FusionEnvironment<AC>(aAfterContextFalse, relsContext, fBContext, types, infers);
+			FusionEnvironment<AC> fEnv = new FusionEnvironment<AC>(aAfterContextFalse, relsContext, fBContext, types, infers, mainAnalysis.getVariant());
 			Pair<AC, RelationshipContext> fPair = checker.runGenericTransfer(fEnv, instr);
 
 			
@@ -133,7 +133,7 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 		else {
 			AC aAfterContext = aliasResults.get(NormalLabel.getNormalLabel());
 			BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
-			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers);
+			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers, mainAnalysis.getVariant());
 			Pair<AC, RelationshipContext> pair = checker.runGenericTransfer(env, instr);
 			
 			return LabeledSingleResult.createResult(pair, labels);
@@ -151,7 +151,7 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 		AC aAfterContext = aliasResults.get(NormalLabel.getNormalLabel());
 
 		BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
-		FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers);
+		FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers, mainAnalysis.getVariant());
 		Pair<AC, RelationshipContext> pair = checker.runGenericTransfer(env, instr);
 	
 		return LabeledSingleResult.createResult(pair, labels);

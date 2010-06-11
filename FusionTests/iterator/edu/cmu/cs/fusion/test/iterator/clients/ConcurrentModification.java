@@ -5,11 +5,12 @@ import edu.cmu.cs.crystal.annotations.FailingTest;
 import edu.cmu.cs.crystal.annotations.PassingTest;
 import java.util.*;
 
-
+/*
 @AnalysisTests(
 		pass={@PassingTest(analysis="FusionComplete")},
 		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=1, analysis="FusionSound")}
 )
+*/
 public class ConcurrentModification {
 	
 	public void duplicate(Collection<String> coll) {
