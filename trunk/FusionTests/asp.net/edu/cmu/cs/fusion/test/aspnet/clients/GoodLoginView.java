@@ -7,12 +7,12 @@ import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
-		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmatic"), @PassingTest(analysis="FusionSound")},
-		fail={}
+		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmatic")},
+		fail={@FailingTest(value=3, analysis="FusionSound")}
 )
 public class GoodLoginView extends Page {
-	LoginView myView;
 	public void goodSetSelection() {
+		LoginView myView = (LoginView) findControl("LoginScreen");
 		if (this.getRequest().isAuthenticated()) {
 			DropDownList list = (DropDownList) myView.findControl("LoggedInDDL");
 			list.getSelectedItem();

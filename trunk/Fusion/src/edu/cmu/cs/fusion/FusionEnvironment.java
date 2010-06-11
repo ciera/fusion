@@ -36,14 +36,16 @@ public class FusionEnvironment<AC extends AliasContext> {
 	private InferenceEnvironment inference;
 	
 	private ConsList<Pair<RelationshipPredicate, Substitution>> continuation;
+	private Variant variant;
 	
-	public FusionEnvironment(AC aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf) {
+	public FusionEnvironment(AC aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf, Variant variant) {
 		context = relLattice;
 		alias = aliasLattice;
 		bools = boolLattice;
 		tHierarchy = types;
 		inference = inf;
 		continuation = ConsList.empty();
+		this.variant = variant;
 	}
 
 	@Deprecated
@@ -58,6 +60,9 @@ public class FusionEnvironment<AC extends AliasContext> {
 	
 	public RelationshipDelta getInferredDelta(RelationshipPredicate rel, Substitution sub) {
 		RelationshipDelta delta;
+		
+		if (variant != Variant.PRAGMATIC_VARIANT)
+			return null;
 
 		//check to see if we've looked for this relationship before with our existing continuation...
 		if (alreadyLookingForRel(rel, sub))
@@ -84,10 +89,9 @@ public class FusionEnvironment<AC extends AliasContext> {
 						continue;
 					
 					//ok, see if this conflicts with what we have
-					List<RelationshipDelta> eDeltas = new LinkedList<RelationshipDelta>();
+					delta = new RelationshipDelta();
 					for (Effect effect : inf.getEffects())
-						eDeltas.add(effect.makeEffects(this, finalSub));
-					delta = RelationshipDelta.join(eDeltas, true);
+						delta.override(effect.makeEffects(this, finalSub));
 					
 					//if it doesn't conflict AND it makes some change, return it!
 					if (delta.isStrictlyMorePrecise(context)) {
@@ -261,7 +265,7 @@ public class FusionEnvironment<AC extends AliasContext> {
 	}
 
 	public FusionEnvironment<AC> copy(RelationshipContext newContext) {
-		FusionEnvironment<AC> env = new FusionEnvironment<AC>(alias, newContext, bools, tHierarchy, inference);
+		FusionEnvironment<AC> env = new FusionEnvironment<AC>(alias, newContext, bools, tHierarchy, inference, variant);
 		env.continuation = continuation;
 		return env;
 	}

@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -95,7 +96,7 @@ public class TestAllValidSubs {
 	
 	@Test
 	public void testEmptyValidLabels() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		
@@ -112,7 +113,7 @@ public class TestAllValidSubs {
 	
 	@Test
 	public void testFindLabelsOneOption() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		
@@ -136,7 +137,7 @@ public class TestAllValidSubs {
 
 	@Test
 	public void testFindLabelsAliasesAllDefinite() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		
@@ -192,7 +193,7 @@ public class TestAllValidSubs {
 	
 	@Test
 	public void testFindLabelsPossibleFromSuperTypes() {
-		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment());
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
 		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
 		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
 		

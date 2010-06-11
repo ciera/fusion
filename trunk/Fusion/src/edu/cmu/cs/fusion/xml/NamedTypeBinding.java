@@ -13,7 +13,7 @@ import org.eclipse.jdt.core.dom.IVariableBinding;
  * name later. The problem is that some interfaces are written to assume that the take ITypeBindings, but all they ever
  * do with them is get a qualified name.
  * 
- * This class should be removed in some refactoring. The methods in question should just be taking the qualifieid name
+ * This class should be removed in some refactoring. The methods in question should just be taking the qualified name
  * instead, if that is possible.
  * @author ciera
  *

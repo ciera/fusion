@@ -38,7 +38,11 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 	}
 	
 	public FivePointLattice getValue(Relationship rel) {
-		return rels.get(rel);
+		FivePointLattice val = rels.get(rel);
+		if (val == null)
+			return FivePointLattice.STAR;
+		else
+			return val;
 	}
 
 	public void setRelationship(Relationship rel, FivePointLattice fp) {
@@ -53,7 +57,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 		return polar;
 	}
 
-	static public RelationshipDelta join(List<RelationshipDelta> deltas, boolean ignoreAsBot) {
+	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();
 		
@@ -63,26 +67,34 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 		joined.rels = new HashMap<Relationship, FivePointLattice>(itr.next().rels);
 		
 		while (itr.hasNext()) {
-			if (ignoreAsBot)
-				joined.joinStar(itr.next());
-			else
-				joined.join(itr.next());
+			joined.join(itr.next());
 		}
 		return joined;
 	}
 		
-	private void joinStar(RelationshipDelta other) {
+	static public RelationshipDelta joinAlt(List<RelationshipDelta> deltas) {
+		Iterator<RelationshipDelta> itr = deltas.iterator();
+		RelationshipDelta joined = new RelationshipDelta();
+		
+		if (deltas.isEmpty())
+			return joined;
+		
+		joined.rels = new HashMap<Relationship, FivePointLattice>(itr.next().rels);
+		
+		while (itr.hasNext()) {
+			joined.joinAlt(itr.next());
+		}
+		return joined;
+	}
+
+	private void joinAlt(RelationshipDelta other) {
 		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
 		combinedRels.addAll(other.rels.keySet());
 		
 		for (Relationship rel : combinedRels) {
-			FivePointLattice myVal = rels.get(rel);
-			FivePointLattice otherVal = other.rels.get(rel);
-			if (myVal == null)
-				rels.put(rel, otherVal);
-			else if (otherVal != null && myVal != otherVal) {
-				rels.put(rel, myVal.join(otherVal));
-			}
+			FivePointLattice myVal = getValue(rel);
+			FivePointLattice otherVal = other.getValue(rel);
+			rels.put(rel, myVal.joinAlt(otherVal));
 		}
 	}
 	
@@ -91,21 +103,22 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 		combinedRels.addAll(other.rels.keySet());
 		
 		for (Relationship rel : combinedRels) {
-			FivePointLattice myVal = rels.get(rel);
-			FivePointLattice otherVal = other.rels.get(rel);
-			if (myVal == null && otherVal != null)
-				rels.put(rel, otherVal.polarize());
-			else if (otherVal == null && myVal != null)
-				rels.put(rel, myVal.polarize());
-			else if (myVal != otherVal) {
-				rels.put(rel, myVal.join(otherVal));
-			}
-			else {
-				//if vals are equal then leave it be
-			}
+			FivePointLattice myVal = getValue(rel);
+			FivePointLattice otherVal = other.getValue(rel);
+			rels.put(rel, myVal.join(otherVal));
 		}
 	}
 
+	public void override(RelationshipDelta makeEffects) {
+		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
+		combinedRels.addAll(makeEffects.rels.keySet());
+		
+		for (Relationship rel : combinedRels) {
+			FivePointLattice myVal = getValue(rel);
+			FivePointLattice otherVal = makeEffects.getValue(rel);
+			rels.put(rel, myVal.override(otherVal));
+		}
+	}
 
 	@Override
 	public int hashCode() {
@@ -165,11 +178,5 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 		}
 		
 		return strictlyMore;
-	}
-
-	public void override(RelationshipDelta makeEffects) {
-		for (Entry<Relationship, FivePointLattice> entry : makeEffects) {
-			this.rels.put(entry.getKey(), entry.getValue());
-		}
 	}
 }

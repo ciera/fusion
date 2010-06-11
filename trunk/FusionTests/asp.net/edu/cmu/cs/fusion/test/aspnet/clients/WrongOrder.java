@@ -8,7 +8,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
 		pass={@PassingTest(analysis="FusionComplete")},
-		fail={@FailingTest(value=2, analysis="FusionPragmatic"), @FailingTest(value=3, analysis="FusionSound")}
+		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=3, analysis="FusionSound")}
 )
 public class WrongOrder extends Page {
 	public void wrongOrder() {
