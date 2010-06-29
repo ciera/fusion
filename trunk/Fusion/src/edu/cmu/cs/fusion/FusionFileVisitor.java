@@ -38,7 +38,7 @@ public class FusionFileVisitor extends Observable  implements IResourceVisitor {
 	
 	public boolean visit(IResource resource) throws CoreException {
 		try {
-			if (resource instanceof IFile && resource.getFileExtension().equals(FUSION_FILE)) {
+			if (resource instanceof IFile && resource.getFileExtension() != null && resource.getFileExtension().equals(FUSION_FILE)) {
 				File file = resource.getLocation().toFile();
 				Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 				XMLContext context = createContext(file.getAbsolutePath(), doc);
