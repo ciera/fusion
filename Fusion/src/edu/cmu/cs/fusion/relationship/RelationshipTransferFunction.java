@@ -1,8 +1,11 @@
 package edu.cmu.cs.fusion.relationship;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
 import edu.cmu.cs.crystal.flow.BooleanLabel;
 import edu.cmu.cs.crystal.flow.ILabel;
@@ -33,6 +36,7 @@ import edu.cmu.cs.crystal.tac.model.SourceVariableReadInstruction;
 import edu.cmu.cs.crystal.tac.model.StoreArrayInstruction;
 import edu.cmu.cs.crystal.tac.model.StoreFieldInstruction;
 import edu.cmu.cs.crystal.tac.model.UnaryOperation;
+import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.BooleanConstantWrapper;
@@ -85,11 +89,24 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 
 	/**
 	 * Get the entry value based on the starting context received from the XML files.
+	 * Also use any callbacks, so go ahead and run the constraint checker here with an entry instruction.
 	 */
 	public Pair<AC, RelationshipContext> createEntryValue(MethodDeclaration method) {		
 		AC aliases = aliasTF.createEntryValue(method);
-		RelationshipContext startingContext = retriever.getStartContext();		
-		return new Pair<AC, RelationshipContext>(aliases, startingContext);
+		RelationshipContext startingContext = retriever.getStartContext();	
+		
+		Variable thisVar = this.getAnalysisContext().getThisVariable();
+		List<Variable> params = new LinkedList<Variable>();
+		Iterator<SingleVariableDeclaration> itr = method.parameters().iterator();
+		while (itr.hasNext()) {
+			params.add(getAnalysisContext().getSourceVariable(itr.next().resolveBinding()));
+		}
+		
+		EntryInstruction entry = new EntryInstruction(thisVar, params, method.resolveBinding());
+		BooleanContext bContext = new BooleanConstantWrapper(method.getBody(), mainAnalysis.getBooleanAnalysis(), aliases);
+		FusionEnvironment<AC> env = new FusionEnvironment<AC>(aliases, startingContext, bContext, types, infers, mainAnalysis.getVariant());
+
+		return checker.runGenericTransfer(env, entry);
 	}
 
 	public ILatticeOperations<Pair<AC, RelationshipContext>> getLatticeOperations() {
