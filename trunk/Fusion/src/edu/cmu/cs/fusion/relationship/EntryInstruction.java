@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.flow.ILabel;
 import edu.cmu.cs.crystal.flow.IResult;
@@ -16,13 +17,19 @@ public class EntryInstruction implements TACInvocation {
 
 	private List<Variable> args;
 	private IMethodBinding binding;
+	private Variable thisVar;
 
-	public EntryInstruction(List<Variable> args, IMethodBinding binding) {
+	public EntryInstruction(Variable thisVar, List<Variable> args, IMethodBinding binding) {
 		super();
+		this.thisVar = thisVar;
 		this.args = args;
 		this.binding = binding;
 	}
 
+	public Variable getReceiver() {
+		return thisVar;
+	}
+	
 	public List<Variable> getArgOperands() {
 		return args;
 	}
