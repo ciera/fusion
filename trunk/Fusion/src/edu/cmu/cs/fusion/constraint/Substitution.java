@@ -28,6 +28,8 @@ public class Substitution {
 	 * @param label
 	 */
 	public Substitution addSub(SpecVar var, ObjectLabel label) {
+		assert(var != null);
+		assert(!subs.contains(var));
 		return new Substitution(ConsList.cons(new Pair<SpecVar, ObjectLabel>(var, label), subs));
 	}
 	
