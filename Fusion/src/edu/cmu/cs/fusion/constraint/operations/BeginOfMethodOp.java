@@ -12,10 +12,18 @@ import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.relationship.EntryInstruction;
 
 public class BeginOfMethodOp implements Operation {
-	String type;
+	private String thisType;
+	private String methodName;
+	private String[] paramTypes;
+	
+	public BeginOfMethodOp(String thisType, String methodName, String[] paramTypes) {
+		this.thisType = thisType;
+		this.methodName = methodName;
+		this.paramTypes = paramTypes;
+	}
 
 	public FreeVars getFreeVariables() {
-		return new FreeVars().addVar(Constraint.RECEIVER, type);
+		return new FreeVars().addVar(Constraint.RECEIVER, thisType);
 	}
 
 	public ConsList<Binding> matches(TypeHierarchy types, TACInstruction instr) {
@@ -25,24 +33,23 @@ public class BeginOfMethodOp implements Operation {
 		EntryInstruction invoke = (EntryInstruction) instr;
 
 		IMethodBinding method = invoke.resolveBinding();
+		
+		if (!(methodName.equals(method.getName())))
+			return null;
 
-//		if (!types.existsCommonSubtype(thisType, method.getDeclaringClass().getQualifiedName()))
-//			return null;
+		if (!types.existsCommonSubtype(thisType, method.getDeclaringClass().getQualifiedName()))
+			return null;
 
-//		if (method.getParameterTypes().length != paramTypes.length)
-//			return null;
+		if (method.getParameterTypes().length != paramTypes.length)
+			return null;
 
-//		for (int ndx = 0; ndx < paramTypes.length; ndx++)
-//			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
-//				return null;
+		for (int ndx = 0; ndx < paramTypes.length; ndx++)
+			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
+				return null;
 		
 		ConsList<Binding> vars = ConsList.empty();
 		
-//		vars = ConsList.cons(new Pair<SpecVar, Variable>(thisVar, invoke.getReceiverOperand()), vars);
-//		vars = ConsList.cons(new Pair<SpecVar, Variable>(retVar, invoke.getTarget()), vars);
-		
-//		for (int ndx = 0; ndx < params.length; ndx++)
-//			vars = ConsList.cons(new Pair<SpecVar, Variable>(params[ndx], invoke.getArgOperands().get(ndx)), vars);
+		vars = ConsList.cons(new Binding(Constraint.RECEIVER, invoke.getReceiver()), vars);
 
 		return vars;
 	}

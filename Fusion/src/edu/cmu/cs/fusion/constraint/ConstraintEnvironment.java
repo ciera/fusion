@@ -24,6 +24,7 @@ import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.ReportingUtility;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
+import edu.cmu.cs.fusion.constraint.requestors.CallbackRequestor;
 import edu.cmu.cs.fusion.constraint.requestors.ConstraintRequestor;
 import edu.cmu.cs.fusion.constraint.requestors.EffectRequestor;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
@@ -48,12 +49,18 @@ public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
 		engine.search(pattern, participants, scope, consReq, monitor);
 		constraints.addAll(consReq.getConstraints());
 		
+		CallbackRequestor callRequest = new CallbackRequestor(rels);
+		pattern = SearchPattern.createPattern("Callback", IJavaSearchConstants.ANNOTATION_TYPE, IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
+		engine.search(pattern, participants, scope, callRequest, monitor);
+		constraints.addAll(callRequest.getConstraints());
+		
 		EffectRequestor effReq = new EffectRequestor(rels);
 		for (Relation rel : rels) {
 			pattern = SearchPattern.createPattern(rel.getName(), IJavaSearchConstants.ANNOTATION_TYPE, IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
 			engine.search(pattern, participants, scope, effReq, monitor);			
 		}
 		constraints.addAll(effReq.getConstraints());
+		
 	}
 
 	public void update(Observable o, Object arg) {
