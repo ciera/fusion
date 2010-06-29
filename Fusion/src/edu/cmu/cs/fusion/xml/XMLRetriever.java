@@ -122,7 +122,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 	 */
 	public boolean visit(IResource resource) throws CoreException {
 		try {
-			if (resource instanceof IFile && resource.getFileExtension().equals("xml")) {
+			if (resource instanceof IFile && resource.getFileExtension() != null && resource.getFileExtension().equals("xml")) {
 				File file = resource.getLocation().toFile();
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				factory.setNamespaceAware(true);
