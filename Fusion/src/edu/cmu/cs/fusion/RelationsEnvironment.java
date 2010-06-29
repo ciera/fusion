@@ -46,6 +46,11 @@ public class RelationsEnvironment extends SearchRequestor implements Iterable<Re
 	public void addRelation(Relation rel) {
 		rels.put(rel.getName(), rel);
 	}
+	
+	@Override
+	public String toString() {
+		return rels.values().toString();
+	}
 
 	@Override
 	public void acceptSearchMatch(SearchMatch match) throws CoreException {

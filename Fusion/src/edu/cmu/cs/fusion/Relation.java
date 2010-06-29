@@ -51,4 +51,17 @@ public class Relation {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		String str = name + "(";
+		int ndx;
+		
+		for (ndx = 0; ndx < fullyQualifiedTypes.length - 1; ndx++)
+			str += fullyQualifiedTypes[ndx] + ", ";
+		if (ndx < fullyQualifiedTypes.length)
+			str += fullyQualifiedTypes[ndx];
+		str += ")";
+		return str;	
+	}
 }
