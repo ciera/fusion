@@ -7,6 +7,7 @@ import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.SpecVar;
+import edu.cmu.cs.fusion.constraint.operations.BeginOfMethodOp;
 import edu.cmu.cs.fusion.constraint.operations.ConstructorOp;
 import edu.cmu.cs.fusion.constraint.operations.EndOfMethodOp;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
@@ -28,6 +29,72 @@ public class ParseOperations {
 				
 		FreeVars vars = invoke.getFreeVariables();
 		Assert.assertEquals("Wrong number of free vars", 0, vars.size());		
+	}
+
+	@Test
+	public void testBOMEmpty() throws ParseException {
+		String string = "BOM";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a BOM, but is " + op.getClass().getCanonicalName(), op instanceof BeginOfMethodOp);
+		
+		BeginOfMethodOp invoke = (BeginOfMethodOp)op;
+				
+		FreeVars vars = invoke.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 1, vars.size());		
+		Assert.assertEquals("Wrong type", "java.lang.Object", vars.getType(Constraint.RECEIVER));		
+	}
+
+	@Test
+	public void testBOMWCParams() throws ParseException {
+		String string = "BOM: Foo.Bar(..)";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a BOM, but is " + op.getClass().getCanonicalName(), op instanceof BeginOfMethodOp);
+		
+		BeginOfMethodOp invoke = (BeginOfMethodOp)op;
+				
+		FreeVars vars = invoke.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 1, vars.size());		
+		Assert.assertEquals("Wrong type", "Foo", vars.getType(Constraint.RECEIVER));		
+	}
+
+	@Test
+	public void testBOMWCName() throws ParseException {
+		String string = "BOM: Foo.*()";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a BOM, but is " + op.getClass().getCanonicalName(), op instanceof BeginOfMethodOp);
+		
+		BeginOfMethodOp invoke = (BeginOfMethodOp)op;
+				
+		FreeVars vars = invoke.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 1, vars.size());		
+		Assert.assertEquals("Wrong type", "Foo", vars.getType(Constraint.RECEIVER));		
+	}
+
+	@Test
+	public void testBOMWCReceiver() throws ParseException {
+		String string = "BOM: *.Name(Bar bar, Baz baz)";
+		
+		FPLParser parser = new FPLParser(string, null, new StubIType());
+		Operation op = parser.operation();
+		
+		Assert.assertTrue("Parsed predicate should be a BOM, but is " + op.getClass().getCanonicalName(), op instanceof BeginOfMethodOp);
+		
+		BeginOfMethodOp invoke = (BeginOfMethodOp)op;
+				
+		FreeVars vars = invoke.getFreeVariables();
+		Assert.assertEquals("Wrong number of free vars", 3, vars.size());
+		Assert.assertEquals("Wrong type", "java.lang.Object", vars.getType(Constraint.RECEIVER));		
+		Assert.assertEquals("Wrong type", "Baz", vars.getType(new SpecVar("baz")));		
+		Assert.assertEquals("Wrong type", "Bar", vars.getType(new SpecVar("bar")));		
 	}
 
 	@Test

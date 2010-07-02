@@ -31,7 +31,6 @@ import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
-import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 import edu.cmu.cs.fusion.xml.XMLRetriever;
@@ -49,6 +48,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private TypeHierarchy types;
 	private boolean majorErrorOccured = false;
 	private DeclarativeRetriever retriever;
+	private Method tacMethod;
 
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -123,19 +123,21 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			return;
 		}
 		try {
+
 			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
 			MayPointsToLatticeOps ops = new MayPointsToLatticeOps(types);
 			
-			RelationshipTransferFunction tfR = new RelationshipTransferFunction(this, constraints, infers, types, retriever, aliasTF, ops);
+			RelationshipTransferFunction<MayPointsToAliasContext> tfR = new RelationshipTransferFunction<MayPointsToAliasContext>(this, constraints, infers, types, retriever, aliasTF, ops);
 			fa = new TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+			
 			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
-			
+
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
 			EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, new ConstraintChecker(constraints, types, variant), reporter, tac, log);
+			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, tfR.getConstraintChecker(), reporter, tac, log);
 			methodDecl.accept(errVisitor);
 			
 //			StatementRelationshipVisitor printer = new StatementRelationshipVisitor(this);
@@ -147,6 +149,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		}
 	}
 	
+
 	public TypeHierarchy getHierarchy() {
 		return types;
 	}

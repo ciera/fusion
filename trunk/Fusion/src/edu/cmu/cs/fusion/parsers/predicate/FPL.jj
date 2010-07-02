@@ -73,6 +73,7 @@ TOKEN : /* OPERATORS */
 TOKEN : /* Operation Tokens */
 {
 	< EOM: "EOM" > 
+|   < BOM : "BOM" >
 |   < DOT : "." >
 |   < WC : "*" >
 |   < UPDATE : "update" >
@@ -344,18 +345,58 @@ Operation operation() :{
 {
 	op = eom() {return op;}
 |
+op = bom() {return op;}
+| 
 LOOKAHEAD(2)
 	op = invoke() {return op;}
 |
 	op = construct() {return op;}}
 
-Operation eom() :
+EndOfMethodOp eom() :
 {
+  String receiverType;
+  String methodName;
+  Pair<String[], SpecVar[] > params;
+  String resType;
 }
-{	< EOM >
-	{	  return new EndOfMethodOp();
+{LOOKAHEAD(2)
+	< EOM >
+":"
+receiverType = wcType()
+< DOT >
+methodName = wcName()
+params = wcTypedParams()
+":"
+resType = wcType()
+{
+  return new EndOfMethodOp(receiverType, methodName, params.snd(), params.fst(), resType);
+}
+|
+	< EOM >
+	{	  return new EndOfMethodOp(null, null, null, null, null);
 	}
 }
+
+BeginOfMethodOp bom() :
+{
+  String receiverType;
+  String methodName;
+  Pair<String[], SpecVar[] > params;
+}
+{
+	LOOKAHEAD(2)
+	< BOM >
+":"
+receiverType = wcType()
+< DOT >
+methodName = wcName()
+params = wcTypedParams()
+{
+  return new BeginOfMethodOp(receiverType, methodName, params.snd(), params.fst());}
+|
+< BOM >	 {return new BeginOfMethodOp(null, null, null, null);}
+}
+
 
 ConstructorOp construct() :
 {
@@ -422,6 +463,17 @@ Relation relation():
 		catch (JavaModelException err)		{			throw new ParseException("Model error found when trying to resolve " + t.image + " within the context of " + context.getFullyQualifiedName() + ".");
 		}
 	}}
+
+Pair<String[], SpecVar[]> wcTypedParams() :
+{
+  Pair<String[], SpecVar[]> params;
+}
+{
+LOOKAHEAD(2)
+	"("< DOT ><DOT >")" {return new Pair<String[], SpecVar[]>(null, null);}
+| 
+params = typedParams() {return params;} 
+}
 
 Pair<String[], SpecVar[]> typedParams() :
 {
@@ -530,6 +582,23 @@ SpecVar[] wcParams(int numParams, String relName) :
 
 
 
+String wcType() :
+{
+  String qualifiedType;
+}
+{
+  < WC >
+  {
+    return null;
+  }
+| 
+  qualifiedType = type()
+  {
+    return qualifiedType;
+  }
+}
+
+
 String type() :
 {
   Token t;
@@ -573,4 +642,14 @@ SpecVar param() :
   t = < IDENTIFIER >
   {    return new SpecVar(t.image);
   }
+}
+
+String wcName() :
+{
+  Token name;
+}
+{
+  < WC > {return null;}
+| 
+  name = < IDENTIFIER > {return name.image;}
 }

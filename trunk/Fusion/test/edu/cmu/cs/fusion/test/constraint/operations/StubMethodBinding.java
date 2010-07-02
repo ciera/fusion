@@ -11,7 +11,15 @@ import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 public class StubMethodBinding implements IMethodBinding {
 	private NamedTypeBinding receiverType;
 	private NamedTypeBinding[] paramTypes;
-	
+	private String name;
+
+	public StubMethodBinding(String name, NamedTypeBinding receiverType,
+			NamedTypeBinding[] paramTypes) {
+		this.name = name;
+		this.receiverType = receiverType;
+		this.paramTypes = paramTypes;
+	}
+
 
 	public StubMethodBinding(NamedTypeBinding receiverType,
 			NamedTypeBinding[] paramTypes) {
@@ -40,8 +48,7 @@ public class StubMethodBinding implements IMethodBinding {
 	}
 
 	public String getName() {
-		throw new UnsupportedOperationException("stub not complete");
-
+		return name;
 	}
 
 	public IAnnotationBinding[] getParameterAnnotations(int paramIndex) {

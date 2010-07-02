@@ -97,7 +97,7 @@ public class TestFullyBound extends ConstraintChecker {
 	}
 	
 	public TestFullyBound() {
-		super(null, null, Variant.PRAGMATIC_VARIANT);
+		super(null, null, Variant.PRAGMATIC_VARIANT, null);
 		types = new TypeHierarchy() {
 			public boolean existsCommonSubtype(String t1, String t2, boolean skipCheck1, boolean skipCheck2) {
 				if (!skipCheck1 && isSubtypeCompatible(t1, t2) || !skipCheck2 && isSubtypeCompatible(t2, t1))
