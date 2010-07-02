@@ -10,6 +10,7 @@ import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.Method;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.Variant;
 import edu.cmu.cs.fusion.alias.AliasContext;
@@ -26,11 +27,13 @@ public class ConstraintChecker {
 	private ConstraintEnvironment constraints;
 	protected TypeHierarchy types;
 	protected Variant variant;
+	protected Method method;
 	
-	public ConstraintChecker(ConstraintEnvironment constraints, TypeHierarchy types, Variant var) {
+	public ConstraintChecker(ConstraintEnvironment constraints, TypeHierarchy types, Variant var, Method method) {
 		this.constraints = constraints;
 		this.types = types;
 		this.variant = var;
+		this.method = method;
 	}
 
 	/**
@@ -82,7 +85,7 @@ public class ConstraintChecker {
 	 */
 	protected Pair<RelationshipDelta, AliasDelta> runSingleConstraint(FusionEnvironment<?> env,
 			Constraint cons, TACInstruction instr) {
-		ConsList<Binding> boundVars = cons.getOp().matches(types, instr);
+		ConsList<Binding> boundVars = cons.getOp().matches(types, method, instr);
 		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
 		List<AliasDelta> specDeltas = new LinkedList<AliasDelta>();
 		
@@ -145,7 +148,7 @@ public class ConstraintChecker {
 	
 	
 	protected FusionErrorReport checkSingleConstraint(FusionEnvironment<?> env, Constraint cons, TACInstruction instr) {
-		ConsList<Binding> boundVars = cons.getOp().matches(types, instr);
+		ConsList<Binding> boundVars = cons.getOp().matches(types, method, instr);
 
 		if (boundVars == null)
 			return null;

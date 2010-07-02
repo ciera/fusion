@@ -69,10 +69,13 @@ public class CallbackRequestor extends SearchRequestor {
 		}
 		
 		String[] paramTypes = new String[methodType.getParameterTypes().length];
-		for (int ndx = 0; ndx < paramTypes.length; ndx++)
+		SpecVar[] params = new SpecVar[paramTypes.length];
+		for (int ndx = 0; ndx < paramTypes.length; ndx++) {
 			paramTypes[ndx] = Utilities.resolveBinaryType(declaringType, methodType.getParameterTypes()[ndx]);
+			params[ndx] = new SpecVar(methodType.getParameterNames()[ndx]);
+		}
 		
-		Operation op = new BeginOfMethodOp(declaringType.getFullyQualifiedName(), methodType.getElementName(), paramTypes);
+		Operation op = new BeginOfMethodOp(declaringType.getFullyQualifiedName(), methodType.getElementName(), params, paramTypes);
 		List<Effect> effects = new LinkedList<Effect>();
 		effects.add(RelEffect.createAddEffect(relation, new SpecVar[] {Constraint.RECEIVER}));
 		

@@ -7,6 +7,7 @@ import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.Binding;
+import edu.cmu.cs.fusion.Method;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.Operation;
@@ -29,22 +30,22 @@ public class ConstructorOp implements Operation {
 		return new FreeVars(params, paramTypes).addVar(ret, type);
 	}
 
-	public ConsList<Binding> matches(TypeHierarchy types, TACInstruction instr) {
+	public ConsList<Binding> matches(TypeHierarchy types, Method method, TACInstruction instr) {
 		if (!(instr instanceof NewObjectInstruction))
 			return null;
 
 		NewObjectInstruction newObj = (NewObjectInstruction) instr;
 
-		IMethodBinding method = newObj.resolveBinding();
+		IMethodBinding binding = newObj.resolveBinding();
 
-		if (method.getParameterTypes().length != paramTypes.length)
+		if (binding.getParameterTypes().length != paramTypes.length)
 			return null;
 
-		if (!types.existsCommonSubtype(type, method.getDeclaringClass().getQualifiedName()))
+		if (!types.existsCommonSubtype(type, binding.getDeclaringClass().getQualifiedName()))
 			return null;
 
 		for (int ndx = 0; ndx < paramTypes.length; ndx++)
-			if (!types.existsCommonSubtype(paramTypes[ndx], method.getParameterTypes()[ndx].getQualifiedName()))
+			if (!types.existsCommonSubtype(paramTypes[ndx], binding.getParameterTypes()[ndx].getQualifiedName()))
 				return null;
 		
 		ConsList<Binding> vars = ConsList.empty();

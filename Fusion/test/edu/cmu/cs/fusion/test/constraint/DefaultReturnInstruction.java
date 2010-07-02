@@ -14,7 +14,7 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 public class DefaultReturnInstruction implements ReturnInstruction {
 
 	public Variable getReturnedVariable() {
-		throw new UnsupportedOperationException("Only to be used as a stub for the reporter");
+		return null;
 	}
 
 	public ASTNode getNode() {

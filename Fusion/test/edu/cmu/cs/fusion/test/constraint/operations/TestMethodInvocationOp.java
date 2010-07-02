@@ -55,7 +55,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "void");
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 
 		assertTrue(map == null);
 	}
@@ -71,7 +71,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);
 	}
@@ -87,7 +87,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo2", vars, vTypes, "Bazaz");
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);
 	}
@@ -103,7 +103,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz2"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);	
 	}
@@ -120,7 +120,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz", "blah"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);
 		
@@ -143,7 +143,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(list != null);
 		assertTrue(list.contains(new Binding(Constraint.RESULT, tVar)));
@@ -167,7 +167,7 @@ public class TestMethodInvocationOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
 		
-		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(list != null);
 		assertTrue(list.contains(new Binding(Constraint.RESULT, tVar)));

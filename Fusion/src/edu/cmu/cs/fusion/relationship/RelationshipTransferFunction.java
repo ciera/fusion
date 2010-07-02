@@ -1,7 +1,7 @@
 package edu.cmu.cs.fusion.relationship;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -45,6 +45,7 @@ import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
+import edu.cmu.cs.fusion.Method;
 import edu.cmu.cs.fusion.PairLatticeOps;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
@@ -60,6 +61,7 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	private DeclarativeRetriever retriever;
 	private AbstractTACBranchSensitiveTransferFunction<AC> aliasTF;
 	private ILatticeOperations<AC> aliasOps;
+	private ConstraintEnvironment constraints;
 	
 	/**
 	 * Do not use, only for testing purposes.
@@ -67,36 +69,42 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	 */
 	public RelationshipTransferFunction(FusionAnalysis relAnalysis, AbstractTACBranchSensitiveTransferFunction<AC> aliasTF) throws FusionException {
 		mainAnalysis = relAnalysis;
-		checker = new ConstraintChecker(null, null, relAnalysis.getVariant());
 		this.aliasTF = aliasTF;
+		checker = new ConstraintChecker(null, null, relAnalysis.getVariant(), null);
 	}
 	
 	public RelationshipTransferFunction(FusionAnalysis relAnalysis, ConstraintEnvironment constraints, InferenceEnvironment inf, TypeHierarchy types, DeclarativeRetriever retriever, AbstractTACBranchSensitiveTransferFunction<AC> aliasTF, ILatticeOperations<AC> aliasOps) throws FusionException {
 		mainAnalysis = relAnalysis;
 		this.infers = inf;
 		this.types = types;
-		checker = new ConstraintChecker(constraints, types, relAnalysis.getVariant());
 		this.retriever = retriever;
 		this.aliasTF = aliasTF;
 		this.aliasOps = aliasOps;
+		this.constraints = constraints;
 	}
-
+	
 	@Override
 	public void setAnalysisContext(ITACAnalysisContext analysisContext) {
 		super.setAnalysisContext(analysisContext);
 		aliasTF.setAnalysisContext(analysisContext);
+	}
+	
+	public ConstraintChecker getConstraintChecker() {
+		return checker;
 	}
 
 	/**
 	 * Get the entry value based on the starting context received from the XML files.
 	 * Also use any callbacks, so go ahead and run the constraint checker here with an entry instruction.
 	 */
-	public Pair<AC, RelationshipContext> createEntryValue(MethodDeclaration method) {		
+	public Pair<AC, RelationshipContext> createEntryValue(MethodDeclaration method) {
+		checker = new ConstraintChecker(constraints, types, mainAnalysis.getVariant(), createTACMethod(method));
+		
 		AC aliases = aliasTF.createEntryValue(method);
 		RelationshipContext startingContext = retriever.getStartContext();	
 		
 		Variable thisVar = this.getAnalysisContext().getThisVariable();
-		List<Variable> params = new LinkedList<Variable>();
+		List<Variable> params = new ArrayList<Variable>();
 		Iterator<SingleVariableDeclaration> itr = method.parameters().iterator();
 		while (itr.hasNext()) {
 			params.add(getAnalysisContext().getSourceVariable(itr.next().resolveBinding()));
@@ -108,6 +116,18 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 
 		return checker.runGenericTransfer(env, entry);
 	}
+	
+	private Method createTACMethod(MethodDeclaration decl) {
+		Variable thisVar = getAnalysisContext().getThisVariable();
+		Variable[] params = new Variable[decl.parameters().size()];
+		Iterator<SingleVariableDeclaration> itr = decl.parameters().iterator();
+		int ndx = 0;
+		while (itr.hasNext()) {
+			params[ndx] = getAnalysisContext().getSourceVariable(itr.next().resolveBinding());
+		}
+		return new Method(params, thisVar, decl.resolveBinding());
+	}
+
 
 	public ILatticeOperations<Pair<AC, RelationshipContext>> getLatticeOperations() {
 		return new PairLatticeOps<AC, RelationshipContext>(aliasOps, new RelationshipLatticeOperations());

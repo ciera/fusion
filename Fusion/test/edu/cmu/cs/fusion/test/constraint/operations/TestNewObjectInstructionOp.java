@@ -56,7 +56,7 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 
 		assertTrue(map == null);
 	}
@@ -67,7 +67,7 @@ public class TestNewObjectInstructionOp {
 		
 		ConstructorOp op = new ConstructorOp("Baz", new SpecVar[] {utils.getVar(1)}, new String[] {"Bar"});
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);
 	}
@@ -78,7 +78,7 @@ public class TestNewObjectInstructionOp {
 
 		ConstructorOp op = new ConstructorOp("Foo", new SpecVar[] {utils.getVar(1)}, new String[] {"Baz"});
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);	
 	}
@@ -91,7 +91,7 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar", "Baz"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(map == null);
 		
@@ -107,7 +107,7 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(list != null);
 		assertTrue(list.contains(new Binding(Constraint.RESULT, target)));
@@ -125,7 +125,7 @@ public class TestNewObjectInstructionOp {
 		String[] vTypes = new String[] {"Bar"};
 		ConstructorOp op = new ConstructorOp("Foo", vars, vTypes);
 		
-		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), instr);
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
 		assertTrue(list != null);
 		assertTrue(list.contains(new Binding(Constraint.RESULT, target)));
