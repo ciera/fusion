@@ -9,7 +9,9 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.FusionAnalysis;
+import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 public class DebuggingCacheVisitor extends ASTVisitor {
@@ -31,7 +33,7 @@ public class DebuggingCacheVisitor extends ASTVisitor {
 			Statement first = (Statement) node.getBody().statements().get(0);
 			int startLine = cu.getLineNumber(first.getStartPosition());
 			int endLine = cu.getLineNumber(first.getStartPosition() + first.getLength());
-			cache.addResult(startLine, endLine, context);
+			cache.addResult(startLine, endLine, new Pair<AliasContext, RelationshipContext>(null, context));
 		}
 		
 		return true;
@@ -42,19 +44,22 @@ public class DebuggingCacheVisitor extends ASTVisitor {
 		Iterator<Statement> itr = (Iterator<Statement>) node.statements().iterator();
 		int startLine, endLine;
 		Statement stmnt;
-		RelationshipContext context = null;
+		RelationshipContext rels = null;
+		AliasContext aliases = null;
 				
 		if (itr.hasNext()) {
 			stmnt = itr.next();
-			context = analysis.getRelResultsAfter(stmnt);
+			rels = analysis.getRelResultsAfter(stmnt);
+			aliases = analysis.getPointsToResultsAfter(stmnt);
 		}
 		
 		while (itr.hasNext()) {
 			stmnt = itr.next();
 			startLine = getStartLine(stmnt);
 			endLine = getEndLine(stmnt);
-			cache.addResult(startLine, endLine, context);
-			context = analysis.getRelResultsAfter(stmnt);
+			cache.addResult(startLine, endLine, new Pair<AliasContext, RelationshipContext>(aliases, rels));
+			rels = analysis.getRelResultsAfter(stmnt);
+			aliases = analysis.getPointsToResultsAfter(stmnt);
 		}
 		return true;
 	}

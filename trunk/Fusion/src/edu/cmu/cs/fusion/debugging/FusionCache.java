@@ -5,6 +5,8 @@ import java.util.TreeMap;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 
+import edu.cmu.cs.crystal.util.Pair;
+import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 public class FusionCache {
@@ -13,10 +15,10 @@ public class FusionCache {
 	
 	private ICompilationUnit compUnit;
 	
-	private SortedMap<Integer, RelationshipContext> cache = new TreeMap<Integer, RelationshipContext>();
+	private SortedMap<Integer, Pair<AliasContext, RelationshipContext>> cache = new TreeMap<Integer, Pair<AliasContext, RelationshipContext>>();
 	
 	
-	public RelationshipContext getResults(ICompilationUnit unit, int lineNum) {
+	public Pair<AliasContext, RelationshipContext> getResults(ICompilationUnit unit, int lineNum) {
 		assert(unit.equals(compUnit));
 		return cache.get(lineNum);
 	}
@@ -26,7 +28,7 @@ public class FusionCache {
 		cache.clear();
 	}
 
-	public void addResult(int startLine, int endLine, RelationshipContext context) {
-		cache.put(startLine, context);
+	public void addResult(int startLine, int endLine, Pair<AliasContext, RelationshipContext> pair) {
+		cache.put(startLine, pair);
 	}
 }
