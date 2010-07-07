@@ -22,6 +22,13 @@
             name="FusionPragmatic">
       </analysis>
    </extension>
+   <extension
+         point="edu.cmu.cs.crystal.CrystalAnalysis">
+      <analysis
+            class="edu.cmu.cs.fusion.debugging.FusionDebuggingAnalysis"
+            name="FusionDebugger">
+      </analysis>
+   </extension>
  <extension
       id="edu.cmu.cs.fusion.fusionparseproblem"
       name="Fusion Parser Marker"
@@ -29,5 +36,18 @@
       <super type="org.eclipse.core.resources.problemmarker"/>
       <persistent value="true"/>
  </extension>
-
-</plugin>
+ <extension
+       point="org.eclipse.ui.views">
+    <category
+          id="Fusion"
+          name="Fusion Category">
+    </category>
+    <view
+          category="Fusion"
+          class="edu.cmu.cs.fusion.ui.RelationshipView"
+          icon="icons/sample.gif"
+          id="edu.cmu.cs.fusion.ui.RelationshipView"
+          name="Relationship View">
+    </view>
+ </extension>
+ </plugin>

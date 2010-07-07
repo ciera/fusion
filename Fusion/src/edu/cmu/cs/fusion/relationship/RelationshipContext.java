@@ -42,6 +42,9 @@ public class RelationshipContext implements Iterable<Relationship> {
 		falseRels = new HashSet<Relationship>(copy.falseRels);
 	}
 
+	public int getSize() {
+		return trueRels.size() + falseRels.size();
+	}
 	
 	public Iterator<Relationship> iterator() {
 		HashSet<Relationship> tAndf = new HashSet<Relationship>();
