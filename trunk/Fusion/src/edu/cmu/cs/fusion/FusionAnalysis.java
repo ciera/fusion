@@ -31,6 +31,7 @@ import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
+import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 import edu.cmu.cs.fusion.xml.XMLRetriever;
@@ -136,17 +137,17 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
-			EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-			ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, tfR.getConstraintChecker(), reporter, tac, log);
-			methodDecl.accept(errVisitor);
+			reportResults(methodDecl, tfR.getConstraintChecker());
 			
-//			StatementRelationshipVisitor printer = new StatementRelationshipVisitor(this);
-//			methodDecl.accept(printer);
-//			log.log(Level.INFO, printer.getResult());
-		
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
 		}
+	}
+
+	protected void reportResults(MethodDeclaration methodDecl, ConstraintChecker checker) {
+		EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
+		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, log);
+		methodDecl.accept(errVisitor);
 	}
 	
 
@@ -166,7 +167,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return fa.getResultsAfter(node).fst();		
 	}
 
-	public RelationshipContext geStartingResults(MethodDeclaration d) {
+	public RelationshipContext getStartingResults(MethodDeclaration d) {
 		return fa.getStartResults(d).snd();
 	}
 	

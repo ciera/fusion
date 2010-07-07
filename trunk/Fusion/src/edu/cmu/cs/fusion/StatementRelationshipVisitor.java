@@ -163,7 +163,7 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration node) {
 		buff.append(node.getName() + "{");
 		buff.append("\n");
-		buff.append(fusionAnalysis.geStartingResults(node).toString());
+		buff.append(fusionAnalysis.getStartingResults(node).toString());
 		buff.append("\n");
 		
 		if (node.getBody() != null) {
