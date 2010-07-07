@@ -1,5 +1,7 @@
 package edu.cmu.cs.fusion.ui;
 
+import java.util.Arrays;
+
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -9,7 +11,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.List;
 
+import edu.cmu.cs.crystal.tac.model.SourceVariable;
+import edu.cmu.cs.crystal.tac.model.ThisVariable;
+import edu.cmu.cs.crystal.tac.model.Variable;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.ui.RelationshipView.FusionContent;
 
@@ -44,8 +51,9 @@ public class FusionViewer extends Viewer {
 
 	@Override
 	public void refresh() {
-		String[] rels = makeIntoArr(content.getContext());
-		String[] aliases = rels;
+		Pair<AliasContext, RelationshipContext> context = content.getContext();
+		String[] rels = makeIntoRelArr(context.snd());
+		String[] aliases = makeIntoPointerArr(context.fst());
 		
 		
 		relPane.setItems(rels);
@@ -55,11 +63,27 @@ public class FusionViewer extends Viewer {
 		topControl.update();
 	}
 
+	private String[] makeIntoPointerArr(AliasContext context) {
+		if (context != null) {
+			String[] arr = new String[context.getVariables().size()];
+			int ndx = 0;
+			for (Variable var : context.getVariables()) {
+				if (var instanceof ThisVariable || var instanceof SourceVariable) {
+					arr[ndx] = var.getSourceString() + " -> " + context.getAliases(var);
+					ndx++;
+				}
+			}
+			return Arrays.copyOf(arr, ndx);
+		}
+		else
+			return new String[] {};
+	}
+
 	@Override
 	public void setSelection(ISelection selection, boolean reveal) {
 	}
 
-	private String[] makeIntoArr(RelationshipContext context) {
+	private String[] makeIntoRelArr(RelationshipContext context) {
 		
 		if (context != null) {
 			String[] arr = new String[context.getSize()];
