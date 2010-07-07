@@ -7,6 +7,9 @@ Require-Bundle: edu.cmu.cs.crystal,
  org.eclipse.core.runtime,
  org.eclipse.jdt.core,
  org.eclipse.core.resources,
- org.junit4
+ org.junit4,
+ org.eclipse.ui,
+ org.eclipse.jdt.ui;bundle-version="3.5.2",
+ org.eclipse.jface.text;bundle-version="3.5.2"
 Bundle-ClassPath: .,
  saxon9he.jar
