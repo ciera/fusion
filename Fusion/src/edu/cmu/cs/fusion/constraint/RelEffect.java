@@ -1,6 +1,6 @@
 package edu.cmu.cs.fusion.constraint;
 
-import java.util.Iterator;
+import java.util.List;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
@@ -97,18 +97,12 @@ public class RelEffect implements Effect {
 		}
 
 		//now, fill in the wildcards and get the real substitutions.
-		SubPair allSubs = env.allValidSubs(subs, getWildCards());
+		List<Substitution> allSubs = env.allValidSubs(subs, getWildCards());
 
 		//for definite wildcard subs, make an effect change according to effect
-		Iterator<Substitution> defs = allSubs.getDefiniteSubstitutions();
-		while (defs.hasNext()) 
-			makeEffectChange(defs.next(), delta, effect);
-		
-		//for possible only, must go to unknown
-		Iterator<Substitution> poss = allSubs.getPossibleSubstitutions();
-		while (poss.hasNext())
-			makeEffectChange(poss.next(), delta, FivePointLattice.UNK);
-		
+		for (Substitution sub : allSubs) 
+			makeEffectChange(sub, delta, effect);
+				
 		return delta;
 	}
 	
