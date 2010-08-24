@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsi:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema">
+
+
+    <xsi:complexType name="Constraint">
+    	<xsi:sequence>
+    		<xsi:element name="op" type="xsi:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xsi:element>
+    		<xsi:element name="trg" type="xsi:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xsi:element>
+    		<xsi:element name="req" type="xsi:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xsi:element>
+    		<xsi:element name="eff" type="xsi:string" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</xsi:element>
+    	</xsi:sequence>
+    </xsi:complexType>
+
+    <xsi:complexType name="Infer">
+    	<xsi:sequence>
+    		<xsi:element name="trg" type="xsi:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xsi:element>
+    		<xsi:element name="eff" type="xsi:string" maxOccurs="unbounded" minOccurs="1"></xsi:element>
+    	</xsi:sequence>
+    </xsi:complexType>
+
+    <xsi:complexType name="Specs">
+    	<xsi:sequence>
+    		<xsi:element name="Import" type="Import"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</xsi:element>
+    		<xsi:element name="Constraint" type="Constraint"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</xsi:element>
+    		<xsi:element name="Infer" type="Infer" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</xsi:element>
+    		<xsi:element name="XMLSchema" type="XMLSchema" maxOccurs="unbounded" minOccurs="0"></xsi:element>
+    	</xsi:sequence>
+    </xsi:complexType>
+
+    <xsi:element name="Specs"
+    	type="Specs">
+    </xsi:element>
+
+    <xsi:complexType name="Import">
+    	<xsi:attribute name="qualName" type="xsi:string"></xsi:attribute>
+    </xsi:complexType>
+
+    <xsi:complexType name="XMLSchema">
+    	<xsi:sequence>
+    		<xsi:element name="locals" type="xsi:string"></xsi:element>
+    		<xsi:element name="topElement" type="xsi:string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</xsi:element>
+    		<xsi:element name="query" type="xsi:string" maxOccurs="unbounded" minOccurs="1"></xsi:element>
+    	</xsi:sequence>
+    	<xsi:attribute name="schemaURI" type="xsi:string"></xsi:attribute>
+    </xsi:complexType>
+</xsi:schema>
