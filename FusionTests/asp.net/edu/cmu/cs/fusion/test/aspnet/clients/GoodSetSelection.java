@@ -11,7 +11,8 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 )
 public class GoodSetSelection extends Page {
 	public void goodSetSelection() {
-		DropDownList ctrl = (DropDownList) findControl("DDL");
+		DropDownList ctrl;
+		ctrl = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 
 		
 		oldSel = ctrl.getSelectedItem();
@@ -19,5 +20,6 @@ public class GoodSetSelection extends Page {
 		
 		newSel = ctrl.getItems().findByText("foo");
 		newSel.setSelected(true);
+		newSel.getText();
 	}
 }

@@ -12,7 +12,8 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 )
 public class MultiLists extends Page {
 	public void multiLists(DropDownList ctrlA) {
-		DropDownList ctrlB = (DropDownList) findControl("DDL");
+		DropDownList ctrlB;
+		ctrlB = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 
 			
 		oldSel = ctrlA.getSelectedItem();
