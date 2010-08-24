@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +17,6 @@ import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.SpecVar;
-import edu.cmu.cs.fusion.constraint.SubPair;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
@@ -93,7 +93,7 @@ public class TestAllValidSubs {
 		
 		aliases.addAlias(vars[5], labels[7]);
 	}
-	
+/*	
 	@Test
 	public void testEmptyValidLabels() {
 		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
@@ -219,6 +219,137 @@ public class TestAllValidSubs {
 		}
 
 		itr = pair.getDefiniteSubstitutions();
+		assertTrue(itr.hasNext());
+		Substitution subC = itr.next();
+		assertTrue(itr.hasNext());
+		Substitution subD = itr.next();
+		assertTrue(!itr.hasNext());		
+		
+		assertEquals(3, subC.size());
+		assertEquals(3, subD.size());
+		
+		if (subC.getSub(new SpecVar("c")).equals(labels[2]))
+			assertEquals(labels[6], subD.getSub(new SpecVar("c")));	
+		else {
+			assertEquals(labels[6], subC.getSub(new SpecVar("c")));	
+			assertEquals(labels[2], subD.getSub(new SpecVar("c")));				
+		}
+	}
+*/
+	@Test
+	public void testEmptyValidLabels() {
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
+		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
+		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
+		
+		List<Substitution> subs = env.allValidSubs(existing, fv);
+		
+		Iterator<Substitution> itr = subs.iterator();
+		assertTrue(itr.hasNext());
+		assertEquals(existing, itr.next());
+		assertTrue(!itr.hasNext());
+	}
+	
+	@Test
+	public void testFindLabelsOneOption() {
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
+		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
+		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
+		
+		fv = fv.addVar(new SpecVar("c"), "Narf");
+		
+		List<Substitution> subs = env.allValidSubs(existing, fv);
+		
+		Iterator<Substitution> itr = subs.iterator();
+		assertTrue(itr.hasNext());
+		Substitution sub = itr.next();
+		assertTrue(!itr.hasNext());		
+		
+		assertEquals(3, sub.size());
+		assertEquals(labels[0], sub.getSub(new SpecVar("a")));
+		assertEquals(labels[1], sub.getSub(new SpecVar("b")));
+		assertEquals(labels[7], sub.getSub(new SpecVar("c")));
+	}
+
+	@Test
+	public void testFindLabelsAliasesAllDefinite() {
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
+		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
+		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
+		
+		fv = fv.addVar(new SpecVar("c"), "Foo");
+		
+		List<Substitution> subs = env.allValidSubs(existing, fv);
+		
+		Iterator<Substitution> itr = subs.iterator();
+		assertTrue(itr.hasNext());
+		Substitution subA = itr.next();
+		assertTrue(itr.hasNext());
+		Substitution subB = itr.next();
+		assertTrue(itr.hasNext());		
+		Substitution subC = itr.next();
+		assertTrue(!itr.hasNext());		
+		
+		assertEquals(3, subA.size());
+		assertEquals(3, subB.size());
+		assertEquals(3, subC.size());
+		
+		if (subA.getSub(new SpecVar("c")).equals(labels[0])) {
+			if (subB.getSub(new SpecVar("c")).equals(labels[3])) {
+				assertEquals(labels[4], subC.getSub(new SpecVar("c")));	
+			}
+			else {
+				assertEquals(labels[4], subB.getSub(new SpecVar("c")));	
+				assertEquals(labels[3], subC.getSub(new SpecVar("c")));				
+			}
+		}
+		else if (subA.getSub(new SpecVar("c")).equals(labels[3])) {
+			if (subB.getSub(new SpecVar("c")).equals(labels[0])) {
+				assertEquals(labels[4], subC.getSub(new SpecVar("c")));	
+			}
+			else {
+				assertEquals(labels[4], subB.getSub(new SpecVar("c")));	
+				assertEquals(labels[0], subC.getSub(new SpecVar("c")));				
+			}
+		}
+		else {
+			assertEquals(labels[4], subA.getSub(new SpecVar("c")));	
+			if (subB.getSub(new SpecVar("c")).equals(labels[0])) {
+				assertEquals(labels[3], subC.getSub(new SpecVar("c")));	
+			}
+			else {
+				assertEquals(labels[3], subB.getSub(new SpecVar("c")));	
+				assertEquals(labels[0], subC.getSub(new SpecVar("c")));				
+			}
+		}
+	}
+	
+	@Test
+	public void testFindLabelsPossibleFromSuperTypes() {
+		FusionEnvironment env = new FusionEnvironment(aliases, null, null, testH, new InferenceEnvironment(), Variant.PRAGMATIC_VARIANT);
+		FreeVars fv = new FreeVars().addVar(new SpecVar("a"), "Foo").addVar(new SpecVar("b"), "Bar");
+		Substitution existing = new Substitution().addSub(new SpecVar("a"), labels[0]).addSub(new SpecVar("b"), labels[1]);
+		
+		fv = fv.addVar(new SpecVar("c"), "Baz");
+		
+		List<Substitution> subs = env.allValidSubs(existing, fv);
+		
+		Iterator<Substitution> itr = subs.iterator();
+		assertTrue(itr.hasNext());
+		Substitution subA = itr.next();
+		assertTrue(itr.hasNext());
+		Substitution subB = itr.next();
+
+		assertEquals(3, subA.size());
+		assertEquals(3, subB.size());
+		
+		if (subA.getSub(new SpecVar("c")).equals(labels[1]))
+				assertEquals(labels[5], subB.getSub(new SpecVar("c")));	
+		else {
+			assertEquals(labels[5], subA.getSub(new SpecVar("c")));	
+			assertEquals(labels[1], subB.getSub(new SpecVar("c")));				
+		}
+
 		assertTrue(itr.hasNext());
 		Substitution subC = itr.next();
 		assertTrue(itr.hasNext());
