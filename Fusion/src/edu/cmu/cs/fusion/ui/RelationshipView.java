@@ -37,19 +37,14 @@ public class RelationshipView extends ViewPart {
 
 
 	class FusionContent implements ISelectionListener {
-//		Object[] rels = {};
 		String topType;
 		int oldStart = -1;
-		Pair<AliasContext, RelationshipContext> context;
+		Pair<? extends AliasContext, RelationshipContext> context;
 		
 		public FusionContent() {
 		}
 		
-//		public Object[] getElements(Object parent) {
-//			return rels;
-//		}
-		
-		public Pair<AliasContext, RelationshipContext> getContext() {
+		public Pair<? extends AliasContext, RelationshipContext> getContext() {
 			return context;
 		}
 		
@@ -74,7 +69,6 @@ public class RelationshipView extends ViewPart {
 					}
 					FusionCache cache = FusionCache.getCache();
 					context = cache.getResults((ICompilationUnit)root, oldStart);
-//					rels = makeIntoArr(context);
 					RelationshipView.this.viewer.refresh();
 				}
 			}
@@ -92,14 +86,7 @@ public class RelationshipView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 		content = new FusionContent();
-//		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer = new FusionViewer(parent);
-		
-//		viewer.setContentProvider(content);
-//		viewer.setLabelProvider(new ViewLabelProvider());
-//		viewer.setSorter(new ViewerSorter());
-//		viewer.setInput(getViewSite());
-
 		viewer.setInput(content);
 		
 		this.getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(content);
