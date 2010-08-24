@@ -15,7 +15,8 @@ public class GoodLoginView extends Page {
 		LoginView myView = (LoginView) findControl("LoginScreen");
 		if (this.getRequest().isAuthenticated()) {
 			DropDownList list = (DropDownList) myView.findControl("LoggedInDDL");
-			list.getSelectedItem();
+			ListItem item = list.getSelectedItem();
+			item.getText();
 		}
 	}
 }

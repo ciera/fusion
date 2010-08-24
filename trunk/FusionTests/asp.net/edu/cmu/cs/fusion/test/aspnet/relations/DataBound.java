@@ -6,12 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import edu.cmu.cs.fusion.annot.Relation;
-import edu.cmu.cs.fusion.test.aspnet.api.DropDownList;
+import edu.cmu.cs.fusion.test.aspnet.api.Control;
+import edu.cmu.cs.fusion.test.aspnet.api.ListControl;
 
-@Relation({DropDownList.class})
+@Relation({ListControl.class})
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
-public @interface SelChanged {
+public @interface DataBound {
 	public String[] value();
 	public Relation.Effect effect() default Relation.Effect.ADD;
 	public String test() default "";
