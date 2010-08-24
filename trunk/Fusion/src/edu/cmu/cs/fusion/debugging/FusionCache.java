@@ -15,10 +15,10 @@ public class FusionCache {
 	
 	private ICompilationUnit compUnit;
 	
-	private SortedMap<Integer, Pair<AliasContext, RelationshipContext>> cache = new TreeMap<Integer, Pair<AliasContext, RelationshipContext>>();
+	private SortedMap<Integer, Pair<? extends AliasContext, RelationshipContext>> cache = new TreeMap<Integer, Pair<? extends AliasContext, RelationshipContext>>();
 	
 	
-	public Pair<AliasContext, RelationshipContext> getResults(ICompilationUnit unit, int lineNum) {
+	public Pair<? extends AliasContext, RelationshipContext> getResults(ICompilationUnit unit, int lineNum) {
 		assert(unit.equals(compUnit));
 		return cache.get(lineNum);
 	}
@@ -28,7 +28,7 @@ public class FusionCache {
 		cache.clear();
 	}
 
-	public void addResult(int startLine, int endLine, Pair<AliasContext, RelationshipContext> pair) {
+	public void addResult(int startLine, int endLine, Pair<? extends AliasContext, RelationshipContext> pair) {
 		cache.put(startLine, pair);
 	}
 }

@@ -44,22 +44,19 @@ public class DebuggingCacheVisitor extends ASTVisitor {
 		Iterator<Statement> itr = (Iterator<Statement>) node.statements().iterator();
 		int startLine, endLine;
 		Statement stmnt;
-		RelationshipContext rels = null;
-		AliasContext aliases = null;
+		Pair<? extends AliasContext, RelationshipContext> pair = null;
 				
 		if (itr.hasNext()) {
 			stmnt = itr.next();
-			rels = analysis.getRelResultsAfter(stmnt);
-			aliases = analysis.getPointsToResultsAfter(stmnt);
+			pair = analysis.getResultsAfter(stmnt);
 		}
 		
 		while (itr.hasNext()) {
 			stmnt = itr.next();
 			startLine = getStartLine(stmnt);
 			endLine = getEndLine(stmnt);
-			cache.addResult(startLine, endLine, new Pair<AliasContext, RelationshipContext>(aliases, rels));
-			rels = analysis.getRelResultsAfter(stmnt);
-			aliases = analysis.getPointsToResultsAfter(stmnt);
+			cache.addResult(startLine, endLine, pair);
+			pair = analysis.getResultsAfter(stmnt);
 		}
 		return true;
 	}
