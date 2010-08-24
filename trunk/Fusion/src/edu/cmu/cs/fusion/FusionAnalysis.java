@@ -131,14 +131,13 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			RelationshipTransferFunction<MayPointsToAliasContext> tfR = new RelationshipTransferFunction<MayPointsToAliasContext>(this, constraints, infers, types, retriever, aliasTF, ops);
 			fa = new TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
-			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
 
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
 			reportResults(methodDecl, tfR.getConstraintChecker());
-			
+		
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
 		}
@@ -149,7 +148,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, log);
 		methodDecl.accept(errVisitor);
 	}
-	
 
 	public TypeHierarchy getHierarchy() {
 		return types;
@@ -175,6 +173,10 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return fa.getResultsBefore(node).snd();
 	}
 	
+	public Pair<? extends AliasContext, RelationshipContext> getResultsAfter(ASTNode node) {
+		return fa.getResultsAfter(node);
+	}
+
 	public RelationshipContext getRelResultsAfter(ASTNode node) {
 		return fa.getResultsAfter(node).snd();		
 	}

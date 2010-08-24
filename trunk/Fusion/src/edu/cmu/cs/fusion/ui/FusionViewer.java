@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.ui;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -17,6 +18,7 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.ui.RelationshipView.FusionContent;
 
@@ -26,17 +28,21 @@ public class FusionViewer extends Viewer {
 	private SashForm topControl;
 	private List relPane;
 	private List aliasPane;
+	private List objPane;
 	private FusionContent content;
 	
 	public FusionViewer(Composite parent) {
 		topControl = new SashForm(parent, SWT.HORIZONTAL);
-
 		topControl.setLayout(new FillLayout());
 
 		relPane = new List(topControl, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
-		aliasPane = new List(topControl, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
+		SashForm rightPane = new SashForm(topControl, SWT.VERTICAL);
+		rightPane.setLayout(new FillLayout());
+		aliasPane = new List(rightPane, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
+		objPane = new List(rightPane, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
 		
 		topControl.setWeights(new int[] {50, 50});
+		rightPane.setWeights(new int[] {50, 50});
 	}
 
 	@Override
@@ -51,16 +57,33 @@ public class FusionViewer extends Viewer {
 
 	@Override
 	public void refresh() {
-		Pair<AliasContext, RelationshipContext> context = content.getContext();
+		Pair<? extends AliasContext, RelationshipContext> context = content.getContext();
 		String[] rels = makeIntoRelArr(context.snd());
 		String[] aliases = makeIntoPointerArr(context.fst());
-		
+		String[] labels = makeIntoObjLabelArr(context.fst());
 		
 		relPane.setItems(rels);
+		objPane.setItems(labels);
 		aliasPane.setItems(aliases);
 		relPane.redraw();
 		aliasPane.redraw();
+		objPane.redraw();
 		topControl.update();
+	}
+
+	private String[] makeIntoObjLabelArr(AliasContext context) {
+		if (context != null) {
+			Set<ObjectLabel> labels = context.getAllAliases();
+			String[] arr = new String[labels.size()];
+			int ndx = 0;
+			for (ObjectLabel lab : labels) {
+				arr[ndx] = lab.toString() + " : " + lab.getType().getQualifiedName();
+				ndx++;
+			}
+			return arr;
+		}
+		else
+			return new String[] {};
 	}
 
 	private String[] makeIntoPointerArr(AliasContext context) {
