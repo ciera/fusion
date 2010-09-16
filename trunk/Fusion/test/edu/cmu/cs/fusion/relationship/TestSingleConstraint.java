@@ -168,8 +168,8 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
 		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eff2));
+		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eff2));
 		
 		assertEquals(expected, deltas.snd());
 
@@ -205,8 +205,8 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
 		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eff2));
+		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eff2));
 		
 		assertEquals(expected, deltas.snd());
 		
@@ -240,8 +240,8 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
 		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(FivePointLattice.TRU, deltas.fst().getValue(eff2));
+		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eff2));
 		assertEquals(expected, deltas.snd());
 	
 		assertNull(error);			
@@ -277,9 +277,9 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[4], labels[5]});
 
 		assertEquals(3, deltas.fst().numberOfChanges());
-		assertEquals(FivePointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff2));
-		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff3));
+		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff2));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff3));
 		assertEquals(expected, deltas.snd());
 
 		assertNull(error);			
@@ -316,10 +316,10 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Relationship eff4 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
 		assertEquals(4, deltas.fst().numberOfChanges());
-		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eff1));
-		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff2));
-		assertEquals(FivePointLattice.FAL_STAR, deltas.fst().getValue(eff3));
-		assertEquals(FivePointLattice.TRU_STAR, deltas.fst().getValue(eff4));
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eff1));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff2));
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eff3));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff4));
 		assertEquals(expected, deltas.snd());
 
 		assertNull(error);			
