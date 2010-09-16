@@ -161,7 +161,7 @@ public class RelationshipContext implements Iterable<Relationship> {
 		RelationshipContext changed = new RelationshipContext(this);
 		changed.isBottom = isBottom && delta.numberOfChanges() == 0;
 		
-		for (Entry<Relationship, FivePointLattice> entry : delta) {
+		for (Entry<Relationship, SevenPointLattice> entry : delta) {
 			Relationship rel = entry.getKey();
 			changed.setRelationship(rel, entry.getValue().override(getRelationship(rel)));
 		}

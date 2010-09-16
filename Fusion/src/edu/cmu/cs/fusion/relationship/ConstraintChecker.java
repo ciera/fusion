@@ -50,7 +50,7 @@ public class ConstraintChecker {
 			aliasDeltas.add(deltas.snd());
 		}
 		
-		RelationshipDelta relDelta = RelationshipDelta.joinAlt(relDeltas);
+		RelationshipDelta relDelta = !relDeltas.isEmpty() ? RelationshipDelta.joinAlt(relDeltas) : new RelationshipDelta();
 		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);
 		
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
@@ -134,9 +134,9 @@ public class ConstraintChecker {
 		
 		RelationshipDelta relDelta;
 		
-//		if (variant.isPragmatic() || variant.isComplete())
-//			relDelta = RelationshipDelta.joinAlt(relDeltas);
-//		else
+		if (relDeltas.isEmpty())
+			relDelta = RelationshipDelta.getTrueBottom();
+		else
 			relDelta = RelationshipDelta.join(relDeltas);
 		AliasDelta specDelta = AliasDelta.join(specDeltas);
 		
@@ -157,7 +157,7 @@ public class ConstraintChecker {
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 		
 		if (trigger == ThreeValue.FALSE) {
-			return new Pair<RelationshipDelta, SpecDelta>(new RelationshipDelta(), SpecDelta.createBottomSpecDelta(partialSubs));
+			return new Pair<RelationshipDelta, SpecDelta>(RelationshipDelta.getTrueBottom(), SpecDelta.createBottomSpecDelta(partialSubs));
 		}
 		else  {
 			RelationshipDelta delta = new RelationshipDelta();
@@ -166,19 +166,15 @@ public class ConstraintChecker {
 			//now make the effects
 			for (Effect effect : cons.getEffects())
 				delta.override(effect.makeEffects(env, partialSubs));
-			
-			if (trigger == ThreeValue.TRUE) {
-				specs = SpecDelta.createSubstitutionSpecDelta(partialSubs);
-			}
-			else {
+
+			if (trigger == ThreeValue.UNKNOWN)
 				delta = delta.polarize();
 			
-				if (variant.isSound())
-					specs = SpecDelta.createTopSpecDelta(partialSubs);
-				else
-					specs = SpecDelta.createBottomSpecDelta(partialSubs);
-			}
-			
+			if (trigger == ThreeValue.UNKNOWN && variant.isPragmatic())
+				specs = SpecDelta.createBottomSpecDelta(partialSubs);
+			else
+				specs = SpecDelta.createSubstitutionSpecDelta(partialSubs);
+						
 			return new Pair<RelationshipDelta, SpecDelta>(delta, specs);
 		}
 	}

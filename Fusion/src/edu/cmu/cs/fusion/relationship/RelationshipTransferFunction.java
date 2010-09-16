@@ -103,18 +103,23 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 		AC aliases = aliasTF.createEntryValue(method);
 		RelationshipContext startingContext = retriever.getStartContext();	
 		
-		Variable thisVar = this.getAnalysisContext().getThisVariable();
-		List<Variable> params = new ArrayList<Variable>();
-		Iterator<SingleVariableDeclaration> itr = method.parameters().iterator();
-		while (itr.hasNext()) {
-			params.add(getAnalysisContext().getSourceVariable(itr.next().resolveBinding()));
+		if (method.getBody() != null) {
+			Variable thisVar = this.getAnalysisContext().getThisVariable();
+			List<Variable> params = new ArrayList<Variable>();
+			Iterator<SingleVariableDeclaration> itr = method.parameters().iterator();
+			while (itr.hasNext()) {
+				params.add(getAnalysisContext().getSourceVariable(itr.next().resolveBinding()));
+			}		
+			EntryInstruction entry = new EntryInstruction(thisVar, params, method.resolveBinding());
+			
+			BooleanContext bContext = new BooleanConstantWrapper(method.getBody(), mainAnalysis.getBooleanAnalysis(), aliases);
+			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aliases, startingContext, bContext, types, infers, mainAnalysis.getVariant());
+			
+			return checker.runGenericTransfer(env, entry);
 		}
-		
-		EntryInstruction entry = new EntryInstruction(thisVar, params, method.resolveBinding());
-		BooleanContext bContext = new BooleanConstantWrapper(method.getBody(), mainAnalysis.getBooleanAnalysis(), aliases);
-		FusionEnvironment<AC> env = new FusionEnvironment<AC>(aliases, startingContext, bContext, types, infers, mainAnalysis.getVariant());
-
-		return checker.runGenericTransfer(env, entry);
+		else {
+			return new Pair<AC, RelationshipContext>(aliases, startingContext);
+		}
 	}
 	
 	private Method createTACMethod(MethodDeclaration decl) {
