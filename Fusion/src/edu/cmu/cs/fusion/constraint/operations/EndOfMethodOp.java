@@ -33,8 +33,8 @@ public class EndOfMethodOp implements Operation {
 	public FreeVars getFreeVariables() {
 		FreeVars fv = new FreeVars();
 	
-		if (thisType != null)
-			fv = fv.addVar(Constraint.RECEIVER, thisType);
+		fv = fv.addVar(Constraint.RECEIVER, thisType != null ? thisType : FreeVars.OBJECT_TYPE);
+		
 		if (resType != null)
 			fv = fv.addVar(Constraint.RESULT, resType);
 		
@@ -79,7 +79,7 @@ public class EndOfMethodOp implements Operation {
 			}
 		}
 
-		if (invoke.getReturnedVariable() != null)
+		if (invoke.getReturnedVariable() != null && resType != null)
 			vars = ConsList.cons(new Binding(Constraint.RESULT, invoke.getReturnedVariable()), vars);
 		
 		return ConsList.cons(new Binding(Constraint.RECEIVER, method.getThisVar()), vars);

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -339,32 +340,27 @@ public class TestAllValidSubs {
 		Substitution subA = itr.next();
 		assertTrue(itr.hasNext());
 		Substitution subB = itr.next();
-
-		assertEquals(3, subA.size());
-		assertEquals(3, subB.size());
-		
-		if (subA.getSub(new SpecVar("c")).equals(labels[1]))
-				assertEquals(labels[5], subB.getSub(new SpecVar("c")));	
-		else {
-			assertEquals(labels[5], subA.getSub(new SpecVar("c")));	
-			assertEquals(labels[1], subB.getSub(new SpecVar("c")));				
-		}
-
 		assertTrue(itr.hasNext());
 		Substitution subC = itr.next();
 		assertTrue(itr.hasNext());
 		Substitution subD = itr.next();
-		assertTrue(!itr.hasNext());		
+		assertTrue(!itr.hasNext());	
 		
+		assertEquals(3, subA.size());
+		assertEquals(3, subB.size());
 		assertEquals(3, subC.size());
 		assertEquals(3, subD.size());
 		
-		if (subC.getSub(new SpecVar("c")).equals(labels[2]))
-			assertEquals(labels[6], subD.getSub(new SpecVar("c")));	
-		else {
-			assertEquals(labels[6], subC.getSub(new SpecVar("c")));	
-			assertEquals(labels[2], subD.getSub(new SpecVar("c")));				
-		}
+		List<ObjectLabel> possible = new LinkedList<ObjectLabel>();
+		possible.add(subA.getSub(new SpecVar("c")));
+		possible.add(subB.getSub(new SpecVar("c")));
+		possible.add(subC.getSub(new SpecVar("c")));
+		possible.add(subD.getSub(new SpecVar("c")));
+		
+		assertTrue(possible.contains(labels[1]));
+		assertTrue(possible.contains(labels[2]));
+		assertTrue(possible.contains(labels[5]));
+		assertTrue(possible.contains(labels[6]));
 	}
 
 }

@@ -18,6 +18,7 @@ import edu.cmu.cs.crystal.IAnalysisReporter;
 import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
+import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
@@ -55,10 +56,9 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	@Override
 	public void endVisit(MethodDeclaration node) {
 		TACInstruction instr = new DefaultReturnInstruction();
-		AliasContext aliases = fa.getPointsToResultsAfter(node.getBody());
-		RelationshipContext rels = fa.getRelResultsAfter(node.getBody());
-		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), aliases);
-		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+		Pair<? extends AliasContext, RelationshipContext> res = fa.getEndingResults(node);
+		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), res.fst());
+		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(res.fst(), res.snd() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
