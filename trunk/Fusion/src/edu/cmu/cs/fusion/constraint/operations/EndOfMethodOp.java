@@ -79,12 +79,9 @@ public class EndOfMethodOp implements Operation {
 			}
 		}
 
-		if (invoke.getReturnedVariable() != null && resType != null)
+		if (invoke.getReturnedVariable() != null)
 			vars = ConsList.cons(new Binding(Constraint.RESULT, invoke.getReturnedVariable()), vars);
 		
-		if (thisType != null)
-			vars = ConsList.cons(new Binding(Constraint.RECEIVER, method.getThisVar()), vars);
-		
-		return vars;
+		return ConsList.cons(new Binding(Constraint.RECEIVER, method.getThisVar()), vars);
 	}
 }
