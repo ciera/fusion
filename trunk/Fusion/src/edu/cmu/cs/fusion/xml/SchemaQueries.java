@@ -28,8 +28,8 @@ import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.annot.Relation.Effect;
 import edu.cmu.cs.fusion.constraint.XMLContext;
-import edu.cmu.cs.fusion.relationship.FivePointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 
 /**
  * This class holds the XQuery from a particular schema. Given a file of that schema, and a type hierarchy,
@@ -94,13 +94,13 @@ public class SchemaQueries {
 			}
 			
 		} catch (XQException e) {
-			e.printStackTrace();
+			throw new FusionTypeCheckException(e);
 		} catch (JavaModelException e) {
-			e.printStackTrace();
+			throw new FusionTypeCheckException(e);
 		} catch (XPathException e) {
-			e.printStackTrace();
+			throw new FusionTypeCheckException(e);
 		}
-		return RelationshipDelta.joinAlt(deltas);		
+		return !deltas.isEmpty() ? RelationshipDelta.joinAlt(deltas) : new RelationshipDelta();
 	}
 	
 	/**
@@ -109,8 +109,9 @@ public class SchemaQueries {
 	 * to create this SchemaQueries object
 	 * @param types A type hierarchy to use for subtyping checks.
 	 * @return A list of ObjectLabels, which will have an associated type.
+	 * @throws FusionTypeCheckException 
 	 */
-	public List<ObjectLabel> findTopObjects(File file, TypeHierarchy types) {
+	public List<ObjectLabel> findTopObjects(File file, TypeHierarchy types) throws FusionTypeCheckException {
 		try {
 			SaxonXQDataSource data = new SaxonXQDataSource();
 			Configuration config = data.getConfiguration();
@@ -126,11 +127,10 @@ public class SchemaQueries {
 			XQResultSequence queryResult = exp.executeQuery();
 			return processBindingResults(queryResult);
 		} catch (XQException e) {
-			e.printStackTrace();
+			throw new FusionTypeCheckException(e);
 		} catch (XPathException e) {
-			e.printStackTrace();
-		}
-		return new LinkedList<ObjectLabel>();		
+			throw new FusionTypeCheckException(e);
+		}	
 	}
 
 
@@ -167,7 +167,7 @@ public class SchemaQueries {
 			ObjectLabel[] labArr = getLabels(relElement, relType, types);
 			Relationship rel = new Relationship(relType, labArr);
 			
-			delta.setRelationship(rel, effect == Effect.ADD ? FivePointLattice.TRU : FivePointLattice.FAL);
+			delta.setRelationship(rel, effect == Effect.ADD ? SevenPointLattice.TRU : SevenPointLattice.FAL);
 		}
 		return delta;
 	}

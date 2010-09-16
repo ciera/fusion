@@ -34,7 +34,7 @@ import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.XMLContext;
-import edu.cmu.cs.fusion.relationship.FivePointLattice;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
@@ -109,7 +109,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		
 		allLabels.addAll(topLabels);
 		
-		for (Entry<Relationship, FivePointLattice> entry : delta) {
+		for (Entry<Relationship, SevenPointLattice> entry : delta) {
 			Relationship rel = entry.getKey();
 			int size = rel.getRelation().getFullyQualifiedTypes().length;
 			for (int ndx = 0; ndx < size; ndx++)

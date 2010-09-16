@@ -6,7 +6,7 @@ import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
-import edu.cmu.cs.fusion.relationship.FivePointLattice;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
 /**
@@ -88,12 +88,12 @@ public class RelEffect implements Effect {
 	public RelationshipDelta makeEffects(FusionEnvironment env,
 			Substitution subs) {
 		RelationshipDelta delta = new RelationshipDelta();
-		FivePointLattice effect = FivePointLattice.TRU;
+		SevenPointLattice effect = SevenPointLattice.TRU;
 		
 		//determine the effect for the test case. This variable cannot be wildcarded, so safe to acccess here.
 		if (test != null) {
 			ObjectLabel testLabel = subs.getSub(test);
-			effect = FivePointLattice.convert(env.getBooleanValue(testLabel));
+			effect = SevenPointLattice.convert(env.getBooleanValue(testLabel));
 		}
 
 		//now, fill in the wildcards and get the real substitutions.
@@ -106,7 +106,7 @@ public class RelEffect implements Effect {
 		return delta;
 	}
 	
-	private void makeEffectChange(Substitution subs, RelationshipDelta delta, FivePointLattice effect) {
+	private void makeEffectChange(Substitution subs, RelationshipDelta delta, SevenPointLattice effect) {
 		ObjectLabel[] labels = new ObjectLabel[vars.length];
 		Relationship rel;
 
@@ -118,10 +118,10 @@ public class RelEffect implements Effect {
 		
 		
 		if (negate) {
-			if (effect == FivePointLattice.TRU)
-				effect = FivePointLattice.FAL;
-			else if (effect == FivePointLattice.FAL)
-				effect = FivePointLattice.TRU;
+			if (effect == SevenPointLattice.TRU)
+				effect = SevenPointLattice.FAL;
+			else if (effect == SevenPointLattice.FAL)
+				effect = SevenPointLattice.TRU;
 		}
 		
 		delta.setRelationship(rel, effect);

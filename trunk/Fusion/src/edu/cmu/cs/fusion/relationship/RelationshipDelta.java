@@ -19,14 +19,24 @@ import edu.cmu.cs.fusion.ThreeValue;
  * @author ciera
  *
  */
-public class RelationshipDelta implements Iterable<Entry<Relationship, FivePointLattice>> {
-	private Map<Relationship, FivePointLattice> rels;
+public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPointLattice>> {
+	private Map<Relationship, SevenPointLattice> rels;
+	
+	static private RelationshipDelta FULL_BOT = new RelationshipDelta(true);
+	
+	static public RelationshipDelta getTrueBottom() {return FULL_BOT;}
 	
 	/**
 	 * Creates a new delta where everything maps to bottom.
 	 */
+	private RelationshipDelta(boolean isBot) {
+	}
+
+	/**
+	 * Creates a new delta where everything maps to star.
+	 */
 	public RelationshipDelta() {
-		rels = new HashMap<Relationship, FivePointLattice>();
+		rels = new HashMap<Relationship, SevenPointLattice>();
 	}
 
 	/**
@@ -34,57 +44,97 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 	 * @return Number of relationship changes. Does not count alias updates!
 	 */
 	public int numberOfChanges() {
+		if (this == FULL_BOT)
+			return 0;
 		return rels.size();
 	}
 	
-	public FivePointLattice getValue(Relationship rel) {
-		FivePointLattice val = rels.get(rel);
+	public SevenPointLattice getValue(Relationship rel) {
+		if (this == FULL_BOT)
+			return SevenPointLattice.BOT;
+		SevenPointLattice val = rels.get(rel);
 		if (val == null)
-			return FivePointLattice.STAR;
+			return SevenPointLattice.STAR;
 		else
 			return val;
 	}
 
-	public void setRelationship(Relationship rel, FivePointLattice fp) {
+	public void setRelationship(Relationship rel, SevenPointLattice fp) {
 		rels.put(rel, fp);
 	}
 
 	public RelationshipDelta polarize() {
+		if (this == FULL_BOT)
+			return this;
 		RelationshipDelta polar = new RelationshipDelta();
 		
-		for (Entry<Relationship, FivePointLattice> entry : rels.entrySet())
+		for (Entry<Relationship, SevenPointLattice> entry : rels.entrySet())
 			polar.setRelationship(entry.getKey(), entry.getValue().polarize());
 		return polar;
 	}
 
 	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
-		RelationshipDelta joined = new RelationshipDelta();
+		RelationshipDelta joined = new RelationshipDelta();;
+		boolean hasChanges;
 		
-		if (deltas.isEmpty())
-			return joined;
+		assert(!deltas.isEmpty());
 		
-		joined.rels = new HashMap<Relationship, FivePointLattice>(itr.next().rels);
+		RelationshipDelta first = itr.next();
+		
+		hasChanges = first != FULL_BOT;
+		if (first != FULL_BOT) {
+			joined.rels = new HashMap<Relationship, SevenPointLattice>(first.rels);
+		}
 		
 		while (itr.hasNext()) {
-			joined.join(itr.next());
+			RelationshipDelta next = itr.next();
+			if (next != FULL_BOT) {
+				joined.join(next);
+				hasChanges = true;
+			}
 		}
-		return joined;
+		return hasChanges ? joined : FULL_BOT;
 	}
+	
+	/**
+	 * This and other cannot be a full bot
+	 * @param other
+	 */
+	private void join(RelationshipDelta other) {
+		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
+		combinedRels.addAll(other.rels.keySet());
+		
+		for (Relationship rel : combinedRels) {
+			SevenPointLattice myVal = getValue(rel);
+			SevenPointLattice otherVal = other.getValue(rel);
+			rels.put(rel, myVal.join(otherVal));
+		}
+	}
+
 		
 	static public RelationshipDelta joinAlt(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
-		RelationshipDelta joined = new RelationshipDelta();
+		RelationshipDelta joined = new RelationshipDelta();;
+		boolean hasChanges;
 		
-		if (deltas.isEmpty())
-			return joined;
+		assert(!deltas.isEmpty());
 		
-		joined.rels = new HashMap<Relationship, FivePointLattice>(itr.next().rels);
+		RelationshipDelta first = itr.next();
+		
+		hasChanges = first != FULL_BOT;
+		if (first != FULL_BOT) {
+			joined.rels = new HashMap<Relationship, SevenPointLattice>(first.rels);
+		}
 		
 		while (itr.hasNext()) {
-			joined.joinAlt(itr.next());
+			RelationshipDelta next = itr.next();
+			if (next != FULL_BOT) {
+				joined.joinAlt(next);
+				hasChanges = true;
+			}
 		}
-		return joined;
+		return hasChanges ? joined : FULL_BOT;
 	}
 
 	private void joinAlt(RelationshipDelta other) {
@@ -92,34 +142,46 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 		combinedRels.addAll(other.rels.keySet());
 		
 		for (Relationship rel : combinedRels) {
-			FivePointLattice myVal = getValue(rel);
-			FivePointLattice otherVal = other.getValue(rel);
+			SevenPointLattice myVal = getValue(rel);
+			SevenPointLattice otherVal = other.getValue(rel);
 			rels.put(rel, myVal.joinAlt(otherVal));
 		}
 	}
-	
-	private void join(RelationshipDelta other) {
-		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
-		combinedRels.addAll(other.rels.keySet());
-		
-		for (Relationship rel : combinedRels) {
-			FivePointLattice myVal = getValue(rel);
-			FivePointLattice otherVal = other.getValue(rel);
-			rels.put(rel, myVal.join(otherVal));
-		}
-	}
 
+	/*
+	 * Can't call this on the bottom delta
+	 */
 	public void override(RelationshipDelta makeEffects) {
 		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
 		combinedRels.addAll(makeEffects.rels.keySet());
 		
 		for (Relationship rel : combinedRels) {
-			FivePointLattice myVal = getValue(rel);
-			FivePointLattice otherVal = makeEffects.getValue(rel);
+			SevenPointLattice myVal = getValue(rel);
+			SevenPointLattice otherVal = makeEffects.getValue(rel);
 			rels.put(rel, myVal.override(otherVal));
 		}
 	}
 
+	/*
+	 * Can't call this on the bottom delta
+	 */
+	public boolean isStrictlyMorePrecise(RelationshipContext context) {
+		boolean strictlyMore = false;
+		if (rels.isEmpty())
+			return false;
+		for (Entry<Relationship, SevenPointLattice> entry : rels.entrySet()) {
+			ThreeValue contextVal = context.getRelationship(entry.getKey());
+			//all most be more precise or equal to
+			if (!entry.getValue().isAtLeastAsPrecise(contextVal))
+				return false;
+			//and one must be more precise
+			if (contextVal == ThreeValue.UNKNOWN && (entry.getValue() == SevenPointLattice.TRU || entry.getValue() == SevenPointLattice.FAL))
+				strictlyMore = true;
+		}
+		
+		return strictlyMore;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,7 +212,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 	public String toString() {
 		String str = "<";
 		
-		for (Entry<Relationship, FivePointLattice> entry : rels.entrySet()) {
+		for (Entry<Relationship, SevenPointLattice> entry : rels.entrySet()) {
 			str += entry.getKey() + "->" + entry.getValue() + ", ";
 		}
 
@@ -159,24 +221,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, FivePoint
 		return str;
 	}
 
-	public Iterator<Entry<Relationship, FivePointLattice>> iterator() {
+	public Iterator<Entry<Relationship, SevenPointLattice>> iterator() {
 		return rels.entrySet().iterator();
-	}
-
-	public boolean isStrictlyMorePrecise(RelationshipContext context) {
-		boolean strictlyMore = false;
-		if (rels.isEmpty())
-			return false;
-		for (Entry<Relationship, FivePointLattice> entry : rels.entrySet()) {
-			ThreeValue contextVal = context.getRelationship(entry.getKey());
-			//all most be more precise or equal to
-			if (!entry.getValue().isAtLeastAsPrecise(contextVal))
-				return false;
-			//and one must be more precise
-			if (contextVal == ThreeValue.UNKNOWN && (entry.getValue() == FivePointLattice.TRU || entry.getValue() == FivePointLattice.FAL))
-				strictlyMore = true;
-		}
-		
-		return strictlyMore;
 	}
 }

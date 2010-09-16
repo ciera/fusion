@@ -8,15 +8,15 @@ import edu.cmu.cs.fusion.ThreeValue;
  * @author ciera
  *
  */
-public enum FivePointLattice {
-	TRU, FAL, UNK, TRU_STAR, FAL_STAR, STAR;
+public enum SevenPointLattice {
+	TRU, FAL, UNK, TRU_STAR, FAL_STAR, STAR, BOT;
 	
 	/**
 	 * This is a polarizing operation. TRU goes to TRU_STAR, and FAL goes to FAL_STAR.
 	 * All other enums return themselves.
 	 * @return
 	 */
-	public FivePointLattice polarize() {
+	public SevenPointLattice polarize() {
 		if (this == TRU)
 			return TRU_STAR;
 		else if (this == FAL)
@@ -30,8 +30,12 @@ public enum FivePointLattice {
 	 * @param other
 	 * @return
 	 */
-	public FivePointLattice join(FivePointLattice other) {
-		if (this == UNK || other == UNK)
+	public SevenPointLattice join(SevenPointLattice other) {
+		if (this == BOT)
+			return other;
+		else if (other == BOT)
+			return this;
+		else if (this == UNK || other == UNK)
 			return UNK;
 		else if (this == other)
 			return this;
@@ -53,8 +57,12 @@ public enum FivePointLattice {
 	 * @param other
 	 * @return
 	 */
-	public FivePointLattice joinAlt(FivePointLattice other) {
-		if (this == UNK || other == UNK)
+	public SevenPointLattice joinAlt(SevenPointLattice other) {
+		if (this == BOT)
+			return other;
+		else if (other == BOT)
+			return this;
+		else if (this == UNK || other == UNK)
 			return UNK;
 		else if (this == other)
 			return this;
@@ -74,8 +82,8 @@ public enum FivePointLattice {
 	 * @param other
 	 * @return
 	 */
-	public FivePointLattice override(FivePointLattice override) {
-		if (override != STAR)
+	public SevenPointLattice override(SevenPointLattice override) {
+		if (override != STAR && override != BOT)
 			return override;
 		else
 			return this;
@@ -110,7 +118,7 @@ public enum FivePointLattice {
 			return this == FAL || this == FAL_STAR;
 	}
 
-	public static FivePointLattice convert(ThreeValue tv) {
+	public static SevenPointLattice convert(ThreeValue tv) {
 		if (tv == ThreeValue.TRUE)
 			return TRU;
 		else if (tv == ThreeValue.FALSE)
