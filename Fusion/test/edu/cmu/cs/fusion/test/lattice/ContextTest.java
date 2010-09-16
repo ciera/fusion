@@ -9,7 +9,7 @@ import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
-import edu.cmu.cs.fusion.relationship.FivePointLattice;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
@@ -32,69 +32,69 @@ public class ContextTest {
 		z = new AbstractObjectLabel("z");
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 		c1 = new RelationshipContext(true).applyChangesFromDelta(delta);
 		
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 		c2 = new RelationshipContext(true).applyChangesFromDelta(delta);
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 		c3 = new RelationshipContext(true).applyChangesFromDelta(delta);
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 		c4 = new RelationshipContext(true).applyChangesFromDelta(delta);
 		
 		
 		d1 = new RelationshipDelta();
-		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.FAL);
-		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
-		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.FAL);
+		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
+		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		d2 = new RelationshipDelta();
-		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.FAL);
-		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.FAL);
+		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		d3 = new RelationshipDelta();
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU_STAR);
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.FAL);
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.UNK);
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.UNK);
-		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU_STAR);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.FAL);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.UNK);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.UNK);
+		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		d4 = new RelationshipDelta();
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU_STAR);
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.UNK);
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.TRU);
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.FAL_STAR);
-		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.FAL_STAR);
-		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.TRU_STAR);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU_STAR);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.UNK);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.TRU);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.FAL_STAR);
+		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.FAL_STAR);
+		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.TRU_STAR);
 }
 	
 	@Test
@@ -224,7 +224,7 @@ public class ContextTest {
 		assertTrue(b1.isMorePreciseOrEqualTo(changes));
 		assertTrue(changes.isMorePreciseOrEqualTo(b1));
 		
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.UNK);
 		changes = b1.applyChangesFromDelta(delta);
 		assertTrue(b1.isMorePreciseOrEqualTo(changes));
 		assertTrue(!changes.isMorePreciseOrEqualTo(b1));

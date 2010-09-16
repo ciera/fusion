@@ -11,7 +11,7 @@ import org.junit.Test;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
-import edu.cmu.cs.fusion.relationship.FivePointLattice;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 
@@ -33,51 +33,51 @@ public class DeltaTest {
 		z = new AbstractObjectLabel("z");
 
 		d1 = new RelationshipDelta();
-		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.FAL);
-		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
-		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		d1.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.FAL);
+		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
+		d1.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		d2 = new RelationshipDelta();
-		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.FAL);
-		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		d2.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.FAL);
+		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		d2.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		d3 = new RelationshipDelta();
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.FAL);
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.UNK);
-		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.UNK);
-		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
-		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.FAL);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.UNK);
+		d3.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.UNK);
+		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
+		d3.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		d4 = new RelationshipDelta();
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU_STAR);
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), FivePointLattice.UNK);
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), FivePointLattice.TRU);
-		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.FAL_STAR);
-		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.FAL_STAR);
-		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.TRU_STAR);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU_STAR);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {w, z}), SevenPointLattice.UNK);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, y}), SevenPointLattice.TRU);
+		d4.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.FAL_STAR);
+		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.FAL_STAR);
+		d4.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.TRU_STAR);
 	}
 
 	@Test
 	public void testPolarize() {
 		RelationshipDelta polar = d1.polarize();
 		
-		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU_STAR);
-		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == FivePointLattice.FAL_STAR);
-		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == FivePointLattice.TRU_STAR);
-		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FivePointLattice.UNK);
+		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == SevenPointLattice.TRU_STAR);
+		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == SevenPointLattice.FAL_STAR);
+		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == SevenPointLattice.TRU_STAR);
+		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == SevenPointLattice.UNK);
 
 		polar = d4.polarize();
 		
-		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU_STAR);
-		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == FivePointLattice.UNK);
-		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == FivePointLattice.TRU_STAR);
-		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == FivePointLattice.FAL_STAR);
-		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == FivePointLattice.FAL_STAR);
-		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FivePointLattice.TRU_STAR);
+		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == SevenPointLattice.TRU_STAR);
+		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == SevenPointLattice.UNK);
+		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == SevenPointLattice.TRU_STAR);
+		assertTrue(polar.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == SevenPointLattice.FAL_STAR);
+		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == SevenPointLattice.FAL_STAR);
+		assertTrue(polar.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == SevenPointLattice.TRU_STAR);
 	}
 	
 	@Test
@@ -90,22 +90,22 @@ public class DeltaTest {
 		list.add(d2);
 		join = RelationshipDelta.join(list);
 		
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == FivePointLattice.FAL_STAR);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == FivePointLattice.FAL_STAR);
-		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FivePointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == SevenPointLattice.TRU);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == SevenPointLattice.FAL_STAR);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == SevenPointLattice.FAL_STAR);
+		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == SevenPointLattice.UNK);
 
 		list = new LinkedList<RelationshipDelta>();
 		list.add(d2);
 		list.add(d4);
 		join = RelationshipDelta.join(list);
 		
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU_STAR);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FivePointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == SevenPointLattice.TRU_STAR);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == SevenPointLattice.UNK);
 
 		list = new LinkedList<RelationshipDelta>();
 		list.add(d1);
@@ -114,12 +114,12 @@ public class DeltaTest {
 		list.add(d4);
 		join = RelationshipDelta.join(list);
 		
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == FivePointLattice.TRU_STAR);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == FivePointLattice.UNK);
-		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == FivePointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, y})) == SevenPointLattice.TRU_STAR);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {w, z})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, y})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tA, new ObjectLabel[] {x, z})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {y, z})) == SevenPointLattice.UNK);
+		assertTrue(join.getValue(new Relationship(tB, new ObjectLabel[] {z, y})) == SevenPointLattice.UNK);
 	}
 	
 	@Test
@@ -133,50 +133,50 @@ public class DeltaTest {
 		
 		//test an equal delta
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {x, z}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 		assertTrue(!delta.isStrictlyMorePrecise(ctx));
 		
 		//test a more precise delta
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.TRU);
 		assertTrue(delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 		
 		//test a more and less precise delta
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.TRU);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.TRU);
 		assertTrue(!delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 
 		//test a less precise U delta
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.UNK);
 		assertTrue(!delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
 		
 		//test a thrashing delta
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.FAL);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.FAL);
 		assertTrue(!delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
 		
 		//test a delta which is less precise when star is used.
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {x, z}), FivePointLattice.TRU_STAR);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {x, z}), SevenPointLattice.TRU_STAR);
 		assertTrue(!delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {x, z}), FivePointLattice.FAL);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {x, z}), SevenPointLattice.FAL);
 		
 		//another star, but equal precise
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU_STAR);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU_STAR);
 		assertTrue(!delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), FivePointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {y, z}), SevenPointLattice.TRU);
 		
 		//test a more and the star used
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU_STAR);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.FAL);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU_STAR);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.FAL);
 		assertTrue(delta.isStrictlyMorePrecise(ctx));
-		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(tA, new ObjectLabel[] {w, y}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(tB, new ObjectLabel[] {z, y}), SevenPointLattice.UNK);
 	}
 
 }

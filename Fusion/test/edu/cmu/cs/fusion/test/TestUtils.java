@@ -8,7 +8,7 @@ import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
-import edu.cmu.cs.fusion.relationship.FivePointLattice;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
@@ -94,68 +94,68 @@ public class TestUtils {
 		subs[1] = subs[1].addSub(Constraint.RECEIVER, labels[1]);
 		
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		contexts[0] = new RelationshipContext(true).applyChangesFromDelta(delta);
 		
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		contexts[1] = new RelationshipContext(true).applyChangesFromDelta(delta);
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		contexts[2] = new RelationshipContext(true).applyChangesFromDelta(delta);
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		contexts[3] = new RelationshipContext(true).applyChangesFromDelta(delta);
 		
 		
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		deltas[0] = delta;
 		
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		deltas[1] = delta;
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), FivePointLattice.TRU);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FivePointLattice.FAL);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), FivePointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[2]}), SevenPointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), SevenPointLattice.FAL);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[2], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[1], new ObjectLabel[] {labels[3], labels[2]}), SevenPointLattice.UNK);
 		deltas[2] = delta;
 
 		delta = new RelationshipDelta();
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), FivePointLattice.UNK);
-		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), FivePointLattice.TRU);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[0], labels[3]}), SevenPointLattice.UNK);
+		delta.setRelationship(new Relationship(relations[0], new ObjectLabel[] {labels[1], labels[2]}), SevenPointLattice.TRU);
 		deltas[3] = delta;
 		
 		aliasContext = new TestAliasContext();
