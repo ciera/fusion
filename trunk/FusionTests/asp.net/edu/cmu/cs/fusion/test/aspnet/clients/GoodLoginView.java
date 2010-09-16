@@ -11,7 +11,8 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=3, analysis="FusionSound")}
 )
 public class GoodLoginView extends Page {
-	public void goodSetSelection() {
+	
+	public void load() {
 		LoginView myView = (LoginView) findControl("LoginScreen");
 		if (this.getRequest().isAuthenticated()) {
 			DropDownList list = (DropDownList) myView.findControl("LoggedInDDL");
@@ -19,4 +20,5 @@ public class GoodLoginView extends Page {
 			item.getText();
 		}
 	}
+	
 }

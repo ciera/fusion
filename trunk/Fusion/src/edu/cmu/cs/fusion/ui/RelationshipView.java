@@ -52,7 +52,7 @@ public class RelationshipView extends ViewPart {
 			if (selection instanceof ITextSelection && part instanceof IEditorPart) {
 				IEditorPart editor = (IEditorPart)part;
 				ITextSelection text = (ITextSelection)selection;
-				int start = text.getStartLine() + 1;
+				int start = text.getStartLine();
 				
 				if (start == oldStart)
 					return;
@@ -70,6 +70,9 @@ public class RelationshipView extends ViewPart {
 					FusionCache cache = FusionCache.getCache();
 					context = cache.getResults((ICompilationUnit)root, oldStart);
 					RelationshipView.this.viewer.refresh();
+				}
+				else {
+					context = null;
 				}
 			}
 		}

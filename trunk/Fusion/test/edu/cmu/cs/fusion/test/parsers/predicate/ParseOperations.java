@@ -28,7 +28,7 @@ public class ParseOperations {
 		EndOfMethodOp invoke = (EndOfMethodOp)op;
 				
 		FreeVars vars = invoke.getFreeVariables();
-		Assert.assertEquals("Wrong number of free vars", 0, vars.size());		
+		Assert.assertEquals("Wrong number of free vars", 1, vars.size());		
 	}
 
 	@Test

@@ -37,7 +37,7 @@ public class TestEOMOp {
 		EndOfMethodOp construct = new EndOfMethodOp(null, null, null, null, null);
 		FreeVars fv = construct.getFreeVariables();
 		
-		assertEquals(0, fv.size());
+		assertEquals(1, fv.size());
 	}
 	
 	@Test

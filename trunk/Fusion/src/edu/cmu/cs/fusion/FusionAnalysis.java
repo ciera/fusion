@@ -169,6 +169,10 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		return fa.getStartResults(d).snd();
 	}
 	
+	public Pair<? extends AliasContext, RelationshipContext> getEndingResults(MethodDeclaration d) {
+		return fa.getEndResults(d);
+	}
+	
 	public RelationshipContext getRelResultsBefore(ASTNode node) {
 		return fa.getResultsBefore(node).snd();
 	}
