@@ -1,5 +1,7 @@
 package edu.cmu.cs.fusion;
 
+import edu.cmu.cs.fusion.annot.Relation.Effect;
+
 
 
 /**
@@ -10,6 +12,10 @@ package edu.cmu.cs.fusion;
  */
 public class FusionTypeCheckException extends Exception {
 
+	public FusionTypeCheckException(String relName) {
+		super("Could not find a relation with name " + relName);
+	}
+    
 	public FusionTypeCheckException(Relation relation, int ndx, String type,
 			String param) {
 		super("Relationhip " + relation.getName() + " needs type " + relation.getFullyQualifiedTypes()[ndx] + " at param " + ndx + " but received type " + type + " from param " + param + ".");
@@ -17,6 +23,10 @@ public class FusionTypeCheckException extends Exception {
 
 	public FusionTypeCheckException(Exception e) {
 		super(e);
+	}
+
+	public FusionTypeCheckException(Effect effect) {
+		super("Effect can only be ADD or REMOVE");
 	}
 
 }

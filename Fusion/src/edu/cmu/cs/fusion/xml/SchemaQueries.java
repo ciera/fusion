@@ -158,11 +158,13 @@ public class SchemaQueries {
 			Element relElement = (Element) results.getObject();
 			String relName = relElement.getAttribute("name");
 			Effect effect = Effect.valueOf(relElement.getAttribute("effect"));
-			assert(effect == Effect.ADD || effect == Effect.REMOVE);
+			if (effect == null || effect == Effect.TEST)
+				throw new FusionTypeCheckException(effect);
 			
 			relName = Utilities.resolveType(context, relName);
 			Relation relType = relEnv.findRelation(relName);
-			assert(relType != null);
+			if (relType == null)
+				throw new FusionTypeCheckException(relName);
 			
 			ObjectLabel[] labArr = getLabels(relElement, relType, types);
 			Relationship rel = new Relationship(relType, labArr);
