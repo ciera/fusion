@@ -3,23 +3,45 @@ package edu.cmu.cs.fusion.debugging;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import edu.cmu.cs.crystal.util.Pair;
-import edu.cmu.cs.fusion.alias.AliasContext;
-import edu.cmu.cs.fusion.relationship.RelationshipContext;
+import edu.cmu.cs.crystal.IRunCrystalCommand;
+import edu.cmu.cs.crystal.internal.AbstractCrystalPlugin;
+import edu.cmu.cs.fusion.ui.FusionDebuggingCommand;
 
 public class FusionCache {
 	static private FusionCache THE_CACHE = new FusionCache();
 	static public FusionCache getCache() {return THE_CACHE;}
 	
 	private ICompilationUnit compUnit;
+	private SortedMap<Integer, DebugInfo> cache = new TreeMap<Integer, DebugInfo>();
 	
-	private SortedMap<Integer, Pair<? extends AliasContext, RelationshipContext>> cache = new TreeMap<Integer, Pair<? extends AliasContext, RelationshipContext>>();
+	public void makeCacheValid(ICompilationUnit root) {
+		if (compUnit == null || !compUnit.equals(root)) {
+			final ICompilationUnit unit = compUnit = root;
+			Job j = new Job("Fusion Debugger") {
+				
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					IRunCrystalCommand command = new FusionDebuggingCommand(unit);
+					
+					AbstractCrystalPlugin.getCrystalInstance().runAnalyses(command, monitor);
+					if (monitor.isCanceled())
+						return Status.CANCEL_STATUS;
+					return Status.OK_STATUS;
+				}
+			};
+			j.setUser(true);
+			j.schedule();
+		}
+	}
 	
-	
-	public Pair<? extends AliasContext, RelationshipContext> getResults(ICompilationUnit unit, int lineNum) {
-		assert(unit.equals(compUnit));
+	public DebugInfo getResults(ICompilationUnit unit, int lineNum) {
+		assert(compUnit.equals(unit));
 		return cache.get(lineNum);
 	}
 	
@@ -28,7 +50,8 @@ public class FusionCache {
 		cache.clear();
 	}
 
-	public void addResult(int startLine, int endLine, Pair<? extends AliasContext, RelationshipContext> pair) {
-		cache.put(startLine, pair);
+	public void addResult(int startLine, int endLine, DebugInfo info) {
+		cache.put(startLine, info);
 	}
+
 }

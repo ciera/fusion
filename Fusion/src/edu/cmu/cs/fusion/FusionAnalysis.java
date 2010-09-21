@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -22,14 +21,12 @@ import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
-import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.alias.MayPointsToAliasContext;
 import edu.cmu.cs.fusion.alias.MayPointsToLatticeOps;
 import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
-import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
@@ -45,11 +42,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private Logger log;
 	private InferenceEnvironment infers;
 	private RelationsEnvironment rels;
-	private IJavaProject project;
-	private TypeHierarchy types;
+	private SharedAnalysisData sharedData;
 	private boolean majorErrorOccured = false;
 	private DeclarativeRetriever retriever;
-	private Method tacMethod;
 
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -58,6 +53,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	 */
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
+		sharedData = new SharedAnalysisData();
 		log = Logger.getLogger("edu.cmu.cs.fusion");
 		log.setLevel(Level.INFO);
 	}
@@ -98,13 +94,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public void beforeAllMethods(ICompilationUnit compUnit,
 			CompilationUnit rootNode) {
 		try {
-			if (project == null || !project.equals(compUnit.getJavaProject())) {
-				//we have a new project. reset the type hierarchy
-				project = compUnit.getJavaProject();
-				types = new CachedTypeHierarchy(project, null);
-				FreeVars.setHierarchy(types);
-			}
-			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), types);
+			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
+			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
 		} catch (JavaModelException e) {
 			log.log(Level.SEVERE, "Could not create type hierarchy", e);
 			majorErrorOccured = true;
@@ -124,7 +115,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			return;
 		}
 		try {
-
+			TypeHierarchy types = sharedData.getHierarchy();
 			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
 			MayPointsToLatticeOps ops = new MayPointsToLatticeOps(types);
 			
@@ -150,7 +141,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 
 	public TypeHierarchy getHierarchy() {
-		return types;
+		return sharedData.getHierarchy();
 	}
 	
 	public InferenceEnvironment getInfers() {
@@ -180,6 +171,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public Pair<? extends AliasContext, RelationshipContext> getResultsAfter(ASTNode node) {
 		return fa.getResultsAfter(node);
 	}
+	
+	public Pair<? extends AliasContext, RelationshipContext> getResultsBeforeAST(ASTNode node) {
+		return fa.getResultsBeforeAST(node);
+	}
+
 
 	public RelationshipContext getRelResultsAfter(ASTNode node) {
 		return fa.getResultsAfter(node).snd();		
@@ -196,4 +192,5 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public Variant getVariant() {
 		return variant;
 	}
+
 }

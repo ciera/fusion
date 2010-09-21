@@ -16,12 +16,8 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
-import edu.cmu.cs.crystal.IRunCrystalCommand;
-import edu.cmu.cs.crystal.internal.AbstractCrystalPlugin;
-import edu.cmu.cs.crystal.util.Pair;
-import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.debugging.DebugInfo;
 import edu.cmu.cs.fusion.debugging.FusionCache;
-import edu.cmu.cs.fusion.relationship.RelationshipContext;
 
 
 
@@ -34,25 +30,22 @@ public class RelationshipView extends ViewPart {
 
 	private FusionViewer viewer;
 	private FusionContent content;
+	private String statement;
 
 
 	class FusionContent implements ISelectionListener {
-		String topType;
 		int oldStart = -1;
-		Pair<? extends AliasContext, RelationshipContext> context;
+		DebugInfo info;
 		
-		public FusionContent() {
-		}
-		
-		public Pair<? extends AliasContext, RelationshipContext> getContext() {
-			return context;
+		public DebugInfo getInfo() {
+			return info;
 		}
 		
 		public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 			if (selection instanceof ITextSelection && part instanceof IEditorPart) {
 				IEditorPart editor = (IEditorPart)part;
 				ITextSelection text = (ITextSelection)selection;
-				int start = text.getStartLine();
+				int start = text.getStartLine() + 1;
 				
 				if (start == oldStart)
 					return;
@@ -61,18 +54,14 @@ public class RelationshipView extends ViewPart {
 				ITypeRoot root = JavaUI.getEditorInputTypeRoot(editor.getEditorInput());
 
 				if (root != null && root.getElementType() == IJavaElement.COMPILATION_UNIT) {
-					String type = root.findPrimaryType().getFullyQualifiedName();
-					if (!(type.equals(topType))) {
-						topType = type;
-						IRunCrystalCommand command = new FusionDebuggingCommand((ICompilationUnit)root);
-						AbstractCrystalPlugin.getCrystalInstance().runAnalyses(command, null);
-					}
 					FusionCache cache = FusionCache.getCache();
-					context = cache.getResults((ICompilationUnit)root, oldStart);
+
+					cache.makeCacheValid((ICompilationUnit)root);
+					info = cache.getResults((ICompilationUnit)root, oldStart);
 					RelationshipView.this.viewer.refresh();
 				}
 				else {
-					context = null;
+					info = null;
 				}
 			}
 		}
