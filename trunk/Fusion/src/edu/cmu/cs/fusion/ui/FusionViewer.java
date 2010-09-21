@@ -10,38 +10,44 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 
 import edu.cmu.cs.crystal.tac.model.SourceVariable;
 import edu.cmu.cs.crystal.tac.model.ThisVariable;
 import edu.cmu.cs.crystal.tac.model.Variable;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
+import edu.cmu.cs.fusion.debugging.DebugInfo;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.ui.RelationshipView.FusionContent;
 
-//pretty sure that to get this to work, I need some kind of ContentProvider that
-//actually gives me something I know about...
 public class FusionViewer extends Viewer {
-	private SashForm topControl;
+	private Composite topControl;
+	private Label statementLabel;
 	private List relPane;
 	private List aliasPane;
 	private List objPane;
 	private FusionContent content;
 	
 	public FusionViewer(Composite parent) {
-		topControl = new SashForm(parent, SWT.HORIZONTAL);
+		topControl = new SashForm(parent, SWT.VERTICAL);
 		topControl.setLayout(new FillLayout());
+		
+		statementLabel = new Label(topControl, 0);
+		statementLabel.setText("-");
+		
+		SashForm resultsPane = new SashForm(topControl, SWT.HORIZONTAL);
+		resultsPane.setLayout(new FillLayout());
 
-		relPane = new List(topControl, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
-		SashForm rightPane = new SashForm(topControl, SWT.VERTICAL);
+		relPane = new List(resultsPane, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
+		SashForm rightPane = new SashForm(resultsPane, SWT.VERTICAL);
 		rightPane.setLayout(new FillLayout());
 		aliasPane = new List(rightPane, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
 		objPane = new List(rightPane, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
 		
-		topControl.setWeights(new int[] {50, 50});
+		resultsPane.setWeights(new int[] {50, 50});
 		rightPane.setWeights(new int[] {50, 50});
 	}
 
@@ -57,17 +63,23 @@ public class FusionViewer extends Viewer {
 
 	@Override
 	public void refresh() {
-		Pair<? extends AliasContext, RelationshipContext> context = content.getContext();
-		String[] rels = makeIntoRelArr(context.snd());
-		String[] aliases = makeIntoPointerArr(context.fst());
-		String[] labels = makeIntoObjLabelArr(context.fst());
+		DebugInfo info = content.getInfo();
+		
+		String[] rels = info != null ? makeIntoRelArr(info.getRels()) : new String[] {};
+		String[] aliases = info != null ? makeIntoPointerArr(info.getAliases()) : new String[] {};
+		String[] labels = info != null ? makeIntoObjLabelArr(info.getAliases()) : new String[] {};
+		String statement = info != null ? info.getStatement() : "-";
 		
 		relPane.setItems(rels);
 		objPane.setItems(labels);
 		aliasPane.setItems(aliases);
+		statementLabel.setText(statement);
+
+		
 		relPane.redraw();
 		aliasPane.redraw();
 		objPane.redraw();
+		statementLabel.redraw();
 		topControl.update();
 	}
 
