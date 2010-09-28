@@ -55,23 +55,26 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	
 	@Override
 	public void endVisit(MethodDeclaration node) {
-		TACInstruction instr = new DefaultReturnInstruction();
-		Pair<? extends AliasContext, RelationshipContext> res = fa.getEndingResults(node);
-		BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), res.fst());
-		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(res.fst(), res.snd() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 		
-		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
-		
-		for (FusionErrorReport err : errors) {
-			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			boolean hasStatements = node.getBody() != null && node.getBody().statements().size() > 0;
-			ASTNode reportOn = !hasStatements ? node : (ASTNode)node.getBody().statements().get(node.getBody().statements().size() - 1);
-			reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, fa.getName(), sev);	
-			log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
-			log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			
-			log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
-			for (Substitution failure : err.getFailingVars())
-				log.log(Level.INFO, "Failing subtitution " + failure.toString());
+		if (node.getBody() != null) {
+			TACInstruction instr = new DefaultReturnInstruction();
+			Pair<? extends AliasContext, RelationshipContext> res = fa.getEndingResults(node);
+			BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), res.fst());
+			FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(res.fst(), res.snd() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+			
+			List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
+			
+			for (FusionErrorReport err : errors) {
+				SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+				boolean hasStatements = node.getBody() != null && node.getBody().statements().size() > 0;
+				ASTNode reportOn = !hasStatements ? node : (ASTNode)node.getBody().statements().get(node.getBody().statements().size() - 1);
+				reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, fa.getName(), sev);	
+				log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
+				log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			
+				log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
+				for (Substitution failure : err.getFailingVars())
+					log.log(Level.INFO, "Failing subtitution " + failure.toString());
+			}
 		}
 	}
 

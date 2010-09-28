@@ -29,14 +29,14 @@ import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionTypeCheckException;
-import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.ReportingUtility;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.XMLContext;
-import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 
 /**
  * Parses out the XMLSchema part of a fusion file and provides starting lattice information.
@@ -139,8 +139,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (FusionTypeCheckException e) {
-			// TODO Send typechecking error to screen
-			e.printStackTrace();
+			ReportingUtility.reportParseError(resource, null, e.getMessage());
 		}
 		return true;
 	}
@@ -192,18 +191,5 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 	 */
 	public Set<ObjectLabel> getAllLabels() {
 		return allLabels;
-	}
-
-
-	private Relationship convertRelationship(Relationship original, Map<ObjectLabel, ObjectLabel> bindings) {
-		Relation relation = original.getRelation();
-		ObjectLabel[] newLabels = new ObjectLabel[relation.getFullyQualifiedTypes().length];
-		
-		for (int ndx = 0; ndx < newLabels.length; ndx++) {
-			ObjectLabel lab = bindings.get(original.getParam(ndx));
-			newLabels[ndx] = (lab != null) ? lab : original.getParam(ndx);
-		}
-		
-		return new Relationship(relation, newLabels);
 	}
 }
