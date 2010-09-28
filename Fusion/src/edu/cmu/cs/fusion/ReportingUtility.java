@@ -12,8 +12,10 @@ public class ReportingUtility {
 	static public void reportParseError(IResource resource, ISourceRange range, String description) {
 		try {
 			IMarker marker = resource.createMarker("edu.cmu.cs.fusion.fusionparseproblem");
-			marker.setAttribute(IMarker.CHAR_START, range.getOffset());
-			marker.setAttribute(IMarker.CHAR_END, range.getOffset() + range.getLength());
+			if (range != null) {
+				marker.setAttribute(IMarker.CHAR_START, range.getOffset());
+				marker.setAttribute(IMarker.CHAR_END, range.getOffset() + range.getLength());
+			}
 			marker.setAttribute(IMarker.MESSAGE, "[Fusion Parser]: " + description);
 			marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
 			marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);

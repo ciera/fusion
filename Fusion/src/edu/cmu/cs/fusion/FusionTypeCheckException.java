@@ -29,4 +29,8 @@ public class FusionTypeCheckException extends Exception {
 		super("Effect can only be ADD or REMOVE");
 	}
 
+	public FusionTypeCheckException(Relation relation, int expectedNumParams, int actualNumParams) {
+		super("Relationship " + relation.getName() + "expected " + expectedNumParams + " params, but received " + actualNumParams);
+	}
+
 }

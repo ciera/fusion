@@ -183,7 +183,8 @@ public class SchemaQueries {
 		NodeList nodes = relElement.getElementsByTagName("Object");
 		String[] relTypes = relation.getFullyQualifiedTypes();
 		
-		assert(relTypes.length == nodes.getLength());
+		if (relTypes.length != nodes.getLength())
+			throw new FusionTypeCheckException(relation, relTypes.length, nodes.getLength());
 		ObjectLabel[] labels = new ObjectLabel[relTypes.length];
 		
 		for (int ndx = 0; ndx < nodes.getLength(); ndx++) {
