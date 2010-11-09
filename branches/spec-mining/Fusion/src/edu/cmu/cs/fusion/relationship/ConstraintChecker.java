@@ -51,10 +51,11 @@ public class ConstraintChecker {
 		}
 		
 		RelationshipDelta relDelta = !relDeltas.isEmpty() ? RelationshipDelta.joinAlt(relDeltas) : new RelationshipDelta();
-		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);
-		
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
-		AC aliasContext = env.makeNewAliases(aliasDelta);
+
+//		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);		
+//		AC aliasContext = env.makeNewAliases(aliasDelta);
+		AC aliasContext = env.makeNewAliases(new AliasDelta());
 		
 		return new Pair<AC, RelationshipContext>(aliasContext, relContext);
 	}

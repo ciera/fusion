@@ -95,7 +95,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			CompilationUnit rootNode) {
 		try {
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
-			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
+//			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
 		} catch (JavaModelException e) {
 			log.log(Level.SEVERE, "Could not create type hierarchy", e);
 			majorErrorOccured = true;
