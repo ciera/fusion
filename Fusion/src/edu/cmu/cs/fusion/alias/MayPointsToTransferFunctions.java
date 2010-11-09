@@ -189,6 +189,8 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		
 		String vType = instr.getTarget().resolveType().getQualifiedName();
 		
+		assert(value.getAliases(instr.getOperand()) != null);
+		
 		for (ObjectLabel label : value.getAliases(instr.getOperand())) {
 			String labType = label.getType().getQualifiedName();		
 			if (types.existsCommonSubtype(labType, vType)) { //there exists a way to make this cast ok
