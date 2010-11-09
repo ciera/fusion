@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
@@ -81,6 +81,7 @@ public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Var
 	 * @param aliases
 	 */
 	public void addPointsTo(Variable var, Set<ObjectLabel> aliases) {
+		assert(aliases != null);
 		Set<ObjectLabel> labels = pointsTo.get(var);
 		
 		if (labels == null) {
