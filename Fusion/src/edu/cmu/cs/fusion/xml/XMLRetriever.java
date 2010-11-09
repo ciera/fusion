@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -57,6 +57,9 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 	 */
 	public XMLRetriever(RelationsEnvironment rels) {
 		this.rels = rels;
+		topLabels = new HashSet<ObjectLabel>();
+		allLabels = new HashSet<ObjectLabel>();
+		delta = new RelationshipDelta();
 		queries = new HashMap<String, SchemaQueries>();
 	}
 	
