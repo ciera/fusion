@@ -126,11 +126,13 @@ public class StatementRelationshipVisitor extends ASTVisitor {
 	public boolean visit(ForStatement node) {				
 		buff.append("for(" + node.initializers() + "; " + node.getExpression() + "; " + node.updaters() + ") {");
 		buff.append("\n");
-		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(true)).toString());
+		if (node.getExpression() != null)
+			buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(true)).toString());
 		buff.append("\n");
 		node.getBody().accept(this);
 		buff.append("}");
 		buff.append("\n");
+		if (node.getExpression() != null)
 		buff.append(fusionAnalysis.getSpecificRelResultsAfter(node.getExpression(), BooleanLabel.getBooleanLabel(false)).toString());
 		buff.append("\n");
 		return false;

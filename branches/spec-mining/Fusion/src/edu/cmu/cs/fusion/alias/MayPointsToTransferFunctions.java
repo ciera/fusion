@@ -36,6 +36,16 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
+/**
+ * The transfer functions for a simple aliasing analysis.
+ * @author ciera
+ *
+ *
+ * Note: This class has an invariant that all variables do have at least one ObjectLabel that they can point to. This label
+ * might be the null label representation, but it always exists. In particular, any call like value.getAliases(instr.getOperand())
+ * is ALWAYS non-null and has at least one element. I have added asserts accordingly. If this is ever null, something went
+ * wrong much earlier in the transfer functions and should be investigated.
+ */
 public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTransferFunction<MayPointsToAliasContext> {
 	private ILatticeOperations<MayPointsToAliasContext> ops;
 	private DeclarativeRetriever retriever;
