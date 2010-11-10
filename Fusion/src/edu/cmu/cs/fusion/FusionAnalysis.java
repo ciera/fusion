@@ -35,6 +35,9 @@ import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
+	protected static final String BASE_FUSION_LOGGER = "edu.cmu.cs.fusion";
+	public static final String FUSION_LOGGER = BASE_FUSION_LOGGER + ".core";
+	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
 	private TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>> fa;
 	private ConstraintEnvironment constraints;
@@ -54,8 +57,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		sharedData = new SharedAnalysisData();
-		log = Logger.getLogger("edu.cmu.cs.fusion");
-		log.setLevel(Level.INFO);
+		log = Logger.getLogger(FUSION_LOGGER);
 	}
 
 	public void beforeAllCompilationUnits() {
@@ -68,7 +70,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			ReportingUtility.clearMarkers(ResourcesPlugin.getWorkspace().getRoot());
 			
 			rels.populate(null);
-			constraints.populate(null);
+ 			constraints.populate(null);
 			infers.populate(null);
 			
 			FusionFileVisitor visitor = new FusionFileVisitor();
@@ -136,7 +138,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 	protected void reportResults(MethodDeclaration methodDecl, ConstraintChecker checker) {
 		EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, log);
+		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac);
 		methodDecl.accept(errVisitor);
 	}
 
