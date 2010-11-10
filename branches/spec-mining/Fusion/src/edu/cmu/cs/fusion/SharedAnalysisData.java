@@ -19,6 +19,13 @@
  */
 package edu.cmu.cs.fusion;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
@@ -34,6 +41,42 @@ import edu.cmu.cs.fusion.constraint.FreeVars;
 public class SharedAnalysisData {
 	static private TypeHierarchy hierarchy;
 	static private IJavaProject project;
+	static private Logger core;
+	static private Logger warn;
+	
+	public SharedAnalysisData() {
+		//set up the base logger to actually log stuff. Otherwise, Eclipse decides that in run mode,
+		//it's just going to ignore all logging requests.
+//		Logger base = Logger.getLogger(FusionAnalysis.BASE_FUSION_LOGGER);
+//		base.setLevel(Level.ALL);
+//		base.getParent().setLevel(Level.ALL);
+		
+		if (core == null) {
+			//The core logger. Should be at warnings only under most circumstances
+			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
+			core.setLevel(Level.WARNING);
+		}
+
+		if (warn == null) {
+			//The reports logger. Set to info if we want to generate reports.
+			warn = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
+			warn.setLevel(Level.INFO);
+			
+			try {
+				FileHandler handler = new FileHandler("%h/fusion_warnings.txt");
+				handler.setFormatter(new Formatter() {
+					public String format(LogRecord record) {
+						return record.getMessage();
+					}
+				});
+				warn.addHandler(handler);
+			} catch (SecurityException e) {
+				core.log(Level.WARNING, "Could not create warnings handler", e.getMessage());
+			} catch (IOException e) {
+				core.log(Level.WARNING, "Could not create warnings handler", e.getMessage());
+			}
+		}
+	}
 	
 	public void checkForProjectReset(IJavaProject newProject, IProgressMonitor monitor) throws JavaModelException {
 		if (project == null || !project.equals(newProject)) {
