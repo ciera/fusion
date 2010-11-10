@@ -2,12 +2,15 @@ package edu.cmu.cs.fusion.relationship;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.Binding;
+import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Method;
 import edu.cmu.cs.fusion.ThreeValue;
@@ -26,12 +29,14 @@ public class ConstraintChecker {
 	protected TypeHierarchy types;
 	protected Variant variant;
 	protected Method method;
+	protected Logger matchLogger;
 	
 	public ConstraintChecker(ConstraintEnvironment constraints, TypeHierarchy types, Variant var, Method method) {
 		this.constraints = constraints;
 		this.types = types;
 		this.variant = var;
 		this.method = method;
+		this.matchLogger = Logger.getLogger(FusionAnalysis.CHECKS_LOGGER);
 	}
 
 	/**
@@ -64,6 +69,9 @@ public class ConstraintChecker {
 		List<FusionErrorReport> errors = new LinkedList<FusionErrorReport>();
 		FusionErrorReport err;
 		
+		assert(instr != null);
+		
+		matchLogger.log(Level.INFO, "***" + instr.toString() + "***\n");
 		for (Constraint cons : constraints) {
 			if (!(cons.getRequires() instanceof TruePredicate)) {
 				err = checkSingleConstraint(env, cons, instr);
@@ -164,6 +172,8 @@ public class ConstraintChecker {
 		
 		if (subs.isEmpty())
 			return null;
+		
+		matchLogger.log(Level.INFO, cons.toString());
 		
 		List<Substitution> failingSubs = new LinkedList<Substitution>();
 
