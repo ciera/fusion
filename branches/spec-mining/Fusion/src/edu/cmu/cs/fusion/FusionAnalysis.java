@@ -38,6 +38,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	protected static final String BASE_FUSION_LOGGER = "edu.cmu.cs.fusion";
 	public static final String FUSION_LOGGER = BASE_FUSION_LOGGER + ".core";
 	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
+	public static final String CHECKS_LOGGER = BASE_FUSION_LOGGER + ".checks";
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
 	private TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>> fa;
 	private ConstraintEnvironment constraints;

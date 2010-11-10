@@ -43,6 +43,8 @@ public class SharedAnalysisData {
 	static private IJavaProject project;
 	static private Logger core;
 	static private Logger warn;
+	static private Logger checks;
+	static private boolean setLoggers;
 	
 	public SharedAnalysisData() {
 		//set up the base logger to actually log stuff. Otherwise, Eclipse decides that in run mode,
@@ -51,32 +53,48 @@ public class SharedAnalysisData {
 //		base.setLevel(Level.ALL);
 //		base.getParent().setLevel(Level.ALL);
 		
-		if (core == null) {
+		if (!setLoggers) {
 			//The core logger. Should be at warnings only under most circumstances
 			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 			core.setLevel(Level.WARNING);
-		}
+			
+			Formatter simpleFormatter = new Formatter() {
+				public String format(LogRecord record) {
+					return record.getMessage();
+				}
+			};
 
-		if (warn == null) {
 			//The reports logger. Set to info if we want to generate reports.
 			warn = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
 			warn.setLevel(Level.INFO);
 			
 			try {
 				FileHandler handler = new FileHandler("%h/fusion_warnings.txt");
-				handler.setFormatter(new Formatter() {
-					public String format(LogRecord record) {
-						return record.getMessage();
-					}
-				});
+				handler.setFormatter(simpleFormatter);
 				warn.addHandler(handler);
+				warn.setUseParentHandlers(false);
 			} catch (SecurityException e) {
 				core.log(Level.WARNING, "Could not create warnings handler", e.getMessage());
 			} catch (IOException e) {
 				core.log(Level.WARNING, "Could not create warnings handler", e.getMessage());
 			}
+
+			checks = Logger.getLogger(FusionAnalysis.CHECKS_LOGGER);
+			checks.setLevel(Level.INFO);
+			
+			try {
+				FileHandler handler = new FileHandler("%h/fusion_checks.txt");
+				handler.setFormatter(simpleFormatter);
+				checks.addHandler(handler);
+				checks.setUseParentHandlers(false);
+			} catch (SecurityException e) {
+				core.log(Level.WARNING, "Could not create checks handler", e.getMessage());
+			} catch (IOException e) {
+				core.log(Level.WARNING, "Could not create checks handler", e.getMessage());
+			}
+			setLoggers = true;
 		}
-	}
+}
 	
 	public void checkForProjectReset(IJavaProject newProject, IProgressMonitor monitor) throws JavaModelException {
 		if (project == null || !project.equals(newProject)) {

@@ -61,7 +61,18 @@ public class ErrorReporterVisitor extends ASTVisitor {
 
 	@Override
 	public void endVisit(ReturnStatement node) {
-		check(node);
+		TACInstruction instr = node.getExpression() == null ? new DefaultReturnInstruction() : tac.instruction(node);
+		AliasContext aliases = fa.getPointsToResultsAfter(node);
+		RelationshipContext rels = fa.getRelResultsBefore(node);
+		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), aliases);
+		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+			
+		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
+		
+		for (FusionErrorReport err : errors) {
+			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+			reportError(err, sev, node);
+		}
 	}
 
 	@Override
@@ -106,7 +117,6 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		for (FusionErrorReport err : errors) {
 			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			
 			reportError(err, sev, node);
 		}
 	}
