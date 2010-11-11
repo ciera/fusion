@@ -153,7 +153,10 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	public IResult<MayPointsToAliasContext> transfer(
 			SourceVariableDeclaration instr, List<ILabel> labels,
 			MayPointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getDeclaredVariable(), value, false), labels);
+		if (instr.isCaughtVariable())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getDeclaredVariable(), value, false), labels);
+		else
+			return super.transfer(instr, labels, value);
 	}
 
 	/**
