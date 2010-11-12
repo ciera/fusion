@@ -114,6 +114,14 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		return ops;
 	}
 	
+	/**
+	 * 
+	 * @param node The node this variable is in; used to determine whether we are currently in a loop
+	 * @param var The variable to create something fresh for
+	 * @param value The starting lattice to use
+	 * @param onlySingleFresh True if there should be a fresh variable here with no aliases, false if it should be aliased
+	 * @return
+	 */
 	private MayPointsToAliasContext putFresh(ASTNode node, Variable var, MayPointsToAliasContext value, boolean onlySingleFresh) {
 		boolean isInLoop = loopCounter.isInLoop(node);
 		MayPointsToAliasContext newValue = value.clone();
@@ -153,7 +161,7 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	public IResult<MayPointsToAliasContext> transfer(
 			SourceVariableDeclaration instr, List<ILabel> labels,
 			MayPointsToAliasContext value) {
-		if (instr.isCaughtVariable())
+		if (instr.isCaughtVariable() || instr.isEnhancedForLoopVariable())
 			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getDeclaredVariable(), value, false), labels);
 		else
 			return super.transfer(instr, labels, value);
