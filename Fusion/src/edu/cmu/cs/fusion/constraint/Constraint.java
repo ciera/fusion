@@ -10,12 +10,18 @@ public class Constraint {
 	private Predicate trigger;
 	private Predicate requires;
 	private List<Effect> effects;
+	private String declarer;
 	
-	public Constraint(Operation op, Predicate trigger, Predicate requires, List<Effect> effects) {
+	public Constraint(String declarer, Operation op, Predicate trigger, Predicate requires, List<Effect> effects) {
+		this.declarer = declarer;
 		this.op = op;
 		this.trigger = trigger;
 		this.requires = requires;
 		this.effects = effects;
+	}
+	
+	public String getDeclarer() {
+		return declarer;
 	}
 	
 	public Operation getOp() {
@@ -50,7 +56,7 @@ public class Constraint {
 	}
 	
 	public String toErrorString() {
-		return "(" + trigger.getShortString() +  ") IMPLIES (" + requires.getShortString() + ")";
+		return declarer + ": (" + trigger.getShortString() +  ") IMPLIES (" + requires.getShortString() + ")";
 	}
 	
 	public String toString() {
