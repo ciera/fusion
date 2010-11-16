@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import edu.cmu.cs.crystal.IAnalysisReporter;
 import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
@@ -41,6 +43,16 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		this.checker = constraintChecker;
 		this.fa = analysis;
 		this.tac = tac;
+	}
+
+	@Override
+	public boolean visit(AnonymousClassDeclaration node) {
+		return false;
+	}
+
+	@Override
+	public boolean visit(TypeDeclaration node) {
+		return false;
 	}
 
 	@Override

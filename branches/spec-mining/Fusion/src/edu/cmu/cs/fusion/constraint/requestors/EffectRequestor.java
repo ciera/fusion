@@ -104,8 +104,9 @@ public class EffectRequestor extends SearchRequestor {
 			}
 			op = new MethodInvocationOp(methodName, receiverType, opParams, paramTypes, returnType);
 		}
-		
-		constraints.add(new Constraint(op, new TruePredicate(), new TruePredicate(), effects));
+		String owner = method.getDeclaringType().getFullyQualifiedName();
+
+		constraints.add(new Constraint(owner, op, new TruePredicate(), new TruePredicate(), effects));
 	}
 	
 	private Relation isMultiRelation(IAnnotation anno, IType context) throws JavaModelException {
