@@ -173,7 +173,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		Set<ObjectLabel> aliases = new HashSet<ObjectLabel>();
 		for (ObjectLabel possibleTop : topLabels) {
 			String thisType = var.resolveType().getQualifiedName();
-			String possibleTopType = possibleTop.getType().getQualifiedName();
+			String possibleTopType = possibleTop.getTypeName();
 			if (types.isSubtypeCompatible(thisType, possibleTopType)) {
 				aliases.add(possibleTop);
 			}

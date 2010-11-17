@@ -19,13 +19,12 @@
  */
 package edu.cmu.cs.fusion.alias;
 
-import org.eclipse.jdt.core.dom.ITypeBinding;
 
 public interface ObjectLabel {
 
 	public boolean isSummary();
-
-	public ITypeBinding getType();
+	
+	public String getTypeName();
 
 	public boolean isTemporary();
 

@@ -30,9 +30,9 @@ public class InstanceOfPredicate implements NegatablePredicate {
 
 	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
 		ObjectLabel obj = sub.getSub(variable);
-		if (env.isSubtypeCompatible(obj.getType().getQualifiedName(), type))
+		if (env.isSubtypeCompatible(obj.getTypeName(), type))
 			return isPositive ? ThreeValue.TRUE : ThreeValue.FALSE;
-		else if (env.existsPossibleSubtype(obj.getType().getQualifiedName(), type))
+		else if (env.existsPossibleSubtype(obj.getTypeName(), type))
 			return ThreeValue.UNKNOWN;
 		else
 			return isPositive ? ThreeValue.FALSE : ThreeValue.TRUE;

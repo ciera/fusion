@@ -113,17 +113,6 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 			if (!rels.containsKey(entry.getKey()))
 				rels.put(entry.getKey(), entry.getValue().join(SevenPointLattice.STAR));
 		}
-		
-/*		
-		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
-		combinedRels.addAll(other.rels.keySet());
-		
-		for (Relationship rel : combinedRels) {
-			SevenPointLattice myVal = getValue(rel);
-			SevenPointLattice otherVal = other.getValue(rel);
-			rels.put(rel, myVal.join(otherVal));
-		}
-*/
 	}
 
 		

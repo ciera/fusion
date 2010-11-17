@@ -35,7 +35,6 @@ import edu.cmu.cs.crystal.tac.model.UnaryOperation;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
-import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 /**
  * The transfer functions for a simple aliasing analysis.
@@ -53,7 +52,7 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	private LoopCounter loopCounter;
 	protected Map<Object, ObjectLabel> knownLiterals;
 	private TypeHierarchy types;
-	private ObjectLabel voidLabel = new DefaultObjectLabel(new NamedTypeBinding("void"), false);
+	private ObjectLabel voidLabel = new DefaultObjectLabel("void", false);
 	
 	//This caches the result of the aliasing when going through a loop, so
 	//we don't create a new variable a second time.
@@ -67,7 +66,7 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		this.types = types;
 		knownLiterals =  new HashMap<Object, ObjectLabel>();
 		loopedVariables = new HashMap<Variable, Set<ObjectLabel>>();
-		knownLiterals.put(null, new LiteralLabel(null, new NamedTypeBinding("java.lang.Object")));
+		knownLiterals.put(null, new LiteralLabel(null, "java.lang.Object"));
 	}
 	
 	public MayPointsToAliasContext createEntryValue(MethodDeclaration method) {
@@ -220,7 +219,7 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		assert(value.getAliases(instr.getOperand()) != null);
 		
 		for (ObjectLabel label : value.getAliases(instr.getOperand())) {
-			String labType = label.getType().getQualifiedName();		
+			String labType = label.getTypeName();		
 			if (types.existsCommonSubtype(labType, vType)) { //there exists a way to make this cast ok
 				newValue.addPointsTo(instr.getTarget(), label);
 			}
