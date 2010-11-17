@@ -10,7 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -128,11 +127,10 @@ public class TestSingleConstraint extends ConstraintChecker {
 		aliases.addAlias(instr.getArgOperands().get(0), labels[3]);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+		RelationshipDelta deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		
-		assertEquals(0, deltas.fst().numberOfChanges());	
-		assertEquals(new AliasDelta(), deltas.snd());
+		assertEquals(0, deltas.numberOfChanges());	
 		assertNull(error);
 	}
 	
@@ -162,16 +160,15 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Constraint cons = new Constraint("", op, new TruePredicate(), new TruePredicate(), effects);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+		RelationshipDelta deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[5], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
-		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eff2));
+		assertEquals(2, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eff1));
+		assertEquals(SevenPointLattice.TRU, deltas.getValue(eff2));
 		
-		assertEquals(expected, deltas.snd());
 
 		assertNull(error);			
 	}
@@ -199,16 +196,15 @@ public class TestSingleConstraint extends ConstraintChecker {
 
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+		RelationshipDelta deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 
-		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eff2));
+		assertEquals(2, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eff1));
+		assertEquals(SevenPointLattice.TRU, deltas.getValue(eff2));
 		
-		assertEquals(expected, deltas.snd());
 		
 		assertNull(error);			
 	}
@@ -234,15 +230,14 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getArgOperands().get(0), labels[2]);	
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+		RelationshipDelta deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
-		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eff2));
-		assertEquals(expected, deltas.snd());
+		assertEquals(2, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eff1));
+		assertEquals(SevenPointLattice.TRU, deltas.getValue(eff2));
 	
 		assertNull(error);			
 	}
@@ -270,17 +265,16 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getArgOperands().get(0), labels[5]);	
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+		RelationshipDelta deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[5]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[5]});
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[4], labels[5]});
 
-		assertEquals(3, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eff1));
-		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff2));
-		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff3));
-		assertEquals(expected, deltas.snd());
+		assertEquals(3, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eff1));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.getValue(eff2));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.getValue(eff3));
 
 		assertNull(error);			
 	}
@@ -308,19 +302,18 @@ public class TestSingleConstraint extends ConstraintChecker {
 		expected.addChange(instr.getArgOperands().get(0), labels[2]);	
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
+		RelationshipDelta deltas = runSingleConstraint(env, cons, instr);
 		FusionErrorReport error = checkSingleConstraint(env, cons, instr);
 		Relationship eff1 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]});
 		Relationship eff2 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[1]});
 		Relationship eff3 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[2]});
 		Relationship eff4 = new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[3], labels[2]});
 
-		assertEquals(4, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eff1));
-		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff2));
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eff3));
-		assertEquals(SevenPointLattice.TRU_STAR, deltas.fst().getValue(eff4));
-		assertEquals(expected, deltas.snd());
+		assertEquals(4, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eff1));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.getValue(eff2));
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eff3));
+		assertEquals(SevenPointLattice.TRU_STAR, deltas.getValue(eff4));
 
 		assertNull(error);			
 	}

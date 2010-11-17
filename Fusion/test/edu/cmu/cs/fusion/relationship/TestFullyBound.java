@@ -11,7 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
@@ -24,7 +23,6 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.Operation;
 import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.RelEffect;
-import edu.cmu.cs.fusion.constraint.SpecDelta;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
@@ -164,11 +162,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, noEffectCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, noEffectCons);
 		
-		assertEquals(0, deltas.fst().numberOfChanges());
+		assertEquals(0, deltas.numberOfChanges());
 		assertFalse(checkFullyBound(env, partialSub, noEffectCons));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
 	}
 
 	@Test
@@ -199,15 +196,14 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, severalEffectCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, severalEffectCons);
 
 		Relationship eRel1 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 		Relationship eRel2 = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
 
-		assertEquals(2, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel1));
-		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eRel2));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(2, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel1));
+		assertEquals(SevenPointLattice.TRU, deltas.getValue(eRel2));
 	
 		assertFalse(checkFullyBound(env, partialSub, severalEffectCons));
 	}
@@ -240,13 +236,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, severalEffectCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, severalEffectCons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[1], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.TRU, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.TRU, deltas.getValue(eRel));
 	
 		assertFalse(checkFullyBound(env, partialSub, severalEffectCons));
 	}
@@ -266,13 +261,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 		
 		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
@@ -293,11 +287,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 		
 		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
@@ -320,11 +313,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 		
 		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
@@ -336,11 +328,10 @@ public class TestFullyBound extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		this.variant = Variant.PRAGMATIC_VARIANT;
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons);
+		RelationshipDelta deltas = runFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons);
 
-		assertEquals(0, deltas.fst().numberOfChanges());
+		assertEquals(0, deltas.numberOfChanges());
 		assertFalse(checkFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons));
-		assertEquals(SpecDelta.createBottomSpecDelta(utils.getSub(1)), deltas.snd());
 	}
 
 	@Test
@@ -357,13 +348,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.PRAGMATIC_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createBottomSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eRel));
 	
 		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
@@ -385,13 +375,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 		
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
@@ -412,11 +401,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
@@ -439,11 +427,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 		
 		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
@@ -455,11 +442,10 @@ public class TestFullyBound extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		this.variant = Variant.SOUND_VARIANT;
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons);
+		RelationshipDelta deltas = runFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons);
 
-		assertEquals(0, deltas.fst().numberOfChanges());
+		assertEquals(0, deltas.numberOfChanges());
 		assertFalse(checkFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons));
-		assertEquals(SpecDelta.createBottomSpecDelta(utils.getSub(1)), deltas.snd());
 	}
 
 	@Test
@@ -478,13 +464,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eRel));
 
 		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
@@ -503,11 +488,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eRel));
 
 		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
@@ -529,11 +513,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.SOUND_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eRel));
 
 		assertTrue(checkFullyBound(env, partialSub, cons));
 	}
@@ -554,13 +537,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, possCons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
@@ -580,13 +562,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, possCons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
@@ -607,11 +588,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, possCons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
@@ -635,11 +615,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, possCons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertFalse(checkFullyBound(env, partialSub, possCons));
 	}
@@ -664,11 +643,10 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, possCons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, possCons);
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL, deltas.getValue(eRel));
 
 		assertTrue(checkFullyBound(env, partialSub, possCons));
 	}
@@ -680,11 +658,10 @@ public class TestFullyBound extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false).applyChangesFromDelta(startRels);
 		
 		this.variant = Variant.COMPLETE_VARIANT;
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons);
+		RelationshipDelta deltas = runFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons);
 
-		assertEquals(0, deltas.fst().numberOfChanges());
+		assertEquals(0, deltas.numberOfChanges());
 		assertFalse(checkFullyBound(new TestEnvironment(rels, variant), utils.getSub(1), cons));
-		assertEquals(SpecDelta.createBottomSpecDelta(utils.getSub(1)), deltas.snd());
 
 	}
 
@@ -702,13 +679,12 @@ public class TestFullyBound extends ConstraintChecker {
 
 		this.variant = Variant.COMPLETE_VARIANT;
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
-		Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, partialSub, cons);
+		RelationshipDelta deltas = runFullyBound(env, partialSub, cons);
 
 		Relationship eRel = new Relationship(utils.getRelation(1), new ObjectLabel[]{labels[6], labels[1]});
 
-		assertEquals(1, deltas.fst().numberOfChanges());
-		assertEquals(SevenPointLattice.FAL_STAR, deltas.fst().getValue(eRel));
-		assertEquals(SpecDelta.createSubstitutionSpecDelta(partialSub), deltas.snd());
+		assertEquals(1, deltas.numberOfChanges());
+		assertEquals(SevenPointLattice.FAL_STAR, deltas.getValue(eRel));
 		assertFalse(checkFullyBound(env, partialSub, cons));
 	}
 }

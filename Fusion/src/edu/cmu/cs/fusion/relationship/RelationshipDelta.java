@@ -103,6 +103,18 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	 * @param other
 	 */
 	private void join(RelationshipDelta other) {
+		for (Entry<Relationship, SevenPointLattice> entry : rels.entrySet()) {
+			entry.setValue(entry.getValue().join(other.getValue(entry.getKey())));
+		}
+		
+		for (Entry<Relationship, SevenPointLattice> entry : other.rels.entrySet()) {
+			//if we don't have this relationship, then it must be star. Save the cost
+			//of trying to find it again. Hashing is expensive!
+			if (!rels.containsKey(entry.getKey()))
+				rels.put(entry.getKey(), entry.getValue().join(SevenPointLattice.STAR));
+		}
+		
+/*		
 		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
 		combinedRels.addAll(other.rels.keySet());
 		
@@ -111,6 +123,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 			SevenPointLattice otherVal = other.getValue(rel);
 			rels.put(rel, myVal.join(otherVal));
 		}
+*/
 	}
 
 		

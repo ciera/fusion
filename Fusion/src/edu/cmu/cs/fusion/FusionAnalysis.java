@@ -99,6 +99,10 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		try {
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
 //			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
+
+			if (analysisInput.getProgressMonitor().isSome())
+				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + compUnit.getElementName());
+		
 		} catch (JavaModelException e) {
 			log.log(Level.SEVERE, "Could not create type hierarchy", e);
 			majorErrorOccured = true;
@@ -118,6 +122,9 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			return;
 		}
 		try {
+			if (analysisInput.getProgressMonitor().isSome())
+				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + methodDecl.resolveBinding().toString());
+
 			TypeHierarchy types = sharedData.getHierarchy();
 			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
 			MayPointsToLatticeOps ops = new MayPointsToLatticeOps(types);

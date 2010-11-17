@@ -20,7 +20,6 @@ import edu.cmu.cs.fusion.alias.AliasDelta;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
-import edu.cmu.cs.fusion.constraint.SpecDelta;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 
@@ -47,19 +46,14 @@ public class ConstraintChecker {
 	 */
 	public <AC extends AliasContext> Pair<AC, RelationshipContext> runGenericTransfer(FusionEnvironment<AC> env, TACInstruction instr) {
 		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
-		List<AliasDelta> aliasDeltas = new LinkedList<AliasDelta>();
 		
 		for (Constraint cons : constraints) {
-			Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);
-			relDeltas.add(deltas.fst());
-			aliasDeltas.add(deltas.snd());
+			relDeltas.add(runSingleConstraint(env, cons, instr));
 		}
 		
 		RelationshipDelta relDelta = !relDeltas.isEmpty() ? RelationshipDelta.joinAlt(relDeltas) : new RelationshipDelta();
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
 
-//		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);		
-//		AC aliasContext = env.makeNewAliases(aliasDelta);
 		AC aliasContext = env.makeNewAliases(new AliasDelta());
 		
 		return new Pair<AC, RelationshipContext>(aliasContext, relContext);
@@ -90,21 +84,18 @@ public class ConstraintChecker {
 	 * @return a relationship delta for all possible aliasing configurations, assuming the constraint
 	 * triggers.
 	 */
-	protected Pair<RelationshipDelta, AliasDelta> runSingleConstraint(FusionEnvironment<?> env,
+	protected RelationshipDelta runSingleConstraint(FusionEnvironment<?> env,
 			Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, method, instr);
 		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
-		List<AliasDelta> specDeltas = new LinkedList<AliasDelta>();
 		
 		if (boundVars == null)
-			return new Pair<RelationshipDelta, AliasDelta>(new RelationshipDelta(), new AliasDelta());
+			return new RelationshipDelta();
 		
 		List<Substitution> subs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
 		
 		for (Substitution sub : subs) {
-			Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, sub, cons);
-			relDeltas.add(deltas.fst());
-			specDeltas.add(deltas.snd().turnToSource(boundVars));
+			relDeltas.add(runFullyBound(env, sub, cons));
 		}
 		
 		RelationshipDelta relDelta;
@@ -113,9 +104,8 @@ public class ConstraintChecker {
 			relDelta = RelationshipDelta.getTrueBottom();
 		else
 			relDelta = RelationshipDelta.join(relDeltas);
-		AliasDelta specDelta = AliasDelta.join(specDeltas);
 		
-		return new Pair<RelationshipDelta, AliasDelta>(relDelta, specDelta);
+		return relDelta;
 	}
 
 	
@@ -127,16 +117,15 @@ public class ConstraintChecker {
 	 * @param instr The instruction to report errors on
 	 * @return Any change effects
 	 */
-	protected Pair<RelationshipDelta, SpecDelta> runFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {	
+	protected RelationshipDelta runFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {	
 		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
 		
 		if (trigger == ThreeValue.FALSE) {
-			return new Pair<RelationshipDelta, SpecDelta>(RelationshipDelta.getTrueBottom(), SpecDelta.createBottomSpecDelta(partialSubs));
+			return RelationshipDelta.getTrueBottom();
 		}
 		else  {
 			RelationshipDelta delta = new RelationshipDelta();
-			SpecDelta specs;
 			
 			//now make the effects
 			for (Effect effect : cons.getEffects())
@@ -145,12 +134,8 @@ public class ConstraintChecker {
 			if (trigger == ThreeValue.UNKNOWN)
 				delta = delta.polarize();
 			
-			if (trigger == ThreeValue.UNKNOWN && variant.isPragmatic())
-				specs = SpecDelta.createBottomSpecDelta(partialSubs);
-			else
-				specs = SpecDelta.createSubstitutionSpecDelta(partialSubs);
 						
-			return new Pair<RelationshipDelta, SpecDelta>(delta, specs);
+			return delta;
 		}
 	}
 	
