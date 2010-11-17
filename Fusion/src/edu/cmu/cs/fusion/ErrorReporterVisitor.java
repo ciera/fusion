@@ -57,44 +57,34 @@ public class ErrorReporterVisitor extends ASTVisitor {
 
 	@Override
 	public void endVisit(ClassInstanceCreation node) {
-		check(node);
+		check(tac.instruction(node), node);
 	}
 
 	@Override
 	public void endVisit(ConstructorInvocation node) {
-		check(node);
+		check(tac.instruction(node), node);
 	}
 	
 
 	@Override
 	public void endVisit(MethodInvocation node) {
-		check(node);
+		check(tac.instruction(node), node);
 	}
-
+	
 	@Override
 	public void endVisit(ReturnStatement node) {
 		TACInstruction instr = node.getExpression() == null ? new DefaultReturnInstruction() : tac.instruction(node);
-		AliasContext aliases = fa.getPointsToResultsAfter(node);
-		RelationshipContext rels = fa.getRelResultsBefore(node);
-		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), aliases);
-		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
-			
-		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
-		
-		for (FusionErrorReport err : errors) {
-			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			reportError(err, sev, node);
-		}
+		check(instr, node);
 	}
 
 	@Override
 	public void endVisit(SuperConstructorInvocation node) {
-		check(node);
+		check(tac.instruction(node), node);
 	}
 
 	@Override
 	public void endVisit(SuperMethodInvocation node) {
-		check(node);
+		check(tac.instruction(node), node);
 	}
 
 	
@@ -118,12 +108,16 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		}
 	}
 
-	private void check(ASTNode node) {
-		TACInstruction instr = tac.instruction(node);
+	private void check(TACInstruction instr, ASTNode node) {
 		AliasContext aliases = fa.getPointsToResultsAfter(node);
 		RelationshipContext rels = fa.getRelResultsBefore(node);
 		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), aliases);
 		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+		
+		if (rels.isBottom()) {
+			log.log(Level.WARNING, "Found an unanalyzed node: " + node.toString());
+			return;
+		}
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
@@ -148,8 +142,8 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		
 		log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 		log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			
-		log.log(Level.INFO, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
+		log.log(Level.CONFIG, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
 		for (Substitution failure : err.getFailingVars())
-			log.log(Level.INFO, "Failing subtitution " + failure.toString());
+			log.log(Level.CONFIG, "Failing subtitution " + failure.toString());
 	}
 }
