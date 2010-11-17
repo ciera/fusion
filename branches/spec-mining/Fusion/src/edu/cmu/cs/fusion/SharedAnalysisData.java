@@ -20,8 +20,10 @@
 package edu.cmu.cs.fusion;
 
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -30,6 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 
+import edu.cmu.cs.crystal.internal.ShortFormatter;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -54,22 +57,26 @@ public class SharedAnalysisData {
 //		base.getParent().setLevel(Level.ALL);
 		
 		if (!setLoggers) {
-			//The core logger. Should be at warnings only under most circumstances
-			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
-			core.setLevel(Level.WARNING);
-			
 			Formatter simpleFormatter = new Formatter() {
 				public String format(LogRecord record) {
 					return record.getMessage();
 				}
 			};
 
+			//The core logger. Should be at warnings only under most circumstances
+			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
+			core.setLevel(Level.WARNING);
+			Handler handler = new ConsoleHandler();
+			handler.setFormatter(new ShortFormatter());
+			core.addHandler(handler);
+			core.setUseParentHandlers(false);
+
 			//The reports logger. Set to info if we want to generate reports.
 			warn = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
 			warn.setLevel(Level.INFO);
 			
 			try {
-				FileHandler handler = new FileHandler("%h/fusion_warnings.txt");
+				handler = new FileHandler("%h/fusion_warnings.txt");
 				handler.setFormatter(simpleFormatter);
 				warn.addHandler(handler);
 				warn.setUseParentHandlers(false);
@@ -83,7 +90,7 @@ public class SharedAnalysisData {
 			checks.setLevel(Level.INFO);
 			
 			try {
-				FileHandler handler = new FileHandler("%h/fusion_checks.txt");
+				handler = new FileHandler("%h/fusion_checks.txt");
 				handler.setFormatter(simpleFormatter);
 				checks.addHandler(handler);
 				checks.setUseParentHandlers(false);
