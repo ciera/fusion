@@ -60,10 +60,7 @@ public class DefaultObjectLabel implements ObjectLabel {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + label;
-		return result;
+		return label;
 	}
 
 	public String toString() {return "L" + Integer.toString(label);}
