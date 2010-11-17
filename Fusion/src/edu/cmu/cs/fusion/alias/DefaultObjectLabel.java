@@ -24,20 +24,35 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 public class DefaultObjectLabel implements ObjectLabel {
 	private static int LABELINDEX = 0;
 	private int label;
-	private ITypeBinding type;
 	private boolean isSummary;
 	private boolean isTemp;
+	private String name;
 	
 	public DefaultObjectLabel(ITypeBinding type, boolean isSummaryLabel) {
-		this(type, isSummaryLabel, true);
+		this(type.getQualifiedName(), isSummaryLabel, true);
 	}
 
 	public DefaultObjectLabel(ITypeBinding type, boolean isSummaryLabel, boolean isTemp) {
+		this(type.getQualifiedName(), isSummaryLabel, isTemp);
+	}
+	
+	public DefaultObjectLabel(String type, boolean isSummaryLabel) {
+		this(type, isSummaryLabel, true);
+	}
+
+	public DefaultObjectLabel(String type, boolean isSummaryLabel, boolean isTemp) {
 		label = ++LABELINDEX;
 		this.isSummary = isSummaryLabel;
-		this.type = type;
+		name = type;
 		this.isTemp = isTemp;
 	}
+	
+
+	public String getTypeName() {		
+		return name;
+	}
+
+	
 	/* (non-Javadoc)
 	 * @see edu.cmu.cs.crystal.analysis.alias.ObjectLabel#isSummary()
 	 */
@@ -63,14 +78,6 @@ public class DefaultObjectLabel implements ObjectLabel {
 			return false;
 		final DefaultObjectLabel other = (DefaultObjectLabel) obj;
 		return label == other.label;
-	}
-
-	
-	/* (non-Javadoc)
-	 * @see edu.cmu.cs.crystal.analysis.alias.ObjectLabel#getType()
-	 */
-	public ITypeBinding getType() {
-		return type;
 	}
 
 	public boolean isTemporary() {

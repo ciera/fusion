@@ -112,7 +112,7 @@ public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Var
 		}
 		
 		for (ObjectLabel label : allLabels) {
-			if (types.isSubtypeCompatible(label.getType().getQualifiedName(), varType.getQualifiedName()))
+			if (types.isSubtypeCompatible(label.getTypeName(), varType.getQualifiedName()))
 				varLabels.add(label);
 		}
 	}

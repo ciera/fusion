@@ -89,7 +89,7 @@ public class FusionViewer extends Viewer {
 			String[] arr = new String[labels.size()];
 			int ndx = 0;
 			for (ObjectLabel lab : labels) {
-				arr[ndx] = lab.toString() + " : " + lab.getType().getQualifiedName();
+				arr[ndx] = lab.toString() + " : " + lab.getTypeName();
 				ndx++;
 			}
 			return arr;
