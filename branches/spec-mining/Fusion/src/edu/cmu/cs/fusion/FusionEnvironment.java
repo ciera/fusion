@@ -156,7 +156,7 @@ public class FusionEnvironment<AC extends AliasContext> {
 			String specType = fv.getType(spec);
 						
 			List<Substitution> newPair = new LinkedList<Substitution>();
-			assert(labels != null);
+			assert labels != null : "labels was null for the variable " + boundVar.getSource().getSourceString();
 			for (Substitution sub : otherSubs) {
 				for (ObjectLabel label : labels) {
 					MatchType mType = checkTypes(label, specType);

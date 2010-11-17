@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
@@ -208,7 +209,13 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		MayPointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
 		
-		String vType = instr.getTarget().resolveType().getQualifiedName();
+		ITypeBinding binding = instr.getTarget().resolveType();
+		String vType;
+		if (binding.isTypeVariable()) {
+			vType = binding.getTypeBounds().length == 0 ? "java.lang.Object" : binding.getTypeBounds()[0].getQualifiedName();
+		}
+		else
+			vType = binding.getQualifiedName();
 		
 		assert(value.getAliases(instr.getOperand()) != null);
 		
