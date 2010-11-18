@@ -49,6 +49,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private SharedAnalysisData sharedData;
 	private boolean majorErrorOccured = false;
 	private DeclarativeRetriever retriever;
+	private String compUnitName;
 
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -97,11 +98,10 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public void beforeAllMethods(ICompilationUnit compUnit,
 			CompilationUnit rootNode) {
 		try {
+			compUnitName = compUnit.getElementName();
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
 //			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
 
-			if (analysisInput.getProgressMonitor().isSome())
-				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + compUnit.getElementName());
 		
 		} catch (JavaModelException e) {
 			log.log(Level.SEVERE, "Could not create type hierarchy", e);
@@ -123,7 +123,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		}
 		try {
 			if (analysisInput.getProgressMonitor().isSome())
-				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + methodDecl.resolveBinding().toString());
+				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + compUnitName  + " " + methodDecl.resolveBinding().toString());
 
 			TypeHierarchy types = sharedData.getHierarchy();
 			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
@@ -146,7 +146,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 	protected void reportResults(MethodDeclaration methodDecl, ConstraintChecker checker) {
 		EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac);
+		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, compUnitName);
 		methodDecl.accept(errVisitor);
 	}
 
