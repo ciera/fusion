@@ -35,14 +35,16 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	private ConstraintChecker checker;
 	private EclipseTAC tac;
 	private FusionAnalysis fa;
+	private String className;
 	private Logger log = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 	private Logger warningsLog = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
 
-	public ErrorReporterVisitor(FusionAnalysis analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac) {
+	public ErrorReporterVisitor(FusionAnalysis analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, String type) {
 		this.reporter = reporter;
 		this.checker = constraintChecker;
 		this.fa = analysis;
 		this.tac = tac;
+		this.className = type;
 	}
 
 	@Override
@@ -115,7 +117,7 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 		
 		if (rels.isBottom()) {
-			log.log(Level.WARNING, "Found an unanalyzed node: " + node.toString());
+			log.log(Level.WARNING, "Found an unanalyzed node in " + className + ": " + node.toString());
 			return;
 		}
 		
