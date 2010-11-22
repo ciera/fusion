@@ -1,5 +1,12 @@
 package edu.cmu.cs.fusion;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,7 +57,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private boolean majorErrorOccured = false;
 	private DeclarativeRetriever retriever;
 	private String compUnitName;
-
+	private List<String> methodBlacklist = new ArrayList<String>();
+	
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
 	 * 
@@ -60,6 +68,33 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		this.variant = variant;
 		sharedData = new SharedAnalysisData();
 		log = Logger.getLogger(FUSION_LOGGER);
+		
+		File file = new File("/tmp/methods.blacklist");		
+		if (file.exists()) {
+			BufferedReader r = null;
+			try {
+				r = new BufferedReader(new FileReader(file));
+				String line = r.readLine();
+				while (line != null) {
+					methodBlacklist.add(line);
+					line = r.readLine();
+				}
+			}
+			catch (FileNotFoundException e) {
+				log.log(Level.WARNING, "Couldn't find blacklist at "+file.getAbsolutePath());
+			}
+			catch (IOException e) {
+				log.log(Level.WARNING, "Couldn't read blacklist at "+file.getAbsolutePath());
+			}
+			try {
+				if (r != null)
+					r.close();
+			} catch (IOException e) {
+				log.log(Level.WARNING, "Couldn't close blacklist at "+file.getAbsolutePath());
+			}
+		}
+		else
+			log.log(Level.WARNING, "Couldn't find blacklist at "+file.getAbsolutePath());
 	}
 
 	public void beforeAllCompilationUnits() {
@@ -100,9 +135,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		try {
 			compUnitName = compUnit.getElementName();
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
-//			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
-
-		
 		} catch (JavaModelException e) {
 			log.log(Level.SEVERE, "Could not create type hierarchy", e);
 			majorErrorOccured = true;
@@ -121,7 +153,18 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			log.log(Level.SEVERE, "something was wrong in initial setup, check log above");
 			return;
 		}
+		
+		String methodString = compUnitName + " " + methodDecl.resolveBinding().toString();
+		for (String blacklisted : methodBlacklist) {
+			if (methodString.matches(blacklisted)) {
+				log.log(Level.SEVERE, "Skipping method because it's blacklisted: "+ methodString);	
+				return;
+			}
+		}
+
 		try {
+			long startTime = System.currentTimeMillis();
+
 			if (analysisInput.getProgressMonitor().isSome())
 				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + compUnitName  + " " + methodDecl.resolveBinding().toString());
 
@@ -138,6 +181,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
 			reportResults(methodDecl, tfR.getConstraintChecker());
+			
+			long totalTime = System.currentTimeMillis() - startTime;
+			if (totalTime > 60000)  // more than one minute
+				log.log(Level.SEVERE, "Checking "+ methodString + " took long: " + (((double)totalTime)/60000) + " minutes");
+
 		
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);

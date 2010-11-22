@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 
+import edu.cmu.cs.crystal.internal.Crystal;
 import edu.cmu.cs.crystal.internal.ShortFormatter;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
@@ -49,24 +50,25 @@ public class SharedAnalysisData {
 	static private Logger checks;
 	static private boolean setLoggers;
 	
-	public SharedAnalysisData() {
-		//set up the base logger to actually log stuff. Otherwise, Eclipse decides that in run mode,
-		//it's just going to ignore all logging requests.
-//		Logger base = Logger.getLogger(FusionAnalysis.BASE_FUSION_LOGGER);
-//		base.setLevel(Level.ALL);
-//		base.getParent().setLevel(Level.ALL);
-		
+	public SharedAnalysisData() {		
 		if (!setLoggers) {
 			Formatter simpleFormatter = new Formatter() {
 				public String format(LogRecord record) {
 					return record.getMessage();
 				}
 			};
+			
+			Logger crystalLogger = Logger.getLogger(Crystal.class.getName());
+			crystalLogger.setLevel(Level.WARNING);
+			Handler handler = new ConsoleHandler();
+			handler.setFormatter(new ShortFormatter());
+			crystalLogger.addHandler(handler);
+			crystalLogger.setUseParentHandlers(false);
 
 			//The core logger. Should be at warnings only under most circumstances
 			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 			core.setLevel(Level.WARNING);
-			Handler handler = new ConsoleHandler();
+			handler = new ConsoleHandler();
 			handler.setFormatter(new ShortFormatter());
 			core.addHandler(handler);
 			core.setUseParentHandlers(false);

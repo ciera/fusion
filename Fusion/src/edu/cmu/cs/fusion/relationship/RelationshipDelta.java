@@ -1,8 +1,8 @@
 package edu.cmu.cs.fusion.relationship;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,9 +19,8 @@ import edu.cmu.cs.fusion.ThreeValue;
  * @author ciera
  *
  */
-public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPointLattice>> {
-	private Map<Relationship, SevenPointLattice> rels;
-	
+public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPointLattice>> {	
+	private Map<Relationship, SevenPointLattice> rels;	
 	static private RelationshipDelta FULL_BOT = new RelationshipDelta(true);
 	
 	static public RelationshipDelta getTrueBottom() {return FULL_BOT;}
@@ -36,7 +35,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	 * Creates a new delta where everything maps to star.
 	 */
 	public RelationshipDelta() {
-		rels = new HashMap<Relationship, SevenPointLattice>();
+		rels = new LinkedHashMap<Relationship, SevenPointLattice>();
 	}
 
 	/**
@@ -74,28 +73,56 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		return polar;
 	}
 
+	/**
+	 * Joins a list of relationship deltas.
+	 * 
+	 * This algorithm needs to be as fast as possible. The calls to join(RelationshipDelta) are fairly
+	 * expensive as they have to go through all of the relationships in both deltas to be joined. We can't
+	 * do any better than linear there. Therefore, this method needs to avoid as many of those calls as possible.
+	 * It attempts to do so by skipping items in the list that are either fully bot or fully star (the default state).
+	 * Bots are skipped entirely. All-stars are remembered, and then the result is polarized if any existed.
+	 * @param deltas
+	 * @return
+	 */
 	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();;
-		boolean hasChanges;
+		boolean hasAllStars = false, found = false;
 		
 		assert(!deltas.isEmpty());
 		
-		RelationshipDelta first = itr.next();
+		RelationshipDelta first = null;
 		
-		hasChanges = first != FULL_BOT;
-		if (first != FULL_BOT) {
-			joined.rels = new HashMap<Relationship, SevenPointLattice>(first.rels);
+		//find the first one that isn't either a bot or an all-stars
+		while (itr.hasNext() && !found) {
+			 first = itr.next();	
+			 found = first != FULL_BOT && !first.rels.isEmpty();
+			 hasAllStars = hasAllStars | (first != FULL_BOT && first.rels.isEmpty());
 		}
+
+		if (!found && hasAllStars)
+			return joined;
+		else if (!found && !hasAllStars)
+				return FULL_BOT;	
+		else
+			joined.rels = new LinkedHashMap<Relationship, SevenPointLattice>(first.rels);
 		
 		while (itr.hasNext()) {
 			RelationshipDelta next = itr.next();
-			if (next != FULL_BOT) {
+			if (next == FULL_BOT) //bot case, ignore everything
+				continue;
+			if (next.rels.isEmpty()) //top case, polarize at the end.
+				hasAllStars = true;
+			else
 				joined.join(next);
-				hasChanges = true;
-			}
 		}
-		return hasChanges ? joined : FULL_BOT;
+		
+		if (hasAllStars) {
+			for (Entry<Relationship, SevenPointLattice> entry : joined.rels.entrySet())
+				entry.setValue(entry.getValue().polarize());
+		}
+
+		return joined;
 	}
 	
 	/**
@@ -111,7 +138,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 			//if we don't have this relationship, then it must be star. Save the cost
 			//of trying to find it again. Hashing is expensive!
 			if (!rels.containsKey(entry.getKey()))
-				rels.put(entry.getKey(), entry.getValue().join(SevenPointLattice.STAR));
+				setRelationship(entry.getKey(), entry.getValue().join(SevenPointLattice.STAR));
 		}
 	}
 
@@ -127,7 +154,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		
 		hasChanges = first != FULL_BOT;
 		if (first != FULL_BOT) {
-			joined.rels = new HashMap<Relationship, SevenPointLattice>(first.rels);
+			joined.rels = new LinkedHashMap<Relationship, SevenPointLattice>(first.rels);
 		}
 		
 		while (itr.hasNext()) {
@@ -147,7 +174,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		for (Relationship rel : combinedRels) {
 			SevenPointLattice myVal = getValue(rel);
 			SevenPointLattice otherVal = other.getValue(rel);
-			rels.put(rel, myVal.joinAlt(otherVal));
+			setRelationship(rel, myVal.joinAlt(otherVal));
 		}
 	}
 
@@ -161,7 +188,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		for (Relationship rel : combinedRels) {
 			SevenPointLattice myVal = getValue(rel);
 			SevenPointLattice otherVal = makeEffects.getValue(rel);
-			rels.put(rel, myVal.override(otherVal));
+			setRelationship(rel, myVal.override(otherVal));
 		}
 	}
 
@@ -229,7 +256,6 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 
 	public Iterator<Entry<Relationship, SevenPointLattice>> iterator() {
 		assert (this != FULL_BOT);
-//			return new HashMap<Relationship, SevenPointLattice>().entrySet().iterator();
 		return rels.entrySet().iterator();
 	}
 }
