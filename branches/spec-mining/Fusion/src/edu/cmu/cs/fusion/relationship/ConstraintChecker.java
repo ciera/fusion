@@ -103,7 +103,7 @@ public class ConstraintChecker {
 		if (relDeltas.isEmpty())
 			relDelta = RelationshipDelta.getTrueBottom();
 		else
-			relDelta = RelationshipDelta.join(relDeltas);
+			relDelta = relDeltas.size() > 1 ? RelationshipDelta.join(relDeltas) : relDeltas.get(0);
 		
 		return relDelta;
 	}
