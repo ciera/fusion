@@ -59,7 +59,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private String compUnitName;
 	private List<String> methodBlacklist = new ArrayList<String>();
 	private long startTime;
-	private MethodDeclaration currentMethod;
 	
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -133,7 +132,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public void checkIfTimeout() {
 		long timeTaken = System.currentTimeMillis() - startTime;
 		if (timeTaken > 30000)
-			throw new TimeoutException("TIMEOUT: Cancelling check of method " + currentMethod.resolveBinding().toString() + " in " + compUnitName + "  after " + ((double)timeTaken)/1000 + " seconds");			
+			throw new TimeoutException(timeTaken/1000 );			
 	}
 
 	@Override
@@ -157,7 +156,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			log.log(Level.SEVERE, "something was wrong in initial setup, check log above");
 			return;
 		}
-		currentMethod = methodDecl;
 		String methodString = compUnitName + " " + methodDecl.resolveBinding().toString();
 		for (String blacklisted : methodBlacklist) {
 			if (methodString.matches(blacklisted)) {
@@ -186,7 +184,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			
 			reportResults(methodDecl, tfR.getConstraintChecker());
 		} catch (TimeoutException e) {
-			log.log(Level.SEVERE, e.getMessage());
+			log.log(Level.SEVERE, "Cancelling check of method " + methodDecl.resolveBinding().toString() + " in " + compUnitName + "  after " + e.getTime());
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
 		}
