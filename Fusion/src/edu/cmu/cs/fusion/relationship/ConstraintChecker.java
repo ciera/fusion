@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Pair;
@@ -63,9 +66,8 @@ public class ConstraintChecker {
 		List<FusionErrorReport> errors = new LinkedList<FusionErrorReport>();
 		FusionErrorReport err;
 		
-		assert(instr != null);
+		assert(instr != null);		
 		
-		matchLogger.log(Level.INFO, "***" + instr.toString() + "***\n");
 		for (Constraint cons : constraints) {
 			if (!(cons.getRequires() instanceof TruePredicate)) {
 				err = checkSingleConstraint(env, cons, instr);
@@ -158,7 +160,19 @@ public class ConstraintChecker {
 		if (subs.isEmpty())
 			return null;
 		
-		matchLogger.log(Level.INFO, cons.toString());
+		ASTNode node = instr.getNode();
+		if (node != null) {
+			CompilationUnit cu = (CompilationUnit) node.getRoot();
+			String methodString = cu.getJavaElement().getPath().toFile().getAbsolutePath();
+			methodString += "@" + Integer.toString(cu.getLineNumber(node.getStartPosition()));
+			methodString += "@" + Integer.toString(node.getStartPosition());
+			methodString += "@" + Integer.toString(node.getStartPosition() + node.getLength());			
+			matchLogger.log(Level.INFO, "CHECK@" + methodString + "@" + cons.toString().replaceAll("\n", " ") + "\n");
+		}		
+		else {
+			matchLogger.log(Level.WARNING, "Could not find the ASTNode for " + instr.toString());
+		}
+
 		
 		List<Substitution> failingSubs = new LinkedList<Substitution>();
 

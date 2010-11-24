@@ -58,6 +58,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private DeclarativeRetriever retriever;
 	private String compUnitName;
 	private List<String> methodBlacklist = new ArrayList<String>();
+	private long startTime;
+	private MethodDeclaration currentMethod;
 	
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -128,6 +130,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 
 	
+	public void checkIfTimeout() {
+		long timeTaken = System.currentTimeMillis() - startTime;
+		if (timeTaken > 30000)
+			throw new TimeoutException("TIMEOUT: Cancelling check of method " + currentMethod.resolveBinding().toString() + " in " + compUnitName + "  after " + ((double)timeTaken)/1000 + " seconds");			
+	}
 
 	@Override
 	public void beforeAllMethods(ICompilationUnit compUnit,
@@ -136,9 +143,6 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			compUnitName = compUnit.getElementName();
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
 		} catch (JavaModelException e) {
-			log.log(Level.SEVERE, "Could not create type hierarchy", e);
-			majorErrorOccured = true;
-		} catch (CoreException e) {
 			log.log(Level.SEVERE, "Could not create type hierarchy", e);
 			majorErrorOccured = true;
 		}
@@ -153,7 +157,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			log.log(Level.SEVERE, "something was wrong in initial setup, check log above");
 			return;
 		}
-		
+		currentMethod = methodDecl;
 		String methodString = compUnitName + " " + methodDecl.resolveBinding().toString();
 		for (String blacklisted : methodBlacklist) {
 			if (methodString.matches(blacklisted)) {
@@ -163,7 +167,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		}
 
 		try {
-			long startTime = System.currentTimeMillis();
+			startTime = System.currentTimeMillis();
 
 			if (analysisInput.getProgressMonitor().isSome())
 				analysisInput.getProgressMonitor().unwrap().subTask("Analyzing " + compUnitName  + " " + methodDecl.resolveBinding().toString());
@@ -181,12 +185,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
 			reportResults(methodDecl, tfR.getConstraintChecker());
-			
-			long totalTime = System.currentTimeMillis() - startTime;
-			if (totalTime > 60000)  // more than one minute
-				log.log(Level.SEVERE, "Checking "+ methodString + " took long: " + (((double)totalTime)/60000) + " minutes");
-
-		
+		} catch (TimeoutException e) {
+			log.log(Level.SEVERE, e.getMessage());
 		} catch (FusionException e) {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
 		}
@@ -207,11 +207,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public AliasContext getPointsToResultsBefore(ASTNode node) {
-		return fa.getResultsBefore(node).fst();
+		return fa.getResultsBeforeCFG(node).fst();
 	}
 	
 	public AliasContext getPointsToResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node).fst();		
+		return fa.getResultsAfterCFG(node).fst();		
 	}
 
 	public RelationshipContext getStartingResults(MethodDeclaration d) {
@@ -223,11 +223,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public RelationshipContext getRelResultsBefore(ASTNode node) {
-		return fa.getResultsBefore(node).snd();
+		return fa.getResultsBeforeCFG(node).snd();
 	}
 	
 	public Pair<? extends AliasContext, RelationshipContext> getResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node);
+		return fa.getResultsAfterCFG(node);
 	}
 	
 	public Pair<? extends AliasContext, RelationshipContext> getResultsBeforeAST(ASTNode node) {
@@ -236,7 +236,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 
 	public RelationshipContext getRelResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node).snd();		
+		return fa.getResultsAfterCFG(node).snd();		
 	}
 
 	public RelationshipContext getSpecificRelResultsAfter(ASTNode node, ILabel label) {

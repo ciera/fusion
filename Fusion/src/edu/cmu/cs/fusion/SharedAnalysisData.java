@@ -34,6 +34,7 @@ import org.eclipse.jdt.core.JavaModelException;
 
 import edu.cmu.cs.crystal.internal.Crystal;
 import edu.cmu.cs.crystal.internal.ShortFormatter;
+import edu.cmu.cs.crystal.internal.StandardAnalysisReporter;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -65,6 +66,9 @@ public class SharedAnalysisData {
 			crystalLogger.addHandler(handler);
 			crystalLogger.setUseParentHandlers(false);
 
+			Logger regressionLogger = Logger.getLogger(StandardAnalysisReporter.REGRESSION_LOGGER);
+			regressionLogger.setLevel(Level.WARNING);
+			
 			//The core logger. Should be at warnings only under most circumstances
 			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 			core.setLevel(Level.WARNING);
