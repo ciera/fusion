@@ -53,8 +53,14 @@ public class ConstraintChecker {
 		for (Constraint cons : constraints) {
 			relDeltas.add(runSingleConstraint(env, cons, instr));
 		}
+
+		RelationshipDelta relDelta;
 		
-		RelationshipDelta relDelta = !relDeltas.isEmpty() ? RelationshipDelta.joinAlt(relDeltas) : new RelationshipDelta();
+		if (relDeltas.isEmpty())
+			relDelta = new RelationshipDelta();
+		else
+			relDelta = relDeltas.size() > 1 ? RelationshipDelta.joinAlt(relDeltas) : relDeltas.get(0);
+
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
 
 		AC aliasContext = env.makeNewAliases(new AliasDelta());
