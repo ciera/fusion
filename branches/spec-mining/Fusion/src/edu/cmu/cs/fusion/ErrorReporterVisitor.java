@@ -130,17 +130,25 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	}
 	
 	private void reportError(FusionErrorReport err, SEVERITY sev, ASTNode reportOn) {
+		if (reportOn instanceof ClassInstanceCreation) {
+			CompilationUnit cu = (CompilationUnit) reportOn.getRoot();	
+			String info = cu.getJavaElement().getPath().toFile().getAbsolutePath();
+			info += "@" + Integer.toString(cu.getLineNumber(reportOn.getStartPosition()));
+			log.log(Level.WARNING, "Pruned warning caused by a constructor call: " + reportOn + " at " + info);
+			return;
+		}
+		
 		reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, fa.getName(), sev);	
 
 		CompilationUnit cu = (CompilationUnit) reportOn.getRoot();
-		String info = cu.getJavaElement().getElementName();
+		String info = cu.getJavaElement().getPath().toFile().getAbsolutePath();
 		info += "@" + Integer.toString(cu.getLineNumber(reportOn.getStartPosition()));
 		info += "@" + Integer.toString(reportOn.getStartPosition());
 		info += "@" + Integer.toString(reportOn.getStartPosition() + reportOn.getLength());
 		info += "@" + (fa.getVariant().isComplete() ? "Error" : fa.getVariant().isPragmatic() ? "Warning" : "Ignore");
-		info += "@" + err.getConstraint().toString();
+		info += "@" + err.getConstraint().toString().replaceAll("\n", " ");
 			
-		warningsLog.log(Level.INFO, info);
+		warningsLog.log(Level.INFO, info + "\n");
 		
 		log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
 		log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			

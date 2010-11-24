@@ -142,6 +142,9 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	@Override
 	public IResult<Pair<AC, RelationshipContext>> transfer(MethodCallInstruction instr,
 			List<ILabel> labels, Pair<AC, RelationshipContext> value) {		
+		
+		mainAnalysis.checkIfTimeout();
+		
 		//run twice: once assuming return is false, and again assuming return is true.
 		AC aBeforeContext = value.fst();
 		RelationshipContext relsContext = value.snd();
@@ -187,6 +190,8 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	public IResult<Pair<AC, RelationshipContext>> transfer(NewObjectInstruction instr,
 			List<ILabel> labels, Pair<AC, RelationshipContext> value) {
 		
+		mainAnalysis.checkIfTimeout();
+
 		AC aBeforeContext = value.fst();
 		RelationshipContext relsContext = value.snd();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
