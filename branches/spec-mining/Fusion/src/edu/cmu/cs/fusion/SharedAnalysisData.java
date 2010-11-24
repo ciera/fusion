@@ -59,6 +59,7 @@ public class SharedAnalysisData {
 				}
 			};
 			
+			//Fix the Crystal loggers so they'll behave as we want.
 			Logger crystalLogger = Logger.getLogger(Crystal.class.getName());
 			crystalLogger.setLevel(Level.WARNING);
 			Handler handler = new ConsoleHandler();
@@ -68,6 +69,10 @@ public class SharedAnalysisData {
 
 			Logger regressionLogger = Logger.getLogger(StandardAnalysisReporter.REGRESSION_LOGGER);
 			regressionLogger.setLevel(Level.WARNING);
+			handler = new ConsoleHandler();
+			handler.setFormatter(new ShortFormatter());
+			regressionLogger.addHandler(handler);
+			regressionLogger.setUseParentHandlers(false);
 			
 			//The core logger. Should be at warnings only under most circumstances
 			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
@@ -76,6 +81,17 @@ public class SharedAnalysisData {
 			handler.setFormatter(new ShortFormatter());
 			core.addHandler(handler);
 			core.setUseParentHandlers(false);
+			
+			try {
+				handler = new FileHandler("%h/fusion_core.txt");
+				handler.setFormatter(simpleFormatter);
+				core.addHandler(handler);
+			} catch (SecurityException e) {
+				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+			} catch (IOException e) {
+				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+			}
+
 
 			//The reports logger. Set to info if we want to generate reports.
 			warn = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
