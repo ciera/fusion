@@ -128,25 +128,28 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	static public RelationshipDelta joinAlt(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();;
-		boolean hasChanges = false;
+		boolean hasChanges = false, foundStar = false;
 		
 		assert(!deltas.isEmpty());
 		
 		RelationshipDelta first = null;		
 		while (itr.hasNext() && !hasChanges) {
 			first = itr.next();
-			hasChanges = !first.rels.isEmpty();
+			if (first != FULL_BOT) {
+				hasChanges = !first.rels.isEmpty();
+				foundStar = true;
+			}
 		}
 		
 		if (hasChanges) {
 			joined.rels = new LinkedHashMap<Relationship, SevenPointLattice>(first.rels);
 		}
 		else
-			return joined;
+			return foundStar ? joined : FULL_BOT;
 		
 		while (itr.hasNext()) {
 			RelationshipDelta next = itr.next();
-			if (!next.rels.isEmpty()) {
+			if (next != FULL_BOT && !next.rels.isEmpty()) {
 				joined.joinAlt(next);
 				hasChanges = true;
 			}
