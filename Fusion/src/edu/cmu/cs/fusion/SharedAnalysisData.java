@@ -68,11 +68,11 @@ public class SharedAnalysisData {
 			try {
 				handler = new FileHandler("%h/crystal.txt");
 				handler.setFormatter(new SimpleFormatter());
-				core.addHandler(handler);
+				crystalLogger.addHandler(handler);
 			} catch (SecurityException e) {
-				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+				crystalLogger.log(Level.WARNING, "Could not create crystal handler", e.getMessage());
 			} catch (IOException e) {
-				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+				crystalLogger.log(Level.WARNING, "Could not create crystal handler", e.getMessage());
 			}
 
 			
