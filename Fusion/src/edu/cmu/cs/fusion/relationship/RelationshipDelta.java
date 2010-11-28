@@ -97,7 +97,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		while (itr.hasNext() && !found) {
 			 first = itr.next();	
 			 found = first != FULL_BOT && !first.rels.isEmpty();
-			 hasAllStars = hasAllStars | (first != FULL_BOT && first.rels.isEmpty());
+			 hasAllStars = hasAllStars || (first != FULL_BOT && first.rels.isEmpty());
 		}
 
 		if (!found && hasAllStars)
