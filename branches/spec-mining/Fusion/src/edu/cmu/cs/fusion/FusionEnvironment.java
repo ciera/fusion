@@ -134,12 +134,15 @@ public class FusionEnvironment<AC extends AliasContext> {
 		//first, get a list of sigmas, with bindings according to variables.
 		List<Substitution> boundSubs = variables.foldl(findLabelsLambda, new Pair<List<Substitution>, FreeVars>(baseCase, fv)).fst();
 		
+		if (boundSubs.size() > 100)
+			throw new AliasesException(boundSubs.size());
+		
 		//then, pass each one into allValidSubs
 		List<Substitution> includeFV = new LinkedList<Substitution>();
 		for (Substitution sub : boundSubs) {
 			List<Substitution> restSubs = allValidSubs(sub, fv);
 				for (Substitution finalSub : restSubs) {
-				includeFV.add(finalSub);
+					includeFV.add(finalSub);
 			}
 		}
 				
@@ -155,17 +158,20 @@ public class FusionEnvironment<AC extends AliasContext> {
 			SpecVar spec = boundVar.getSpec();
 			String specType = fv.getType(spec);
 						
-			List<Substitution> newPair = new LinkedList<Substitution>();
+			List<Substitution> newSubs = new LinkedList<Substitution>();
 			assert labels != null : "labels was null for the variable " + boundVar.getSource().getSourceString();
 			for (Substitution sub : otherSubs) {
 				for (ObjectLabel label : labels) {
 					MatchType mType = checkTypes(label, specType);
 					if (mType != MatchType.NONE) {
-						newPair.add(sub.addSub(spec, label));
+						newSubs.add(sub.addSub(spec, label));
 					}
 				}				
 			}
-			return new Pair<List<Substitution>, FreeVars>(newPair, fv);
+			if (newSubs.size() > 100)
+				throw new AliasesException(newSubs.size());
+			
+			return new Pair<List<Substitution>, FreeVars>(newSubs, fv);
 		}
 	};
 			
@@ -193,18 +199,22 @@ public class FusionEnvironment<AC extends AliasContext> {
 			SpecVar spec = freeVar.fst();
 			String specType = freeVar.snd();
 			Set<ObjectLabel> aliases = alias.getAllAliases();
-			List<Substitution> newPair = new LinkedList<Substitution>();
+			List<Substitution> newSubs = new LinkedList<Substitution>();
 		
 			assert(aliases != null);
 			for (Substitution sub : otherPairs){
 				for (ObjectLabel label : aliases) {
 					MatchType mType = checkTypes(label, specType);
 					if (mType != MatchType.NONE) {
-						newPair.add(sub.addSub(spec, label));
+						newSubs.add(sub.addSub(spec, label));
 					}
 				}				
-			}			
-			return newPair;
+			}
+			
+			if (newSubs.size() > 100)
+				throw new AliasesException(newSubs.size());
+
+			return newSubs;
 		}
 	};
 

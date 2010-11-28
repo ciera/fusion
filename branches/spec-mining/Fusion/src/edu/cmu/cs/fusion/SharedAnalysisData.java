@@ -27,6 +27,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
@@ -64,6 +65,17 @@ public class SharedAnalysisData {
 			Handler handler = new ConsoleHandler();
 			handler.setFormatter(new ShortFormatter());
 			crystalLogger.addHandler(handler);
+			try {
+				handler = new FileHandler("%h/crystal.txt");
+				handler.setFormatter(new SimpleFormatter());
+				core.addHandler(handler);
+			} catch (SecurityException e) {
+				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+			} catch (IOException e) {
+				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+			}
+
+			
 			crystalLogger.setUseParentHandlers(false);
 
 			//The core logger. Should be at warnings only under most circumstances
