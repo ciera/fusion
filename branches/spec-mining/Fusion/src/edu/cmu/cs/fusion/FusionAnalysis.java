@@ -183,6 +183,8 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
 			
 			reportResults(methodDecl, tfR.getConstraintChecker());
+			
+			log.log(Level.SEVERE, "Successfully analyzed " +  methodDecl.resolveBinding().toString() + " in " + compUnitName);
 		} catch (TimeoutException e) {
 			log.log(Level.SEVERE, "Cancelling check of method " + methodDecl.resolveBinding().toString() + " in " + compUnitName + "  after " + e.getTime());
 		} catch (FusionException e) {
