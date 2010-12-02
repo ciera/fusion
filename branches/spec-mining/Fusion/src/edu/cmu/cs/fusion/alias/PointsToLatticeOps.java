@@ -9,18 +9,18 @@ import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 
-public class MayPointsToLatticeOps implements ILatticeOperations<MayPointsToAliasContext> {
+public class PointsToLatticeOps implements ILatticeOperations<PointsToAliasContext> {
 	
 	private TypeHierarchy types;
 
-	public MayPointsToLatticeOps(TypeHierarchy types) {
+	public PointsToLatticeOps(TypeHierarchy types) {
 		this.types = types;
 	}
 
 	/**
 	 * @return true if info has more precise aliasing information than reference. That is, info is a strict subset of reference
 	 */
-	public boolean atLeastAsPrecise(MayPointsToAliasContext info, MayPointsToAliasContext reference, ASTNode node) {
+	public boolean atLeastAsPrecise(PointsToAliasContext info, PointsToAliasContext reference, ASTNode node) {
 		//info must know a subset of reference's aliases
 		if (!(reference.getAllAliases().containsAll(info.getAllAliases())))
 			return false;
@@ -39,18 +39,18 @@ public class MayPointsToLatticeOps implements ILatticeOperations<MayPointsToAlia
 		return true;
 	}
 
-	public MayPointsToAliasContext bottom() {
-		return new MayPointsToAliasContext(types);
+	public PointsToAliasContext bottom() {
+		return new PointsToAliasContext(types);
 	}
 
-	public MayPointsToAliasContext copy(MayPointsToAliasContext original) {
+	public PointsToAliasContext copy(PointsToAliasContext original) {
 		return original.clone();
 	}
 
-	public MayPointsToAliasContext join(MayPointsToAliasContext someInfo,
-			MayPointsToAliasContext otherInfo, ASTNode node) {
+	public PointsToAliasContext join(PointsToAliasContext someInfo,
+			PointsToAliasContext otherInfo, ASTNode node) {
 		
-		MayPointsToAliasContext joined = someInfo.clone();
+		PointsToAliasContext joined = someInfo.clone();
 		
 		joined.addLabels(otherInfo.getAllAliases());
 		
