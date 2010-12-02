@@ -29,8 +29,8 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
-import edu.cmu.cs.fusion.alias.MayPointsToAliasContext;
-import edu.cmu.cs.fusion.alias.MayPointsToLatticeOps;
+import edu.cmu.cs.fusion.alias.PointsToAliasContext;
+import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
 import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
@@ -47,7 +47,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
 	public static final String CHECKS_LOGGER = BASE_FUSION_LOGGER + ".checks";
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
-	private TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>> fa;
+	private TACFlowAnalysis<Pair<PointsToAliasContext,RelationshipContext>> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
 	private Logger log;
@@ -172,10 +172,10 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 			TypeHierarchy types = sharedData.getHierarchy();
 			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
-			MayPointsToLatticeOps ops = new MayPointsToLatticeOps(types);
+			PointsToLatticeOps ops = new PointsToLatticeOps(types);
 			
-			RelationshipTransferFunction<MayPointsToAliasContext> tfR = new RelationshipTransferFunction<MayPointsToAliasContext>(this, constraints, infers, types, retriever, aliasTF, ops);
-			fa = new TACFlowAnalysis<Pair<MayPointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+			RelationshipTransferFunction<PointsToAliasContext> tfR = new RelationshipTransferFunction<PointsToAliasContext>(this, constraints, infers, types, retriever, aliasTF, ops);
+			fa = new TACFlowAnalysis<Pair<PointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
