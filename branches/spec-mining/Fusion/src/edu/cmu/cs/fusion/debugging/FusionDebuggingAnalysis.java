@@ -4,14 +4,21 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
+import edu.cmu.cs.crystal.flow.ILatticeOperations;
+import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.Variant;
+import edu.cmu.cs.fusion.alias.MustPointsToTransferFunctions;
+import edu.cmu.cs.fusion.alias.PointsToAliasContext;
+import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 
-public class FusionDebuggingAnalysis extends FusionAnalysis {
+public class FusionDebuggingAnalysis extends FusionAnalysis<PointsToAliasContext> {
 
 	public FusionDebuggingAnalysis() {
-		super(Variant.PRAGMATIC_VARIANT);
+		super(Variant.COMPLETE_VARIANT);
 	}
 
 	@Override
@@ -30,5 +37,11 @@ public class FusionDebuggingAnalysis extends FusionAnalysis {
 		methodDecl.accept(cacheVisitor);
 	}
 
-	
+	public AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> getAliasTransferFunction(DeclarativeRetriever retriever, TypeHierarchy types) {
+		return new MustPointsToTransferFunctions(retriever, types);
+	}
+
+	public ILatticeOperations<PointsToAliasContext> getAliasLatticeOps(TypeHierarchy types) {
+		return new PointsToLatticeOps(types);
+	}
 }

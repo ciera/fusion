@@ -1,6 +1,13 @@
 package edu.cmu.cs.fusion;
 
-public class FusionCompleteAnalysis extends FusionAnalysis {
+import edu.cmu.cs.crystal.flow.ILatticeOperations;
+import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
+import edu.cmu.cs.crystal.util.TypeHierarchy;
+import edu.cmu.cs.fusion.alias.MustPointsToTransferFunctions;
+import edu.cmu.cs.fusion.alias.PointsToAliasContext;
+import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
+
+public class FusionCompleteAnalysis extends FusionAnalysis<PointsToAliasContext> {
 
 	public FusionCompleteAnalysis() {
 		super(Variant.COMPLETE_VARIANT);
@@ -8,4 +15,12 @@ public class FusionCompleteAnalysis extends FusionAnalysis {
 
 	@Override
 	public String getName() {return "FusionComplete";}
+	
+	public AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> getAliasTransferFunction(DeclarativeRetriever retriever, TypeHierarchy types) {
+		return new MustPointsToTransferFunctions(retriever, types);
+	}
+
+	public ILatticeOperations<PointsToAliasContext> getAliasLatticeOps(TypeHierarchy types) {
+		return new PointsToLatticeOps(types);
+	}
 }
