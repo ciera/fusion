@@ -50,8 +50,22 @@ public class ConstraintChecker {
 			aliasDeltas.add(deltas.snd());
 		}
 		
-		RelationshipDelta relDelta = !relDeltas.isEmpty() ? RelationshipDelta.joinAlt(relDeltas) : new RelationshipDelta();
-		AliasDelta aliasDelta = AliasDelta.join(aliasDeltas);
+		RelationshipDelta relDelta;
+		AliasDelta aliasDelta;
+		
+		//try to avoid calling joins
+		if (relDeltas.isEmpty()) {
+			relDelta = new RelationshipDelta();
+			aliasDelta = new AliasDelta();
+		}
+		else if (relDeltas.size() == 1) {
+			relDelta = relDeltas.get(0);
+			aliasDelta = aliasDeltas.get(0);
+		}
+		else {
+			relDelta = RelationshipDelta.joinAlt(relDeltas);
+			aliasDelta = AliasDelta.join(aliasDeltas);
+		}
 		
 		RelationshipContext relContext = env.getContext().applyChangesFromDelta(relDelta);
 		AC aliasContext = env.makeNewAliases(aliasDelta);
@@ -87,7 +101,7 @@ public class ConstraintChecker {
 			Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, method, instr);
 		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
-		List<AliasDelta> specDeltas = new LinkedList<AliasDelta>();
+		List<AliasDelta> aliasDeltas = new LinkedList<AliasDelta>();
 		
 		if (boundVars == null)
 			return new Pair<RelationshipDelta, AliasDelta>(new RelationshipDelta(), new AliasDelta());
@@ -97,18 +111,26 @@ public class ConstraintChecker {
 		for (Substitution sub : subs) {
 			Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, sub, cons);
 			relDeltas.add(deltas.fst());
-			specDeltas.add(deltas.snd().turnToSource(boundVars));
+			aliasDeltas.add(deltas.snd().turnToSource(boundVars));
 		}
 		
 		RelationshipDelta relDelta;
-		
-		if (relDeltas.isEmpty())
+		AliasDelta aliasDelta;
+			
+		if (relDeltas.isEmpty()) {
 			relDelta = RelationshipDelta.getTrueBottom();
-		else
+			aliasDelta = new AliasDelta();
+		}
+		else if (relDeltas.size() == 1) {
+			relDelta = relDeltas.get(0);
+			aliasDelta = aliasDeltas.get(0);
+		}
+		else {
 			relDelta = RelationshipDelta.join(relDeltas);
-		AliasDelta specDelta = AliasDelta.join(specDeltas);
-		
-		return new Pair<RelationshipDelta, AliasDelta>(relDelta, specDelta);
+			aliasDelta = AliasDelta.join(aliasDeltas);
+		}
+			
+		return new Pair<RelationshipDelta, AliasDelta>(relDelta, aliasDelta);
 	}
 
 	
