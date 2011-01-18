@@ -169,8 +169,7 @@ public class RelationshipContext implements Iterable<Relationship> {
 		
 		return changed;
 	}
-
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

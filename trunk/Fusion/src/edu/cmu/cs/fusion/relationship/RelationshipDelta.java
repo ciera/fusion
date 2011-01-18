@@ -1,6 +1,5 @@
 package edu.cmu.cs.fusion.relationship;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -20,9 +19,8 @@ import edu.cmu.cs.fusion.ThreeValue;
  * @author ciera
  *
  */
-public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPointLattice>> {
-	private Map<Relationship, SevenPointLattice> rels;
-	
+public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPointLattice>> {	
+	private Map<Relationship, SevenPointLattice> rels;	
 	static private RelationshipDelta FULL_BOT = new RelationshipDelta(true);
 	
 	static public RelationshipDelta getTrueBottom() {return FULL_BOT;}
@@ -75,63 +73,83 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		return polar;
 	}
 
+	/**
+	 * Joins a list of relationship deltas.
+	 * 
+	 * This algorithm needs to be as fast as possible. The calls to join(RelationshipDelta) are fairly
+	 * expensive as they have to go through all of the relationships in both deltas to be joined. We can't
+	 * do any better than linear there. Therefore, this method needs to avoid as many of those calls as possible.
+	 * It attempts to do so by skipping items in the list that are either fully bot or fully star (the default state).
+	 * Bots are skipped entirely. All-stars are remembered, and then the result is polarized if any existed.
+	 * @param deltas
+	 * @return
+	 */
 	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();;
-		boolean hasChanges;
+		boolean hasAllStars = false, found = false;
 		
 		assert(!deltas.isEmpty());
 		
-		RelationshipDelta first = itr.next();
+		RelationshipDelta first = null;
 		
-		hasChanges = first != FULL_BOT;
-		if (first != FULL_BOT) {
-			joined.rels = new HashMap<Relationship, SevenPointLattice>(first.rels);
+		//find the first one that isn't either a bot or an all-stars
+		while (itr.hasNext() && !found) {
+			 first = itr.next();	
+			 found = first != FULL_BOT && !first.rels.isEmpty();
+			 hasAllStars = hasAllStars || (first != FULL_BOT && first.rels.isEmpty());
 		}
+
+		if (!found && hasAllStars)
+			return joined;
+		else if (!found && !hasAllStars)
+				return FULL_BOT;	
+		else
+			joined.rels = new LinkedHashMap<Relationship, SevenPointLattice>(first.rels);
 		
 		while (itr.hasNext()) {
 			RelationshipDelta next = itr.next();
-			if (next != FULL_BOT) {
+			if (next == FULL_BOT) //bot case, ignore everything
+				continue;
+			if (next.rels.isEmpty()) //top case, polarize at the end.
+				hasAllStars = true;
+			else
 				joined.join(next);
-				hasChanges = true;
-			}
 		}
-		return hasChanges ? joined : FULL_BOT;
+		
+		if (hasAllStars) {
+			for (Entry<Relationship, SevenPointLattice> entry : joined.rels.entrySet())
+				entry.setValue(entry.getValue().polarize());
+		}
+
+		return joined;
 	}
 	
-	/**
-	 * This and other cannot be a full bot
-	 * @param other
-	 */
-	private void join(RelationshipDelta other) {
-		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
-		combinedRels.addAll(other.rels.keySet());
-		
-		for (Relationship rel : combinedRels) {
-			SevenPointLattice myVal = getValue(rel);
-			SevenPointLattice otherVal = other.getValue(rel);
-			rels.put(rel, myVal.join(otherVal));
-		}
-	}
-
-		
 	static public RelationshipDelta joinAlt(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();
 		RelationshipDelta joined = new RelationshipDelta();;
-		boolean hasChanges;
+		boolean hasChanges = false, foundStar = false;
 		
 		assert(!deltas.isEmpty());
 		
-		RelationshipDelta first = itr.next();
-		
-		hasChanges = first != FULL_BOT;
-		if (first != FULL_BOT) {
-			joined.rels = new HashMap<Relationship, SevenPointLattice>(first.rels);
+		RelationshipDelta first = null;		
+		while (itr.hasNext() && !hasChanges) {
+			first = itr.next();
+			if (first != FULL_BOT) {
+				hasChanges = !first.rels.isEmpty();
+				foundStar = true;
+			}
 		}
+		
+		if (hasChanges) {
+			joined.rels = new LinkedHashMap<Relationship, SevenPointLattice>(first.rels);
+		}
+		else
+			return foundStar ? joined : FULL_BOT;
 		
 		while (itr.hasNext()) {
 			RelationshipDelta next = itr.next();
-			if (next != FULL_BOT) {
+			if (next != FULL_BOT && !next.rels.isEmpty()) {
 				joined.joinAlt(next);
 				hasChanges = true;
 			}
@@ -139,14 +157,44 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		return hasChanges ? joined : FULL_BOT;
 	}
 
-	private void joinAlt(RelationshipDelta other) {
-		Set<Relationship> combinedRels = new HashSet<Relationship>(rels.keySet());
-		combinedRels.addAll(other.rels.keySet());
+
+	
+	/**
+	 * This and other cannot be a full bot
+	 * @param other
+	 */
+	private void join(RelationshipDelta other) {
+		Iterator<Entry<Relationship, SevenPointLattice>> itr = rels.entrySet().iterator();		
+		while (itr.hasNext()) {
+			Entry<Relationship, SevenPointLattice> entry = itr.next();
+			entry.setValue(entry.getValue().join(other.getValue(entry.getKey())));
+		}
 		
-		for (Relationship rel : combinedRels) {
-			SevenPointLattice myVal = getValue(rel);
-			SevenPointLattice otherVal = other.getValue(rel);
-			rels.put(rel, myVal.joinAlt(otherVal));
+		itr = other.rels.entrySet().iterator();		
+		while (itr.hasNext()) {
+			Entry<Relationship, SevenPointLattice> entry = itr.next();
+			//if we don't have this relationship, then it must be star. Save the cost
+			//of trying to find it again. Hashing is expensive!
+			if (!rels.containsKey(entry.getKey()))
+				setRelationship(entry.getKey(), entry.getValue().join(SevenPointLattice.STAR));
+		}
+	}
+
+		
+	private void joinAlt(RelationshipDelta other) {
+		Iterator<Entry<Relationship, SevenPointLattice>> itr = rels.entrySet().iterator();		
+		while (itr.hasNext()) {
+			Entry<Relationship, SevenPointLattice> entry = itr.next();
+			entry.setValue(entry.getValue().joinAlt(other.getValue(entry.getKey())));
+		}
+		
+		itr = other.rels.entrySet().iterator();		
+		while (itr.hasNext()) {
+			Entry<Relationship, SevenPointLattice> entry = itr.next();
+			//if we don't have this relationship, then it must be star. Save the cost
+			//of trying to find it again. Hashing is expensive!
+			if (!rels.containsKey(entry.getKey()))
+				setRelationship(entry.getKey(), entry.getValue().joinAlt(SevenPointLattice.STAR));
 		}
 	}
 
@@ -160,7 +208,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 		for (Relationship rel : combinedRels) {
 			SevenPointLattice myVal = getValue(rel);
 			SevenPointLattice otherVal = makeEffects.getValue(rel);
-			rels.put(rel, myVal.override(otherVal));
+			setRelationship(rel, myVal.override(otherVal));
 		}
 	}
 
@@ -214,8 +262,9 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	public String toString() {
 		if (this == FULL_BOT)
 			return "<BOTTOM>";
-
+		
 		String str = "<";
+		
 		for (Entry<Relationship, SevenPointLattice> entry : rels.entrySet()) {
 			str += entry.getKey() + "->" + entry.getValue() + ", ";
 		}
