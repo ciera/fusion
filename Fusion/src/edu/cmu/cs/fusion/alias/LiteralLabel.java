@@ -24,11 +24,20 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 
 public class LiteralLabel implements ObjectLabel {
 	private Object literal;
-	private ITypeBinding type;
+	private String name;
 	
 	public LiteralLabel(Object literal, ITypeBinding type) {
-		this.type = type;
+		name = type.getQualifiedName();
 		this.literal = literal;
+	}
+
+	public LiteralLabel(Object literal, String type) {
+		name = type;
+		this.literal = literal;
+	}
+
+	public String getTypeName() {
+		return name;
 	}
 
 	/**
@@ -63,12 +72,6 @@ public class LiteralLabel implements ObjectLabel {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.cmu.cs.crystal.analysis.alias.ObjectLabel#getType()
-	 */
-	public ITypeBinding getType() {
-		return type;
-	}
 
 	/**
 	 * @return

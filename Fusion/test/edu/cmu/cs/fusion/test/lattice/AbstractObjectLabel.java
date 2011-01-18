@@ -1,13 +1,10 @@
 package edu.cmu.cs.fusion.test.lattice;
 
-import org.eclipse.jdt.core.dom.ITypeBinding;
-
 import edu.cmu.cs.fusion.alias.ObjectLabel;
-import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
 public class AbstractObjectLabel implements ObjectLabel {
 	private String name;
-	private ITypeBinding binding;
+	private String typeName;
 	
 	public AbstractObjectLabel(String name) {
 		this.name = name;
@@ -15,11 +12,11 @@ public class AbstractObjectLabel implements ObjectLabel {
 
 	public AbstractObjectLabel(String name, String type) {
 		this.name = name;
-		binding = new NamedTypeBinding(type);
+		this.typeName = type;
 	}
 
-	public ITypeBinding getType() {
-		return binding;
+	public String getTypeName() {
+		return typeName;
 	}
 
 	public boolean isSummary() {

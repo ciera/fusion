@@ -35,8 +35,8 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
-public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTransferFunction<MayPointsToAliasContext> {
-	private ILatticeOperations<MayPointsToAliasContext> ops;
+public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> {
+	private ILatticeOperations<PointsToAliasContext> ops;
 	private DeclarativeRetriever retriever;
 	private LoopCounter loopCounter;
 	protected Map<Object, ObjectLabel> knownLiterals;
@@ -49,7 +49,7 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	private Map<Variable, Set<ObjectLabel>> loopedVariables;
 
 	public MayPointsToTransferFunctions(DeclarativeRetriever retriever, TypeHierarchy types) {
-		ops = new MayPointsToLatticeOps(types);
+		ops = new PointsToLatticeOps(types);
 		loopCounter = new LoopCounter();
 		this.retriever = retriever;
 		this.types = types;
@@ -58,8 +58,8 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		knownLiterals.put(null, new LiteralLabel(null, new NamedTypeBinding("java.lang.Object")));
 	}
 	
-	public MayPointsToAliasContext createEntryValue(MethodDeclaration method) {
-		MayPointsToAliasContext entry = ops.bottom();
+	public PointsToAliasContext createEntryValue(MethodDeclaration method) {
+		PointsToAliasContext entry = ops.bottom();
 		Variable thisVar = this.getAnalysisContext().getThisVariable();
 		
 		if (thisVar != null) {
@@ -99,13 +99,13 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		return entry;
 	}
 
-	public ILatticeOperations<MayPointsToAliasContext> getLatticeOperations() {
+	public ILatticeOperations<PointsToAliasContext> getLatticeOperations() {
 		return ops;
 	}
 	
-	private MayPointsToAliasContext putFresh(AssignmentInstruction instr, MayPointsToAliasContext value, boolean onlySingleFresh) {
+	private PointsToAliasContext putFresh(AssignmentInstruction instr, PointsToAliasContext value, boolean onlySingleFresh) {
 		boolean isInLoop = loopCounter.isInLoop(instr.getNode());
-		MayPointsToAliasContext newValue = value.clone();
+		PointsToAliasContext newValue = value.clone();
 		
 		newValue.resetPointsTo(instr.getTarget());
 		
@@ -139,9 +139,9 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	 * Handles literal labels. This has no need to track looping since literal labels
 	 * are always the same regardless of whether they are in a loop.
 	 */
-	private MayPointsToAliasContext putLiteral(LoadInstruction instr, Object literal, MayPointsToAliasContext value) {
+	private PointsToAliasContext putLiteral(LoadInstruction instr, Object literal, PointsToAliasContext value) {
 		ObjectLabel label = knownLiterals.get(literal);
-		MayPointsToAliasContext newValue = value.clone();
+		PointsToAliasContext newValue = value.clone();
 		
 		if (label == null) { //we haven't done this literal yet
 			label = new LiteralLabel(literal, instr.getTarget().resolveType());
@@ -155,28 +155,28 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			ArrayInitInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(BinaryOperation instr,
-			List<ILabel> labels, MayPointsToAliasContext value) {
+	public IResult<PointsToAliasContext> transfer(BinaryOperation instr,
+			List<ILabel> labels, PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(CastInstruction instr,
-			List<ILabel> labels, MayPointsToAliasContext value) {
-		MayPointsToAliasContext newValue = value.clone();
+	public IResult<PointsToAliasContext> transfer(CastInstruction instr,
+			List<ILabel> labels, PointsToAliasContext value) {
+		PointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
 		
 		String vType = instr.getTarget().resolveType().getQualifiedName();
 		
 		for (ObjectLabel label : value.getAliases(instr.getOperand())) {
-			String labType = label.getType().getQualifiedName();		
+			String labType = label.getTypeName();		
 			if (types.existsCommonSubtype(labType, vType)) { //there exists a way to make this cast ok
 				newValue.addPointsTo(instr.getTarget(), label);
 			}
@@ -185,71 +185,71 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(CopyInstruction instr,
-			List<ILabel> labels, MayPointsToAliasContext value) {
-		MayPointsToAliasContext newValue = value.clone();
+	public IResult<PointsToAliasContext> transfer(CopyInstruction instr,
+			List<ILabel> labels, PointsToAliasContext value) {
+		PointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
 		newValue.addPointsTo(instr.getTarget(), newValue.getAliases(instr.getOperand()));
 		return LabeledSingleResult.createResult(newValue, labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(DotClassInstruction instr,
-			List<ILabel> labels, MayPointsToAliasContext value) {
+	public IResult<PointsToAliasContext> transfer(DotClassInstruction instr,
+			List<ILabel> labels, PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putLiteral(instr, instr.getTypeNode().resolveBinding().getQualifiedName(), value), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			InstanceofInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			LoadArrayInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			LoadFieldInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			LoadLiteralInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putLiteral(instr, instr.getLiteral(), value), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			MethodCallInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(NewArrayInstruction instr,
-			List<ILabel> labels, MayPointsToAliasContext value) {
+	public IResult<PointsToAliasContext> transfer(NewArrayInstruction instr,
+			List<ILabel> labels, PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(
+	public IResult<PointsToAliasContext> transfer(
 			NewObjectInstruction instr, List<ILabel> labels,
-			MayPointsToAliasContext value) {
+			PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
 	}
 
 	@Override
-	public IResult<MayPointsToAliasContext> transfer(UnaryOperation instr,
-			List<ILabel> labels, MayPointsToAliasContext value) {
+	public IResult<PointsToAliasContext> transfer(UnaryOperation instr,
+			List<ILabel> labels, PointsToAliasContext value) {
 		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
 	}
 

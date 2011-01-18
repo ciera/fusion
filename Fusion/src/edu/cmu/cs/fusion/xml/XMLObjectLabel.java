@@ -1,7 +1,5 @@
 package edu.cmu.cs.fusion.xml;
 
-import org.eclipse.jdt.core.dom.ITypeBinding;
-
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 
@@ -12,18 +10,18 @@ import edu.cmu.cs.fusion.alias.ObjectLabel;
  *
  */
 public class XMLObjectLabel implements ObjectLabel {
-	private ITypeBinding type;
+	private String type;
 	private String name;
 
 	public XMLObjectLabel(String name, String type) {
 		this.name = name;
-		this.type = new NamedTypeBinding(type);
+		this.type = type;
 	}
 
 	/**
 	 * @return a false ITypeBinding, which can only be used to get the fully qualified name.
 	 */
-	public ITypeBinding getType() {
+	public String getTypeName() {
 		return type;
 	}
 
