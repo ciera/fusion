@@ -85,8 +85,8 @@ public class ConstraintRequestor extends SearchRequestor {
 				parser.reset(eString);
 				effects.add(parser.effect());
 			}
-
-			constraints.add(new Constraint(op, trigger, requires, effects));
+			String owner = contextType.getFullyQualifiedName();	
+			constraints.add(new Constraint(owner, op, trigger, requires, effects));
 		} catch (ParseException e) {
 			ReportingUtility.reportParseError(constraint.getResource(), constraint.getNameRange(), e.getMessage());
 		}
