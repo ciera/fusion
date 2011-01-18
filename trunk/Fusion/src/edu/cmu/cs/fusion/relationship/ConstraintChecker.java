@@ -63,6 +63,8 @@ public class ConstraintChecker {
 		List<FusionErrorReport> errors = new LinkedList<FusionErrorReport>();
 		FusionErrorReport err;
 		
+		assert(instr != null);
+		
 		for (Constraint cons : constraints) {
 			if (!(cons.getRequires() instanceof TruePredicate)) {
 				err = checkSingleConstraint(env, cons, instr);

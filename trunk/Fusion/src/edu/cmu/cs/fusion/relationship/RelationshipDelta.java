@@ -3,10 +3,11 @@ package edu.cmu.cs.fusion.relationship;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
@@ -36,7 +37,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	 * Creates a new delta where everything maps to star.
 	 */
 	public RelationshipDelta() {
-		rels = new HashMap<Relationship, SevenPointLattice>();
+		rels = new LinkedHashMap<Relationship, SevenPointLattice>();
 	}
 
 	/**
@@ -60,6 +61,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	}
 
 	public void setRelationship(Relationship rel, SevenPointLattice fp) {
+		assert (this != FULL_BOT);
 		rels.put(rel, fp);
 	}
 
@@ -210,8 +212,10 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 
 	
 	public String toString() {
+		if (this == FULL_BOT)
+			return "<BOTTOM>";
+
 		String str = "<";
-		
 		for (Entry<Relationship, SevenPointLattice> entry : rels.entrySet()) {
 			str += entry.getKey() + "->" + entry.getValue() + ", ";
 		}
@@ -222,6 +226,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	}
 
 	public Iterator<Entry<Relationship, SevenPointLattice>> iterator() {
+		assert (this != FULL_BOT);
 		return rels.entrySet().iterator();
 	}
 }

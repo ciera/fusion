@@ -3,8 +3,8 @@ package edu.cmu.cs.fusion.relationship;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import edu.cmu.cs.fusion.Relationship;
 import edu.cmu.cs.fusion.ThreeValue;
@@ -41,6 +41,8 @@ public class RelationshipContext implements Iterable<Relationship> {
 		trueRels = new HashSet<Relationship>(copy.trueRels);
 		falseRels = new HashSet<Relationship>(copy.falseRels);
 	}
+	
+	public boolean isBottom() {return isBottom;}
 
 	public int getSize() {
 		return trueRels.size() + falseRels.size();
@@ -55,7 +57,6 @@ public class RelationshipContext implements Iterable<Relationship> {
 
 	
 	public ThreeValue getRelationship(Relationship rel) {
-//		assert !isBottom : "Shouldn't be possible as the flow analysis will only use a bottom lattice to join from univisited nodes";
 		if (trueRels.contains(rel))
 			return ThreeValue.TRUE;
 		else if (falseRels.contains(rel))
@@ -176,6 +177,7 @@ public class RelationshipContext implements Iterable<Relationship> {
 		int result = 1;
 		result = prime * result
 				+ ((falseRels == null) ? 0 : falseRels.hashCode());
+		result = prime * result + (isBottom ? 1231 : 1237);
 		result = prime * result
 				+ ((trueRels == null) ? 0 : trueRels.hashCode());
 		return result;
@@ -189,11 +191,13 @@ public class RelationshipContext implements Iterable<Relationship> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final RelationshipContext other = (RelationshipContext) obj;
+		RelationshipContext other = (RelationshipContext) obj;
 		if (falseRels == null) {
 			if (other.falseRels != null)
 				return false;
 		} else if (!falseRels.equals(other.falseRels))
+			return false;
+		if (isBottom != other.isBottom)
 			return false;
 		if (trueRels == null) {
 			if (other.trueRels != null)
@@ -203,7 +207,6 @@ public class RelationshipContext implements Iterable<Relationship> {
 		return true;
 	}
 
-	
 	public String toString() {
 		String str = "{";
 		
