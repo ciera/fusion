@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
@@ -19,12 +19,12 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
  * @author ciera
  *
  */
-public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Variable, Set<ObjectLabel>>> {
+public class PointsToAliasContext implements AliasContext, Iterable<Entry<Variable, Set<ObjectLabel>>> {
 	private Map<Variable, Set<ObjectLabel>> pointsTo;
 	private Set<ObjectLabel> allLabels;
 	private TypeHierarchy types;
 	
-	public MayPointsToAliasContext(TypeHierarchy types) {
+	public PointsToAliasContext(TypeHierarchy types) {
 		pointsTo = new HashMap<Variable, Set<ObjectLabel>>();
 		allLabels = new HashSet<ObjectLabel>();
 		this.types = types;
@@ -94,8 +94,8 @@ public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Var
 		allLabels.addAll(labels);
 	}
 	
-	public MayPointsToAliasContext clone() {
-		MayPointsToAliasContext clone = new MayPointsToAliasContext(types);
+	public PointsToAliasContext clone() {
+		PointsToAliasContext clone = new PointsToAliasContext(types);
 		clone.allLabels.addAll(allLabels);
 		for (Entry<Variable, Set<ObjectLabel>> entry : pointsTo.entrySet())
 			clone.pointsTo.put(entry.getKey(), new HashSet<ObjectLabel>(entry.getValue()));
@@ -111,7 +111,7 @@ public class MayPointsToAliasContext implements AliasContext, Iterable<Entry<Var
 		}
 		
 		for (ObjectLabel label : allLabels) {
-			if (types.isSubtypeCompatible(label.getType().getQualifiedName(), varType.getQualifiedName()))
+			if (types.isSubtypeCompatible(label.getTypeName(), varType.getQualifiedName()))
 				varLabels.add(label);
 		}
 	}

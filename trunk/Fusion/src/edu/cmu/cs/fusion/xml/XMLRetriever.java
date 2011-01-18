@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -170,7 +170,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		Set<ObjectLabel> aliases = new HashSet<ObjectLabel>();
 		for (ObjectLabel possibleTop : topLabels) {
 			String thisType = var.resolveType().getQualifiedName();
-			String possibleTopType = possibleTop.getType().getQualifiedName();
+			String possibleTopType = possibleTop.getTypeName();
 			if (types.isSubtypeCompatible(thisType, possibleTopType)) {
 				aliases.add(possibleTop);
 			}

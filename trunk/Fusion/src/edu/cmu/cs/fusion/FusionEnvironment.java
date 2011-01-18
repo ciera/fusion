@@ -399,10 +399,10 @@ public class FusionEnvironment<AC extends AliasContext> {
 
 	
 	private MatchType checkTypes(ObjectLabel label, String type) {
-		if (tHierarchy.isSubtypeCompatible(label.getType().getQualifiedName(), type)) {
+		if (tHierarchy.isSubtypeCompatible(label.getTypeName(), type)) {
 			return MatchType.DEF;
 		}
-		else if (tHierarchy.existsCommonSubtype(label.getType().getQualifiedName(), type, true, false)) {
+		else if (tHierarchy.existsCommonSubtype(label.getTypeName(), type, true, false)) {
 			return MatchType.POS;
 		}
 		else
