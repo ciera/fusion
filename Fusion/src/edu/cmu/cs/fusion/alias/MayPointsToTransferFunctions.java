@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
@@ -16,7 +18,6 @@ import edu.cmu.cs.crystal.flow.IResult;
 import edu.cmu.cs.crystal.flow.LabeledSingleResult;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.model.ArrayInitInstruction;
-import edu.cmu.cs.crystal.tac.model.AssignmentInstruction;
 import edu.cmu.cs.crystal.tac.model.BinaryOperation;
 import edu.cmu.cs.crystal.tac.model.CastInstruction;
 import edu.cmu.cs.crystal.tac.model.CopyInstruction;
@@ -29,19 +30,29 @@ import edu.cmu.cs.crystal.tac.model.LoadLiteralInstruction;
 import edu.cmu.cs.crystal.tac.model.MethodCallInstruction;
 import edu.cmu.cs.crystal.tac.model.NewArrayInstruction;
 import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
+import edu.cmu.cs.crystal.tac.model.SourceVariableDeclaration;
 import edu.cmu.cs.crystal.tac.model.UnaryOperation;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
-import edu.cmu.cs.fusion.xml.NamedTypeBinding;
 
+/**
+ * The transfer functions for a simple aliasing analysis.
+ * @author ciera
+ *
+ *
+ * Note: This class has an invariant that all variables do have at least one ObjectLabel that they can point to. This label
+ * might be the null label representation, but it always exists. In particular, any call like value.getAliases(instr.getOperand())
+ * is ALWAYS non-null and has at least one element. I have added asserts accordingly. If this is ever null, something went
+ * wrong much earlier in the transfer functions and should be investigated.
+ */
 public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> {
 	private ILatticeOperations<PointsToAliasContext> ops;
 	private DeclarativeRetriever retriever;
 	private LoopCounter loopCounter;
 	protected Map<Object, ObjectLabel> knownLiterals;
 	private TypeHierarchy types;
-	private ObjectLabel voidLabel = new DefaultObjectLabel(new NamedTypeBinding("void"), false);
+	private ObjectLabel voidLabel = new DefaultObjectLabel("void", false);
 	
 	//This caches the result of the aliasing when going through a loop, so
 	//we don't create a new variable a second time.
@@ -55,7 +66,7 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		this.types = types;
 		knownLiterals =  new HashMap<Object, ObjectLabel>();
 		loopedVariables = new HashMap<Variable, Set<ObjectLabel>>();
-		knownLiterals.put(null, new LiteralLabel(null, new NamedTypeBinding("java.lang.Object")));
+		knownLiterals.put(null, new LiteralLabel(null, "java.lang.Object"));
 	}
 	
 	public PointsToAliasContext createEntryValue(MethodDeclaration method) {
@@ -103,35 +114,54 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		return ops;
 	}
 	
-	private PointsToAliasContext putFresh(AssignmentInstruction instr, PointsToAliasContext value, boolean onlySingleFresh) {
-		boolean isInLoop = loopCounter.isInLoop(instr.getNode());
+	/**
+	 * 
+	 * @param node The node this variable is in; used to determine whether we are currently in a loop
+	 * @param var The variable to create something fresh for
+	 * @param value The starting lattice to use
+	 * @param onlySingleFresh True if there should be a fresh variable here with no aliases, false if it should be aliased
+	 * @return
+	 */
+	private PointsToAliasContext putFresh(ASTNode node, Variable var, PointsToAliasContext value, boolean onlySingleFresh) {
+		boolean isInLoop = loopCounter.isInLoop(node);
 		PointsToAliasContext newValue = value.clone();
 		
-		newValue.resetPointsTo(instr.getTarget());
+		newValue.resetPointsTo(var);
 		
-		if (isInLoop && loopedVariables.get(instr.getTarget()) != null) {
-			Set<ObjectLabel> aliases = loopedVariables.get(instr.getTarget());
-			newValue.addPointsTo(instr.getTarget(), aliases);
+		if (isInLoop && loopedVariables.get(var) != null) {
+			Set<ObjectLabel> aliases = loopedVariables.get(var);
+			newValue.addPointsTo(var, aliases);
 		}
 		else {
-			if (instr.getTarget().resolveType().getQualifiedName().equals("void")) {
-				newValue.addPointsTo(instr.getTarget(), voidLabel);
+			if (var.resolveType().getQualifiedName().equals("void")) {
+				newValue.addPointsTo(var, voidLabel);
 			}
 			else {
 				if (!onlySingleFresh)
-					newValue.addPointsToAnySubtype(instr.getTarget(), instr.getTarget().resolveType());
+					newValue.addPointsToAnySubtype(var, var.resolveType());
 
-				ObjectLabel freshLabel = new DefaultObjectLabel(instr.getTarget().resolveType(), isInLoop);
-				newValue.addPointsTo(instr.getTarget(), freshLabel);
+				ObjectLabel freshLabel = new DefaultObjectLabel(var.resolveType(), isInLoop);
+				newValue.addPointsTo(var, freshLabel);
 				newValue.addLabel(freshLabel);
 			}
 			
 			if (isInLoop) {
-				Set<ObjectLabel> storeAliases = newValue.getAliases(instr.getTarget());
-				loopedVariables.put(instr.getTarget(), storeAliases);
+				Set<ObjectLabel> storeAliases = newValue.getAliases(var);
+				loopedVariables.put(var, storeAliases);
 			}
 		}
 		return newValue;
+	}
+
+	
+	@Override
+	public IResult<PointsToAliasContext> transfer(
+			SourceVariableDeclaration instr, List<ILabel> labels,
+			PointsToAliasContext value) {
+		if (instr.isCaughtVariable() || instr.isEnhancedForLoopVariable())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getDeclaredVariable(), value, false), labels);
+		else
+			return super.transfer(instr, labels, value);
 	}
 
 
@@ -158,22 +188,33 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	public IResult<PointsToAliasContext> transfer(
 			ArrayInitInstruction instr, List<ILabel> labels,
 			PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(),  value, true), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(BinaryOperation instr,
 			List<ILabel> labels, PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(CastInstruction instr,
 			List<ILabel> labels, PointsToAliasContext value) {
+		if (instr.getTarget().resolveType().isPrimitive())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
+
 		PointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
 		
-		String vType = instr.getTarget().resolveType().getQualifiedName();
+    	ITypeBinding binding = instr.getTarget().resolveType();
+		String vType;
+		if (binding.isTypeVariable()) {
+			vType = binding.getTypeBounds().length == 0 ? "java.lang.Object" : binding.getTypeBounds()[0].getQualifiedName();
+		}
+		else
+			vType = binding.getQualifiedName();
+		
+		assert(value.getAliases(instr.getOperand()) != null);
 		
 		for (ObjectLabel label : value.getAliases(instr.getOperand())) {
 			String labType = label.getTypeName();		
@@ -187,9 +228,14 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	@Override
 	public IResult<PointsToAliasContext> transfer(CopyInstruction instr,
 			List<ILabel> labels, PointsToAliasContext value) {
+		if (instr.getTarget().resolveType().isPrimitive())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
+		
 		PointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
-		newValue.addPointsTo(instr.getTarget(), newValue.getAliases(instr.getOperand()));
+		Set<ObjectLabel> aliases = newValue.getAliases(instr.getOperand());
+		assert aliases != null : "Had null aliases for operand " + instr.getOperand().getSourceString();
+		newValue.addPointsTo(instr.getTarget(), aliases);
 		return LabeledSingleResult.createResult(newValue, labels);
 	}
 
@@ -203,21 +249,27 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	public IResult<PointsToAliasContext> transfer(
 			InstanceofInstruction instr, List<ILabel> labels,
 			PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(
 			LoadArrayInstruction instr, List<ILabel> labels,
 			PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
+		if (instr.getTarget().resolveType().isPrimitive())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
+
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, false), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(
 			LoadFieldInstruction instr, List<ILabel> labels,
 			PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
+		if (instr.getTarget().resolveType().isPrimitive())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
+
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, false), labels);
 	}
 
 	@Override
@@ -231,26 +283,29 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 	public IResult<PointsToAliasContext> transfer(
 			MethodCallInstruction instr, List<ILabel> labels,
 			PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, false), labels);
+		if (instr.getTarget().resolveType().isPrimitive())
+			return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
+
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, false), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(NewArrayInstruction instr,
 			List<ILabel> labels, PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(
 			NewObjectInstruction instr, List<ILabel> labels,
 			PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
 	}
 
 	@Override
 	public IResult<PointsToAliasContext> transfer(UnaryOperation instr,
 			List<ILabel> labels, PointsToAliasContext value) {
-		return LabeledSingleResult.createResult(putFresh(instr, value, true), labels);
+		return LabeledSingleResult.createResult(putFresh(instr.getNode(), instr.getTarget(), value, true), labels);
 	}
 
 }

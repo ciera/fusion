@@ -49,10 +49,7 @@ public class LiteralLabel implements ObjectLabel {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((literal == null) ? 0 : literal.hashCode());
-		return result;
+		return (literal == null) ? 0 : literal.hashCode();
 	}
 
 	@Override
