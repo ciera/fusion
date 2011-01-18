@@ -110,7 +110,8 @@ public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
 				trigger = new TruePredicate();
 			if (requires == null)
 				requires = new TruePredicate();
-			constraints.add(new Constraint(op, trigger, requires, effects));
+			
+			constraints.add(new Constraint(resource.getName(), op, trigger, requires, effects));
 		} catch (ParseException e) {
 			ReportingUtility.reportParseError(resource, null, e.getMessage());
 		}
