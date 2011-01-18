@@ -10,6 +10,6 @@ import edu.cmu.cs.fusion.alias.LiteralLabel;
  */
 public class XMLLiteralLabel extends LiteralLabel {
 	public XMLLiteralLabel(Object literal, String type) {
-		super(literal, new NamedTypeBinding(type));
+		super(literal, type);
 	}
 }

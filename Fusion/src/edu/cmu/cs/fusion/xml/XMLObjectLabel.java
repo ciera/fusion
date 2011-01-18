@@ -18,13 +18,6 @@ public class XMLObjectLabel implements ObjectLabel {
 		this.type = type;
 	}
 
-	/**
-	 * @return a false ITypeBinding, which can only be used to get the fully qualified name.
-	 */
-	public String getTypeName() {
-		return type;
-	}
-
 	public boolean isSummary() {
 		return false;
 	}
@@ -36,11 +29,7 @@ public class XMLObjectLabel implements ObjectLabel {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
+		return name.hashCode();
 	}
 
 	@Override
@@ -70,5 +59,9 @@ public class XMLObjectLabel implements ObjectLabel {
 	}
 
 	public void makePermanent() {
+	}
+
+	public String getTypeName() {
+		return type;
 	}
 }

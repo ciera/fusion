@@ -57,6 +57,9 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 	 */
 	public XMLRetriever(RelationsEnvironment rels) {
 		this.rels = rels;
+		topLabels = new HashSet<ObjectLabel>();
+		allLabels = new HashSet<ObjectLabel>();
+		delta = new RelationshipDelta();
 		queries = new HashMap<String, SchemaQueries>();
 	}
 	
