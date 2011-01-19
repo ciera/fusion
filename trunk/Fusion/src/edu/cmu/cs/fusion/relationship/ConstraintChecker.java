@@ -106,7 +106,7 @@ public class ConstraintChecker {
 		if (boundVars == null)
 			return new Pair<RelationshipDelta, AliasDelta>(new RelationshipDelta(), new AliasDelta());
 		
-		List<Substitution> subs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
+		List<Substitution> subs = env.findLabels(boundVars, cons.getUniversalFreeVars());
 		
 		for (Substitution sub : subs) {
 			Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, sub, cons);
@@ -183,7 +183,7 @@ public class ConstraintChecker {
 		if (boundVars == null)
 			return null;
 
-		List<Substitution> subs = env.findLabels(boundVars, cons.getFreeVarsExceptReqs());
+		List<Substitution> subs = env.findLabels(boundVars, cons.getUniversalFreeVars());
 		
 		if (subs.isEmpty())
 			return null;

@@ -10,6 +10,9 @@
     		<xsi:element name="trg" type="xsi:string" maxOccurs="1"
     			minOccurs="0">
     		</xsi:element>
+    		<xsi:element name="rst" type="xsi:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xsi:element>
     		<xsi:element name="req" type="xsi:string" maxOccurs="1"
     			minOccurs="0">
     		</xsi:element>

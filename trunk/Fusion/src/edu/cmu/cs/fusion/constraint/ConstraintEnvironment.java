@@ -75,7 +75,7 @@ public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
 		try {
 			NodeList consParts = item.getChildNodes();
 			Operation op = null;
-			Predicate trigger = null, requires = null;
+			Predicate trigger = null, restrict = null, requires = null;
 			List<Effect> effects = new LinkedList<Effect>();
 			
 			FPLParser parser = new FPLParser(rels, context);
@@ -96,6 +96,11 @@ public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
 					parser.reset(node.getTextContent());
 					trigger = parser.expression();
 				}
+				else if (name.equals("rst")) {
+					assert restrict == null;
+					parser.reset(node.getTextContent());
+					restrict = parser.expression();
+				}
 				else if (name.equals("req")) {
 					assert requires == null;
 					parser.reset(node.getTextContent());
@@ -108,10 +113,12 @@ public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
 			}
 			if (trigger == null)
 				trigger = new TruePredicate();
+			if (restrict == null)
+				restrict = new TruePredicate();
 			if (requires == null)
 				requires = new TruePredicate();
 			
-			constraints.add(new Constraint(resource.getName(), op, trigger, requires, effects));
+			constraints.add(new Constraint(resource.getName(), op, trigger, restrict, requires, effects));
 		} catch (ParseException e) {
 			ReportingUtility.reportParseError(resource, null, e.getMessage());
 		}
