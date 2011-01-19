@@ -11,9 +11,10 @@ import edu.cmu.cs.fusion.alias.ObjectLabel;
  *
  */
 public class Relationship {
-	private ObjectLabel[] parameters;
-	
+	private ObjectLabel[] parameters;	
 	private Relation type;
+	/** Since relationships are immutable and we do hashing on them a lot, store the hashCode! */
+	private int hashCode = 0;
 	
 	public Relationship(Relation type, ObjectLabel[] params) {
 		this.type = type;
@@ -34,11 +35,13 @@ public class Relationship {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + Arrays.hashCode(parameters);
-		return result;
+		if (hashCode == 0) {
+			final int prime = 31;
+			hashCode = 1;
+			hashCode = prime * hashCode + ((type == null) ? 0 : type.hashCode());
+			hashCode = prime * hashCode + Arrays.hashCode(parameters);
+		}
+		return hashCode;
 	}
 
 	@Override
@@ -62,6 +65,20 @@ public class Relationship {
 	
 	@Override
 	public String toString() {
+		String str =  type.getName() + "(";
+		int ndx = 0;
+		
+		for (ObjectLabel param : parameters) {
+			str += param.toString();
+			if (ndx != parameters.length - 1)
+				str += ",";
+			ndx++;
+		}
+		str += ")";
+		return str;
+	}
+
+	public String toErrorString() {
 		String str =  type.getName().substring(type.getName().lastIndexOf('.') + 1) + "(";
 		int ndx = 0;
 		
