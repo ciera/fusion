@@ -29,6 +29,7 @@ import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.operations.MethodInvocationOp;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
+import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 import edu.cmu.cs.fusion.test.TestAliasContext;
 import edu.cmu.cs.fusion.test.TestEnvironment;
 import edu.cmu.cs.fusion.test.TestUtils;
@@ -63,14 +64,14 @@ public class TestFullyBound extends ConstraintChecker {
 		req = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		
-		cons = new Constraint("", op, trigger, req, effects);
+		cons = new Constraint("", op, trigger, new TruePredicate(), req, effects);
 		
 		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		req = new RelationshipPredicate(utils.getRelation(2), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		
-		possCons = new Constraint("", op, trigger, req, effects);
+		possCons = new Constraint("", op, trigger, new TruePredicate(), req, effects);
 		
 		aliases = new TestAliasContext();
 		
@@ -146,7 +147,7 @@ public class TestFullyBound extends ConstraintChecker {
 		//target.(v0, v2) : result
 		//R0(v0, v1) -> R1(v1, v2)
 		
-		Constraint noEffectCons = new Constraint("", op, trigger, req, effects);
+		Constraint noEffectCons = new Constraint("", op, trigger, new TruePredicate(), req, effects);
 
 		
 		RelationshipDelta startRels = new RelationshipDelta();
@@ -184,7 +185,7 @@ public class TestFullyBound extends ConstraintChecker {
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		effects.add(RelEffect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(1)}));
 
-		Constraint severalEffectCons = new Constraint("", op, trigger, req, effects);
+		Constraint severalEffectCons = new Constraint("", op, trigger, new TruePredicate(), req, effects);
 		
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), SevenPointLattice.TRU);
@@ -225,7 +226,7 @@ public class TestFullyBound extends ConstraintChecker {
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {Constraint.RESULT, utils.getVar(1)}));
 		effects.add(RelEffect.createAddEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(1)}));
 
-		Constraint severalEffectCons = new Constraint("", op, trigger, req, effects);
+		Constraint severalEffectCons = new Constraint("", op, trigger, new TruePredicate(), req, effects);
 
 		RelationshipDelta startRels = new RelationshipDelta();
 		startRels.setRelationship(new Relationship(utils.getRelation(0), new ObjectLabel[]{labels[0], labels[1]}), SevenPointLattice.TRU);

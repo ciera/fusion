@@ -80,7 +80,7 @@ public class CallbackRequestor extends SearchRequestor {
 		effects.add(RelEffect.createAddEffect(relation, new SpecVar[] {Constraint.RECEIVER}));
 		
 		String owner = methodType.getDeclaringType().getFullyQualifiedName();
-		constraints.add(new Constraint(owner, op, new TruePredicate(), new TruePredicate(), effects));
+		constraints.add(new Constraint(owner, op, new TruePredicate(), new TruePredicate(), new TruePredicate(), effects));
 	}
 
 	public List<Constraint> getConstraints() {

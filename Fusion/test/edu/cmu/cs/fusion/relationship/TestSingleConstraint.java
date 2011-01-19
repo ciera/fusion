@@ -57,7 +57,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {Constraint.RECEIVER, utils.getVar(0)}));
 		effects.add(RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
 		
-		cons = new Constraint("", op, trigger, req, effects);
+		cons = new Constraint("", op, trigger, new TruePredicate(), req, effects);
 		
 		labels = new ObjectLabel[7];
 		labels[0] = new AbstractObjectLabel("0", "Foo");
@@ -159,7 +159,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(1), new SpecVar[] {utils.getVar(0), utils.getVar(0)}));
 		effects.add(RelEffect.createAddEffect(utils.getRelation(0), new SpecVar[] {Constraint.RESULT, utils.getVar(0)}));
 		
-		Constraint cons = new Constraint("", op, new TruePredicate(), new TruePredicate(), effects);
+		Constraint cons = new Constraint("", op, new TruePredicate(), new TruePredicate(), new TruePredicate(), effects);
 
 		FusionEnvironment env = new FusionEnvironment(aliases, rels, null, types, new InferenceEnvironment(), variant);		
 		Pair<RelationshipDelta, AliasDelta> deltas = runSingleConstraint(env, cons, instr);

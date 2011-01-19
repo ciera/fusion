@@ -8,14 +8,16 @@ public class Constraint {
 		
 	private Operation op;
 	private Predicate trigger;
+	private Predicate restrict;
 	private Predicate requires;
 	private List<Effect> effects;
 	private String declarer;
 	
-	public Constraint(String declarer, Operation op, Predicate trigger, Predicate requires, List<Effect> effects) {
+	public Constraint(String declarer, Operation op, Predicate trigger, Predicate restrict, Predicate requires, List<Effect> effects) {
 		this.declarer = declarer;
 		this.op = op;
 		this.trigger = trigger;
+		this.restrict = restrict;
 		this.requires = requires;
 		this.effects = effects;
 	}
@@ -30,6 +32,9 @@ public class Constraint {
 	public Predicate getTrigger() {
 		return trigger;
 	}
+	public Predicate getRestrict() {
+		return restrict;
+	}
 	public Predicate getRequires() {
 		return requires;
 	}
@@ -38,11 +43,11 @@ public class Constraint {
 	}
 	
 	public FreeVars getFreeVars() {
-		return getFreeVarsExceptReqs().union(requires.getFreeVariables());
+		return getUniversalFreeVars().union(requires.getFreeVariables()).union(restrict.getFreeVariables());
 	}
 
 
-	public FreeVars getFreeVarsExceptReqs() {
+	public FreeVars getUniversalFreeVars() {
 		FreeVars fv = new FreeVars();
 		
 		for (Effect eff : effects) {
@@ -60,7 +65,7 @@ public class Constraint {
 	}
 	
 	public String toString() {
-		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " EFFECTS\n" + effects + "\n";
+		return op + " AND\n" + trigger + " IMPLIES\n" + requires + " RESTRICTS\n" + restrict + " EFFECTS\n" + effects + "\n";
 	}
 	
 	
