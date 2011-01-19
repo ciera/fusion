@@ -31,4 +31,9 @@ public class DefaultReturnInstruction implements ReturnInstruction {
 		throw new UnsupportedOperationException("Only to be used as a stub for the reporter");
 	}
 
+	@Override
+	public String toString() {
+		return "<return>";
+	}
+
 }

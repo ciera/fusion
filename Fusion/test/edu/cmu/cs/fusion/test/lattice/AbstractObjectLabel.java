@@ -4,7 +4,7 @@ import edu.cmu.cs.fusion.alias.ObjectLabel;
 
 public class AbstractObjectLabel implements ObjectLabel {
 	private String name;
-	private String typeName;
+	private String type;
 	
 	public AbstractObjectLabel(String name) {
 		this.name = name;
@@ -12,12 +12,9 @@ public class AbstractObjectLabel implements ObjectLabel {
 
 	public AbstractObjectLabel(String name, String type) {
 		this.name = name;
-		this.typeName = type;
+		this.type = type;
 	}
 
-	public String getTypeName() {
-		return typeName;
-	}
 
 	public boolean isSummary() {
 		return false;
@@ -32,5 +29,9 @@ public class AbstractObjectLabel implements ObjectLabel {
 	}
 
 	public void makePermanent() {
+	}
+
+	public String getTypeName() {
+		return type;
 	}
 }
