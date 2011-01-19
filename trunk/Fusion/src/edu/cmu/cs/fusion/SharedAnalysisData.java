@@ -19,10 +19,22 @@
  */
 package edu.cmu.cs.fusion;
 
+import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 
+import edu.cmu.cs.crystal.internal.Crystal;
+import edu.cmu.cs.crystal.internal.ShortFormatter;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -34,8 +46,73 @@ import edu.cmu.cs.fusion.constraint.FreeVars;
 public class SharedAnalysisData {
 	static private TypeHierarchy hierarchy;
 	static private IJavaProject project;
+	static private Logger core;
+	static private Logger warn;
+	static private boolean setLoggers;
 	
-	public void checkForProjectReset(IJavaProject newProject, IProgressMonitor monitor) throws JavaModelException {
+	public SharedAnalysisData() {		
+		if (!setLoggers) {
+			Formatter simpleFormatter = new Formatter() {
+				public String format(LogRecord record) {
+					return record.getMessage();
+				}
+			};
+			
+			//Fix the Crystal loggers so they'll behave as we want.
+			Logger crystalLogger = Logger.getLogger(Crystal.class.getName());
+			crystalLogger.setLevel(Level.WARNING);
+			Handler handler = new ConsoleHandler();
+			handler.setFormatter(new ShortFormatter());
+			crystalLogger.addHandler(handler);
+			try {
+				handler = new FileHandler("%h/crystal.txt");
+				handler.setFormatter(new SimpleFormatter());
+				crystalLogger.addHandler(handler);
+			} catch (SecurityException e) {
+				crystalLogger.log(Level.WARNING, "Could not create crystal handler", e.getMessage());
+			} catch (IOException e) {
+				crystalLogger.log(Level.WARNING, "Could not create crystal handler", e.getMessage());
+			}
+			crystalLogger.setUseParentHandlers(false);
+
+			//The core logger. Should be at warnings only under most circumstances
+			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
+			core.setLevel(Level.WARNING);
+			handler = new ConsoleHandler();
+			handler.setFormatter(new ShortFormatter());
+			core.addHandler(handler);
+			core.setUseParentHandlers(false);
+			try {
+				handler = new FileHandler("%h/fusion_core.txt");
+				handler.setFormatter(new ShortFormatter());
+				core.addHandler(handler);
+			} catch (SecurityException e) {
+				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+			} catch (IOException e) {
+				core.log(Level.WARNING, "Could not create core handler", e.getMessage());
+			}
+
+
+			//The reports logger. Set to info if we want to generate reports.
+			warn = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
+			warn.setLevel(Level.INFO);
+			try {
+				handler = new FileHandler("%h/fusion_warnings.txt");
+				handler.setFormatter(simpleFormatter);
+				warn.addHandler(handler);
+				warn.setUseParentHandlers(false);
+			} catch (SecurityException e) {
+				core.log(Level.WARNING, "Could not create warnings handler", e.getMessage());
+			} catch (IOException e) {
+				core.log(Level.WARNING, "Could not create warnings handler", e.getMessage());
+			}
+
+			setLoggers = true;
+		}
+	}
+	
+
+		public void checkForProjectReset(IJavaProject newProject, IProgressMonitor monitor) throws JavaModelException {
 		if (project == null || !project.equals(newProject)) {
 			//we have a new project. reset the type hierarchy
 			if (monitor != null)

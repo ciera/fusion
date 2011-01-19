@@ -15,16 +15,15 @@ import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
 import edu.cmu.cs.crystal.analysis.constant.BooleanConstantLE;
 import edu.cmu.cs.crystal.analysis.constant.ConstantTransferFunction;
 import edu.cmu.cs.crystal.flow.ILabel;
+import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.simple.TupleLatticeElement;
+import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
-import edu.cmu.cs.fusion.alias.PointsToAliasContext;
-import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
-import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -34,9 +33,12 @@ import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
-public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
+public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCrystalMethodAnalysis {
+	protected static final String BASE_FUSION_LOGGER = "edu.cmu.cs.fusion";
+	public static final String FUSION_LOGGER = BASE_FUSION_LOGGER + ".core";
+	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
-	private TACFlowAnalysis<Pair<PointsToAliasContext,RelationshipContext>> fa;
+	private TACFlowAnalysis<Pair<AC,RelationshipContext>> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
 	private Logger log;
@@ -45,6 +47,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	private SharedAnalysisData sharedData;
 	private boolean majorErrorOccured = false;
 	private DeclarativeRetriever retriever;
+	private String compUnitName;
 
 	/**
 	 * Constructor used only for the purposes of the unit tests of fusion.
@@ -54,8 +57,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public FusionAnalysis(Variant variant) {
 		this.variant = variant;
 		sharedData = new SharedAnalysisData();
-		log = Logger.getLogger("edu.cmu.cs.fusion");
-		log.setLevel(Level.INFO);
+		log = Logger.getLogger(FUSION_LOGGER);
 	}
 
 	public void beforeAllCompilationUnits() {
@@ -94,13 +96,14 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	public void beforeAllMethods(ICompilationUnit compUnit,
 			CompilationUnit rootNode) {
 		try {
+			compUnitName = compUnit.getElementName();
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
 			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
 		} catch (JavaModelException e) {
-			log.log(Level.SEVERE, "Could not create type hierarchy", e);
+			log.log(Level.SEVERE, "Could not set up compilation unit for analysis", e);
 			majorErrorOccured = true;
 		} catch (CoreException e) {
-			log.log(Level.SEVERE, "Could not create type hierarchy", e);
+			log.log(Level.SEVERE, "Could not set up compilation unit for analysis", e);
 			majorErrorOccured = true;
 		}
 	}
@@ -116,11 +119,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 		}
 		try {
 			TypeHierarchy types = sharedData.getHierarchy();
-			MayPointsToTransferFunctions aliasTF = new MayPointsToTransferFunctions(retriever, types);
-			PointsToLatticeOps ops = new PointsToLatticeOps(types);
+			AbstractTACBranchSensitiveTransferFunction<AC> aliasTF = getAliasTransferFunction(retriever, types);
+			ILatticeOperations<AC> ops = getAliasLatticeOps(types);
 			
-			RelationshipTransferFunction<PointsToAliasContext> tfR = new RelationshipTransferFunction<PointsToAliasContext>(this, constraints, infers, types, retriever, aliasTF, ops);
-			fa = new TACFlowAnalysis<Pair<PointsToAliasContext,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+			RelationshipTransferFunction<AC> tfR = new RelationshipTransferFunction<AC>(this, constraints, infers, types, retriever, aliasTF, ops);
+			fa = new TACFlowAnalysis<Pair<AC,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
@@ -133,10 +136,14 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 			log.log(Level.SEVERE, "Error in Fusion analysis", e);
 		}
 	}
+	
+	abstract public AbstractTACBranchSensitiveTransferFunction<AC> getAliasTransferFunction(DeclarativeRetriever retriever, TypeHierarchy types);
+	
+	abstract public ILatticeOperations<AC> getAliasLatticeOps(TypeHierarchy types);
 
 	protected void reportResults(MethodDeclaration methodDecl, ConstraintChecker checker) {
 		EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, log);
+		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, compUnitName);
 		methodDecl.accept(errVisitor);
 	}
 
@@ -149,11 +156,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public AliasContext getPointsToResultsBefore(ASTNode node) {
-		return fa.getResultsBefore(node).fst();
+		return fa.getResultsBeforeCFG(node).fst();
 	}
 	
 	public AliasContext getPointsToResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node).fst();		
+		return fa.getResultsAfterCFG(node).fst();		
 	}
 
 	public RelationshipContext getStartingResults(MethodDeclaration d) {
@@ -165,11 +172,11 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 	}
 	
 	public RelationshipContext getRelResultsBefore(ASTNode node) {
-		return fa.getResultsBefore(node).snd();
+		return fa.getResultsBeforeCFG(node).snd();
 	}
 	
 	public Pair<? extends AliasContext, RelationshipContext> getResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node);
+		return fa.getResultsAfterCFG(node);
 	}
 	
 	public Pair<? extends AliasContext, RelationshipContext> getResultsBeforeAST(ASTNode node) {
@@ -178,7 +185,7 @@ public class FusionAnalysis extends AbstractCrystalMethodAnalysis {
 
 
 	public RelationshipContext getRelResultsAfter(ASTNode node) {
-		return fa.getResultsAfter(node).snd();		
+		return fa.getResultsAfterCFG(node).snd();		
 	}
 
 	public RelationshipContext getSpecificRelResultsAfter(ASTNode node, ILabel label) {
