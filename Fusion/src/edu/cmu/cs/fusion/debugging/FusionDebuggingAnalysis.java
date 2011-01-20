@@ -10,7 +10,7 @@ import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.Variant;
-import edu.cmu.cs.fusion.alias.MustPointsToTransferFunctions;
+import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.alias.PointsToAliasContext;
 import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
@@ -18,7 +18,7 @@ import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 public class FusionDebuggingAnalysis extends FusionAnalysis<PointsToAliasContext> {
 
 	public FusionDebuggingAnalysis() {
-		super(Variant.COMPLETE_VARIANT);
+		super(Variant.PRAGMATIC_VARIANT);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class FusionDebuggingAnalysis extends FusionAnalysis<PointsToAliasContext
 	@Override
 	public AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> getAliasTransferFunction(
 			DeclarativeRetriever retriever, TypeHierarchy types) {
-		return new MustPointsToTransferFunctions(retriever, types);
+		return new MayPointsToTransferFunctions(retriever, types);
 	}
 
 	@Override
