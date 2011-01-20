@@ -82,7 +82,7 @@ public class RelationshipDelta implements Iterable<Entry<Relationship, SevenPoin
 	 * It attempts to do so by skipping items in the list that are either fully bot or fully star (the default state).
 	 * Bots are skipped entirely. All-stars are remembered, and then the result is polarized if any existed.
 	 * @param deltas
-	 * @return
+	 * @return A new joined relationship delta
 	 */
 	static public RelationshipDelta join(List<RelationshipDelta> deltas) {
 		Iterator<RelationshipDelta> itr = deltas.iterator();

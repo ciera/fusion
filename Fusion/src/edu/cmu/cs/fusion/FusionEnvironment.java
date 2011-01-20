@@ -66,7 +66,7 @@ public class FusionEnvironment<AC extends AliasContext> {
 		if (alreadyLookingForRel(rel, sub))
 			return null;
 		
-		continuation = continuation.cons(new Pair(rel, sub), continuation);
+		continuation = ConsList.cons(new Pair<RelationshipPredicate, Substitution>(rel, sub), continuation);
 		
 		for (InferredRel inf : inference) {	
 			//first, find out what substitutions are needed to make rel. There might 

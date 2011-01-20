@@ -32,15 +32,6 @@ public class InferenceEnvironment implements Iterable<InferredRel>, Observer{
 	private Set<InferredRel> inferRules;
 	private RelationsEnvironment rels;
 
-	/**
-	 * for testing purposes only
-	 * @param rels
-	 */
-	@Deprecated
-	public InferenceEnvironment() {
-		inferRules = new HashSet<InferredRel>();
-	}
-
 	public InferenceEnvironment(RelationsEnvironment rels) {
 		inferRules = new HashSet<InferredRel>();
 		this.rels = rels;
