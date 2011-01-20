@@ -17,7 +17,6 @@ import edu.cmu.cs.fusion.alias.AliasDelta;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.Effect;
-import edu.cmu.cs.fusion.constraint.SpecDelta;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.predicates.TruePredicate;
 
@@ -109,9 +108,9 @@ public class ConstraintChecker {
 		List<Substitution> subs = env.findLabels(boundVars, cons.getUniversalFreeVars());
 		
 		for (Substitution sub : subs) {
-			Pair<RelationshipDelta, SpecDelta> deltas = runFullyBound(env, sub, cons);
+			Pair<RelationshipDelta, Substitution> deltas = runFullyBound(env, sub, cons);
 			relDeltas.add(deltas.fst());
-			aliasDeltas.add(deltas.snd().turnToSource(boundVars));
+			aliasDeltas.add(new AliasDelta(boundVars, deltas.snd()));
 		}
 		
 		RelationshipDelta relDelta;
@@ -134,42 +133,6 @@ public class ConstraintChecker {
 	}
 
 	
-	/**
-	 * Check a constraint with the fully bound substitutions
-	 * @param env The stating lattices
-	 * @param partialSubs The substitutions for FV(cons) - FV(req)
-	 * @param cons The constraint to check
-	 * @param instr The instruction to report errors on
-	 * @return Any change effects
-	 */
-	protected Pair<RelationshipDelta, SpecDelta> runFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {	
-		
-		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
-		
-		if (trigger == ThreeValue.FALSE) {
-			return new Pair<RelationshipDelta, SpecDelta>(RelationshipDelta.getTrueBottom(), SpecDelta.createBottomSpecDelta(partialSubs));
-		}
-		else  {
-			RelationshipDelta delta = new RelationshipDelta();
-			SpecDelta specs;
-			
-			//now make the effects
-			for (Effect effect : cons.getEffects())
-				delta.override(effect.makeEffects(env, partialSubs));
-
-			if (trigger == ThreeValue.UNKNOWN)
-				delta = delta.polarize();
-			
-			if (trigger == ThreeValue.UNKNOWN && variant.isPragmatic())
-				specs = SpecDelta.createBottomSpecDelta(partialSubs);
-			else
-				specs = SpecDelta.createSubstitutionSpecDelta(partialSubs);
-						
-			return new Pair<RelationshipDelta, SpecDelta>(delta, specs);
-		}
-	}
-	
-
 	/**
 	 * 
 	 * @param env
@@ -199,6 +162,52 @@ public class ConstraintChecker {
 			return new FusionErrorReport(cons, failingSubs, env);
 		else
 			return null;
+	}
+
+	/**
+	 * Check a constraint with the fully bound substitutions
+	 * @param env The stating lattices
+	 * @param partialSubs The substitutions for FV(cons) - FV(req)
+	 * @param cons The constraint to check
+	 * @param instr The instruction to report errors on
+	 * @return Any change effects
+	 */
+	protected Pair<RelationshipDelta, Substitution> runFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {	
+		
+		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
+		
+		if (trigger == ThreeValue.FALSE) {
+			return new Pair<RelationshipDelta, Substitution>(RelationshipDelta.getTrueBottom(), partialSubs);
+		}
+		else  {
+			RelationshipDelta delta = new RelationshipDelta();
+			
+			//now make the effects
+			for (Effect effect : cons.getEffects())
+				delta.override(effect.makeEffects(env, partialSubs));
+
+			if (trigger == ThreeValue.UNKNOWN) {
+				return new Pair<RelationshipDelta, Substitution>(delta.polarize(), partialSubs);
+			}
+			else { //trigger == ThreeValue.TRUE
+				return new Pair<RelationshipDelta, Substitution>(delta, isGoodSubs(env, partialSubs, cons) ? partialSubs : null);
+			}
+		}
+	}
+
+	private boolean isGoodSubs(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {
+		if (cons.getRestrict() instanceof TruePredicate)
+			return true;
+		
+		List<Substitution> subs = env.allValidSubs(partialSubs, cons.getFreeVars());
+			
+		for (Substitution sub : subs) {
+			ThreeValue restrict = cons.getRestrict().getTruth(env, sub);
+			
+			if ((restrict == ThreeValue.TRUE) || (restrict == ThreeValue.UNKNOWN && variant.isPragmatic()))
+				return true;
+		}
+		return false;
 	}
 
 	/**
