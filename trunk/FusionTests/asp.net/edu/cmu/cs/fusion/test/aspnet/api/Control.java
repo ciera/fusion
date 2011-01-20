@@ -8,8 +8,7 @@ import edu.cmu.cs.plural.annot.States;
 
 @Constraint(
 		op="Control.findControl(String name) : Control",
-		trigger="Name(name, result) AND SubControl(result, target)",
-		requires = "TRUE",
+		restrictTo="Name(name, result) AND SubControl(result, target)",
 		effects = {}
 )
 public class Control {

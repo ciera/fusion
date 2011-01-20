@@ -8,7 +8,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
 		pass={},
-		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=3, analysis="FusionSound")}
+		fail={@FailingTest(value=1, analysis="FusionComplete"),@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=3, analysis="FusionSound")}
 )
 public class BadLoginView extends Page {
 	

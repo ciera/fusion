@@ -8,8 +8,6 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 @Constraints({
 @Constraint(
 	op="BOM",
-	trigger = "TRUE",
-	requires = "TRUE",
 	effects = {"CorrectlySelected(*)"}
 ),
 @Constraint(
