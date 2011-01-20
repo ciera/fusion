@@ -204,7 +204,7 @@ public class ConstraintChecker {
 		for (Substitution sub : subs) {
 			ThreeValue restrict = cons.getRestrict().getTruth(env, sub);
 			
-			if ((restrict == ThreeValue.TRUE) || (restrict == ThreeValue.UNKNOWN && variant.isPragmatic()))
+			if ((restrict == ThreeValue.TRUE) || (restrict == ThreeValue.UNKNOWN && !variant.isPragmatic()))
 				return true;
 		}
 		return false;

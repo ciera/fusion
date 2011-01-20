@@ -14,7 +14,6 @@ public enum SevenPointLattice {
 	/**
 	 * This is a polarizing operation. TRU goes to TRU_STAR, and FAL goes to FAL_STAR.
 	 * All other enums return themselves.
-	 * @return
 	 */
 	public SevenPointLattice polarize() {
 		if (this == TRU)
@@ -27,8 +26,6 @@ public enum SevenPointLattice {
 	
 	/**
 	 * The expected join operation.
-	 * @param other
-	 * @return
 	 */
 	public SevenPointLattice join(SevenPointLattice other) {
 		if (this == BOT)
@@ -54,8 +51,6 @@ public enum SevenPointLattice {
 	 * This join operation works a little differently. It will
 	 * place TRU and FAL above TRU_STAR and FAL_STAR respectively. This will in turn
 	 * cause STAR to be bottom.
-	 * @param other
-	 * @return
 	 */
 	public SevenPointLattice joinAlt(SevenPointLattice other) {
 		if (this == BOT)
@@ -79,8 +74,6 @@ public enum SevenPointLattice {
 	/**
 	 * The overriding operator for the main lattice. This is particularly used when
 	 * creating effects that need to be combined in order of appearance.
-	 * @param other
-	 * @return
 	 */
 	public SevenPointLattice override(SevenPointLattice override) {
 		if (override != STAR && override != BOT)
@@ -91,8 +84,6 @@ public enum SevenPointLattice {
 
 	/**
 	 * The overriding operator for three values.
-	 * @param initial
-	 * @return
 	 */
 	public ThreeValue override(ThreeValue initial) {
 		if (this == UNK)

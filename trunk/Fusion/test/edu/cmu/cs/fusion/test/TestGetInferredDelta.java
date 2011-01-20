@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionEnvironment;
@@ -24,9 +23,9 @@ import edu.cmu.cs.fusion.constraint.RelEffect;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
-import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.test.constraint.operations.StubVariable;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
 
@@ -63,8 +62,6 @@ public class TestGetInferredDelta {
 				return superType.equals("Baz") || superType.equals("Bar");
 			else
 				return false;
-		}
-		public void sendToXML(Document doc) {
 		}
 	};
 
@@ -112,8 +109,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testNoMatchForProduce() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -137,8 +134,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testNoVariablesWork() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -162,8 +159,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testWrongValue() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("a"), new SpecVar("b")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -187,8 +184,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testThrashes() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -212,8 +209,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testWorksSingleStepSame() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -240,8 +237,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testWorksSingleStepDiff() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();
@@ -269,8 +266,8 @@ public class TestGetInferredDelta {
 	 */
 	@Test
 	public void testWorksTwoSteps() {
-		InferenceEnvironment infEnv = new InferenceEnvironment();
-		FusionEnvironment env = new FusionEnvironment(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
+		InferenceEnvironment infEnv = new InferenceEnvironment(null);
+		FusionEnvironment<?> env = new FusionEnvironment<TestAliasContext>(aliases, ctx, null, testH, infEnv, Variant.PRAGMATIC_VARIANT);
 		
 		RelationshipPredicate trigger = new RelationshipPredicate(relations[0], new SpecVar[] {new SpecVar("x"), new SpecVar("y")});
 		List<RelEffect> eff = new LinkedList<RelEffect>();

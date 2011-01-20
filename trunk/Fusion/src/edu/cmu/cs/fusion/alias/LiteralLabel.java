@@ -69,10 +69,6 @@ public class LiteralLabel implements ObjectLabel {
 		return true;
 	}
 
-
-	/**
-	 * @return
-	 */
 	public Object getLiteral() {
 		return literal;
 	}
