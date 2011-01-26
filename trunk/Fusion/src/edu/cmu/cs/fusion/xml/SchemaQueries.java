@@ -94,11 +94,11 @@ public class SchemaQueries {
 			}
 			
 		} catch (XQException e) {
-			throw new FusionTypeCheckException(e);
+			throw new FusionTypeCheckException(context.getFullyQualifiedName(), file, e);
 		} catch (JavaModelException e) {
-			throw new FusionTypeCheckException(e);
+			throw new FusionTypeCheckException(context.getFullyQualifiedName(), file, e);
 		} catch (XPathException e) {
-			throw new FusionTypeCheckException(e);
+			throw new FusionTypeCheckException(context.getFullyQualifiedName(), file, e);
 		}
 		return !deltas.isEmpty() ? RelationshipDelta.joinAlt(deltas) : new RelationshipDelta();
 	}
