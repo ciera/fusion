@@ -13,16 +13,32 @@ import edu.cmu.cs.fusion.Binding;
 import edu.cmu.cs.fusion.constraint.Substitution;
 
 public class AliasDelta implements Iterable<Variable> {
-	public HashMap<Variable, Set<ObjectLabel>> aliases;
+	private HashMap<Variable, Set<ObjectLabel>> aliases;
 	
-	public AliasDelta(ConsList<Binding> boundVars, Substitution sub) {
+	public AliasDelta(ConsList<Binding> boundVars, List<Substitution> subs) {
 		aliases = new HashMap<Variable, Set<ObjectLabel>>();
-		if (sub != null) {
-			for (Binding bound : boundVars) {
-				addChange(bound.getSource(), sub.getSub(bound.getSpec()));
+		for (Binding bound : boundVars) {
+			Set<ObjectLabel> variables = new HashSet<ObjectLabel>();
+			
+			for (Substitution sub : subs) {
+				if (sub != null)
+					variables.add(sub.getSub(bound.getSpec()));
 			}
+			
+			aliases.put(bound.getSource(), variables);
 		}
 	}
+
+	
+	public AliasDelta(HashMap<Variable, ObjectLabel> changes) {
+		aliases = new HashMap<Variable, Set<ObjectLabel>>();
+		for (Entry<Variable, ObjectLabel> entry : changes.entrySet()) {
+			Set<ObjectLabel> variables = new HashSet<ObjectLabel>();
+			variables.add(entry.getValue());
+			aliases.put(entry.getKey(), variables);
+		}
+	}
+	
 
 	public AliasDelta() {
 		aliases = new HashMap<Variable, Set<ObjectLabel>>();
@@ -49,17 +65,18 @@ public class AliasDelta implements Iterable<Variable> {
 		}
 		variables.add(sub);
 	}
-	
-	public static AliasDelta join(List<AliasDelta> specDeltas) {
+
+	public static AliasDelta join(List<AliasDelta> aliasDeltas) {
 		AliasDelta combined = new AliasDelta();
-		for (AliasDelta delta : specDeltas) {
-			for (Entry<Variable, Set<ObjectLabel>> entry : delta.aliases.entrySet()) {
+		for (AliasDelta delta : aliasDeltas) {
+			for (Entry<Variable, Set<ObjectLabel>> entry : delta.aliases.entrySet()) {		
 				Set<ObjectLabel> existing = combined.aliases.get(entry.getKey());
 				if (existing == null) {
-					existing = new HashSet<ObjectLabel>();
+					existing = new HashSet<ObjectLabel>(entry.getValue());
 					combined.aliases.put(entry.getKey(), existing);
 				}
-				existing.addAll(entry.getValue());
+				else
+					existing.retainAll(entry.getValue());
 			}
 		}
 		return combined;
@@ -100,4 +117,6 @@ public class AliasDelta implements Iterable<Variable> {
 		}
 		return str + "}";
 	}
+
+
 }
