@@ -38,13 +38,15 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	private String className;
 	private Logger log = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 	private Logger warningsLog = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
-
+	private SEVERITY sev;
+	
 	public ErrorReporterVisitor(FusionAnalysis<?> analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, String type) {
 		this.reporter = reporter;
 		this.checker = constraintChecker;
 		this.fa = analysis;
 		this.tac = tac;
 		this.className = type;
+		this.sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
 	}
 
  	@Override
@@ -91,7 +93,6 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	
 	@Override
 	public void endVisit(MethodDeclaration node) {
-		
 		if (node.getBody() != null) {
 			TACInstruction instr = new DefaultReturnInstruction();
 			Pair<? extends AliasContext, RelationshipContext> res = fa.getEndingResults(node);
@@ -101,10 +102,9 @@ public class ErrorReporterVisitor extends ASTVisitor {
 			List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 			
 			for (FusionErrorReport err : errors) {
-				SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
 				boolean hasStatements = node.getBody() != null && node.getBody().statements().size() > 0;
 				ASTNode reportOn = !hasStatements ? node : (ASTNode)node.getBody().statements().get(node.getBody().statements().size() - 1);
-				reportError(err, sev, reportOn);
+				reportError(err, reportOn);
 			}
 		}
 	}
@@ -119,26 +119,18 @@ public class ErrorReporterVisitor extends ASTVisitor {
 			log.log(Level.WARNING, "Found an unanalyzed node in " + className + ": " + node.toString());
 			return;
 		}
-
 		
 		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 		
-		for (FusionErrorReport err : errors) {
-			SEVERITY sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
-			reportError(err, sev, node);
-		}
+		for (FusionErrorReport err : errors) 
+			reportError(err, node);
 	}
 
-	private void reportError(FusionErrorReport err, SEVERITY sev, ASTNode reportOn) {
-		if (reportOn instanceof ClassInstanceCreation) {
-			CompilationUnit cu = (CompilationUnit) reportOn.getRoot();	
-			String info = cu.getJavaElement().getPath().toFile().getAbsolutePath();
-			info += "@" + Integer.toString(cu.getLineNumber(reportOn.getStartPosition()));
-			log.log(Level.WARNING, "Pruned warning caused by a constructor call: " + reportOn + " at " + info);
-			return;
-		}
+	private void reportError(FusionErrorReport err, ASTNode reportOn) {	
+		String message;
 		
-		reporter.reportUserProblem("Broken constraint:" + err.getConstraint().toErrorString(), reportOn, fa.getName(), sev);	
+		message = "Broken constraint:" + err.getConstraint().toErrorString();
+		reporter.reportUserProblem(message, reportOn, fa.getName(), sev);	
 
 		CompilationUnit cu = (CompilationUnit) reportOn.getRoot();
 		String info = cu.getJavaElement().getPath().toFile().getAbsolutePath();
@@ -149,8 +141,7 @@ public class ErrorReporterVisitor extends ASTVisitor {
 		info += "@" + err.getConstraint().toString().replaceAll("\n", " ");
 			
 		warningsLog.log(Level.INFO, info + "\n");
-		
-		log.log(Level.INFO, "Broken constraint:" + err.getConstraint());
+		log.log(Level.INFO, message);
 		log.log(Level.INFO, "Variant:" + fa.getVariant().toString());			
 		log.log(Level.CONFIG, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
 		for (Substitution failure : err.getFailingVars())
