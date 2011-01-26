@@ -99,18 +99,18 @@ public class ConstraintChecker {
 	protected Pair<RelationshipDelta, AliasDelta> runSingleConstraint(FusionEnvironment<?> env,
 			Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, method, instr);
-		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
-		List<AliasDelta> aliasDeltas = new LinkedList<AliasDelta>();
 		
 		if (boundVars == null)
 			return new Pair<RelationshipDelta, AliasDelta>(new RelationshipDelta(), new AliasDelta());
 		
+		List<RelationshipDelta> relDeltas = new LinkedList<RelationshipDelta>();
+		List<Substitution> changeSubs = new LinkedList<Substitution>();
 		List<Substitution> subs = env.findLabels(boundVars, cons.getUniversalFreeVars());
 		
 		for (Substitution sub : subs) {
 			Pair<RelationshipDelta, Substitution> deltas = runFullyBound(env, sub, cons);
 			relDeltas.add(deltas.fst());
-			aliasDeltas.add(new AliasDelta(boundVars, deltas.snd()));
+			changeSubs.add(deltas.snd());
 		}
 		
 		RelationshipDelta relDelta;
@@ -122,11 +122,11 @@ public class ConstraintChecker {
 		}
 		else if (relDeltas.size() == 1) {
 			relDelta = relDeltas.get(0);
-			aliasDelta = aliasDeltas.get(0);
+			aliasDelta = new AliasDelta(boundVars, changeSubs);
 		}
 		else {
 			relDelta = RelationshipDelta.join(relDeltas);
-			aliasDelta = AliasDelta.join(aliasDeltas);
+			aliasDelta = new AliasDelta(boundVars, changeSubs);
 		}
 			
 		return new Pair<RelationshipDelta, AliasDelta>(relDelta, aliasDelta);
@@ -151,8 +151,8 @@ public class ConstraintChecker {
 		if (subs.isEmpty())
 			return null;
 		
-		List<Substitution> failingSubs = new LinkedList<Substitution>();
-
+		List<Substitution> failingSubs = new LinkedList<Substitution>();		
+		
 		for (Substitution sub : subs) {
 			if (checkFullyBound(env, sub, cons))
 				failingSubs.add(sub);
@@ -173,53 +173,51 @@ public class ConstraintChecker {
 	 * @return Any change effects
 	 */
 	protected Pair<RelationshipDelta, Substitution> runFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {	
-		
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
+		Substitution keepSub = isGoodSubs(trigger, env, partialSubs, cons) ? partialSubs : null;
+		RelationshipDelta delta;
 		
 		if (trigger == ThreeValue.FALSE) {
-			return new Pair<RelationshipDelta, Substitution>(RelationshipDelta.getTrueBottom(), partialSubs);
+			delta = RelationshipDelta.getTrueBottom();
 		}
 		else  {
-			RelationshipDelta delta = new RelationshipDelta();
+			delta = new RelationshipDelta();
 			
 			//now make the effects
 			for (Effect effect : cons.getEffects())
 				delta.override(effect.makeEffects(env, partialSubs));
 
 			if (trigger == ThreeValue.UNKNOWN) {
-				return new Pair<RelationshipDelta, Substitution>(delta.polarize(), partialSubs);
-			}
-			else { //trigger == ThreeValue.TRUE
-				return new Pair<RelationshipDelta, Substitution>(delta, isGoodSubs(env, partialSubs, cons) ? partialSubs : null);
+				delta = delta.polarize();
 			}
 		}
+		return new Pair<RelationshipDelta, Substitution>(delta, keepSub);
 	}
 
-	private boolean isGoodSubs(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {
-		if (cons.getRestrict() instanceof TruePredicate)
+
+	private boolean isGoodSubs(ThreeValue trigger, FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {
+		
+		if (trigger == ThreeValue.FALSE || trigger == ThreeValue.UNKNOWN) {
 			return true;
-		
-		List<Substitution> subs = env.allValidSubs(partialSubs, cons.getFreeVars());
-			
-		for (Substitution sub : subs) {
-			ThreeValue restrict = cons.getRestrict().getTruth(env, sub);
-			
-			if ((restrict == ThreeValue.TRUE) || (restrict == ThreeValue.UNKNOWN && !variant.isPragmatic()))
-				return true;
 		}
-		return false;
+		else {
+			if (cons.getRestrict() instanceof TruePredicate)
+				return true;
+			
+			List<Substitution> subs = env.allValidSubs(partialSubs, cons.getFreeVars());
+				
+			for (Substitution sub : subs) {
+				ThreeValue restrict = cons.getRestrict().getTruth(env, sub);
+				
+				if ((restrict == ThreeValue.TRUE) || (restrict == ThreeValue.UNKNOWN && !variant.isPragmatic()))
+					return true;
+			}
+			return false;
+		}
 	}
 
-	/**
-	 * 
-	 * @param env
-	 * @param partialSubs
-	 * @param cons
-	 * @return true if there is an error, false if it passes
-	 */
-	protected boolean checkFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {		
+	protected boolean checkFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {			
 		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
-		
 		if (trigger == ThreeValue.FALSE) {
 			return false;
 		}
