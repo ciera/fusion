@@ -1,5 +1,7 @@
 package edu.cmu.cs.fusion;
 
+import java.io.File;
+
 import edu.cmu.cs.fusion.annot.Relation.Effect;
 
 
@@ -31,6 +33,10 @@ public class FusionTypeCheckException extends Exception {
 
 	public FusionTypeCheckException(Relation relation, int expectedNumParams, int actualNumParams) {
 		super("Relationship " + relation.getName() + "expected " + expectedNumParams + " params, but received " + actualNumParams);
+	}
+
+	public FusionTypeCheckException(String context, File file, Exception e) {
+		super("Had an error when trying to parse file " + file.getName() + "with " + context + ". See log for details.", e);
 	}
 
 }
