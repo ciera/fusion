@@ -8,10 +8,8 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.FusionAnalysis;
-import edu.cmu.cs.fusion.alias.AliasContext;
-import edu.cmu.cs.fusion.relationship.RelationshipContext;
+import edu.cmu.cs.fusion.FusionLattice;
 
 public class DebuggingCacheVisitor extends ASTVisitor {
 	private FusionCache cache;
@@ -27,14 +25,14 @@ public class DebuggingCacheVisitor extends ASTVisitor {
 		Iterator<Statement> itr = (Iterator<Statement>) node.statements().iterator();
 		int startLine, endLine;
 		Statement stmnt;
-		Pair<? extends AliasContext, RelationshipContext> pair = null;
+		FusionLattice<?> pair = null;
 			
 		while (itr.hasNext()) {
 			stmnt = itr.next();
 			startLine = getStartLine(stmnt);
 			endLine = getEndLine(stmnt);
 			pair = analysis.getResultsBeforeAST(stmnt);
-			cache.addResult(startLine, endLine, new DebugInfo(stmnt.toString(), startLine, pair.fst(), pair.snd()));
+			cache.addResult(startLine, endLine, new DebugInfo(stmnt.toString(), startLine, pair.getAliasContext(), pair.getRelContext()));
 		}
 
 		return true;

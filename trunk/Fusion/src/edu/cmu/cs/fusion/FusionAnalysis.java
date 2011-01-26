@@ -21,7 +21,6 @@ import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
 import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.Constraint;
@@ -38,7 +37,7 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 	public static final String FUSION_LOGGER = BASE_FUSION_LOGGER + ".core";
 	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
-	private TACFlowAnalysis<Pair<AC,RelationshipContext>> fa;
+	private TACFlowAnalysis<FusionLattice<AC>> fa;
 	private ConstraintEnvironment constraints;
 	private Variant variant;
 	private Logger log;
@@ -123,12 +122,12 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 			ILatticeOperations<AC> ops = getAliasLatticeOps(types);
 			
 			RelationshipTransferFunction<AC> tfR = new RelationshipTransferFunction<AC>(this, constraints, infers, types, retriever, aliasTF, ops);
-			fa = new TACFlowAnalysis<Pair<AC,RelationshipContext>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
+			fa = new TACFlowAnalysis<FusionLattice<AC>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
 			
 			ConstantTransferFunction tfC = new ConstantTransferFunction();
 			constants = new TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>>(tfC, this.analysisInput.getComUnitTACs().unwrap());
 
-			RelationshipContext finalLattice = fa.getEndResults(methodDecl).snd();
+			RelationshipContext finalLattice = fa.getEndResults(methodDecl).getRelContext();
 			
 			reportResults(methodDecl, tfR.getConstraintChecker());
 		
@@ -143,7 +142,7 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 
 	protected void reportResults(MethodDeclaration methodDecl, ConstraintChecker checker) {
 		EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);
-		ErrorReporterVisitor errVisitor = new ErrorReporterVisitor(this, checker, reporter, tac, compUnitName);
+		ErrorReporterVisitor<AC> errVisitor = new ErrorReporterVisitor<AC>(this, checker, reporter, tac, compUnitName);
 		methodDecl.accept(errVisitor);
 	}
 
@@ -156,40 +155,44 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 	}
 	
 	public AliasContext getPointsToResultsBefore(ASTNode node) {
-		return fa.getResultsBeforeCFG(node).fst();
+		return fa.getResultsBeforeCFG(node).getAliasContext();
 	}
 	
+//	public AliasContext getPointsToResultsIntermediate(ASTNode node) {
+//		return fa.getResultsAfterCFG(node).getAliasesForTrigger();	
+//	}
+
 	public AliasContext getPointsToResultsAfter(ASTNode node) {
-		return fa.getResultsAfterCFG(node).fst();		
+		return fa.getResultsAfterCFG(node).getAliasContext();		
 	}
 
 	public RelationshipContext getStartingResults(MethodDeclaration d) {
-		return fa.getStartResults(d).snd();
+		return fa.getStartResults(d).getRelContext();
 	}
 	
-	public Pair<? extends AliasContext, RelationshipContext> getEndingResults(MethodDeclaration d) {
+	public FusionLattice<AC> getEndingResults(MethodDeclaration d) {
 		return fa.getEndResults(d);
 	}
 	
 	public RelationshipContext getRelResultsBefore(ASTNode node) {
-		return fa.getResultsBeforeCFG(node).snd();
+		return fa.getResultsBeforeCFG(node).getRelContext();
 	}
 	
-	public Pair<? extends AliasContext, RelationshipContext> getResultsAfter(ASTNode node) {
+	public FusionLattice<AC> getResultsAfter(ASTNode node) {
 		return fa.getResultsAfterCFG(node);
 	}
 	
-	public Pair<? extends AliasContext, RelationshipContext> getResultsBeforeAST(ASTNode node) {
+	public FusionLattice<AC> getResultsBeforeAST(ASTNode node) {
 		return fa.getResultsBeforeAST(node);
 	}
 
 
 	public RelationshipContext getRelResultsAfter(ASTNode node) {
-		return fa.getResultsAfterCFG(node).snd();		
+		return fa.getResultsAfterCFG(node).getRelContext();	
 	}
 
 	public RelationshipContext getSpecificRelResultsAfter(ASTNode node, ILabel label) {
-		return fa.getLabeledResultsAfter(node).get(label).snd();
+		return fa.getLabeledResultsAfter(node).get(label).getRelContext();
 	}
 
 	public TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> getBooleanAnalysis() {
