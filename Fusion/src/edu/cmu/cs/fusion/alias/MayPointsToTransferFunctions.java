@@ -234,7 +234,6 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 		PointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
 		Set<ObjectLabel> aliases = newValue.getAliases(instr.getOperand());
-		assert aliases != null : "Had null aliases for operand " + instr.getOperand().getSourceString();
 		newValue.addPointsTo(instr.getTarget(), aliases);
 		return LabeledSingleResult.createResult(newValue, labels);
 	}

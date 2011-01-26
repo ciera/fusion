@@ -81,14 +81,14 @@ public class PointsToAliasContext implements AliasContext, Iterable<Entry<Variab
 	 * @param aliases
 	 */
 	public void addPointsTo(Variable var, Set<ObjectLabel> aliases) {
-		assert(aliases != null);
 		Set<ObjectLabel> labels = pointsTo.get(var);
 		
 		if (labels == null) {
 			labels = new HashSet<ObjectLabel>();
 			pointsTo.put(var, labels);
 		}
-		labels.addAll(aliases);
+		if (aliases != null)
+			labels.addAll(aliases);
 	}
 
 	public void addLabels(Set<ObjectLabel> labels) {
