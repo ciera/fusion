@@ -45,16 +45,17 @@ import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.FusionException;
+import edu.cmu.cs.fusion.FusionLattice;
+import edu.cmu.cs.fusion.FusionLatticeOps;
 import edu.cmu.cs.fusion.Method;
-import edu.cmu.cs.fusion.PairLatticeOps;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 
 
-public class RelationshipTransferFunction<AC extends AliasContext> extends AbstractTACBranchSensitiveTransferFunction<Pair<AC, RelationshipContext>> {
+public class RelationshipTransferFunction<AC extends AliasContext> extends AbstractTACBranchSensitiveTransferFunction<FusionLattice<AC>> {
 
-	private FusionAnalysis mainAnalysis;
+	private FusionAnalysis<AC> mainAnalysis;
 	protected TypeHierarchy types;
 	private InferenceEnvironment infers;
 	private ConstraintChecker checker;
@@ -97,7 +98,7 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	 * Get the entry value based on the starting context received from the XML files.
 	 * Also use any callbacks, so go ahead and run the constraint checker here with an entry instruction.
 	 */
-	public Pair<AC, RelationshipContext> createEntryValue(MethodDeclaration method) {
+	public FusionLattice<AC> createEntryValue(MethodDeclaration method) {
 		checker = new ConstraintChecker(constraints, types, mainAnalysis.getVariant(), createTACMethod(method));
 		
 		AC aliases = aliasTF.createEntryValue(method);
@@ -115,10 +116,10 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			BooleanContext bContext = new BooleanConstantWrapper(method.getBody(), mainAnalysis.getBooleanAnalysis(), aliases);
 			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aliases, startingContext, bContext, types, infers, mainAnalysis.getVariant());
 			
-			return checker.runGenericTransfer(env, entry);
+			return convertToLattice(checker.runGenericTransfer(env, entry));
 		}
 		else {
-			return new Pair<AC, RelationshipContext>(aliases, startingContext);
+			return new FusionLattice<AC>(startingContext, aliases);
 		}
 	}
 	
@@ -134,17 +135,17 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	}
 
 
-	public ILatticeOperations<Pair<AC, RelationshipContext>> getLatticeOperations() {
-		return new PairLatticeOps<AC, RelationshipContext>(aliasOps, new RelationshipLatticeOperations());
+	public ILatticeOperations<FusionLattice<AC>> getLatticeOperations() {
+		return new FusionLatticeOps<AC>(aliasOps);
 	}
 	
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(MethodCallInstruction instr,
-			List<ILabel> labels, Pair<AC, RelationshipContext> value) {		
+	public IResult<FusionLattice<AC>> transfer(MethodCallInstruction instr,
+			List<ILabel> labels, FusionLattice<AC> value) {		
 		//run twice: once assuming return is false, and again assuming return is true.
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 		
 		
@@ -156,18 +157,18 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			AC aAfterContextTrue = aliasResults.get(trueLabel);
 			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextTrue, true);
 			FusionEnvironment<AC> tEnv = new FusionEnvironment<AC>(aAfterContextTrue, relsContext, tBContext, types, infers, mainAnalysis.getVariant());
-			Pair<AC, RelationshipContext> tPair = checker.runGenericTransfer(tEnv, instr);
+			FusionLattice<AC> tPair = convertToLattice(checker.runGenericTransfer(tEnv, instr));
 			
 			//false branch
 			AC aAfterContextFalse = aliasResults.get(falseLabel);
 			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextFalse, false);
 			FusionEnvironment<AC> fEnv = new FusionEnvironment<AC>(aAfterContextFalse, relsContext, fBContext, types, infers, mainAnalysis.getVariant());
-			Pair<AC, RelationshipContext> fPair = checker.runGenericTransfer(fEnv, instr);
+			FusionLattice<AC> fPair = convertToLattice(checker.runGenericTransfer(fEnv, instr));
 
 			
-			Pair<AC, RelationshipContext> defPair = new Pair<AC, RelationshipContext>(aliasResults.get(NormalLabel.getNormalLabel()), new RelationshipContext(false));
+			FusionLattice<AC> defPair = new FusionLattice<AC>(new RelationshipContext(false), aliasResults.get(NormalLabel.getNormalLabel()));
 		
-			LabeledResult<Pair<AC, RelationshipContext>> result = LabeledResult.createResult(labels, defPair);
+			LabeledResult<FusionLattice<AC>> result = LabeledResult.createResult(labels, defPair);
 			result.put(trueLabel, tPair);
 			result.put(falseLabel, fPair);
 			return result;
@@ -176,47 +177,51 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			AC aAfterContext = aliasResults.get(NormalLabel.getNormalLabel());
 			BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
 			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers, mainAnalysis.getVariant());
-			Pair<AC, RelationshipContext> pair = checker.runGenericTransfer(env, instr);
+			FusionLattice<AC> pair = convertToLattice(checker.runGenericTransfer(env, instr));
 			
 			return LabeledSingleResult.createResult(pair, labels);
 		}
 	}
 
 
+	private FusionLattice<AC> convertToLattice(Pair<AC, RelationshipContext> results) {
+		return new FusionLattice<AC>(results.snd(), results.fst());
+	}
+
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(NewObjectInstruction instr,
-			List<ILabel> labels, Pair<AC, RelationshipContext> value) {
+	public IResult<FusionLattice<AC>> transfer(NewObjectInstruction instr,
+			List<ILabel> labels, FusionLattice<AC> value) {
 		
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 		AC aAfterContext = aliasResults.get(NormalLabel.getNormalLabel());
 
 		BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
 		FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers, mainAnalysis.getVariant());
-		Pair<AC, RelationshipContext> pair = checker.runGenericTransfer(env, instr);
+		FusionLattice<AC> pair = convertToLattice(checker.runGenericTransfer(env, instr));
 	
 		return LabeledSingleResult.createResult(pair, labels);
 	}
 
-	private IResult<Pair<AC, RelationshipContext>> mapOverResults(
+	private IResult<FusionLattice<AC>> mapOverResults(
 			IResult<AC> aliasResults, List<ILabel> labels,
 			RelationshipContext relsContext) {
-		Pair<AC, RelationshipContext> defPair = new Pair<AC, RelationshipContext>(aliasResults.get(null), relsContext);
-		LabeledResult<Pair<AC, RelationshipContext>> result = LabeledResult.createResult(labels, defPair);
+		FusionLattice<AC> lattice = new FusionLattice<AC>(relsContext, aliasResults.get(null));
+		LabeledResult<FusionLattice<AC>> result = LabeledResult.createResult(labels, lattice);
 
 		for (ILabel label : labels)
-			result.put(label, new Pair<AC, RelationshipContext>(aliasResults.get(label), relsContext));
+			result.put(label, new FusionLattice<AC>(relsContext, aliasResults.get(label)));
 		
 		return result;
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			ArrayInitInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
@@ -224,187 +229,187 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			BinaryOperation instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			CastInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			ConstructorCallInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			CopyInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			DotClassInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			EnhancedForConditionInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			InstanceofInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			LoadArrayInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			LoadFieldInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			LoadLiteralInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			NewArrayInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			ReturnInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			SourceVariableDeclaration instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			SourceVariableReadInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			StoreArrayInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			StoreFieldInstruction instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);
 	}
 
 	@Override
-	public IResult<Pair<AC, RelationshipContext>> transfer(
+	public IResult<FusionLattice<AC>> transfer(
 			UnaryOperation instr, List<ILabel> labels,
-			Pair<AC, RelationshipContext> value) {
-		AC aBeforeContext = value.fst();
-		RelationshipContext relsContext = value.snd();
+			FusionLattice<AC> value) {
+		AC aBeforeContext = value.getAliasContext();
+		RelationshipContext relsContext = value.getRelContext();
 		IResult<AC> aliasResults = aliasTF.transfer(instr, labels, aliasOps.copy(aBeforeContext));
 
 		return mapOverResults(aliasResults, labels, relsContext);

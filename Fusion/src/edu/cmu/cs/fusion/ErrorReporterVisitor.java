@@ -21,7 +21,6 @@ import edu.cmu.cs.crystal.IAnalysisReporter;
 import edu.cmu.cs.crystal.IAnalysisReporter.SEVERITY;
 import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
-import edu.cmu.cs.crystal.util.Pair;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
@@ -29,18 +28,18 @@ import edu.cmu.cs.fusion.relationship.FusionErrorReport;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.test.constraint.DefaultReturnInstruction;
 
-public class ErrorReporterVisitor extends ASTVisitor {
+public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 
 	private IAnalysisReporter reporter;
 	private ConstraintChecker checker;
 	private EclipseTAC tac;
-	private FusionAnalysis<?> fa;
+	private FusionAnalysis<AC> fa;
 	private String className;
 	private Logger log = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 	private Logger warningsLog = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
 	private SEVERITY sev;
 	
-	public ErrorReporterVisitor(FusionAnalysis<?> analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, String type) {
+	public ErrorReporterVisitor(FusionAnalysis<AC> analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, String type) {
 		this.reporter = reporter;
 		this.checker = constraintChecker;
 		this.fa = analysis;
@@ -95,9 +94,9 @@ public class ErrorReporterVisitor extends ASTVisitor {
 	public void endVisit(MethodDeclaration node) {
 		if (node.getBody() != null) {
 			TACInstruction instr = new DefaultReturnInstruction();
-			Pair<? extends AliasContext, RelationshipContext> res = fa.getEndingResults(node);
-			BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), res.fst());
-			FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(res.fst(), res.snd() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+			FusionLattice<AC> res = fa.getEndingResults(node);
+			BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), res.getAliasContext());
+			FusionEnvironment<AC> env = new FusionEnvironment<AC>(res.getAliasContext(), res.getRelContext() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 			
 			List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
 			
