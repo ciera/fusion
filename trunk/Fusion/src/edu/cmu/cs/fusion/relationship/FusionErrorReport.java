@@ -9,27 +9,32 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 public class FusionErrorReport {
 	private Constraint cons;
 	private List<Substitution> failingVars;
-	private FusionEnvironment failingEnvironment;
+	private FusionEnvironment<?> failingEnvironment;
+	private boolean restrictedAliases;
 	
-
-	public FusionErrorReport(Constraint cons, List<Substitution> failingSubs, FusionEnvironment env) {
+	public FusionErrorReport(Constraint cons, List<Substitution> failingSubs, FusionEnvironment<?> env, boolean restrictedAliases) {
 		this.cons = cons;
 		this.failingVars = failingSubs;
 		this.failingEnvironment = env;
+		this.restrictedAliases = restrictedAliases;
 	}
-	
 
 	public List<Substitution> getFailingVars() {
 		return failingVars;
 	}
 
-	public FusionEnvironment getFailingEnvironment() {
+	public FusionEnvironment<?> getFailingEnvironment() {
 		return failingEnvironment;
+	}
+
+	public boolean causedRemovalOfAllAliases() {
+		return restrictedAliases;
 	}
 
 	public Constraint getConstraint() {
 		return cons;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -38,6 +43,7 @@ public class FusionErrorReport {
 		result = prime * result + ((cons == null) ? 0 : cons.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -54,5 +60,7 @@ public class FusionErrorReport {
 		} else if (!cons.equals(other.cons))
 			return false;
 		return true;
-	}	
+	}
+
+
 }

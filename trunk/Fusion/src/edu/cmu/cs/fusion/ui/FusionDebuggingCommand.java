@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import edu.cmu.cs.crystal.IAnalysisReporter;
@@ -14,10 +14,10 @@ import edu.cmu.cs.crystal.IRunCrystalCommand;
 import edu.cmu.cs.crystal.internal.NullPrintWriter;
 
 public class FusionDebuggingCommand implements IRunCrystalCommand {
-	private List<ICompilationUnit> units;
+	private List<ITypeRoot> units;
 	static private Set<String> analyses;
 	static private IAnalysisReporter nullReporter = new IAnalysisReporter() {
-		public void clearMarkersForCompUnit(ICompilationUnit compUnit) {}
+		public void clearMarkersForCompUnit(ITypeRoot compUnit) {}
 
 		public PrintWriter debugOut() {
 			return NullPrintWriter.instance();
@@ -39,8 +39,8 @@ public class FusionDebuggingCommand implements IRunCrystalCommand {
 		analyses.add("FusionDebugger");		
 	}
 	
-	public FusionDebuggingCommand(ICompilationUnit unit) {
-		units = new LinkedList<ICompilationUnit>();
+	public FusionDebuggingCommand(ITypeRoot unit) {
+		units = new LinkedList<ITypeRoot>();
 		units.add(unit);
 	}
 	
@@ -48,7 +48,7 @@ public class FusionDebuggingCommand implements IRunCrystalCommand {
 		return analyses;
 	}
 
-	public List<ICompilationUnit> compilationUnits() {
+	public List<ITypeRoot> compilationUnits() {
 		return units;
 	}
 

@@ -7,13 +7,13 @@ import edu.cmu.cs.fusion.alias.MayPointsToTransferFunctions;
 import edu.cmu.cs.fusion.alias.PointsToAliasContext;
 import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
 
-public class FusionPragmaticAnalysis extends FusionAnalysis<PointsToAliasContext> {
+public class FusionPragmaticSharedAnalysis extends FusionAnalysis<PointsToAliasContext> {
 
-	public FusionPragmaticAnalysis() {
+	public FusionPragmaticSharedAnalysis() {
 		super(Variant.PRAGMATIC_VARIANT);
 	}
 	@Override
-	public String getName() {return "FusionPragmatic";}
+	public String getName() {return "FusionPragmaticShared";}
 
 	@Override
 	public AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> getAliasTransferFunction(

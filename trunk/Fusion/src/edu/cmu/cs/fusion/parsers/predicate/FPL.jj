@@ -74,6 +74,7 @@ TOKEN : /* Operation Tokens */
 {
 	< EOM: "EOM" > 
 |   < BOM : "BOM" >
+|   < NOP : "XML" >
 |   < DOT : "." >
 |   < WC : "*" >
 |   < UPDATE : "update" >
@@ -88,6 +89,8 @@ TOKEN : /* LITERALS */
   < TRUE: "TRUE" >
 | 
   < FALSE:  "FALSE" >
+| 
+  <STATIC: "STATIC" >
 }
 
 TOKEN : /* IDENTIFIERS */
@@ -347,10 +350,20 @@ Operation operation() :{
 |
 op = bom() {return op;}
 | 
+op = nop() {return op;}
+|
 LOOKAHEAD(2)
 	op = invoke() {return op;}
 |
 	op = construct() {return op;}}
+
+NoOp nop() :
+{
+}
+{
+	< NOP > {return new NoOp();}
+}
+
 
 EndOfMethodOp eom() :
 {
@@ -417,8 +430,10 @@ MethodInvocationOp invoke() :
   String receiverType;
   Token name;
   Pair<String[], SpecVar[] > params;
-  String returnType;}
+  String returnType;
+  boolean isStatic = false;}
 {
+ [< STATIC > {isStatic = true;} ]
   receiverType = type()
   < DOT >
   name = < IDENTIFIER >
@@ -426,7 +441,7 @@ MethodInvocationOp invoke() :
   ":"
   returnType = type()
   {
-	return new MethodInvocationOp(name.image, receiverType, params.snd(), params.fst(), returnType);
+	return new MethodInvocationOp(name.image, receiverType, params.snd(), params.fst(), returnType, isStatic);
   }}
 
 

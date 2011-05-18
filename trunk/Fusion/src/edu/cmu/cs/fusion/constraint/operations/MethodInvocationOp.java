@@ -21,9 +21,10 @@ public class MethodInvocationOp implements Operation {
 	private SpecVar thisVar;
 	private SpecVar retVar;
 	private String retType;
+	boolean isStatic;
 
 	public MethodInvocationOp(String methodName, String thisType, SpecVar[] paramNames,
-		    String[] paramTypes, String returnType) {
+		    String[] paramTypes, String returnType, boolean isStatic) {
 			thisVar = Constraint.RECEIVER;
 			retVar = Constraint.RESULT;
 			this.params = paramNames;
@@ -31,10 +32,14 @@ public class MethodInvocationOp implements Operation {
 			this.retType = returnType;
 			this.thisType = thisType;
 			name = methodName;
+			this.isStatic = isStatic;
 		}
 
 	public FreeVars getFreeVariables() {
-		return new FreeVars(params, paramTypes).addVar(thisVar, thisType).addVar(retVar, retType);
+		FreeVars vars = new FreeVars(params, paramTypes).addVar(retVar, retType);
+		if (!isStatic)
+			vars = vars.addVar(thisVar, thisType);
+		return vars;
 	}
 
 	public ConsList<Binding> matches(TypeHierarchy types, Method method, TACInstruction instr) {
@@ -46,22 +51,26 @@ public class MethodInvocationOp implements Operation {
 		//first, check to see if the instr is right for this op
 		if (!name.equals(invoke.getMethodName()))
 			return null;
+		
+		if (isStatic != invoke.isStaticMethodCall())
+			return null;
 
 		IMethodBinding binding = invoke.resolveBinding();
 
-		if (!types.existsCommonSubtype(thisType, binding.getDeclaringClass().getQualifiedName()))
+		if (!types.existsCommonSubtype(thisType, invoke.getReceiverOperand().resolveType().getQualifiedName()))
 			return null;
 
 		if (binding.getParameterTypes().length != paramTypes.length)
 			return null;
 
 		for (int ndx = 0; ndx < paramTypes.length; ndx++)
-			if (!types.existsCommonSubtype(paramTypes[ndx], binding.getParameterTypes()[ndx].getQualifiedName()))
+			if (!types.existsCommonSubtype(paramTypes[ndx], invoke.getArgOperands().get(ndx).resolveType().getQualifiedName()))
 				return null;
 		
 		ConsList<Binding> vars = ConsList.empty();
 		
-		vars = ConsList.cons(new Binding(thisVar, invoke.getReceiverOperand()), vars);
+		if (!isStatic)	
+			vars = ConsList.cons(new Binding(thisVar, invoke.getReceiverOperand()), vars);
 		vars = ConsList.cons(new Binding(retVar, invoke.getTarget()), vars);
 		
 		for (int ndx = 0; ndx < params.length; ndx++)

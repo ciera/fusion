@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.ITypeRoot;
 
 import edu.cmu.cs.crystal.IRunCrystalCommand;
 import edu.cmu.cs.crystal.internal.AbstractCrystalPlugin;
@@ -17,12 +17,12 @@ public class FusionCache {
 	static private FusionCache THE_CACHE = new FusionCache();
 	static public FusionCache getCache() {return THE_CACHE;}
 	
-	private ICompilationUnit compUnit;
+	private ITypeRoot compUnit;
 	private SortedMap<Integer, DebugInfo> cache = new TreeMap<Integer, DebugInfo>();
 	
-	public void makeCacheValid(ICompilationUnit root) {
+	public void makeCacheValid(ITypeRoot root) {
 		if (compUnit == null || !compUnit.equals(root)) {
-			final ICompilationUnit unit = compUnit = root;
+			final ITypeRoot unit = compUnit = root;
 			Job j = new Job("Fusion Debugger") {
 				
 				@Override
@@ -40,12 +40,12 @@ public class FusionCache {
 		}
 	}
 	
-	public DebugInfo getResults(ICompilationUnit unit, int lineNum) {
+	public DebugInfo getResults(ITypeRoot unit, int lineNum) {
 		assert(compUnit.equals(unit));
 		return cache.get(lineNum);
 	}
 	
-	public void setCompUnit(ICompilationUnit compUnit) {
+	public void setCompUnit(ITypeRoot compUnit) {
 		this.compUnit = compUnit;
 		cache.clear();
 	}

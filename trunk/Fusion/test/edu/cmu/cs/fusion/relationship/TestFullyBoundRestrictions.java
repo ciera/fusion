@@ -53,7 +53,7 @@ public class TestFullyBoundRestrictions extends ConstraintChecker {
 		Predicate trigger;
 		Predicate rst;
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0), utils.getVar(1)}, new String[] {"Foo", "Bar"}, "Bar", false);
 		trigger = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
 		rst = new RelationshipPredicate(utils.getRelation(1), new SpecVar[] {utils.getVar(1), utils.getVar(2)});
 		cons = new Constraint("", op, trigger, rst, new TruePredicate(), new LinkedList<Effect>());

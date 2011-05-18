@@ -72,15 +72,15 @@ public class ConstraintChecker {
 		return new Pair<AC, RelationshipContext>(aliasContext, relContext);
 	}
 
-	public List<FusionErrorReport> checkForErrors(FusionEnvironment<?> env, TACInstruction instr) {
+	public List<FusionErrorReport> checkForErrors(FusionEnvironment<?> triggerEnv, TACInstruction instr) {
 		List<FusionErrorReport> errors = new LinkedList<FusionErrorReport>();
 		FusionErrorReport err;
 		
 		assert(instr != null);
 		
 		for (Constraint cons : constraints) {
-			if (!(cons.getRequires() instanceof TruePredicate)) {
-				err = checkSingleConstraint(env, cons, instr);
+			if (!(cons.getRequires() instanceof TruePredicate && cons.getRestrict() instanceof TruePredicate)) {
+				err = checkSingleConstraint(triggerEnv, cons, instr);
 				if (err != null)
 					errors.add(err);
 			}
@@ -140,26 +140,30 @@ public class ConstraintChecker {
 	 * @param instr
 	 * @return The error report from this constraint, or null if there were no errors.
 	 */
-	protected FusionErrorReport checkSingleConstraint(FusionEnvironment<?> env, Constraint cons, TACInstruction instr) {
+	protected FusionErrorReport checkSingleConstraint(FusionEnvironment<?> triggerEnv, Constraint cons, TACInstruction instr) {
 		ConsList<Binding> boundVars = cons.getOp().matches(types, method, instr);
 
 		if (boundVars == null)
 			return null;
 
-		List<Substitution> subs = env.findLabels(boundVars, cons.getUniversalFreeVars());
-		
-		if (subs.isEmpty())
-			return null;
+		List<Substitution> subs = triggerEnv.findLabels(boundVars, cons.getUniversalFreeVars());
 		
 		List<Substitution> failingSubs = new LinkedList<Substitution>();		
 		
+		boolean hasGoodSub = false;
 		for (Substitution sub : subs) {
-			if (checkFullyBound(env, sub, cons))
-				failingSubs.add(sub);
+			ThreeValue trigger = cons.getTrigger().getTruth(triggerEnv, sub);
+			if (isGoodSubs(trigger, triggerEnv, sub, cons)) {			
+				if (checkFullyBound(triggerEnv, sub, cons))
+					failingSubs.add(sub);
+				hasGoodSub = true;
+			}
 		}
 				
 		if (!failingSubs.isEmpty())
-			return new FusionErrorReport(cons, failingSubs, env);
+			return new FusionErrorReport(cons, failingSubs, triggerEnv, false);
+		else if (!subs.isEmpty() && !hasGoodSub)
+			return new FusionErrorReport(cons, failingSubs, triggerEnv, true); 		
 		else
 			return null;
 	}
@@ -203,7 +207,6 @@ public class ConstraintChecker {
 		else {
 			if (cons.getRestrict() instanceof TruePredicate)
 				return true;
-			
 			List<Substitution> subs = env.allValidSubs(partialSubs, cons.getFreeVars());
 				
 			for (Substitution sub : subs) {
@@ -216,37 +219,40 @@ public class ConstraintChecker {
 		}
 	}
 
-	protected boolean checkFullyBound(FusionEnvironment<?> env, Substitution partialSubs, Constraint cons) {			
-		ThreeValue trigger = cons.getTrigger().getTruth(env, partialSubs);
-		if (trigger == ThreeValue.FALSE) {
+	/**
+	 * 
+	 * @param triggerEnv
+	 * @param postRestrict
+	 * @param partialSubs
+	 * @param cons
+	 * @return True if there is an error, false if there is not an error
+	 */
+	protected boolean checkFullyBound(FusionEnvironment<?> triggerEnv, Substitution partialSubs, Constraint cons) {			
+		ThreeValue trigger = cons.getTrigger().getTruth(triggerEnv, partialSubs);
+		
+		if (trigger == ThreeValue.FALSE)
 			return false;
-		}
-		else if (trigger == ThreeValue.TRUE) {
-			if (variant.isComplete())
-				return checkCompletely(env, partialSubs, cons);
-			else if (variant.isPragmatic())
-				return checkPragmatically(env, partialSubs, cons);
-			else
-				return checkSoundly(env, partialSubs, cons);
-		}
-		else {
+		else if (trigger == ThreeValue.UNKNOWN){
 			if (variant.isComplete() || variant.isPragmatic()) 
 				return false;
 			else
-				return checkSoundly(env, partialSubs, cons);
+				return checkSoundly(triggerEnv, partialSubs, cons);
+		}
+		else  {
+			if (variant.isComplete())
+				return checkCompletely(triggerEnv, partialSubs, cons);
+			else if (variant.isSound())
+				return checkSoundly(triggerEnv, partialSubs, cons);
+			else
+				return checkPragmatically(triggerEnv, partialSubs, cons);
 		}
 	}
 
-
 	/**
-	 * 
-	 * @param env
-	 * @param partialSubs
-	 * @param cons
 	 * @return true if there is an error, false if it passes
 	 */
 	private boolean checkPragmatically(FusionEnvironment<?> env,
-			Substitution partialSubs, Constraint cons) {
+			Substitution partialSubs, Constraint cons) {		
 		List<Substitution> subs = env.allValidSubs(partialSubs, cons.getFreeVars());
 		
 		for (Substitution fullSub : subs) {
@@ -258,10 +264,6 @@ public class ConstraintChecker {
 	}
 
 	/**
-	 * 
-	 * @param env
-	 * @param partialSubs
-	 * @param cons
 	 * @return true if there is an error, false if it passes
 	 */
 	private boolean checkSoundly(FusionEnvironment<?> env,
@@ -280,10 +282,6 @@ public class ConstraintChecker {
 	}
 	
 	/**
-	 * 
-	 * @param env
-	 * @param partialSubs
-	 * @param cons
 	 * @return true if there is an error, false if it passes
 	 */
 	private boolean checkCompletely(FusionEnvironment<?> env,
