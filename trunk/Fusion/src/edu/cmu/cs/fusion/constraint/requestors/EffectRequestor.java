@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.Flags;
 import org.eclipse.jdt.core.IAnnotation;
 import org.eclipse.jdt.core.IMemberValuePair;
 import org.eclipse.jdt.core.IMethod;
@@ -14,8 +15,6 @@ import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jdt.core.search.TypeReferenceMatch;
-
-import com.sun.tools.javac.code.Flags;
 
 import edu.cmu.cs.crystal.util.Utilities;
 import edu.cmu.cs.fusion.Relation;
@@ -99,7 +98,7 @@ public class EffectRequestor extends SearchRequestor {
 			String returnType = Utilities.resolveType(contextType, Signature.toString(method.getReturnType()));
 			String[] paramTypes = new String[method.getParameterTypes().length];
 			SpecVar[] opParams = new SpecVar[method.getParameterNames().length];
-			boolean isStatic = (method.getFlags() & Flags.STATIC) != 0;
+			boolean isStatic = Flags.isStatic(method.getFlags());
 			
 			for (int ndx = 0; ndx < paramTypes.length; ndx++) {
 				paramTypes[ndx] = Utilities.resolveType(contextType, Signature.toString(method.getParameterTypes()[ndx]));
