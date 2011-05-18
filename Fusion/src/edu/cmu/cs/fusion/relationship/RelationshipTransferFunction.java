@@ -116,10 +116,10 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			BooleanContext bContext = new BooleanConstantWrapper(method.getBody(), mainAnalysis.getBooleanAnalysis(), aliases);
 			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aliases, startingContext, bContext, types, infers, mainAnalysis.getVariant());
 			
-			return convertToLattice(checker.runGenericTransfer(env, entry));
+			return convertToLattice(checker.runGenericTransfer(env, entry), aliases);
 		}
 		else {
-			return new FusionLattice<AC>(startingContext, aliases);
+			return new FusionLattice<AC>(startingContext, aliases, aliases);
 		}
 	}
 	
@@ -130,6 +130,7 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 		int ndx = 0;
 		while (itr.hasNext()) {
 			params[ndx] = getAnalysisContext().getSourceVariable(itr.next().resolveBinding());
+			ndx++;
 		}
 		return new Method(params, thisVar, decl.resolveBinding());
 	}
@@ -157,16 +158,16 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			AC aAfterContextTrue = aliasResults.get(trueLabel);
 			BooleanContext tBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextTrue, true);
 			FusionEnvironment<AC> tEnv = new FusionEnvironment<AC>(aAfterContextTrue, relsContext, tBContext, types, infers, mainAnalysis.getVariant());
-			FusionLattice<AC> tPair = convertToLattice(checker.runGenericTransfer(tEnv, instr));
+			FusionLattice<AC> tPair = convertToLattice(checker.runGenericTransfer(tEnv, instr), aAfterContextTrue);
 			
 			//false branch
 			AC aAfterContextFalse = aliasResults.get(falseLabel);
 			BooleanContext fBContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aBeforeContext, aAfterContextFalse, false);
 			FusionEnvironment<AC> fEnv = new FusionEnvironment<AC>(aAfterContextFalse, relsContext, fBContext, types, infers, mainAnalysis.getVariant());
-			FusionLattice<AC> fPair = convertToLattice(checker.runGenericTransfer(fEnv, instr));
+			FusionLattice<AC> fPair = convertToLattice(checker.runGenericTransfer(fEnv, instr), aAfterContextFalse);
 
 			
-			FusionLattice<AC> defPair = new FusionLattice<AC>(new RelationshipContext(false), aliasResults.get(NormalLabel.getNormalLabel()));
+			FusionLattice<AC> defPair = new FusionLattice<AC>(new RelationshipContext(false), aliasResults.get(NormalLabel.getNormalLabel()), aliasResults.get(NormalLabel.getNormalLabel()));
 		
 			LabeledResult<FusionLattice<AC>> result = LabeledResult.createResult(labels, defPair);
 			result.put(trueLabel, tPair);
@@ -177,15 +178,15 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 			AC aAfterContext = aliasResults.get(NormalLabel.getNormalLabel());
 			BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
 			FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers, mainAnalysis.getVariant());
-			FusionLattice<AC> pair = convertToLattice(checker.runGenericTransfer(env, instr));
+			FusionLattice<AC> pair = convertToLattice(checker.runGenericTransfer(env, instr), aAfterContext);
 			
 			return LabeledSingleResult.createResult(pair, labels);
 		}
 	}
 
 
-	private FusionLattice<AC> convertToLattice(Pair<AC, RelationshipContext> results) {
-		return new FusionLattice<AC>(results.snd(), results.fst());
+	private FusionLattice<AC> convertToLattice(Pair<AC, RelationshipContext> results, AC triggerAliases) {
+		return new FusionLattice<AC>(results.snd(), triggerAliases, results.fst());
 	}
 
 	@Override
@@ -199,7 +200,7 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 
 		BooleanContext bContext = new BooleanConstantWrapper(instr, mainAnalysis.getBooleanAnalysis(), aAfterContext);
 		FusionEnvironment<AC> env = new FusionEnvironment<AC>(aAfterContext, relsContext, bContext, types, infers, mainAnalysis.getVariant());
-		FusionLattice<AC> pair = convertToLattice(checker.runGenericTransfer(env, instr));
+		FusionLattice<AC> pair = convertToLattice(checker.runGenericTransfer(env, instr), aAfterContext);
 	
 		return LabeledSingleResult.createResult(pair, labels);
 	}
@@ -207,11 +208,11 @@ public class RelationshipTransferFunction<AC extends AliasContext> extends Abstr
 	private IResult<FusionLattice<AC>> mapOverResults(
 			IResult<AC> aliasResults, List<ILabel> labels,
 			RelationshipContext relsContext) {
-		FusionLattice<AC> lattice = new FusionLattice<AC>(relsContext, aliasResults.get(null));
+		FusionLattice<AC> lattice = new FusionLattice<AC>(relsContext, aliasResults.get(null), aliasResults.get(null));
 		LabeledResult<FusionLattice<AC>> result = LabeledResult.createResult(labels, lattice);
 
 		for (ILabel label : labels)
-			result.put(label, new FusionLattice<AC>(relsContext, aliasResults.get(label)));
+			result.put(label, new FusionLattice<AC>(relsContext, aliasResults.get(label), aliasResults.get(null)));
 		
 		return result;
 	}

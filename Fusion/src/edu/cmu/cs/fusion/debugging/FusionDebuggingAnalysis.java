@@ -1,6 +1,6 @@
 package edu.cmu.cs.fusion.debugging;
 
-import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
@@ -25,7 +25,7 @@ public class FusionDebuggingAnalysis extends FusionAnalysis<PointsToAliasContext
 	public String getName() {return "FusionDebugger";}
 	
 	@Override
-	public void beforeAllMethods(ICompilationUnit compUnit,
+	public void beforeAllMethods(ITypeRoot compUnit,
 			CompilationUnit rootNode) {
 		super.beforeAllMethods(compUnit, rootNode);
 		FusionCache.getCache().setCompUnit(compUnit);

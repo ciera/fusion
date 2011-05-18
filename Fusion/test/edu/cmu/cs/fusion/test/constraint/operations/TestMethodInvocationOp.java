@@ -32,7 +32,7 @@ public class TestMethodInvocationOp {
 	@Test
 	public void testFreeVars() {
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
-		MethodInvocationOp invoke = new MethodInvocationOp("mName", "Foo", vars, new String[] {"Foo", "Bar"}, "Bar");
+		MethodInvocationOp invoke = new MethodInvocationOp("mName", "Foo", vars, new String[] {"Foo", "Bar"}, "Bar", false);
 		FreeVars fv = invoke.getFreeVariables();
 		
 		assertEquals("Foo", fv.getType(Constraint.RECEIVER));
@@ -53,7 +53,7 @@ public class TestMethodInvocationOp {
 		NewObjectInstruction instr = new StubNewObjectInstruction(params, new StubMethodBinding(new NamedTypeBinding("Foo"), vBindings), new StubVariable());	
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "void");
+		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "void", false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 
@@ -69,7 +69,7 @@ public class TestMethodInvocationOp {
 		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "Bazaz");
+		MethodInvocationOp op = new MethodInvocationOp("testtesttest", "Foo", vars, vTypes, "Bazaz", false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
@@ -85,7 +85,7 @@ public class TestMethodInvocationOp {
 		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo2", vars, vTypes, "Bazaz");
+		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo2", vars, vTypes, "Bazaz", false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
@@ -101,7 +101,7 @@ public class TestMethodInvocationOp {
 		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz2"};
-		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
+		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz", false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
@@ -118,7 +118,7 @@ public class TestMethodInvocationOp {
 		MethodCallInstruction instr = getMCI(new StubVariable(), params, new StubVariable());
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz", "blah"};
-		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
+		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz", false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
@@ -141,7 +141,7 @@ public class TestMethodInvocationOp {
 		MethodCallInstruction instr = getMCI(rVar, params, tVar);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
+		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz", false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
@@ -165,7 +165,7 @@ public class TestMethodInvocationOp {
 		MethodCallInstruction instr = getMCI(rVar, params, tVar);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz");
+		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz", false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		

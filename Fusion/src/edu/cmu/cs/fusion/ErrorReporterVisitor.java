@@ -96,9 +96,9 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 			TACInstruction instr = new DefaultReturnInstruction();
 			FusionLattice<AC> res = fa.getEndingResults(node);
 			BooleanContext bools = new BooleanConstantWrapper(node.getBody(), fa.getBooleanAnalysis(), res.getAliasContext());
-			FusionEnvironment<AC> env = new FusionEnvironment<AC>(res.getAliasContext(), res.getRelContext() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+			FusionEnvironment<AC> triggerEnv = new FusionEnvironment<AC>(res.getAliasesForTrigger(), res.getRelContext() , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 			
-			List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
+			List<FusionErrorReport> errors = checker.checkForErrors(triggerEnv, instr);
 			
 			for (FusionErrorReport err : errors) {
 				boolean hasStatements = node.getBody() != null && node.getBody().statements().size() > 0;
@@ -109,17 +109,17 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 	}
 
 	private void check(TACInstruction instr, ASTNode node) {
-		AliasContext aliases = fa.getPointsToResultsAfter(node);
+		AliasContext triggerAliases = fa.getPointsToResultsIntermediate(node);
 		RelationshipContext rels = fa.getRelResultsBefore(node);
-		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), aliases);
-		FusionEnvironment<?> env = new FusionEnvironment<AliasContext>(aliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+		BooleanContext bools = new BooleanConstantWrapper(node, fa.getBooleanAnalysis(), triggerAliases);
+		FusionEnvironment<?> triggerEnv = new FusionEnvironment<AliasContext>(triggerAliases, rels , bools, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
 		
 		if (rels.isBottom()) {
 			log.log(Level.WARNING, "Found an unanalyzed node in " + className + ": " + node.toString());
 			return;
 		}
 		
-		List<FusionErrorReport> errors = checker.checkForErrors(env, instr);
+		List<FusionErrorReport> errors = checker.checkForErrors(triggerEnv, instr);
 		
 		for (FusionErrorReport err : errors) 
 			reportError(err, node);
@@ -128,7 +128,10 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 	private void reportError(FusionErrorReport err, ASTNode reportOn) {	
 		String message;
 		
-		message = "Broken constraint:" + err.getConstraint().toErrorString();
+		if (err.causedRemovalOfAllAliases())
+			message = "Constraint restricted all potential labels: " + err.getConstraint().toErrorString();
+		else
+			message = "Broken constraint:" + err.getConstraint().toErrorString();
 		reporter.reportUserProblem(message, reportOn, fa.getName(), sev);	
 
 		CompilationUnit cu = (CompilationUnit) reportOn.getRoot();

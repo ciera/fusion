@@ -18,8 +18,15 @@
    <extension
          point="edu.cmu.cs.crystal.CrystalAnalysis">
       <analysis
-            class="edu.cmu.cs.fusion.FusionPragmaticAnalysis"
-            name="FusionPragmatic">
+            class="edu.cmu.cs.fusion.FusionPragmaticUniqueAnalysis"
+            name="FusionPragmaticUnique">
+      </analysis>
+   </extension>
+   <extension
+         point="edu.cmu.cs.crystal.CrystalAnalysis">
+      <analysis
+            class="edu.cmu.cs.fusion.FusionPragmaticSharedAnalysis"
+            name="FusionPragmaticShared">
       </analysis>
    </extension>
    <extension
@@ -29,6 +36,7 @@
             name="FusionDebugger">
       </analysis>
    </extension>
+
  <extension
       id="edu.cmu.cs.fusion.fusionparseproblem"
       name="Fusion Parser Marker"
@@ -36,6 +44,7 @@
       <super type="org.eclipse.core.resources.problemmarker"/>
       <persistent value="true"/>
  </extension>
+ 
  <extension
        point="org.eclipse.ui.views">
     <category
@@ -50,4 +59,5 @@
           name="Relationship View">
     </view>
  </extension>
+ 
  </plugin>

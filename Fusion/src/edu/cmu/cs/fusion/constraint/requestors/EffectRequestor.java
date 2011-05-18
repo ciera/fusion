@@ -15,6 +15,8 @@ import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jdt.core.search.TypeReferenceMatch;
 
+import com.sun.tools.javac.code.Flags;
+
 import edu.cmu.cs.crystal.util.Utilities;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.RelationsEnvironment;
@@ -97,12 +99,13 @@ public class EffectRequestor extends SearchRequestor {
 			String returnType = Utilities.resolveType(contextType, Signature.toString(method.getReturnType()));
 			String[] paramTypes = new String[method.getParameterTypes().length];
 			SpecVar[] opParams = new SpecVar[method.getParameterNames().length];
+			boolean isStatic = (method.getFlags() & Flags.STATIC) != 0;
 			
 			for (int ndx = 0; ndx < paramTypes.length; ndx++) {
 				paramTypes[ndx] = Utilities.resolveType(contextType, Signature.toString(method.getParameterTypes()[ndx]));
 				opParams[ndx] = new SpecVar(method.getParameterNames()[ndx]);
 			}
-			op = new MethodInvocationOp(methodName, receiverType, opParams, paramTypes, returnType);
+			op = new MethodInvocationOp(methodName, receiverType, opParams, paramTypes, returnType, isStatic);
 		}
 		String owner = method.getDeclaringType().getFullyQualifiedName();
 		constraints.add(new Constraint(owner, op, new TruePredicate(), new TruePredicate(), new TruePredicate(), effects));

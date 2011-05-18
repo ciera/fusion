@@ -7,14 +7,13 @@ import edu.cmu.cs.fusion.alias.MustPointsToTransferFunctions;
 import edu.cmu.cs.fusion.alias.PointsToAliasContext;
 import edu.cmu.cs.fusion.alias.PointsToLatticeOps;
 
-public class FusionCompleteAnalysis extends FusionAnalysis<PointsToAliasContext> {
+public class FusionPragmaticUniqueAnalysis extends FusionAnalysis<PointsToAliasContext> {
 
-	public FusionCompleteAnalysis() {
-		super(Variant.COMPLETE_VARIANT);
+	public FusionPragmaticUniqueAnalysis() {
+		super(Variant.PRAGMATIC_VARIANT);
 	}
-
 	@Override
-	public String getName() {return "FusionComplete";}
+	public String getName() {return "FusionPragmaticUnique";}
 
 	@Override
 	public AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> getAliasTransferFunction(
@@ -26,4 +25,5 @@ public class FusionCompleteAnalysis extends FusionAnalysis<PointsToAliasContext>
 	public ILatticeOperations<PointsToAliasContext> getAliasLatticeOps(TypeHierarchy types) {
 		return new PointsToLatticeOps(types);
 	}
+
 }

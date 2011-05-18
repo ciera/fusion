@@ -50,7 +50,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 		Predicate req;
 		List<Effect> effects = new LinkedList<Effect>();
 		
-		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"}, "Foo");
+		op = new MethodInvocationOp("methodName", "Foo", new SpecVar[] {utils.getVar(0)}, new String[] {"Bar"}, "Foo", false);
 		trigger = new TruePredicate();
 		req = new TruePredicate();
 		effects.add(RelEffect.createRemoveEffect(utils.getRelation(0), new SpecVar[] {Constraint.RECEIVER, utils.getVar(0)}));

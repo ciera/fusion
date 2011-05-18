@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -81,18 +81,15 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 			
 			for (Constraint cons : constraints) {
 				log.log(Level.CONFIG, cons.toString());
-			}
-			
+			}			
 		} catch (CoreException err) {
 			log.log(Level.SEVERE, "Error while parsing relations", err);
 			majorErrorOccured = true;
 		}
 	}
 
-	
-
 	@Override
-	public void beforeAllMethods(ICompilationUnit compUnit,
+	public void beforeAllMethods(ITypeRoot compUnit,
 			CompilationUnit rootNode) {
 		try {
 			compUnitName = compUnit.getElementName();
@@ -158,9 +155,9 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 		return fa.getResultsBeforeCFG(node).getAliasContext();
 	}
 	
-//	public AliasContext getPointsToResultsIntermediate(ASTNode node) {
-//		return fa.getResultsAfterCFG(node).getAliasesForTrigger();	
-//	}
+	public AliasContext getPointsToResultsIntermediate(ASTNode node) {
+		return fa.getResultsAfterCFG(node).getAliasesForTrigger();	
+	}
 
 	public AliasContext getPointsToResultsAfter(ASTNode node) {
 		return fa.getResultsAfterCFG(node).getAliasContext();		
@@ -202,5 +199,4 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 	public Variant getVariant() {
 		return variant;
 	}
-
 }

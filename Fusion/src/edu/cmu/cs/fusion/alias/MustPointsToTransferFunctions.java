@@ -209,7 +209,7 @@ public class MustPointsToTransferFunctions extends AbstractTACBranchSensitiveTra
 		else
 			vType = binding.getQualifiedName();
 		
-		assert(value.getAliases(instr.getOperand()) != null);
+//		assert(value.getAliases(instr.getOperand()) != null);
 		
 		for (ObjectLabel label : value.getAliases(instr.getOperand())) {
 			String labType = label.getTypeName();		
@@ -230,7 +230,7 @@ public class MustPointsToTransferFunctions extends AbstractTACBranchSensitiveTra
 		PointsToAliasContext newValue = value.clone();
 		newValue.resetPointsTo(instr.getTarget());
 		Set<ObjectLabel> aliases = newValue.getAliases(instr.getOperand());
-		assert aliases != null : "Had null aliases for operand " + instr.getOperand().getSourceString();
+//		assert aliases != null : "Had null aliases for operand " + instr.getOperand().getSourceString();
 		newValue.addPointsTo(instr.getTarget(), aliases);
 		return LabeledSingleResult.createResult(newValue, labels);
 	}

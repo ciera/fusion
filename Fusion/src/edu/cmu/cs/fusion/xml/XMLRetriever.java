@@ -7,9 +7,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Set;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,6 +30,7 @@ import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.Triple;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
+import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.FusionTypeCheckException;
 import edu.cmu.cs.fusion.RelationsEnvironment;
 import edu.cmu.cs.fusion.Relationship;
@@ -132,17 +135,23 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 				
 				Document doc = factory.newDocumentBuilder().parse(file);
 				retrieveWithSchema(file, doc.getDocumentElement().getNamespaceURI());
+				
 				return false;
 			}
 				
 		} catch (SAXException e) {
-			e.printStackTrace();
+			
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.INFO, "Visiting XML resource " + resource.getName() + "failed.", e);			
+			return false;
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.INFO, "Visiting XML resource " + resource.getName() + "failed.", e);
+			return false;
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.INFO, "Visiting XML resource " + resource.getName() + "failed.", e);			
+			return false;
 		} catch (FusionTypeCheckException e) {
 			ReportingUtility.reportParseError(resource, null, e.getMessage());
+			return false;
 		}
 		return true;
 	}
@@ -157,7 +166,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		SchemaQueries sQueries = queries.get(schema);
 		
 		if (sQueries != null) {
-			RelationshipDelta result = sQueries.runQueries(file, types);
+			RelationshipDelta result = sQueries.runQueries(file, types);		
 			List<RelationshipDelta> list = new LinkedList<RelationshipDelta>();
 			list.add(delta);
 			list.add(result);
