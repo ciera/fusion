@@ -1,6 +1,7 @@
 package edu.cmu.cs.fusion.xml;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
@@ -86,7 +87,8 @@ public class SchemaQueries {
 				StringReader reader = new StringReader(complete);
 				
 				XQPreparedExpression exp = conn.prepareExpression(reader);
-				exp.bindString(new QName(DOC), file.getAbsolutePath(), null);
+				String filename = file.getAbsolutePath().replace('\\', '/');
+				exp.bindString(new QName(DOC), filename, null);
 				
 				XQResultSequence queryResult = exp.executeQuery();
 				result = processRelationshipResults(queryResult, types);
@@ -122,7 +124,7 @@ public class SchemaQueries {
 			StringReader reader = new StringReader(complete);
 				
 			XQPreparedExpression exp = conn.prepareExpression(reader);
-			exp.bindString(new QName(DOC), file.getAbsolutePath(), null);
+			exp.bindString(new QName(DOC), file.getAbsolutePath().replace('\\', '/'), null);
 				
 			XQResultSequence queryResult = exp.executeQuery();
 			return processBindingResults(queryResult);
@@ -130,7 +132,7 @@ public class SchemaQueries {
 			throw new FusionTypeCheckException(e);
 		} catch (XPathException e) {
 			throw new FusionTypeCheckException(e);
-		}	
+		} 
 	}
 
 
