@@ -6,12 +6,6 @@ import edu.cmu.cs.fusion.annot.Constraint;
 import edu.cmu.cs.fusion.annot.Constraints;
 import edu.cmu.cs.fusion.annot.Infer;
 import edu.cmu.cs.fusion.test.aspnet.relations.*;
-
-
-@Infer(
-		trigger = "Items(list, ctrl) AND Item(item, list)",
-		effects = {"Child(item, ctrl)"}
-	)
 @Constraints({
 @Constraint(
 		op="EOM",
@@ -19,21 +13,18 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 		requires = "DataBound(control)",
 		effects = {}
 ),
-
+@Constraint(
+		op="ListControl.getItems() : ListItemCollection",
+		effects = {"!Items(result, *)", "Items(result, target)"}
+),
 @Constraint(
 		op="ListControl.getSelectedItem() : ListItem",
-		trigger = "TRUE",
-		requires = "TRUE",
-		effects = {"!Child(result, *)", "Child(result, target)", "Selected(result)"}
+		effects = {"Selected(result)", "!Child(result, *)", "Child(result, target)"}
 )
 })
-
 public class ListControl extends Control {
-	@Items({"result", "target"})
 	public ListItemCollection getItems() {return null;}
 	
-//	@Child({"result", "target"})
-//	@Selected({"result"})
 	public ListItem getSelectedItem() {return null;}
 	
 	@DataSourceReset({"data", "target"})

@@ -17,7 +17,6 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 			effects = {}
 	)	
 })
-
 public class Page extends Control {
 	
 	@Callback(name = "PreInit")

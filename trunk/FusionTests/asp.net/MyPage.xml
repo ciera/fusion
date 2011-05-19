@@ -3,8 +3,10 @@
 	<asp:LoginView ID="LoginScreen">
 		<AnonymousTemplate><h1>Hello World</h1></AnonymousTemplate>
 		<LoggedInTemplate>
-			<asp:DropDownList ID="LoggedInDDL"/>
+			<asp:DropDownList ID="LoggedInDDL"/> 
 		</LoggedInTemplate>
 	</asp:LoginView>
 	<asp:DropDownList ID="DDL"/>
 </asp:Page>
+
+ 

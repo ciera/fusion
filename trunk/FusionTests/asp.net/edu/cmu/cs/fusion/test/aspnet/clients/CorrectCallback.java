@@ -6,12 +6,12 @@ import edu.cmu.cs.crystal.annotations.AnalysisTests;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
-		pass={@PassingTest(analysis="FusionComplete")},
-		fail={@FailingTest(value=1, analysis="FusionPragmaticShared"), @FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=1, analysis="FusionSound")}
+		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmaticShared")},
+		fail={@FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=1, analysis="FusionSound")}
 )
-public class WrongCallback extends Page {
+public class CorrectCallback extends Page {
 	@Override
-	public void init() {
+	public void load() {
 		DropDownList ctrl = (DropDownList) findControl("DDL");
 
 		ctrl.setDataSource(null);

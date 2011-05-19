@@ -8,7 +8,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
 		pass={@PassingTest(analysis="FusionComplete")},
-		fail={@FailingTest(value=2, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
+		fail={@FailingTest(value=2, analysis="FusionPragmaticShared"), @FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=2, analysis="FusionSound")}
 )
 public class RandomDeselect extends Page {
 	public void noSelectionSet() {

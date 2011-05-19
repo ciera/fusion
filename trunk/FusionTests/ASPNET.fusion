@@ -76,9 +76,33 @@
 			<![CDATA[			
 			let $page := doc($doc)/asp:Page/.
 			for $control in $page/asp:LoginView
+			for $subControl in $control/AnonymousTemplate/asp:*
+			where fusion:isSubtype(local:type($subControl), "edu.cmu.cs.fusion.test.aspnet.api.Control")
+			return <Relationship name="SubControl" effect="ADD">
+						<Object name ="{local:name($subControl)}" type="{local:type($subControl)}"/>
+						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
+					</Relationship>
+			]]>
+		</query>
+		<query>
+			<![CDATA[			
+			let $page := doc($doc)/asp:Page/.
+			for $control in $page/asp:LoginView
 			for $subControl in $control/LoggedInTemplate/asp:*
 			where fusion:isSubtype(local:type($subControl), "edu.cmu.cs.fusion.test.aspnet.api.Control")
 			return <Relationship name="LoggedInControl" effect="ADD">
+						<Object name ="{local:name($subControl)}" type="{local:type($subControl)}"/>
+						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
+					</Relationship>
+			]]>
+		</query>
+		<query>
+			<![CDATA[			
+			let $page := doc($doc)/asp:Page/.
+			for $control in $page/asp:LoginView
+			for $subControl in $control/LoggedInTemplate/asp:*
+			where fusion:isSubtype(local:type($subControl), "edu.cmu.cs.fusion.test.aspnet.api.Control")
+			return <Relationship name="SubControl" effect="ADD">
 						<Object name ="{local:name($subControl)}" type="{local:type($subControl)}"/>
 						<Object name ="{local:name($control)}" type="{local:type($control)}"/>
 					</Relationship>

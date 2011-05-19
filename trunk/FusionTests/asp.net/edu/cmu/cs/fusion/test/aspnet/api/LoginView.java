@@ -9,14 +9,12 @@ import edu.cmu.cs.fusion.test.aspnet.relations.*;
 @Constraint(
 		op="LoginView.findControl(String name) : Control",
 		trigger = "Name(name, result) AND LoggedInControl(result, target)",
-		restrictTo = "Name(name, result) AND LoggedInControl(result, target)",
 		requires = "SubControl(target, page) AND PageRequest(request, page) AND Authenticated(request)",
 		effects = {}
 ),
 @Constraint(
 		op="LoginView.findControl(String name) : Control",
 		trigger = "Name(name, result) AND AnonymousControl(result, target)",
-		restrictTo = "Name(name, result) AND AnonymousControl(result, target)",
 		requires = "SubControl(target, page) AND PageRequest(request, page) AND !Authenticated(request)",
 		effects = {}
 )

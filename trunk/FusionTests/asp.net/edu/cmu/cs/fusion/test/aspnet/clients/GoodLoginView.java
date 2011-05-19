@@ -7,8 +7,8 @@ import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
-		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmatic")},
-		fail={@FailingTest(value=3, analysis="FusionSound")}
+		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmaticShared")},
+		fail={@FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=3, analysis="FusionSound")}
 )
 public class GoodLoginView extends Page {
 	
