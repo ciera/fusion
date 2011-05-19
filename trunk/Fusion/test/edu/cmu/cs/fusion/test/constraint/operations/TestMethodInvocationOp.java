@@ -126,8 +126,6 @@ public class TestMethodInvocationOp {
 		
 	}
 	
-	//how many things did it verify?
-	
 	@Test
 	public void testMatchCorrect() {
 		StubVariable rVar = new StubVariable();
@@ -156,16 +154,19 @@ public class TestMethodInvocationOp {
 
 	@Test
 	public void testMatchCorrectAndMultiple() {
-		StubVariable rVar = new StubVariable();
-		StubVariable tVar = new StubVariable();
+		StubVariable rVar = new StubVariable("r", "Foo");
+		StubVariable tVar = new StubVariable("t", "Bar");
 		List<StubVariable> params = new ArrayList<StubVariable>();
 		params.add(rVar);
 		params.add(tVar);
 
-		MethodCallInstruction instr = getMCI(rVar, params, tVar);
+		NamedTypeBinding rBinding = new NamedTypeBinding("Foo");		
+		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Foo"), new NamedTypeBinding("Bar")};
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("mName", rVar, params, new StubMethodBinding(rBinding, vBindings), tVar);	
+		
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
-		String[] vTypes = new String[] {"Bar", "Baz"};
-		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bazaz", false);
+		String[] vTypes = new String[] {"Foo", "Bar"};
+		MethodInvocationOp op = new MethodInvocationOp("mName", "Foo", vars, vTypes, "Bar", false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 		
@@ -182,6 +183,10 @@ public class TestMethodInvocationOp {
 	private MethodCallInstruction getMCI(StubVariable resVar, List<StubVariable> params, StubVariable tarVar) {
 		NamedTypeBinding rBinding = new NamedTypeBinding("Foo");		
 		NamedTypeBinding[] vBindings = new NamedTypeBinding[] {new NamedTypeBinding("Bar"), new NamedTypeBinding("Baz")};
+		resVar.setType(rBinding);
+		params.get(0).setType(vBindings[0]);		
+		params.get(1).setType(vBindings[1]);
+		tarVar.setType(new NamedTypeBinding("Bazaz"));
 		
 		return new StubMethodCallInstruction("mName", resVar, params, new StubMethodBinding(rBinding, vBindings), tarVar);	
 	}

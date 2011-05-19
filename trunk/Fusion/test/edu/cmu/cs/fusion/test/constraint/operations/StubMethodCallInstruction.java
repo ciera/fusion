@@ -42,7 +42,7 @@ public class StubMethodCallInstruction implements MethodCallInstruction {
 	public IMethodBinding resolveBinding() {return binding;}
 
 	public boolean isStaticMethodCall() {
-		throw new UnsupportedOperationException("stub not complete");
+		return false;
 	}
 
 	public boolean isSuperCall() {

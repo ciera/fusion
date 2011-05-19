@@ -110,11 +110,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 	public void testNoMatches() throws FusionException {
 		RelationshipContext rels = new RelationshipContext(false);
 		
-		List<StubVariable> vars = new LinkedList<StubVariable>();
-		vars.add(new StubVariable());
-		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("m", new StubVariable(), vars,
-				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Foo")}), new StubVariable());
+		StubMethodCallInstruction instr = getMCI();
 		
 		//op has type Foo.methodName(Foo) : Bar
 		//instr has type Foo.m(Foo) : Bar
@@ -138,10 +134,10 @@ public class TestSingleConstraint extends ConstraintChecker {
 		RelationshipContext rels = new RelationshipContext(false);
 
 		List<StubVariable> vars = new LinkedList<StubVariable>();
-		vars.add(new StubVariable("p0"));
+		vars.add(new StubVariable("p0", "Bar"));
 		
 		StubNewObjectInstruction instr = new StubNewObjectInstruction(vars,
-				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar", "Foo"));
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getTarget(), labels[3]);
@@ -178,11 +174,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 	public void testDefOnly() throws FusionException {
 		RelationshipContext rels = new RelationshipContext(false);
 
-		List<StubVariable> vars = new LinkedList<StubVariable>();
-		vars.add(new StubVariable("p0"));
-		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
+		StubMethodCallInstruction instr = getMCI();
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -214,11 +206,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 	public void testPartialOnly() throws FusionException {
 		RelationshipContext rels = new RelationshipContext(false);
 
-		List<StubVariable> vars = new LinkedList<StubVariable>();
-		vars.add(new StubVariable("p0"));
-		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
+		StubMethodCallInstruction instr = getMCI();
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -248,11 +236,7 @@ public class TestSingleConstraint extends ConstraintChecker {
 	public void testSeveralDef() throws FusionException {
 		RelationshipContext rels = new RelationshipContext(false);
 
-		List<StubVariable> vars = new LinkedList<StubVariable>();
-		vars.add(new StubVariable("p0"));
-		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
+		StubMethodCallInstruction instr = getMCI();
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -282,15 +266,12 @@ public class TestSingleConstraint extends ConstraintChecker {
 		assertNull(error);			
 	}
 
+
 	@Test
 	public void testCombined() throws FusionException {
 		RelationshipContext rels = new RelationshipContext(false);
 
-		List<StubVariable> vars = new LinkedList<StubVariable>();
-		vars.add(new StubVariable("p0"));
-		
-		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar"), vars,
-				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar"));
+		StubMethodCallInstruction instr = getMCI();
 		
 		TestAliasContext aliases = new TestAliasContext();
 		aliases.addAlias(instr.getReceiverOperand(), labels[0]);
@@ -321,4 +302,14 @@ public class TestSingleConstraint extends ConstraintChecker {
 
 		assertNull(error);			
 	}
+	
+	private StubMethodCallInstruction getMCI() {
+		List<StubVariable> vars = new LinkedList<StubVariable>();
+		vars.add(new StubVariable("p0",  "Bar"));
+		
+		StubMethodCallInstruction instr = new StubMethodCallInstruction("methodName", new StubVariable("rVar", "Foo"), vars,
+				 new StubMethodBinding(new NamedTypeBinding("Foo"), new NamedTypeBinding[]{new NamedTypeBinding("Bar")}), new StubVariable("tVar", "java.lang.Object"));
+		return instr;
+	}
+
 }
