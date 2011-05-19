@@ -34,7 +34,9 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 
 import edu.cmu.cs.crystal.internal.Crystal;
+import edu.cmu.cs.crystal.internal.ShortExceptionFormatter;
 import edu.cmu.cs.crystal.internal.ShortFormatter;
+import edu.cmu.cs.crystal.internal.StandardAnalysisReporter;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.crystal.util.typehierarchy.CachedTypeHierarchy;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -62,7 +64,7 @@ public class SharedAnalysisData {
 			Logger crystalLogger = Logger.getLogger(Crystal.class.getName());
 			crystalLogger.setLevel(Level.WARNING);
 			Handler handler = new ConsoleHandler();
-			handler.setFormatter(new ShortFormatter());
+			handler.setFormatter(new ShortExceptionFormatter());
 			crystalLogger.addHandler(handler);
 			try {
 				handler = new FileHandler("%h/crystal.txt");
@@ -74,12 +76,19 @@ public class SharedAnalysisData {
 				crystalLogger.log(Level.WARNING, "Could not create crystal handler", e.getMessage());
 			}
 			crystalLogger.setUseParentHandlers(false);
+			
+			//Fix the Crystal loggers so they'll behave as we want.
+			Logger regLogger = Logger.getLogger(StandardAnalysisReporter.REGRESSION_LOGGER);
+			regLogger.setLevel(Level.SEVERE);
+			regLogger.addHandler(new ConsoleHandler());
+			regLogger.setUseParentHandlers(false);
+		
 
 			//The core logger. Should be at warnings only under most circumstances
 			core = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 			core.setLevel(Level.WARNING);
 			handler = new ConsoleHandler();
-			handler.setFormatter(new ShortFormatter());
+			handler.setFormatter(new ShortExceptionFormatter());
 			core.addHandler(handler);
 			core.setUseParentHandlers(false);
 			try {
