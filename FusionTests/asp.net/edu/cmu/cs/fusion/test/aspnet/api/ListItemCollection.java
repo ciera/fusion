@@ -3,10 +3,21 @@ package edu.cmu.cs.fusion.test.aspnet.api;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.cmu.cs.fusion.annot.Constraint;
+import edu.cmu.cs.fusion.annot.Constraints;
+import edu.cmu.cs.fusion.annot.Infer;
 import edu.cmu.cs.fusion.annot.Relation;
+import edu.cmu.cs.fusion.test.aspnet.relations.Items;
+import edu.cmu.cs.fusion.test.aspnet.relations.Child;
 import edu.cmu.cs.fusion.test.aspnet.relations.Item;
 import edu.cmu.cs.fusion.test.aspnet.relations.Text;
 
+@Constraint(
+		op="ListItemCollection.findByText(String name) : ListItem",
+		trigger = "Items(target, ctrl)",
+		requires = "TRUE",
+		effects = {"Item(result, target)", "Text(result, text)", "!Child(result, *)", "Child(result, ctrl)"}
+	)
 public class ListItemCollection implements Iterable<ListItem> {
 	private List<ListItem> items;
 	
@@ -45,7 +56,6 @@ public class ListItemCollection implements Iterable<ListItem> {
 	}
 
 	public Iterator<ListItem> iterator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

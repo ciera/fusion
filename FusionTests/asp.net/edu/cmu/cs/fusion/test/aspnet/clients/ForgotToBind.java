@@ -9,12 +9,11 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		pass={@PassingTest(analysis="FusionComplete")},
 		fail={@FailingTest(value=1, analysis="FusionPragmaticShared"), @FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=1, analysis="FusionSound")}
 )
-public class WrongCallback extends Page {
+public class ForgotToBind extends Page {
 	@Override
-	public void init() {
+	public void load() {
 		DropDownList ctrl = (DropDownList) findControl("DDL");
 
 		ctrl.setDataSource(null);
-		ctrl.dataBind();
 	}
 }

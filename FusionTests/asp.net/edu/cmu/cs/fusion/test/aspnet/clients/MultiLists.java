@@ -7,11 +7,12 @@ import edu.cmu.cs.crystal.annotations.UseAnalyses;
 import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
-		pass={@PassingTest(analysis="FusionComplete")},
-		fail={@FailingTest(value=1, analysis="FusionPragmatic"), @FailingTest(value=2, analysis="FusionSound")}
+		pass={},
+		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=1, analysis="FusionPragmaticShared"), @FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=2, analysis="FusionSound")}
 )
 public class MultiLists extends Page {
-	public void multiLists(DropDownList ctrlA) {
+	DropDownList ctrlA;
+	public void multiLists() {
 		DropDownList ctrlB;
 		ctrlB = (DropDownList) findControl("DDL");
 		ListItem newSel, oldSel; 

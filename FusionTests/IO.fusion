@@ -4,7 +4,7 @@
 	<Import qualName="java.lang.String"/>
 	<Import qualName="edu.cmu.cs.fusion.test.io.relations.Writeable"/>
 	<Import qualName="edu.cmu.cs.fusion.test.io.relations.Closed"/>
-	<Constraint>
+<!--	<Constraint>
 		<op>FileWriter.write(String str) : void</op>
 		<trg>TRUE</trg>
 		<req>Writeable(target)</req>
@@ -23,4 +23,5 @@
 		<eff>!Writeable(target)</eff>
 		<eff>Closed(target)</eff>
 	</Constraint>
+-->
 </Specs>
