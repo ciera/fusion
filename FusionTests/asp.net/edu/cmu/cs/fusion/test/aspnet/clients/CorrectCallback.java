@@ -9,7 +9,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 
 @AnalysisTests(
 		pass={@PassingTest(analysis="FusionComplete"), @PassingTest(analysis="FusionPragmaticShared")},
-		fail={@FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=2, analysis="FusionSound")}
+		fail={@FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=3, analysis="FusionSound")}
 )
 public class CorrectCallback extends Page {
 	@Override
