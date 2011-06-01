@@ -11,24 +11,24 @@ import edu.cmu.cs.fusion.alias.ObjectLabel;
  *
  */
 public class Relationship {
-	private ObjectLabel[] parameters;	
+	private ObjectLabel[] parameters;
 	private Relation type;
 	/** Since relationships are immutable and we do hashing on them a lot, store the hashCode! */
 	private int hashCode = 0;
-	
+
 	public Relationship(Relation type, ObjectLabel[] params) {
 		this.type = type;
 		this.parameters = params;
 	}
-	
+
 	public ObjectLabel getParam(int ndx) {
 		return parameters[ndx];
 	}
-	
+
 	public Relation getRelation() {
 		return type;
 	}
-	
+
 	public String getName() {
 		return type.getName();
 	}
@@ -62,12 +62,16 @@ public class Relationship {
 			return false;
 		return true;
 	}
-	
-	@Override
-	public String toString() {
-		String str =  type.getName() + "(";
+
+	public String toString(boolean qualified) {
+		String str = type.getName();
+		int last = str.lastIndexOf('.');
+		if (qualified && last != -1 && last + 1 < str.length()) {
+			str = str.substring(last + 1);
+		}
+		str += "(";
 		int ndx = 0;
-		
+
 		for (ObjectLabel param : parameters) {
 			str += param.toString();
 			if (ndx != parameters.length - 1)
@@ -78,10 +82,15 @@ public class Relationship {
 		return str;
 	}
 
+	@Override
+	public String toString() {
+		return toString(false);
+	}
+
 	public String toErrorString() {
-		String str =  type.getName().substring(type.getName().lastIndexOf('.') + 1) + "(";
+		String str = type.getName().substring(type.getName().lastIndexOf('.') + 1) + "(";
 		int ndx = 0;
-		
+
 		for (ObjectLabel param : parameters) {
 			str += param.toString();
 			if (ndx != parameters.length - 1)
