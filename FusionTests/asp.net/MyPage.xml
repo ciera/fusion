@@ -6,7 +6,7 @@
 			<asp:DropDownList ID="LoggedInDDL"/> 
 		</LoggedInTemplate>
 	</asp:LoginView>
-	<asp:DropDownList ID="DDL"/>
+	<asp:DropDownList ID="DDL"/>asdadasdas
 </asp:Page>
 
  
