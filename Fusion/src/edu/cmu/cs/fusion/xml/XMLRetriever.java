@@ -140,14 +140,13 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 			}
 				
 		} catch (SAXException e) {
-			
-			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.INFO, "Visiting XML resource " + resource.getName() + "failed.", e);			
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.SEVERE, "Visiting XML resource " + resource.getName() + "failed.", e);			
 			return false;
 		} catch (IOException e) {
-			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.INFO, "Visiting XML resource " + resource.getName() + "failed.", e);
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.SEVERE, "Visiting XML resource " + resource.getName() + "failed.", e);
 			return false;
 		} catch (ParserConfigurationException e) {
-			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.INFO, "Visiting XML resource " + resource.getName() + "failed.", e);			
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.SEVERE, "Visiting XML resource " + resource.getName() + "failed.", e);			
 			return false;
 		} catch (FusionTypeCheckException e) {
 			ReportingUtility.reportParseError(resource, null, e.getMessage());
@@ -166,6 +165,7 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 		SchemaQueries sQueries = queries.get(schema);
 		
 		if (sQueries != null) {
+			Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.WARNING, "Retrieved relationships from" + file.getName() + " with schema " + schema);
 			RelationshipDelta result = sQueries.runQueries(file, types);		
 			List<RelationshipDelta> list = new LinkedList<RelationshipDelta>();
 			list.add(delta);
