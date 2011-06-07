@@ -33,7 +33,7 @@ import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
 public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCrystalMethodAnalysis {
-	protected static final String BASE_FUSION_LOGGER = "edu.cmu.cs.fusion";
+	private static final String BASE_FUSION_LOGGER = "edu.cmu.cs.fusion";
 	public static final String FUSION_LOGGER = BASE_FUSION_LOGGER + ".core";
 	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;

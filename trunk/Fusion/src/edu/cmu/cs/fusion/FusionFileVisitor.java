@@ -3,6 +3,8 @@ package edu.cmu.cs.fusion;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -40,6 +42,7 @@ public class FusionFileVisitor extends Observable  implements IResourceVisitor {
 		try {
 			if (resource instanceof IFile && resource.getFileExtension() != null && resource.getFileExtension().equals(FUSION_FILE)) {
 				File file = resource.getLocation().toFile();
+				Logger.getLogger(FusionAnalysis.FUSION_LOGGER).log(Level.WARNING, "Parsing Fusion file " + resource.getName());
 				Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 				XMLContext context = createContext(file.getAbsolutePath(), doc);
 				setChanged();
