@@ -20,20 +20,23 @@ public class EndOfMethodOp implements Operation {
 	private SpecVar[] paramNames;
 	private String[] paramTypes;
 	private String resType;
+	private boolean isStatic;
 	
 	public EndOfMethodOp(String thisType, String methodName, SpecVar[] paramNames,
-			String[] paramTypes, String resType) {
+			String[] paramTypes, String resType, boolean isStatic) {
 		this.thisType = thisType;
 		this.methodName = methodName;
 		this.paramNames = paramNames;
 		this.paramTypes = paramTypes;
 		this.resType = resType;
+		this.isStatic = isStatic;
 	}
 
 	public FreeVars getFreeVariables() {
 		FreeVars fv = new FreeVars();
 	
-		fv = fv.addVar(Constraint.RECEIVER, thisType != null ? thisType : FreeVars.OBJECT_TYPE);
+		if (!isStatic)
+			fv = fv.addVar(Constraint.RECEIVER, thisType != null ? thisType : FreeVars.OBJECT_TYPE);
 		
 		if (resType != null)
 			fv = fv.addVar(Constraint.RESULT, resType);
@@ -59,9 +62,17 @@ public class EndOfMethodOp implements Operation {
 		if (thisType != null && !types.existsCommonSubtype(thisType, binding.getDeclaringClass().getQualifiedName()))
 			return null;
 		
-		if (invoke.getReturnedVariable() != null) {
+		//it should match if the op is static and the method we are in is not, but not
+		//the other way around.
+		if (method.getThisVar() == null && !isStatic) 
+			return null;
+		
+		if (resType != null) {
+			if (invoke.getReturnedVariable() == null)
+				return null;
+			
 			String resVarType = invoke.getReturnedVariable().resolveType().getQualifiedName();
-			if (resType != null && !types.existsCommonSubtype(resType, resVarType))
+			if (!types.existsCommonSubtype(resType, resVarType))
 				return null;
 		}
 
@@ -82,6 +93,8 @@ public class EndOfMethodOp implements Operation {
 		if (invoke.getReturnedVariable() != null && resType != null)
 			vars = ConsList.cons(new Binding(Constraint.RESULT, invoke.getReturnedVariable()), vars);
 		
-		return ConsList.cons(new Binding(Constraint.RECEIVER, method.getThisVar()), vars);
+		if (!isStatic)
+			vars = ConsList.cons(new Binding(Constraint.RECEIVER, method.getThisVar()), vars);
+		return vars;
 	}
 }

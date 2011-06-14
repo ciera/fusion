@@ -1,7 +1,6 @@
 package edu.cmu.cs.fusion.xml;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,6 +62,9 @@ public class SchemaQueries {
 		this.queryStrings = queryStrings;
 		this.context = context;
 		this.relEnv = relEnv;
+		
+		if (localStr == null)
+			localStr = "";
 	}
 
 	/**
@@ -114,6 +116,9 @@ public class SchemaQueries {
 	 * @throws FusionTypeCheckException 
 	 */
 	public List<ObjectLabel> findTopObjects(File file, TypeHierarchy types) throws FusionTypeCheckException {
+		if (topStr == null)
+			return new LinkedList<ObjectLabel>();
+		
 		try {
 			SaxonXQDataSource data = new SaxonXQDataSource();
 			Configuration config = data.getConfiguration();

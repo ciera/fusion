@@ -19,20 +19,24 @@ public class BeginOfMethodOp implements Operation {
 	private String methodName;
 	private String[] paramTypes;
 	private SpecVar[] paramNames;
+	private boolean isStatic;
 	
-	public BeginOfMethodOp(String thisType, String methodName, SpecVar[] paramNames, String[] paramTypes) {
+	public BeginOfMethodOp(String thisType, String methodName, SpecVar[] paramNames, String[] paramTypes, boolean isStatic) {
 		this.thisType = thisType;
 		this.methodName = methodName;
 		this.paramTypes = paramTypes;
 		this.paramNames = paramNames;
+		this.isStatic = isStatic;
 	}
 
 	public FreeVars getFreeVariables() {
 		FreeVars fv = new FreeVars();
-		if (thisType == null)
-			fv = fv.addVar(Constraint.RECEIVER, FreeVars.OBJECT_TYPE);
-		else
-			fv = fv.addVar(Constraint.RECEIVER, thisType);
+		if (!isStatic) {
+			if (thisType == null)
+				fv = fv.addVar(Constraint.RECEIVER, FreeVars.OBJECT_TYPE);
+			else
+				fv = fv.addVar(Constraint.RECEIVER, thisType);
+		}
 		
 		if (paramNames != null) {
 			fv = fv.addVars(paramNames, paramTypes);
@@ -53,6 +57,10 @@ public class BeginOfMethodOp implements Operation {
 
 		if (thisType != null && !types.existsCommonSubtype(thisType, binding.getDeclaringClass().getQualifiedName()))
 			return null;
+		
+		//it's ok if we have a receiver and we're static (we just won't use it), but not the other way around.
+		if (invoke.getReceiver() == null && !isStatic) 
+			return null;
 
 		ConsList<Binding> vars = ConsList.empty();
 		if (paramTypes != null) {
@@ -68,7 +76,9 @@ public class BeginOfMethodOp implements Operation {
 			}
 		}
 		
+		if (!isStatic)
+			vars = ConsList.cons(new Binding(Constraint.RECEIVER, invoke.getReceiver()), vars);
 		
-		return ConsList.cons(new Binding(Constraint.RECEIVER, invoke.getReceiver()), vars);
+		return vars;
 	}
 }

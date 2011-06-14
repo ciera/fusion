@@ -136,7 +136,7 @@ public class MustPointsToTransferFunctions extends AbstractTACBranchSensitiveTra
 				newValue.addPointsTo(var, voidLabel);
 			}
 			else {
-				ObjectLabel freshLabel = new DefaultObjectLabel(var.resolveType(), isInLoop, false);
+				ObjectLabel freshLabel = new DefaultObjectLabel(var.resolveType(), isInLoop);
 				newValue.addPointsTo(var, freshLabel);
 				newValue.addLabel(freshLabel);
 			}

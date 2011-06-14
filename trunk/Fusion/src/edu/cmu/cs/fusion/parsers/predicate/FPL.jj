@@ -90,7 +90,7 @@ TOKEN : /* LITERALS */
 | 
   < FALSE:  "FALSE" >
 | 
-  <STATIC: "STATIC" >
+  <STATIC: "static" >
 }
 
 TOKEN : /* IDENTIFIERS */
@@ -371,10 +371,12 @@ EndOfMethodOp eom() :
   String methodName;
   Pair<String[], SpecVar[] > params;
   String resType;
+  boolean isStatic = false;
 }
 {LOOKAHEAD(2)
 	< EOM >
 ":"
+[< STATIC > {isStatic = true;} ]
 receiverType = wcType()
 < DOT >
 methodName = wcName()
@@ -382,11 +384,11 @@ params = wcTypedParams()
 ":"
 resType = wcType()
 {
-  return new EndOfMethodOp(receiverType, methodName, params.snd(), params.fst(), resType);
+  return new EndOfMethodOp(receiverType, methodName, params.snd(), params.fst(), resType, isStatic);
 }
 |
 	< EOM >
-	{	  return new EndOfMethodOp(null, null, null, null, null);
+	{	  return new EndOfMethodOp(null, null, null, null, null, true);
 	}
 }
 
@@ -395,19 +397,21 @@ BeginOfMethodOp bom() :
   String receiverType;
   String methodName;
   Pair<String[], SpecVar[] > params;
+  boolean isStatic = false;
 }
 {
 	LOOKAHEAD(2)
 	< BOM >
 ":"
+[< STATIC > {isStatic = true;} ]
 receiverType = wcType()
 < DOT >
 methodName = wcName()
 params = wcTypedParams()
 {
-  return new BeginOfMethodOp(receiverType, methodName, params.snd(), params.fst());}
+  return new BeginOfMethodOp(receiverType, methodName, params.snd(), params.fst(), isStatic);}
 |
-< BOM >	 {return new BeginOfMethodOp(null, null, null, null);}
+< BOM >	 {return new BeginOfMethodOp(null, null, null, null, true);}
 }
 
 

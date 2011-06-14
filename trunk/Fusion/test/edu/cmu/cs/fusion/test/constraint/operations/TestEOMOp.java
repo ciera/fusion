@@ -34,7 +34,15 @@ public class TestEOMOp {
 
 	@Test
 	public void testFreeVars() {
-		EndOfMethodOp construct = new EndOfMethodOp(null, null, null, null, null);
+		EndOfMethodOp construct = new EndOfMethodOp(null, null, null, null, null, false);
+		FreeVars fv = construct.getFreeVariables();
+		
+		assertEquals(1, fv.size());
+	}
+	
+	@Test
+	public void testFreeVarsStaticReturn() {
+		EndOfMethodOp construct = new EndOfMethodOp(null, null, null, null, "Bar", true);
 		FreeVars fv = construct.getFreeVariables();
 		
 		assertEquals(1, fv.size());
@@ -51,7 +59,7 @@ public class TestEOMOp {
 		
 		StubMethodCallInstruction instr = new StubMethodCallInstruction("mName", new StubVariable(), params, new StubMethodBinding(rBinding, vBindings), new StubVariable());	
 		
-		EndOfMethodOp op = new EndOfMethodOp(null, null, null, null, null);
+		EndOfMethodOp op = new EndOfMethodOp(null, null, null, null, null, false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), null, instr);
 
@@ -67,12 +75,50 @@ public class TestEOMOp {
 	
 		Pair<ReturnInstruction, Method> pair = getRetAndMethod(var, params, new StubVariable());
 		
-		EndOfMethodOp op = new EndOfMethodOp(null, null, null, null, null);
+		EndOfMethodOp op = new EndOfMethodOp(null, null, null, null, null, false);
 
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
 		assertTrue(map != null);
 		assertEquals(1, map.size());
+		assertTrue(map.contains(new Binding(Constraint.RECEIVER, var)));
+	}	
+	
+	@Test
+	public void testMatchCorrectStatic() {
+		List<Variable> params = new ArrayList<Variable>();
+		params.add(new StubVariable());
+		params.add(new StubVariable());
+		StubVariable var = new StubVariable("A", "Foo");
+	
+		Pair<ReturnInstruction, Method> pair = getRetAndMethod(new StubVariable(), params, var);
+		
+		EndOfMethodOp op = new EndOfMethodOp(null, null, null, null, "Foo", true);
+
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
+		
+		assertTrue(map != null);
+		assertEquals(1, map.size());
+		assertTrue(map.contains(new Binding(Constraint.RESULT, var)));
+	}	
+	
+	@Test
+	public void testMatchCorrectBoth() {
+		List<Variable> params = new ArrayList<Variable>();
+		params.add(new StubVariable());
+		params.add(new StubVariable());
+		StubVariable var = new StubVariable();
+		StubVariable retVar = new StubVariable("A" , "Foo");
+	
+		Pair<ReturnInstruction, Method> pair = getRetAndMethod(var, params, retVar);
+		
+		EndOfMethodOp op = new EndOfMethodOp(null, null, null, null, "Foo", false);
+
+		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
+		
+		assertTrue(map != null);
+		assertEquals(2, map.size());
+		assertTrue(map.contains(new Binding(Constraint.RESULT, retVar)));
 		assertTrue(map.contains(new Binding(Constraint.RECEIVER, var)));
 	}	
 	
@@ -87,8 +133,11 @@ public class TestEOMOp {
 			vArr[ndx] = var;
 			ndx++;
 		}
-
-		return new Pair<ReturnInstruction, Method>(new DefaultReturnInstruction(), new Method(vArr, tarVar, methodBinding));	
+		
+		if (rVar != null)
+			return new Pair<ReturnInstruction, Method>(new StubReturnInstruction(rVar), new Method(vArr, tarVar, methodBinding));
+		else
+			return new Pair<ReturnInstruction, Method>(new DefaultReturnInstruction(), new Method(vArr, tarVar, methodBinding));
 	}
 
 }
