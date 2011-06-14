@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.Flags;
 import org.eclipse.jdt.core.IAnnotation;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
@@ -75,7 +76,9 @@ public class CallbackRequestor extends SearchRequestor {
 			params[ndx] = new SpecVar(methodType.getParameterNames()[ndx]);
 		}
 		
-		Operation op = new BeginOfMethodOp(declaringType.getFullyQualifiedName(), methodType.getElementName(), params, paramTypes);
+		boolean isStatic = Flags.isStatic(methodType.getFlags());
+		
+		Operation op = new BeginOfMethodOp(declaringType.getFullyQualifiedName(), methodType.getElementName(), params, paramTypes, isStatic);
 		List<Effect> effects = new LinkedList<Effect>();
 		effects.add(RelEffect.createAddEffect(relation, new SpecVar[] {Constraint.RECEIVER}));
 		

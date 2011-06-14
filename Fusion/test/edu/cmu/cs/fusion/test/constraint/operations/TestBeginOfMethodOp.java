@@ -35,7 +35,7 @@ public class TestBeginOfMethodOp {
 
 	@Test
 	public void testFreeVarsWild() {
-		BeginOfMethodOp begin = new BeginOfMethodOp(null, null, null, null);
+		BeginOfMethodOp begin = new BeginOfMethodOp(null, null, null, null, false);
 		FreeVars fv = begin.getFreeVariables();
 		
 		assertEquals("java.lang.Object", fv.getType(Constraint.RECEIVER));		
@@ -44,7 +44,7 @@ public class TestBeginOfMethodOp {
 	
 	@Test
 	public void testFreeVarsBoundedReceiver() {
-		BeginOfMethodOp begin = new BeginOfMethodOp("Foo", null, null, null);
+		BeginOfMethodOp begin = new BeginOfMethodOp("Foo", null, null, null, false);
 		FreeVars fv = begin.getFreeVariables();
 		
 		assertEquals("Foo", fv.getType(Constraint.RECEIVER));		
@@ -54,7 +54,7 @@ public class TestBeginOfMethodOp {
 	@Test
 	public void testFreeVarsBoundedParams() {
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
-		BeginOfMethodOp begin = new BeginOfMethodOp(null, null, vars, new String[] {"Bar", "Baz"});
+		BeginOfMethodOp begin = new BeginOfMethodOp(null, null, vars, new String[] {"Bar", "Baz"}, false);
 		FreeVars fv = begin.getFreeVariables();
 		
 		assertEquals("java.lang.Object", fv.getType(Constraint.RECEIVER));		
@@ -77,7 +77,7 @@ public class TestBeginOfMethodOp {
 		Method method = new Method(new Variable[] {v1, v2}, null, binding);
 		
 		NewObjectInstruction instr = new StubNewObjectInstruction(params, binding, new StubVariable());	
-		BeginOfMethodOp op = new BeginOfMethodOp(null, null, null, null);
+		BeginOfMethodOp op = new BeginOfMethodOp(null, null, null, null, false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), method, instr);
 
@@ -91,7 +91,7 @@ public class TestBeginOfMethodOp {
 		params.add(new StubVariable());
 
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(new StubVariable(), params);
-		BeginOfMethodOp op = new BeginOfMethodOp(null, "OtherName", null, null);
+		BeginOfMethodOp op = new BeginOfMethodOp(null, "OtherName", null, null, false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -106,7 +106,7 @@ public class TestBeginOfMethodOp {
 		StubVariable var = new StubVariable();
 
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(var, params);
-		BeginOfMethodOp op = new BeginOfMethodOp(null, "name", null, null);
+		BeginOfMethodOp op = new BeginOfMethodOp(null, "name", null, null, false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -122,7 +122,7 @@ public class TestBeginOfMethodOp {
 		params.add(new StubVariable());
 
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(new StubVariable(), params);
-		BeginOfMethodOp op = new BeginOfMethodOp("Bar", null, null, null);
+		BeginOfMethodOp op = new BeginOfMethodOp("Bar", null, null, null, false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -137,7 +137,7 @@ public class TestBeginOfMethodOp {
 		StubVariable var = new StubVariable();
 
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(var, params);
-		BeginOfMethodOp op = new BeginOfMethodOp("Foo", null, null, null);
+		BeginOfMethodOp op = new BeginOfMethodOp("Foo", null, null, null, false);
 		
 		ConsList<Binding> map = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -156,7 +156,7 @@ public class TestBeginOfMethodOp {
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(new StubVariable(), params);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz", "blah"};
-		BeginOfMethodOp op = new BeginOfMethodOp(null, null, vars, vTypes);
+		BeginOfMethodOp op = new BeginOfMethodOp(null, null, vars, vTypes, false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -172,7 +172,7 @@ public class TestBeginOfMethodOp {
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(new StubVariable(), params);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz2"};
-		BeginOfMethodOp op = new BeginOfMethodOp(null, null, vars, vTypes);
+		BeginOfMethodOp op = new BeginOfMethodOp(null, null, vars, vTypes, false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -192,7 +192,7 @@ public class TestBeginOfMethodOp {
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(tVar, params);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		BeginOfMethodOp op = new BeginOfMethodOp("Foo", "name", vars, vTypes);
+		BeginOfMethodOp op = new BeginOfMethodOp("Foo", "name", vars, vTypes, false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
@@ -205,6 +205,29 @@ public class TestBeginOfMethodOp {
 	}	
 
 	@Test
+	public void testMatchCorrectStatic() {
+		StubVariable tVar = new StubVariable();
+		StubVariable p1 = new StubVariable();
+		StubVariable p2 = new StubVariable();
+		List<Variable> params = new ArrayList<Variable>();
+		params.add(p1);
+		params.add(p2);
+
+		Pair<EntryInstruction, Method> pair = getEntryAndMethod(tVar, params);
+		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
+		String[] vTypes = new String[] {"Bar", "Baz"};
+		BeginOfMethodOp op = new BeginOfMethodOp("Foo", "name", vars, vTypes, true);
+		
+		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
+		
+		assertTrue(list != null);
+		assertTrue(list.contains(new Binding(utils.getVar(0), p1)));
+		assertTrue(list.contains(new Binding(utils.getVar(1), p2)));
+		
+		assertEquals(2, list.size());
+	}	
+
+	@Test
 	public void testMatchCorrectAndMultiple() {
 		StubVariable tVar = new StubVariable();
 		List<Variable> params = new ArrayList<Variable>();
@@ -214,7 +237,7 @@ public class TestBeginOfMethodOp {
 		Pair<EntryInstruction, Method> pair = getEntryAndMethod(tVar, params);
 		SpecVar[] vars = new SpecVar[] {utils.getVar(0), utils.getVar(1)};
 		String[] vTypes = new String[] {"Bar", "Baz"};
-		BeginOfMethodOp op = new BeginOfMethodOp(null, null, vars, vTypes);
+		BeginOfMethodOp op = new BeginOfMethodOp(null, null, vars, vTypes, false);
 		
 		ConsList<Binding> list = op.matches(new EqualityOnlyTypeHierarchy(), pair.snd(), pair.fst());
 		
