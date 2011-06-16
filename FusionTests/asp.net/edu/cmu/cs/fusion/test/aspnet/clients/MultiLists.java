@@ -11,7 +11,7 @@ import edu.cmu.cs.fusion.test.aspnet.api.*;
 		fail={@FailingTest(value=1, analysis="FusionComplete"), @FailingTest(value=1, analysis="FusionPragmaticShared"), @FailingTest(value=1, analysis="FusionPragmaticUnique"),@FailingTest(value=2, analysis="FusionSound")}
 )
 public class MultiLists extends Page {
-	DropDownList ctrlA;
+	DropDownList ctrlA;	
 	public void multiLists() {
 		DropDownList ctrlB;
 		ctrlB = (DropDownList) findControl("DDL");

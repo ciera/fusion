@@ -7,7 +7,7 @@
 	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.CollIterator"/>
 	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.HasNext"/>
 	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.Item"/>
-<!--	<Constraint>
+	<Constraint>
 		<op>Iterable.iterator() : Iterator</op>
 		<eff>CollIterator(result, target)</eff>
 		<eff>!HasNext(result)</eff>
@@ -36,5 +36,5 @@
 		<op>Collection.contains(Object o) : boolean</op>
 		<eff>?Item(o, target) : result</eff>
 	</Constraint>
-	-->
+	
 </Specs>
