@@ -11,7 +11,7 @@ import java.util.*;
 )
 */
 public class NotCallingHasNext {
-	public void foo(Collection<String> collection) {
+	static public void foo(Collection<String> collection) {
 		Iterator<String> itr = collection.iterator();
 		itr.next();
 		itr.next();

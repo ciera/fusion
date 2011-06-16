@@ -17,5 +17,6 @@ public class NoSelectionSet extends Page {
 
 		newSel = ctrl.getSelectedItem();
 		newSel.setSelected(false);
+		newSel.toString();
 	}
 }
