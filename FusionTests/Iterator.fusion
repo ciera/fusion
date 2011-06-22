@@ -5,12 +5,15 @@
 	<Import qualName="java.util.Collection"/>
 	<Import qualName="java.util.Iterator"/>
 	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.CollIterator"/>
+	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.Removable"/>
+	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.Current"/>
 	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.HasNext"/>
 	<Import qualName="edu.cmu.cs.fusion.test.iterator.relations.Item"/>
 	<Constraint>
 		<op>Iterable.iterator() : Iterator</op>
 		<eff>CollIterator(result, target)</eff>
 		<eff>!HasNext(result)</eff>
+		<eff>!Removable(result)</eff>
 	</Constraint>
 	<Constraint>
 		<op>Iterator.hasNext() : boolean</op>
@@ -21,6 +24,12 @@
 		<req>HasNext(target) AND CollIterator(target, coll)</req>
 		<eff>!HasNext(target)</eff>
 		<eff>Item(result, coll)</eff>
+		<eff>Removable(target)</eff>
+	</Constraint>
+	<Constraint>
+		<op>Iterator.remove() : Object</op>
+		<req>Removable(target) AND CollIterator(target, coll)</req>
+		<eff>!Removable(target)</eff>
 	</Constraint>
 	<Constraint>
 		<op>Collection.add(Object e) : boolean</op>
