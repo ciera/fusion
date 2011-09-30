@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.tac.AbstractTACBranchSensitiveTransferFunction;
-import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.DeclarativeRetriever;
 import edu.cmu.cs.fusion.FusionAnalysis;
 import edu.cmu.cs.fusion.Variant;
@@ -39,13 +38,13 @@ public class FusionDebuggingAnalysis extends FusionAnalysis<PointsToAliasContext
 
 	@Override
 	public AbstractTACBranchSensitiveTransferFunction<PointsToAliasContext> getAliasTransferFunction(
-			DeclarativeRetriever retriever, TypeHierarchy types) {
-		return new MayPointsToTransferFunctions(retriever, types);
+			DeclarativeRetriever retriever) {
+		return new MayPointsToTransferFunctions(retriever, getHierarchy());
 	}
 
 	@Override
-	public ILatticeOperations<PointsToAliasContext> getAliasLatticeOps(TypeHierarchy types) {
-		return new PointsToLatticeOps(types);
+	public ILatticeOperations<PointsToAliasContext> getAliasLatticeOps() {
+		return new PointsToLatticeOps(getHierarchy());
 	}
 	
 }

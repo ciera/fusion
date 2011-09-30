@@ -22,6 +22,9 @@ public class BooleanConstantWrapper implements BooleanContext {
 	private AliasContext aliasLattice;
 	private Map<ObjectLabel, ThreeValue> cache;
 	
+
+	public BooleanConstantWrapper() {};
+	
 	public BooleanConstantWrapper(TACInstruction instr,
 			TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants, AliasContext aliases) {
 		boolLattice = constants.getResultsBefore(instr);
@@ -76,6 +79,7 @@ public class BooleanConstantWrapper implements BooleanContext {
 			cache.put(returnLabel, resultValue ? ThreeValue.TRUE : ThreeValue.FALSE);
 		}
 	}
+
 
 	public ThreeValue getBooleanValue(ObjectLabel label) {
 		ThreeValue value = cache.get(label);

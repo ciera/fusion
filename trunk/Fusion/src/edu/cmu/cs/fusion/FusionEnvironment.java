@@ -223,6 +223,7 @@ public class FusionEnvironment<AC extends AliasContext> {
 	}
 
 	//TODO: Consider removing this method. Replace with utility methods?
+	@Deprecated
 	public RelationshipContext getContext() {
 		return context;
 	}
