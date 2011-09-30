@@ -188,7 +188,6 @@ public class XMLRetriever implements DeclarativeRetriever, IResourceVisitor {
 			}
 		}
 		return aliases;
-
 	}
 
 	/* (non-Javadoc)

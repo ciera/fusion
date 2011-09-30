@@ -78,11 +78,14 @@ public class MayPointsToTransferFunctions extends AbstractTACBranchSensitiveTran
 			
 			if (thisAliases.isEmpty()) {
 				ObjectLabel fresh = new DefaultObjectLabel(thisVar.resolveType(), false);
+				entry.addPointsTo(getAnalysisContext().getSuperVariable(), fresh);
 				entry.addPointsTo(thisVar, fresh);
 				entry.addLabel(fresh);
 			}
-			else
+			else {			
 				entry.addPointsTo(thisVar, thisAliases);
+				entry.addPointsTo(getAnalysisContext().getSuperVariable(), thisAliases);
+			}
 		}
 		
 		entry.addLabel(voidLabel);

@@ -47,6 +47,15 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 		this.className = type;
 		this.sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
 	}
+	
+	public void checkXMLError(AliasContext aliases, RelationshipContext rels, CompilationUnit node) {
+		FusionEnvironment<?> triggerEnv = new FusionEnvironment<AliasContext>(aliases, rels , null, fa.getHierarchy(), fa.getInfers(), fa.getVariant());
+		
+		List<FusionErrorReport> errors = checker.checkForErrors(triggerEnv, null);
+		
+		for (FusionErrorReport err : errors) 
+			reportError(err, node);
+	}
 
  	@Override
 	public boolean visit(AnonymousClassDeclaration node) {
@@ -133,6 +142,7 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 		else
 			message = "Broken constraint:" + err.getConstraint().toErrorString();
 		reporter.reportUserProblem(message, reportOn, fa.getName(), sev);	
+
 
 		CompilationUnit cu = (CompilationUnit) reportOn.getRoot();
 		String info = cu.getJavaElement().getPath().toFile().getAbsolutePath();

@@ -23,6 +23,7 @@ import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.alias.AliasContext;
+import edu.cmu.cs.fusion.alias.NoVarsAliasContext;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.ConstraintEnvironment;
 import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
@@ -95,6 +96,12 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 			compUnitName = compUnit.getElementName();
 			sharedData.checkForProjectReset(compUnit.getJavaProject(), analysisInput.getProgressMonitor().isSome() ? analysisInput.getProgressMonitor().unwrap() : null);
 			retriever.retrieveRelationships(ResourcesPlugin.getWorkspace().getRoot(), sharedData.getHierarchy());
+			
+			ConstraintChecker checker = new ConstraintChecker(constraints, getHierarchy(), variant, null);
+			NoVarsAliasContext aContext = new NoVarsAliasContext(retriever.getAllLabels());
+			RelationshipContext rels = retriever.getStartContext();
+			new ErrorReporterVisitor<AC>(this, checker, reporter, null, compUnitName).checkXMLError(aContext, rels, rootNode);
+			
 		} catch (JavaModelException e) {
 			log.log(Level.SEVERE, "Could not set up compilation unit for analysis", e);
 			majorErrorOccured = true;
@@ -115,8 +122,8 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 		}
 		try {
 			TypeHierarchy types = sharedData.getHierarchy();
-			AbstractTACBranchSensitiveTransferFunction<AC> aliasTF = getAliasTransferFunction(retriever, types);
-			ILatticeOperations<AC> ops = getAliasLatticeOps(types);
+			AbstractTACBranchSensitiveTransferFunction<AC> aliasTF = getAliasTransferFunction(retriever);
+			ILatticeOperations<AC> ops = getAliasLatticeOps();
 			
 			RelationshipTransferFunction<AC> tfR = new RelationshipTransferFunction<AC>(this, constraints, infers, types, retriever, aliasTF, ops);
 			fa = new TACFlowAnalysis<FusionLattice<AC>>(tfR, this.analysisInput.getComUnitTACs().unwrap());
@@ -133,9 +140,9 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 		}
 	}
 	
-	abstract public AbstractTACBranchSensitiveTransferFunction<AC> getAliasTransferFunction(DeclarativeRetriever retriever, TypeHierarchy types);
+	abstract public AbstractTACBranchSensitiveTransferFunction<AC> getAliasTransferFunction(DeclarativeRetriever retriever);
 	
-	abstract public ILatticeOperations<AC> getAliasLatticeOps(TypeHierarchy types);
+	abstract public ILatticeOperations<AC> getAliasLatticeOps();
 
 	protected void reportResults(MethodDeclaration methodDecl, ConstraintChecker checker) {
 		EclipseTAC tac = this.getInput().getComUnitTACs().unwrap().getMethodTAC(methodDecl);

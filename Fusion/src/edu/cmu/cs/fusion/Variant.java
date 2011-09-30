@@ -1,5 +1,8 @@
 package edu.cmu.cs.fusion;
 
+/*
+ * Which variant of the analysis we are using.
+ */
 public class Variant {
 	public static int SOUND = 1;
 	public static int COMPLETE = 2;
