@@ -56,6 +56,12 @@ public class SpecVar {
 		} else if (!var.equals(other.var))
 			return false;
 		return true;
+		/*equivalent code below
+		if (obj == null || obj.getClass() != this.getClass())
+			return false;
+		SpecVar other = (SpecVar) obj;
+		return this==obj || (other.var==null && this.var == null) || this.equals(other.var);*/
+		
 	}
 	
 	public String toString() {

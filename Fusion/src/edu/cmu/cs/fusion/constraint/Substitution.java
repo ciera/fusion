@@ -63,7 +63,51 @@ public class Substitution {
 		result = prime * result + ((subs == null) ? 0 : subs.hashCode());
 		return result;
 	}
-
+	/**
+	 * Answers whether "other" is distinguishable from "this" under the "relevant" SpecVars 
+	 * @param other
+	 * @param relevant
+	 * @return true iff exists (x,y) in "this", (x,z) in "other", s.t. relevant.contains(x)
+	 */
+	public boolean distinguishes(Substitution other, java.util.HashSet<SpecVar> relevant)
+	{
+		assert(other.size()==this.size());
+		for (Pair<SpecVar, ObjectLabel> pair : subs) {
+			
+			ObjectLabel lab = other.getSub(pair.fst());
+			if (lab!=pair.snd() && relevant.contains(pair.fst()))
+				return false;
+		}
+		return true;
+	}
+	/**
+	 * Restricts the domain of substitutions in "subs" to the "relevant" variables,
+	 *  eliminating any two subs that are not distinguishable under the new domain.
+	 * @param subs
+	 * @param relevant
+	 * @return (x_1 ... x_n) such that for all 1<i<j<=n, x_i.distinguishes(x_j) == true
+	 */
+	public static java.util.List<Substitution> collapseDomain(java.util.List<Substitution> subs, SpecVar[] relevant)
+	{
+		java.util.List<Substitution> collapsed = new java.util.LinkedList<Substitution>();
+		java.util.HashSet<SpecVar> relevantSet = new java.util.HashSet<SpecVar>();
+		for(SpecVar spec: relevant)relevantSet.add(spec);
+		if(subs.size()>0)
+		{
+			collapsed.add(subs.get(0));
+			nextSub:
+			for(int i=1;i<subs.size();i++)
+			{
+				
+				Substitution possBranch = subs.get(i);
+				for(Substitution sub: collapsed)
+					if(sub.distinguishes(possBranch, relevantSet)==false)
+						continue nextSub;
+				collapsed.add(possBranch);
+			}
+		}
+		return collapsed;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

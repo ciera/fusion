@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="asp.net"/>
-	<classpathentry kind="src" path="io"/>
-	<classpathentry kind="src" path="iterator"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="edu.cmu.cs.planno.PLAID_ANNOTATION_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

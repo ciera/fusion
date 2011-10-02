@@ -1,9 +1,11 @@
 package edu.cmu.cs.fusion;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import edu.cmu.cs.crystal.tac.model.SourceVariable;
 import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.crystal.util.ConsList;
 import edu.cmu.cs.crystal.util.Lambda2;
@@ -18,6 +20,7 @@ import edu.cmu.cs.fusion.constraint.InferenceEnvironment;
 import edu.cmu.cs.fusion.constraint.InferredRel;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
+import edu.cmu.cs.fusion.constraint.predicates.PredicateSatMap;
 import edu.cmu.cs.fusion.constraint.predicates.RelationshipPredicate;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
@@ -35,6 +38,7 @@ public class FusionEnvironment<AC extends AliasContext> {
 	
 	private ConsList<Pair<RelationshipPredicate, Substitution>> continuation;
 	private Variant variant;
+	private PredicateSatMap overrideMap;
 	
 	public FusionEnvironment(AC aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf, Variant variant) {
 		context = relLattice;
@@ -210,7 +214,14 @@ public class FusionEnvironment<AC extends AliasContext> {
 		}
 	};
 
-	
+	public PredicateSatMap getOverrideMap()
+	{
+		return overrideMap;
+	}
+	public void setOverrideMap(PredicateSatMap map)
+	{
+		this.overrideMap = map;
+	}
 	private MatchType checkTypes(ObjectLabel label, String type) {
 		if (tHierarchy.isSubtypeCompatible(label.getTypeName(), type)) {
 			return MatchType.DEF;
@@ -230,8 +241,7 @@ public class FusionEnvironment<AC extends AliasContext> {
 	
 	public ThreeValue getBooleanValue(ObjectLabel label) {
 		return bools.getBooleanValue(label);
-	}
-
+	}	
 	public boolean isSubtypeCompatible(String subType, String superType) {
 		return tHierarchy.isSubtypeCompatible(subType, superType);
 	}
@@ -239,7 +249,53 @@ public class FusionEnvironment<AC extends AliasContext> {
 	public boolean existsPossibleSubtype(String subType, String superType) {
 		return tHierarchy.existsCommonSubtype(subType, superType);
 	}
-
+	/**
+	 * 
+	 * @param lab
+	 * @return (x_1 ... x_n) such that this.alias.getAliases(x_i).contains(lab)
+	 */
+	public List<Variable> getPreImageVars(ObjectLabel lab)
+	{
+		List<Variable> vars = new LinkedList<Variable>();
+		if(lab!=null)//?
+		for(Variable var: this.alias.getVariables())
+		{
+			if (this.alias.getAliases(var).contains(lab))
+				vars.add(var);
+		}
+		return vars;
+	}
+	/**
+	 * 
+	 * @param sub
+	 * @param specVars
+	 * @return getSourceVars(sub,specVars)[i] == 
+	 * first source variable which is in the preimage of 
+	 * the object label obtained after substituting specVars[i]
+	 * on sub, if it exists, otherwise any variable in the same preimage 
+	 */
+	public Variable[] getSourceVars(Substitution sub, SpecVar ...specVars)
+	{		
+		Variable[] sourceVars = new Variable[specVars.length];
+		for (int i = 0; i < specVars.length; i++) {
+			
+			ObjectLabel lab = sub.getSub(specVars[i]);
+			List<Variable> vars = this.getPreImageVars(lab);
+			for(Variable var: vars)
+			{
+				if(var instanceof SourceVariable)
+					{
+						sourceVars[i] = var;
+						break;//possibly ignoring other source variables
+					}
+			}
+			
+			if(sourceVars[i]==null && vars.size()>0)
+				sourceVars[i] = vars.get(0);//non source variable
+			assert(sourceVars[i]!=null||vars.size()==0);
+		}
+		return sourceVars;
+	}
 	public FusionEnvironment<AC> copy(RelationshipContext newContext) {
 		FusionEnvironment<AC> env = new FusionEnvironment<AC>(alias, newContext, bools, tHierarchy, inference, variant);
 		env.continuation = continuation;

@@ -26,6 +26,7 @@ import edu.cmu.cs.fusion.constraint.Substitution;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.FusionErrorReport;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
+import edu.cmu.cs.fusion.relationship.SuggestionGenerator;
 import edu.cmu.cs.fusion.test.constraint.DefaultReturnInstruction;
 
 public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
@@ -38,6 +39,7 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 	private Logger log = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 	private Logger warningsLog = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
 	private SEVERITY sev;
+	private SuggestionGenerator suggestions;
 	
 	public ErrorReporterVisitor(FusionAnalysis<AC> analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, String type) {
 		this.reporter = reporter;
@@ -46,6 +48,7 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 		this.tac = tac;
 		this.className = type;
 		this.sev = fa.getVariant().isComplete() ? SEVERITY.ERROR : SEVERITY.WARNING;
+		suggestions = new SuggestionGenerator();//will be static.
 	}
 	
 	public void checkXMLError(AliasContext aliases, RelationshipContext rels, CompilationUnit node) {
@@ -135,12 +138,12 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 	}
 
 	private void reportError(FusionErrorReport err, ASTNode reportOn) {	
-		String message;
-		
+		String message;		
 		if (err.causedRemovalOfAllAliases())
 			message = "Constraint restricted all potential labels: " + err.getConstraint().toErrorString();
 		else
-			message = "Broken constraint:" + err.getConstraint().toErrorString();
+//			message = "Broken constraint:" + err.getConstraint().toErrorString
+			message = "Broken constraint: "+err.getConstraint() + "at least one of the following predicate mappings must hold\n"+err.getAllSubPathMessages().toString();
 		reporter.reportUserProblem(message, reportOn, fa.getName(), sev);	
 
 
@@ -158,6 +161,8 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 		log.log(Level.CONFIG, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
 		for (Substitution failure : err.getFailingVars())
 			log.log(Level.CONFIG, "Failing subtitution " + failure.toString());
+		suggestions.compute(err, this.fa.getConstraints(), reportOn);
+//		suggestions.getFrame();
 	}
 
 }
