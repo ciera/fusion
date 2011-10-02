@@ -7,7 +7,7 @@ import edu.cmu.cs.fusion.constraint.predicates.PredicateSatMap;
 public interface Predicate {
 	/**
 	 * 
-	 * @param env The environment to test truth under.
+	 * @param env The environment where to test truth.
 	 * @param sub The domain of the substitution must be a superset of the domain that
 	 * the predicate will return when getFreeVariables is called.
 	 * @return Whether this predicate is true, false, or unknown
