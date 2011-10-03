@@ -1,5 +1,8 @@
 package edu.cmu.cs.fusion.constraint.predicates;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.FreeVars;
@@ -59,7 +62,8 @@ public class TestPredicate implements NegatablePredicate {
 		}
 		return val;
 	}
-
+	
+	
 	public boolean isPositive() {
 		return isPositive;
 	}
@@ -80,4 +84,49 @@ public class TestPredicate implements NegatablePredicate {
 		
 		return str;
 	}
+	@Override
+	public String toHumanReadable(FusionEnvironment env, Substitution sub) {
+		String relPredHuman = inner.toHumanReadable(env, sub);
+		String testSourceVar = env.getSourceVars(sub, test)[0].toString(); 
+		return relPredHuman + "?=" +(isPositive?"!":"")+testSourceVar;
+	}
+
+	@Override
+	public List<PredicateSatMap> getSAT(FusionEnvironment env, Substitution sub, ThreeValue target) {
+
+		ThreeValue testVal = env.getBooleanValue(sub.getSub(test)), relVal = inner.getTruth(env, sub);
+		if (isPositive==false) testVal = testVal.negate();		
+		
+		List<PredicateSatMap> list = new LinkedList<PredicateSatMap>();
+		if (target == ThreeValue.UNKNOWN)
+		{
+			if (relVal==ThreeValue.UNKNOWN|| testVal==ThreeValue.UNKNOWN)
+			{
+				list.add(PredicateSatMap.EMPTY);
+			}
+			else
+			{
+				list.add(new PredicateSatMap(inner, ThreeValue.UNKNOWN)); 
+				list.add(new PredicateSatMap(new BooleanValue(test, this.isPositive),ThreeValue.UNKNOWN));
+			}
+		}
+
+		if (relVal!=ThreeValue.UNKNOWN && testVal!=ThreeValue.UNKNOWN)
+		{
+			if ( (target == ThreeValue.TRUE) == (testVal == relVal))
+			{
+				list.add(PredicateSatMap.EMPTY);
+			}
+			else
+			{
+				list.add(new PredicateSatMap(inner, relVal.negate()));			
+				list.add(new PredicateSatMap(new BooleanValue(test, this.isPositive),testVal.negate()));//correct use of isPositive?
+			}
+		}		
+		return list;
+		
+	}
+
+
+	
 }

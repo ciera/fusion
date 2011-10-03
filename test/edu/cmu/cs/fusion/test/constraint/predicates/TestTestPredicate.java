@@ -48,8 +48,7 @@ public class TestTestPredicate {
 		RelationshipPredicate relPred = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
 		Predicate pred = new TestPredicate(relPred, utils.getVar(0));
 		Map<ObjectLabel, ThreeValue> tvs = new HashMap<ObjectLabel, ThreeValue>();
-		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);
-		
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), tvs, Variant.SOUND_VARIANT);		
 		tvs.put(utils.getSub(0).getSub(utils.getVar(0)), ThreeValue.TRUE);
 		assertEquals(ThreeValue.TRUE, pred.getTruth(env, utils.getSub(0)));
 	}

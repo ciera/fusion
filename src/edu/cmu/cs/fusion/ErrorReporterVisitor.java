@@ -23,6 +23,7 @@ import edu.cmu.cs.crystal.tac.eclipse.EclipseTAC;
 import edu.cmu.cs.crystal.tac.model.TACInstruction;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.constraint.Substitution;
+import edu.cmu.cs.fusion.constraint.SuggestionGenerator;
 import edu.cmu.cs.fusion.relationship.ConstraintChecker;
 import edu.cmu.cs.fusion.relationship.FusionErrorReport;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
@@ -38,6 +39,7 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 	private Logger log = Logger.getLogger(FusionAnalysis.FUSION_LOGGER);
 	private Logger warningsLog = Logger.getLogger(FusionAnalysis.REPORTS_LOGGER);
 	private SEVERITY sev;
+	private static SuggestionGenerator suggestions = new SuggestionGenerator();
 	
 	public ErrorReporterVisitor(FusionAnalysis<AC> analysis, ConstraintChecker constraintChecker, IAnalysisReporter reporter, EclipseTAC tac, String type) {
 		this.reporter = reporter;
@@ -135,12 +137,11 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 	}
 
 	private void reportError(FusionErrorReport err, ASTNode reportOn) {	
-		String message;
-		
+		String message;		
 		if (err.causedRemovalOfAllAliases())
 			message = "Constraint restricted all potential labels: " + err.getConstraint().toErrorString();
 		else
-			message = "Broken constraint:" + err.getConstraint().toErrorString();
+			message = "Broken constraint: "+err.getConstraint() + "at least one of the following atomic predicate mappings must hold\n"+err.getAllSubPathMessages().toString();
 		reporter.reportUserProblem(message, reportOn, fa.getName(), sev);	
 
 
@@ -158,6 +159,7 @@ public class ErrorReporterVisitor<AC extends AliasContext> extends ASTVisitor {
 		log.log(Level.CONFIG, "Failing alias env " + err.getFailingEnvironment().printAllAliases());
 		for (Substitution failure : err.getFailingVars())
 			log.log(Level.CONFIG, "Failing subtitution " + failure.toString());
+		suggestions.compute(err, this.fa.getConstraints(), reportOn);
 	}
 
 }

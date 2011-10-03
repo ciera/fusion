@@ -1,5 +1,6 @@
 package edu.cmu.cs.fusion.constraint.predicates;
 
+import edu.cmu.cs.crystal.tac.model.Variable;
 import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
@@ -7,7 +8,7 @@ import edu.cmu.cs.fusion.constraint.FreeVars;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
 
-public class InstanceOfPredicate implements NegatablePredicate {
+public class InstanceOfPredicate extends AtomicPredicate implements NegatablePredicate {
 	private String type;
 	private SpecVar variable;
 	private boolean isPositive;
@@ -28,7 +29,7 @@ public class InstanceOfPredicate implements NegatablePredicate {
 		return new FreeVars().addVar(variable, isPositive ? type : FreeVars.OBJECT_TYPE);
 	}
 
-	public ThreeValue getTruth(FusionEnvironment env, Substitution sub) {
+	public ThreeValue getRawTruth(FusionEnvironment env, Substitution sub) {
 		ObjectLabel obj = sub.getSub(variable);
 		if (env.isSubtypeCompatible(obj.getTypeName(), type))
 			return isPositive ? ThreeValue.TRUE : ThreeValue.FALSE;
@@ -49,9 +50,16 @@ public class InstanceOfPredicate implements NegatablePredicate {
 	public String toString() {
 		return isPositive ? variable.toString() + " iof " + type : variable.toString() + " !iof " + type;
 	}
-
 	public String getShortString() {
 		String shortType = type.lastIndexOf('.') != -1 ? type.substring(type.lastIndexOf('.') + 1) : type;
 		return isPositive ? variable.toString() + " iof " + shortType : variable.toString() + " !iof " + shortType;
+	}
+
+	@Override
+	public String toHumanReadable(FusionEnvironment env, Substitution sub) {
+		Variable[] sourceVars = env.getSourceVars(sub, variable);
+		assert(sourceVars.length==1);
+		String shortType = type.lastIndexOf('.') != -1 ? type.substring(type.lastIndexOf('.') + 1) : type;
+		return sourceVars[0].toString() + (isPositive? "":"!")+"iof"+shortType;
 	}
 }
