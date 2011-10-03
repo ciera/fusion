@@ -74,11 +74,25 @@ public class MethodInvocationOp implements Operation {
 		vars = ConsList.cons(new Binding(retVar, invoke.getTarget()), vars);
 		
 		for (int ndx = 0; ndx < params.length; ndx++)
-			vars = ConsList.cons(new Binding(params[ndx], invoke.getArgOperands().get(ndx)), vars);
+			vars = ConsList.cons(new Binding(params[ndx], invoke.getArgOperands().get(ndx)), vars);	
 
 		return vars;
 	}
-	
+	public void fillASTNode(org.eclipse.jdt.core.dom.Expression[] replacements, org.eclipse.jdt.core.dom.MethodInvocation method)
+	{
+		org.eclipse.jdt.core.dom.AST failingAST = method.getAST();
+		method.setName(failingAST.newSimpleName(this.name));
+		//warning: depends on ordering of getFreeVars.
+		//assuming replacements = arg1, ... argn, [receiverExp]
+		if(this.isStatic==false)
+		{
+			method.setExpression(replacements[replacements.length-1]);
+		}
+		for(int i=0;i<replacements.length-1-(isStatic?0:1);i++)
+		{
+			method.arguments().add(replacements[i]);
+		}
+	}	
 	public String toString() {
 		String str = thisType + "." + name + "(";
 		

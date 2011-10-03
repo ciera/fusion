@@ -1,17 +1,26 @@
 package edu.cmu.cs.fusion.test;
 
+
+import java.util.List;
+
+import edu.cmu.cs.fusion.FusionEnvironment;
 import edu.cmu.cs.fusion.Relation;
 import edu.cmu.cs.fusion.Relationship;
+import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.alias.AliasContext;
 import edu.cmu.cs.fusion.alias.ObjectLabel;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.FreeVars;
+import edu.cmu.cs.fusion.constraint.Predicate;
 import edu.cmu.cs.fusion.constraint.SpecVar;
 import edu.cmu.cs.fusion.constraint.Substitution;
-import edu.cmu.cs.fusion.relationship.SevenPointLattice;
+import edu.cmu.cs.fusion.constraint.predicates.AtomicPredicate;
+import edu.cmu.cs.fusion.constraint.predicates.PredicateSatMap;
 import edu.cmu.cs.fusion.relationship.RelationshipContext;
 import edu.cmu.cs.fusion.relationship.RelationshipDelta;
+import edu.cmu.cs.fusion.relationship.SevenPointLattice;
 import edu.cmu.cs.fusion.test.lattice.AbstractObjectLabel;
+import static org.junit.Assert.assertEquals;
 
 
 public class TestUtils {
@@ -164,5 +173,19 @@ public class TestUtils {
 		aliasContext = new TestAliasContext();
 		aliases[1] = aliasContext;
 	}
-
+	
+	public void test(Predicate p, FusionEnvironment env, Substitution sub)
+	{
+		for (ThreeValue target: ThreeValue.values())
+		{
+			List<PredicateSatMap> changesL = p.getSAT(env, sub, target);
+			for(PredicateSatMap changes: changesL)
+			{
+				env.setOverrideMap(changes);
+				ThreeValue truth = p.getTruth(env, sub);
+				env.setOverrideMap(null);
+				assertEquals(truth,target);
+			}			
+		}
+	}
 }

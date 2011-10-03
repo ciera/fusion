@@ -66,7 +66,7 @@ public class Constraint {
 
 		return fv;
 	}
-
+	@Deprecated
 	public String toErrorString() {
 
 		String message = declarer + ": ";

@@ -103,6 +103,15 @@ public class TestAndPred {
 
 		FusionEnvironment env = new TestEnvironment(utils.getContext(1), Variant.SOUND_VARIANT);
 		
-		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));
+		assertEquals(ThreeValue.UNKNOWN, pred.getTruth(env, utils.getSub(0)));		
+	}
+	@Test
+	public void testSat() {
+		RelationshipPredicate lP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(0), utils.getVar(1)});
+		RelationshipPredicate rP = new RelationshipPredicate(utils.getRelation(0), new SpecVar[] {utils.getVar(4), utils.getVar(3)});
+		AndPredicate pred = new AndPredicate(lP, rP);
+
+		FusionEnvironment env = new TestEnvironment(utils.getContext(0), Variant.SOUND_VARIANT);
+		utils.test(pred, env, utils.getSub(0));
 	}
 }

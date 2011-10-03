@@ -1,10 +1,15 @@
 package edu.cmu.cs.fusion.relationship;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 
 import edu.cmu.cs.fusion.FusionEnvironment;
+import edu.cmu.cs.fusion.ThreeValue;
 import edu.cmu.cs.fusion.constraint.Constraint;
 import edu.cmu.cs.fusion.constraint.Substitution;
+import edu.cmu.cs.fusion.constraint.predicates.AtomicPredicate;
+import edu.cmu.cs.fusion.constraint.predicates.PredicateSatMap;
 
 public class FusionErrorReport {
 	private Constraint cons;
@@ -34,8 +39,60 @@ public class FusionErrorReport {
 	public Constraint getConstraint() {
 		return cons;
 	}
-
-
+	/**
+	 * 
+	 * @param sub
+	 * @param paths
+	 * @return A list of strings describing each atomic predicate map for a given substitution
+	 */
+	public List<String> getSubPathMessages(Substitution sub, List<PredicateSatMap> paths)
+	{
+		List<String> strings = new java.util.LinkedList<String>();
+		for(PredicateSatMap sat: paths)
+		{
+			//make unmodifiable or implement iterator
+			StringBuffer buf = new StringBuffer();
+			int i=0;
+			for(Entry<AtomicPredicate, ThreeValue> entry: sat.getMap().entrySet())
+			{
+				buf.append(String.format("%d. %s => %s ",
+						i++,entry.getKey().toHumanReadable(failingEnvironment,sub ),entry.getValue()));
+			}
+			strings.add(buf.toString());
+		}
+		return strings;		
+	}
+	/**
+	 * 
+	 * @return For each substitution   
+	 * a list of strings describing each predicate map for that substitution. 
+	 */
+	public List<String> getAllSubPathMessages()
+	{
+		List<String> strings = new java.util.LinkedList<String>();
+		for(Substitution sub: this.failingVars)
+		{
+			strings.addAll(getSubPathMessages(sub,getMaps(sub)));					
+		}
+		return strings;		
+	}
+	/**
+	 * For a given substitution, a list of maps which make this error go away
+	 * @param sub
+	 * @return
+	 */
+	public List<PredicateSatMap> getMaps(Substitution sub) {
+		//depends on pragmatic, sound, complete
+		/*for(PredicateSatMap map:
+			cons.getRequires().getSAT(failingEnvironment, sub, ThreeValue.TRUE))
+		{
+			if(maps.add(map))
+			{
+				strings.add(getSubPathMessages(sub, paths));					
+			}
+		}*/
+		return cons.getRequires().getSAT(failingEnvironment, sub, ThreeValue.TRUE);
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -61,6 +118,7 @@ public class FusionErrorReport {
 			return false;
 		return true;
 	}
+	
 
 
 }

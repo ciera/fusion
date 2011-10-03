@@ -206,4 +206,8 @@ public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCr
 	public Variant getVariant() {
 		return variant;
 	}
+
+	public ConstraintEnvironment getConstraints() {
+		return this.constraints;
+	}
 }
