@@ -80,18 +80,17 @@ public class MethodInvocationOp implements Operation {
 	}
 	public void fillASTNode(org.eclipse.jdt.core.dom.Expression[] replacements, org.eclipse.jdt.core.dom.MethodInvocation method)
 	{
-		//bad style or recompute.
 		org.eclipse.jdt.core.dom.AST failingAST = method.getAST();
 		method.setName(failingAST.newSimpleName(this.name));
-		//warning: depends on implementation of getFreeVars.
-		//this method could be cleaner		
+		//warning: depends on ordering of getFreeVars.
+		//assuming replacements = arg1, ... argn, [receiverExp]
 		if(this.isStatic==false)
 		{
 			method.setExpression(replacements[replacements.length-1]);
 		}
 		for(int i=0;i<replacements.length-1-(isStatic?0:1);i++)
 		{
-			method.arguments().add(replacements[i]);//test this
+			method.arguments().add(replacements[i]);
 		}
 	}	
 	public String toString() {

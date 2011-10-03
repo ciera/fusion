@@ -64,7 +64,8 @@ public class Substitution {
 		return result;
 	}
 	/**
-	 * Answers whether "other" is distinguishable from "this" under the "relevant" SpecVars 
+	 * Answers whether "other" is distinguishable from "this" when considering only 
+	 * "relevant" SpecVars 
 	 * @param other
 	 * @param relevant
 	 * @return true iff exists (x,y) in "this", (x,z) in "other", s.t. relevant.contains(x)
@@ -83,6 +84,7 @@ public class Substitution {
 	/**
 	 * Restricts the domain of substitutions in "subs" to the "relevant" variables,
 	 *  eliminating any two subs that are not distinguishable under the new domain.
+	 *  suboptimally O(n^2)
 	 * @param subs
 	 * @param relevant
 	 * @return (x_1 ... x_n) such that for all 1<i<j<=n, x_i.distinguishes(x_j) == true
