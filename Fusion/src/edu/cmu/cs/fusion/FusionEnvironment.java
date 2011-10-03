@@ -1,6 +1,5 @@
 package edu.cmu.cs.fusion;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +37,8 @@ public class FusionEnvironment<AC extends AliasContext> {
 	
 	private ConsList<Pair<RelationshipPredicate, Substitution>> continuation;
 	private Variant variant;
+	//this property of the environment causes atomic predicates to override their 
+	//truth values when evaluated under this environment 
 	private PredicateSatMap overrideMap;
 	
 	public FusionEnvironment(AC aliasLattice, RelationshipContext relLattice, BooleanContext boolLattice, TypeHierarchy types, InferenceEnvironment inf, Variant variant) {
@@ -273,6 +274,8 @@ public class FusionEnvironment<AC extends AliasContext> {
 	 * first source variable which is in the preimage of 
 	 * the object label obtained after substituting specVars[i]
 	 * on sub, if it exists, otherwise any variable in the same preimage 
+	 * or null if there is no such variable.
+	 * 
 	 */
 	public Variable[] getSourceVars(Substitution sub, SpecVar ...specVars)
 	{		
