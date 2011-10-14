@@ -28,7 +28,7 @@ import edu.cmu.cs.fusion.constraint.requestors.InferRequestor;
 import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
-public class InferenceEnvironment implements Iterable<InferredRel>, Observer{
+public class InferenceEnvironment implements Iterable<InferredRel>, Observer {
 	private Set<InferredRel> inferRules;
 	private RelationsEnvironment rels;
 
@@ -36,6 +36,12 @@ public class InferenceEnvironment implements Iterable<InferredRel>, Observer{
 		inferRules = new HashSet<InferredRel>();
 		this.rels = rels;
 	}
+	
+	public InferenceEnvironment(InferenceEnvironment other, RelationsEnvironment rels) {
+		inferRules = new HashSet<InferredRel>(other.inferRules);
+		this.rels = rels;
+	}
+	
 	
 	public Iterator<InferredRel> iterator() {
 		return inferRules.iterator();

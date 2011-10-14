@@ -31,11 +31,16 @@ import edu.cmu.cs.fusion.parsers.predicate.FPLParser;
 import edu.cmu.cs.fusion.parsers.predicate.ParseException;
 
 public class ConstraintEnvironment implements Iterable<Constraint>, Observer {
-	List<Constraint> constraints;
+	private List<Constraint> constraints;
 	private RelationsEnvironment rels;
 	
 	public ConstraintEnvironment(RelationsEnvironment rels) {
 		constraints = new LinkedList<Constraint>();
+		this.rels = rels;
+	}
+	
+	public ConstraintEnvironment(ConstraintEnvironment other, RelationsEnvironment rels) {
+		constraints = new LinkedList<Constraint>(other.constraints);
 		this.rels = rels;
 	}
 	
