@@ -33,24 +33,54 @@ import edu.cmu.cs.fusion.relationship.RelationshipTransferFunction;
 import edu.cmu.cs.fusion.xml.XMLRetriever;
 
 
-public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCrystalMethodAnalysis {
+public abstract class FusionAnalysis<AC extends AliasContext> extends AbstractCrystalMethodAnalysis implements Cloneable {
 	private static final String BASE_FUSION_LOGGER = "edu.cmu.cs.fusion";
 	public static final String FUSION_LOGGER = BASE_FUSION_LOGGER + ".core";
 	public static final String REPORTS_LOGGER = BASE_FUSION_LOGGER + ".reports";
+	
+	private Variant variant;
+	private Logger log;
+	private SharedAnalysisData sharedData;
 	private TACFlowAnalysis<TupleLatticeElement<Variable, BooleanConstantLE>> constants;
 	private TACFlowAnalysis<FusionLattice<AC>> fa;
 	private ConstraintEnvironment constraints;
-	private Variant variant;
-	private Logger log;
 	private InferenceEnvironment infers;
 	private RelationsEnvironment rels;
-	private SharedAnalysisData sharedData;
 	private boolean majorErrorOccured = false;
 	private DeclarativeRetriever retriever;
 	private String compUnitName;
 
 	/**
-	 * Constructor used only for the purposes of the unit tests of fusion.
+	 * This clone will copy all information that stays the same for the analysis of a single class,
+	 * but not for a single method. In particular, analyzeMethod must be called before getting
+	 * any results as fa and constants will be null.
+	 */
+	@Override
+	public Object clone() {
+		FusionAnalysis<AC> analysis = null;
+		try {
+			analysis = (FusionAnalysis)super.clone();
+			analysis.variant = this.variant;
+			analysis.sharedData = new SharedAnalysisData();
+			analysis.log = Logger.getLogger(FUSION_LOGGER);
+
+			analysis.rels = (RelationsEnvironment) this.rels.clone();
+			analysis.constraints = new ConstraintEnvironment(this.constraints, analysis.rels);
+			analysis.infers =  new InferenceEnvironment(this.infers, analysis.rels);
+			
+			analysis.majorErrorOccured = this.majorErrorOccured;
+			analysis.compUnitName = this.compUnitName;
+			
+			analysis.constants = null;
+			analysis.fa = null;
+		} catch (CloneNotSupportedException e) {
+
+		}		
+		return analysis;
+	}
+	
+	/**
+	 * 
 	 * 
 	 * @param variant
 	 */

@@ -19,11 +19,22 @@ import org.eclipse.jdt.core.search.TypeReferenceMatch;
 
 import edu.cmu.cs.crystal.util.Utilities;
 
-public class RelationsEnvironment extends SearchRequestor implements Iterable<Relation> {
+public class RelationsEnvironment extends SearchRequestor implements Iterable<Relation>, Cloneable {
 	private Map<String, Relation> rels;
 	
 	public RelationsEnvironment() {
 		rels = new HashMap<String, Relation>();
+	}
+	
+	public Object clone() {
+		RelationsEnvironment cloned = null;
+		try {
+			cloned = (RelationsEnvironment) super.clone();
+			cloned.rels = new HashMap<String, Relation>(rels);
+		} catch (CloneNotSupportedException e) {
+			//can't happen
+		}
+		return cloned;
 	}
 	
 	public Relation findRelation(String qualifiedName) {
