@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.w3c.dom.Document;
 
 import edu.cmu.cs.crystal.util.TypeHierarchy;
 import edu.cmu.cs.fusion.FusionException;
@@ -37,9 +36,6 @@ public class TestFreeVars {
 				return superType.equals("Baz") || superType.equals("Bar");
 			else
 				return false;
-		}
-
-		public void sendToXML(Document doc) {
 		}
 	};
 
