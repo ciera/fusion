@@ -1,0 +1,75 @@
+# Steps to specify a library #
+  1. As before, [specify the relations as annotations](SpecifyingRelationships.md)
+  1. Create an XML file with the extension .fusion and the [FUSION schema](http://fusion.googlecode.com/svn/trunk/Fusion/Fusion.xsd)
+  1. Use the Import element to specify the fully qualified names of the types you will use. Failure to do this will result in errors. The wildcard `*` cannot be used.
+  1. Add constraints and infers to the .fusion file. The format is the same as for the strings in @Constraint and @Infer.
+    * Constraints
+      * The op element is required for constraints.
+      * The trigger and requires elements are optional, but will default to TRUE
+      * Effects are specified in a separate element for each effect. You may have 0-n effects.
+    * Infer rules
+      * The trigger element is required.
+      * There must be at least one effect.
+  1. Analyze as normal!
+
+# Complete Examples #
+  * [Iterator](http://fusion.googlecode.com/svn/trunk/FusionTests/Iterator.fusion)
+  * [File I/O](http://fusion.googlecode.com/svn/trunk/FusionTests/IO.fusion)
+
+# Some sample translation #
+## A constraint ##
+```
+@Constraint(
+        op="ListItem.setSelected(boolean selected) : void",
+        trigger = "selected AND Child(target, ctrl) AND ctrl instanceof DropDownList",
+        requires = "!CorrectlySelected(ctrl)",
+        effects = {"CorrectlySelected(ctrl)"}
+)
+```
+
+is the same as
+
+```
+	<Constraint>
+		<op>ListItem.setSelected(boolean selected) : void</op>
+		<trg>selected AND Child(target, ctrl) AND ctrl instanceof DropDownList</trg>
+		<req>!CorrectlySelected(ctrl)</req>
+		<eff>CorrectlySelected(ctrl)</eff>
+	</Constraint>
+```
+
+## An effect ##
+```
+public class FileWriter {
+   @Writeable(value={"target"}, effect=Effect.REMOVE)
+   @Closed({"target"})
+   public void close() { ... }
+}
+```
+
+is the same as
+
+```
+	<Constraint>
+		<op>FileWriter.close() : void</op>
+		<eff>!Writeable(target)</eff>
+		<eff>Closed(target)</eff>
+	</Constraint>
+```
+
+## An infer rule ##
+```
+@Infer(
+                trigger = "Items(list, ctrl) AND Item(item, list)",
+                effects = {"Child(item, ctrl)"}
+        )
+```
+
+is the same as
+
+```
+	<Infer>
+		<trg>Items(list, ctrl) AND Item(item, list)</trg>
+		<eff>Child(item, ctrl)</eff>
+	</Infer>
+```

@@ -1,0 +1,12 @@
+# Unit Tests #
+
+The unit tests are method-level tests within the Fusion project. The code for this is under the source folder named "test". To run these tests, simply run the entire folder as JUnit 4 tests. All tests should pass.
+
+
+# System Tests #
+
+The system tests are analysis-level tests. That is, we must open a new Eclipse instance and actually run the analysis on some sample code. To do this, we are using the test scaffold provided by Crystal and running Eclipse in "headless" mode (that is, there is a new Eclipse instance, but it has no GUI).
+
+To set this up, simply follow the instructions in Crystal's wiki [on this topic](http://code.google.com/p/crystalsaf/wiki/TestingYourAnalysis).
+
+The project which contains the code for these tests is called FusionTest, and is sibling to the Fusion project.
