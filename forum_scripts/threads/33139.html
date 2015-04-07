@@ -1,0 +1,465 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #93452 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit93452" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post93452" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=93452&amp;postcount=1" target="new" rel="nofollow" id="postcount93452" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=93452" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post93452"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 3rd, 2007, 11:07 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_93452">
+<a class="bigusername" href="member.php?u=17445">Chaps</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Chaps is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_93452", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>
+						Posts: 109
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '17445', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Chaps" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_93452">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>AbstractFormController: Invalid submit detected: Form object not found in session</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_93452">
+			
+			Hello <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /><br />
+<br />
+I'm currently experiencing a little problem with a SimpleFormController.<br />
+<br />
+Here is my source code:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 482px;
+		text-align: left;
+		overflow: auto">	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object obj, BindException bindException) throws Exception 
+	{
+		TransactionFiltersForm filters = (TransactionFiltersForm)obj;		
+		Map results = logic.getPayments(filters);
+		request.setAttribute(&quot;results&quot;, results);
+		logger.trace(&quot;End of transaction controller&quot;);
+		return new ModelAndView(getSuccessView(),getCommandName(),filters);
+	}
+	
+	protected Object formBackingObject(HttpServletRequest request)
+	{	
+		Date today = new Date(Calendar.getInstance().getTimeInMillis());
+		Date yesterday = new Date();
+		
+		Calendar calendarYesterday = Calendar.getInstance();
+		calendarYesterday.setTime(today);
+		calendarYesterday.add(Calendar.DATE, -1);
+		yesterday = calendarYesterday.getTime();
+		
+		TransactionFiltersForm filters = new TransactionFiltersForm();
+		DateFormat dateFormat = DateFormat.getInstance();
+		filters.setTo(dateFormat.format(today));
+		filters.setFrom(dateFormat.format(yesterday));
+		
+		Map results = logic.getPayments(filters);
+		request.setAttribute(&quot;results&quot;,results);
+		return filters;
+		
+	}</pre>
+</div>And this is the bean in the bean file:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 354px;
+		text-align: left;
+		overflow: auto">	&lt;bean id=&quot;transactionController&quot; class=&quot;reporting.web.controllers.TransactionController&quot;&gt;
+		&lt;property name=&quot;logic&quot;&gt;&lt;ref bean=&quot;logicImpl&quot; /&gt;&lt;/property&gt;
+		&lt;property name=&quot;commandName&quot;&gt;
+			&lt;value&gt;filters&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;reporting.web.formBeans.TransactionFiltersForm&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;validator&quot;&gt;
+			&lt;ref bean=&quot;transactionFiltersValidator&quot; /&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;transaction&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;transaction&lt;/value&gt;
+		&lt;/property&gt; 
+		&lt;property name=&quot;sessionForm&quot;&gt;
+			&lt;value&gt;true&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>I'm using Spring 2.0.<br />
+<br />
+The problem is is the following:<br />
+<br />
+When I first call the page, formBackingObject is called, everything is fine.<br />
+<br />
+When I first submit, no problem, the onSubmt function is called.<br />
+<br />
+But when I submit again, I got the following message:<br />
+[DEBUG]AbstractFormController: Invalid submit detected: Form object not found in session (in session-form mode)<br />
+<br />
+Then formBackingObject is called, then the onSubmit (with the right command! so formBackingObject didn't changed anything).<br />
+<br />
+I don't really understand why, and even if the result is right, the page is displayed, the fact that it go throught formBackingObject is a big lack of performance as the tables I use are really big.<br />
+<br />
+Thanks a lot by advance for your help.<br />
+<br />
+Guillaume
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=93452" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=93452" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_93452" /></a>
+<a href="newreply.php?do=newreply&amp;p=93452" rel="nofollow" id="qr_93452" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 93452 popup menu -->
+<div class="vbmenu_popup" id="postmenu_93452_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Chaps</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17445">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17445" rel="nofollow">Send a private message to Chaps</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17445" rel="nofollow">Send email to Chaps</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17445" rel="nofollow">Find all posts by Chaps</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17445">Add Chaps to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 93452 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #93452 --><!-- post #93457 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit93457" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post93457" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=93457&amp;postcount=2" target="new" rel="nofollow" id="postcount93457" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=93457" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post93457"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 3rd, 2007, 11:23 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_93457">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_93457", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_93457">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_93457">
+			
+			Instead of returning a new ModelAndView call the showForm method. The commandObject is already on the session so no need to replace it, also I would put the logic for retrieving the list of data into the referenceData method. That way it gets only called on rendering, and the formbackingobject method is just returning a simple object.<br />
+<br />
+With that refactoring in place you get a very simple onSubmit and just one place in which you retrieve your list of data.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 402px;
+		text-align: left;
+		overflow: auto">protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object obj, BindException bindException) throws Exception {
+	return showForm(request, response, bindException, model);
+}
+
+protected Object formBackingObject(HttpServletRequest request) {	
+		Date today = new Date();
+		
+		Calendar calendarYesterday = Calendar.getInstance();
+		calendarYesterday.setTime(today);
+		calendarYesterday.add(Calendar.DATE, -1);
+		Date yesterday = calendarYesterday.getTime();
+		
+		TransactionFiltersForm filters = new TransactionFiltersForm();
+		DateFormat dateFormat = DateFormat.getInstance();
+		filters.setTo(dateFormat.format(today));
+		filters.setFrom(dateFormat.format(yesterday));		
+		return filters;		
+}
+
+protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+    Map referenceData = new HashMap();
+    referenceData.put(&quot;results&quot;, logic.getPayments((TransactionFiltersForm) command));
+    return referenceData;
+}</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by Marten Deinum; Jan 3rd, 2007 at <span class="time">11:29 AM</span>.
+					
+					
+						Reason: Noticed use of retrieving data in formbackingobject method.
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=93457" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=93457" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_93457" /></a>
+<a href="newreply.php?do=newreply&amp;p=93457" rel="nofollow" id="qr_93457" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 93457 popup menu -->
+<div class="vbmenu_popup" id="postmenu_93457_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 93457 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #93457 --><!-- post #93460 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit93460" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post93460" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=93460&amp;postcount=3" target="new" rel="nofollow" id="postcount93460" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=93460" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post93460"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 3rd, 2007, 11:32 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_93460">
+<a class="bigusername" href="member.php?u=17445">Chaps</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Chaps is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_93460", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>
+						Posts: 109
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '17445', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Chaps" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_93460">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_93460">
+			
+			Thank you very much it works perfectly!<br />
+I don't really understand why yet but I will work on it <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=93460" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=93460" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_93460" /></a>
+<a href="newreply.php?do=newreply&amp;p=93460" rel="nofollow" id="qr_93460" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 93460 popup menu -->
+<div class="vbmenu_popup" id="postmenu_93460_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Chaps</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17445">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17445" rel="nofollow">Send a private message to Chaps</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17445" rel="nofollow">Send email to Chaps</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17445" rel="nofollow">Find all posts by Chaps</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17445">Add Chaps to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 93460 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #93460 --><div id="lastpost"></div></div></body></html>

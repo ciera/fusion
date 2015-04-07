@@ -1,0 +1,703 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #97445 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit97445" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post97445" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=97445&amp;postcount=1" target="new" rel="nofollow" id="postcount97445" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=97445" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post97445"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 22nd, 2007, 09:32 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_97445">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_97445", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_97445">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>ResourceBundleMessageSource access within an Action</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_97445">
+			
+			I'm currently using a MessageSource property file with WebFlow for my form's error messages, however, I'd like to extend this property file to also include messages that are not directly related to form entry.  I do not have multiple languages to support (yet), but I'd like to have the capability present.  At the moment, I have a single &quot;MessageResources.properties&quot; file and it works fine for my &quot;Error.rejectValue()&quot; calls, however, I can't seem to get my hands on an object that I can use within my main action beans for messages out to log files or the like.<br />
+<br />
+I tried implementing MessageSourceAware in my AbstractAction, however, when I call getMessage on that object, and supply it a default Locale (since I'm only using the default properties file, any Locale should still resolve the &quot;basename&quot; property file) it generates an exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">org.springframework.context.NoSuchMessageException: No message found under code 'testmessage' for locale 'en_US'</pre>
+</div>My ResourceBundleMessageSource is configured like:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;messageSource&quot; class=&quot;org.springframework.context.support.ResourceBundleMessageSource&quot;&gt;
+    &lt;property name=&quot;basename&quot;&gt;
+        &lt;value&gt;MessageResources&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div>And my MessageResources.properties file has (among many other properties used by my forms):<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">testmessage=Lorem ipsum dolor sit amet</pre>
+</div>The code I've been working with is:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">msgSrc.getMessage(&quot;testmessage&quot;, null, Locale.getDefault());</pre>
+</div>Any ideas as to why this doesn't seem to be resolving the &quot;basename&quot; property file when used in this context?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=97445" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=97445" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_97445" /></a>
+<a href="newreply.php?do=newreply&amp;p=97445" rel="nofollow" id="qr_97445" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 97445 popup menu -->
+<div class="vbmenu_popup" id="postmenu_97445_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 97445 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #97445 --><!-- post #97464 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit97464" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post97464" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=97464&amp;postcount=2" target="new" rel="nofollow" id="postcount97464" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=97464" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post97464"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 23rd, 2007, 02:20 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_97464">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_97464", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_97464">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_97464">
+			
+			My guess would be that you're defining your MessageSourceAware action in a Spring beans file included from the web flow XML while you're defining the ResourceBundleMessageSource in the main DispatcherServlet application context.<br />
+<br />
+Try to move the action bean definition to the DispatcherServlet application context.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=97464" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=97464" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_97464" /></a>
+<a href="newreply.php?do=newreply&amp;p=97464" rel="nofollow" id="qr_97464" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 97464 popup menu -->
+<div class="vbmenu_popup" id="postmenu_97464_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 97464 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #97464 --><!-- post #97598 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit97598" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post97598" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=97598&amp;postcount=3" target="new" rel="nofollow" id="postcount97598" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=97598" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post97598"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 23rd, 2007, 01:41 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_97598">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_97598", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_97598">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_97598">
+			
+			So the ResourceBundleMessageSource bean must be local to the configuration file containing the bean that's referencing the MessageSource?<br />
+<br />
+What is odd is that I have four context configuration files, one for the servlet, one global (beans used by both flows), and two for specific flows to keep it organized.  In my servlet context I have defined my FlowRegistry, FlowController, ViewResolver, and a MessageSource.  Beans in both flows, defined within their respective independent context configuration files, can utilize the MessageSource in the servlet context for forms-based error messages.  Those same beans, however, cannot access the same MessageSource for non-error message operations.<br />
+<br />
+So I have to keep a separate MessageSource in each context configuration for non-form-error messages, or consolidate my beans into a single context file?  Seems a bit counter-intuitive.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=97598" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=97598" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_97598" /></a>
+<a href="newreply.php?do=newreply&amp;p=97598" rel="nofollow" id="qr_97598" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 97598 popup menu -->
+<div class="vbmenu_popup" id="postmenu_97598_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 97598 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #97598 --><!-- post #97620 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit97620" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post97620" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=97620&amp;postcount=4" target="new" rel="nofollow" id="postcount97620" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=97620" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post97620"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 23rd, 2007, 03:51 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_97620">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_97620", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_97620">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_97620">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				So the ResourceBundleMessageSource bean must be local to the configuration file containing the bean that's referencing the MessageSource?
+			
+		</td>
+</tr>
+</table>
+</div>Not necessarily the 'file', but the application context. As you know a single application context can be made up of bean definitions in multiple XML files that are merged together.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Beans in both flows, defined within their respective independent context configuration files, can utilize the MessageSource in the servlet context for forms-based error messages. Those same beans, however, cannot access the same MessageSource for non-error message operations.
+			
+		</td>
+</tr>
+</table>
+</div>So they can access the MessageSource but don't see all messages? Make sure the MessageSource can find all .properties files in the classpath.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=97620" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=97620" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_97620" /></a>
+<a href="newreply.php?do=newreply&amp;p=97620" rel="nofollow" id="qr_97620" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 97620 popup menu -->
+<div class="vbmenu_popup" id="postmenu_97620_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 97620 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #97620 --><!-- post #97636 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit97636" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post97636" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=97636&amp;postcount=5" target="new" rel="nofollow" id="postcount97636" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=97636" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post97636"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 23rd, 2007, 05:16 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_97636">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_97636", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_97636">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_97636">
+			
+			Intriguing... of course I write out a lengthy explanation of the issue only to realize it has resolved itself.  I do have multiple context configuration files, one for &quot;global&quot; beans, and two separate ones for individual flows, to maintain organization.  When I originally had the &quot;messageSource&quot; bean in the &quot;global&quot; context file, the property file would only be resolved with regard to form field errors (via the Error.rejectValue() method).  Any attempts to call &quot;getMessage&quot; from a MessageSource injected via MessageSourceAware wouldn't resolve the same properties file.  After a restart of Tomcat, it seems to be resolving properly now... which is strange, but I'm not going to argue.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=97636" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=97636" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_97636" /></a>
+<a href="newreply.php?do=newreply&amp;p=97636" rel="nofollow" id="qr_97636" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 97636 popup menu -->
+<div class="vbmenu_popup" id="postmenu_97636_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 97636 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #97636 --><!-- post #97655 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit97655" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post97655" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=97655&amp;postcount=6" target="new" rel="nofollow" id="postcount97655" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=97655" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post97655"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 23rd, 2007, 07:50 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_97655">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_97655", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_97655">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_97655">
+			
+			I thought this might be a useful addition, so I posted a JIRA improvement:<br />
+<br />
+<a href="http://opensource.atlassian.com/projects/spring/browse/SWF-243" target="_blank" rel="nofollow">http://opensource.atlassian.com/proj...browse/SWF-243</a>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=97655" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=97655" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_97655" /></a>
+<a href="newreply.php?do=newreply&amp;p=97655" rel="nofollow" id="qr_97655" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 97655 popup menu -->
+<div class="vbmenu_popup" id="postmenu_97655_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 97655 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #97655 --><div id="lastpost"></div></div></body></html>

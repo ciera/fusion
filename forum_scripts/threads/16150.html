@@ -1,0 +1,1555 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #26190 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26190" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26190" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26190&amp;postcount=1" target="new" rel="nofollow" id="postcount26190" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26190" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26190"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 3rd, 2005, 02:41 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26190">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26190", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26190">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Submitting Form gives ClassCastException</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26190">
+			
+			Greetings!<br />
+<br />
+I am recieving the following ClassCastException whenever I submit my form. I believe there was similar post and the solution was to get the latest CVS build that fixed the problem. However, I am still getting the exception.<br />
+<br />
+java.lang.ClassCastException<br />
+	at org.springframework.webflow.execution.servlet.Serv  letEvent.&lt;init&gt;(ServletEvent.java:83)<br />
+	at org.springframework.webflow.execution.servlet.Serv  letEvent.&lt;init&gt;(ServletEvent.java:55)<br />
+	at org.springframework.webflow.execution.servlet.Serv  letFlowExecutionManager.createEvent(ServletFlowExe  cutionManager.java:102)<br />
+	at org.springframework.webflow.execution.servlet.Serv  letFlowExecutionManager.handle(ServletFlowExecutio  nManager.java:77)<br />
+	at org.springframework.webflow.mvc.FlowController.han  dleRequestInternal(FlowController.java:137)<br />
+	at org.springframework.web.servlet.mvc.AbstractContro  ller.handleRequest(AbstractController.java:128)<br />
+	at org.springframework.web.servlet.mvc.SimpleControll  erHandlerAdapter.handle(SimpleControllerHandlerAda  pter.java:44)<br />
+	at org.springframework.web.servlet.DispatcherServlet.  doDispatch(DispatcherServlet.java:684)<br />
+	at org.springframework.web.servlet.DispatcherServlet.  doService(DispatcherServlet.java:625)<br />
+	at org.springframework.web.servlet.FrameworkServlet.s  erviceWrapper(FrameworkServlet.java:386)<br />
+	at org.springframework.web.servlet.FrameworkServlet.d  oPost(FrameworkServlet.java:355)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:152)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:90)<br />
+	at com.caucho.server.dispatch.ServletFilterChain.doFi  lter(ServletFilterChain.java:99)<br />
+	at org.springframework.orm.hibernate3.support.OpenSes  sionInViewFilter.doFilterInternal(OpenSessionInVie  wFilter.java:172)<br />
+	at org.springframework.web.filter.OncePerRequestFilte  r.doFilter(OncePerRequestFilter.java:76)<br />
+	at com.caucho.server.dispatch.FilterFilterChain.doFil  ter(FilterFilterChain.java:70)<br />
+	at com.caucho.server.webapp.WebAppFilterChain.doFilte  r(WebAppFilterChain.java:163)<br />
+	at com.caucho.server.dispatch.ServletInvocation.servi  ce(ServletInvocation.java:207)<br />
+	at com.caucho.server.http.HttpRequest.handleRequest(H  ttpRequest.java:249)<br />
+	at com.caucho.server.port.TcpConnection.run(TcpConnec  tion.java:327)<br />
+	at com.caucho.util.ThreadPool.runTasks(ThreadPool.jav  a:450)<br />
+	at com.caucho.util.ThreadPool.run(ThreadPool.java:394  )<br />
+	at java.lang.Thread.run(Thread.java:534)<br />
+<br />
+Any Ideas?
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26190" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26190" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26190" /></a>
+<a href="newreply.php?do=newreply&amp;p=26190" rel="nofollow" id="qr_26190" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26190 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26190_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26190 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26190 --><!-- post #26201 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26201" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26201" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26201&amp;postcount=2" target="new" rel="nofollow" id="postcount26201" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26201" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26201"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 3rd, 2005, 10:31 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_26201">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26201", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26201">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26201">
+			
+			Can you post your view code? I need to see what the value of the _eventId parameter is as well as the _flowExecutionId.  For some reason more than one person has submtited event ids with commas, and it gets treated as a String[] instead of a String (or something like that--it's not yet clear to me).<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26201" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26201" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26201" /></a>
+<a href="newreply.php?do=newreply&amp;p=26201" rel="nofollow" id="qr_26201" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26201 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26201_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26201 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26201 --><!-- post #26202 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26202" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26202" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26202&amp;postcount=3" target="new" rel="nofollow" id="postcount26202" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26202" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26202"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 3rd, 2005, 10:42 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_26202">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26202", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26202">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26202">
+			
+			Here is the line where the CCE occurs:<br />
+<br />
+String eventId = (String)searchForParameter(eventIdParameterName, parameterValueDelimiter);<br />
+<br />
+So the parameter returned is not a String, I believe it is a String[] erroneously.  There *may* be a bug in the searchForParameter parsing., or it may be a error in your view submission code.  Paste that view code and lets figure it out.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26202" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26202" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26202" /></a>
+<a href="newreply.php?do=newreply&amp;p=26202" rel="nofollow" id="qr_26202" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26202 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26202_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26202 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26202 --><!-- post #26203 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26203" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26203" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26203&amp;postcount=4" target="new" rel="nofollow" id="postcount26203" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26203" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26203"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 3rd, 2005, 02:15 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26203">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26203", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26203">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26203">
+			
+			Greetings Keith.<br />
+<br />
+The following is the steps I am taking and the corresponding url/code:<br />
+<br />
+1. I click on a category to see a list of subcategories.<br />
+<br />
+url produced is:<br />
+<a href="http://xxx.xxx.xxx.xxx/commerce/categoryBrowse.html?select=6&amp;flowExecutionId=908B0E43-F648-5580-B0DE-F43781C3B23B&amp;_eventId=showCategory&amp;category=6" target="_blank" rel="nofollow">http://xxx.xxx.xxx.xxx/commerce/cate...ory&amp;category=6</a><br />
+<br />
+2. The subcategory list is displayed, I then click on a create button that displays a form to create a new category.<br />
+<br />
+url produced is:<br />
+<a href="http://xxx.xxx.xxx.xxx/commerce/categoryTemplate.html?_flowExecutionId=EEFAC811-5DD3-B253-8D11-907D4F1B0CE0&amp;_eventId=addCategory&amp;action=add&amp;method=template&amp;category=6" target="_blank" rel="nofollow">http://xxx.xxx.xxx.xxx/commerce/cate...ate&amp;category=6</a><br />
+<br />
+<br />
+The form is displayed. The form code is:<br />
+<br />
+&lt;%@ page session=&quot;false&quot; %&gt;<br />
+&lt;%@ include file=&quot;../../taglib.jsp&quot;%&gt;<br />
+<br />
+<br />
+		&lt;div align=&quot;left&quot;&gt;<br />
+<br />
+			&lt;form name=&quot;NewCategoryForm&quot; method=&quot;POST&quot;&gt;<br />
+				&lt;input type=&quot;hidden&quot; name=&quot;_flowExecutionId&quot; value=&quot;&lt;c:out value=&quot;${flowExecutionId}&quot;/&gt;&quot;&gt;<br />
+				&lt;input type=&quot;hidden&quot; name=&quot;category&quot; value=&quot;&lt;c:out value=&quot;${param.category}&quot;/&gt;&quot;&gt;<br />
+				&lt;input type=&quot;hidden&quot; name=&quot;_eventId&quot; value=&quot;submit&quot;&gt;<br />
+<br />
+<br />
+				&lt;table border=&quot;0&quot; cellpacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot;&gt;<br />
+<br />
+					&lt;tr bgcolor=&quot;#FFFF88&quot;&gt;<br />
+						&lt;td&gt;Name:&lt;/td&gt;<br />
+						&lt;td&gt;<br />
+							&lt;spring:bind path=&quot;categoryForm.name&quot;&gt;<br />
+	  						&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot;/&gt;<br />
+ 						 	&lt;/spring:bind&gt;<br />
+						&lt;/td&gt;<br />
+					&lt;/tr&gt;<br />
+<br />
+					&lt;tr bgcolor=&quot;#FFFF88&quot;&gt;<br />
+						&lt;td&gt;Short Description&lt;/td&gt;<br />
+						&lt;td&gt;<br />
+							&lt;spring:bind path=&quot;categoryForm.shortDescription&quot;&gt;<br />
+	  						&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot;/&gt;<br />
+ 						 	&lt;/spring:bind&gt;<br />
+						&lt;/td&gt;<br />
+					&lt;/tr&gt;<br />
+<br />
+					&lt;tr bgcolor=&quot;#FFFF88&quot;&gt;<br />
+						&lt;td&gt;Long Description&lt;/td&gt;<br />
+						&lt;td&gt;<br />
+							&lt;spring:bind path=&quot;categoryForm.longDescription&quot;&gt;<br />
+	  						&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot;/&gt;<br />
+ 						 	&lt;/spring:bind&gt;<br />
+						&lt;/td&gt;<br />
+					&lt;/tr&gt;<br />
+<br />
+<br />
+					&lt;tr&gt;<br />
+  					    &lt;td colspan=&quot;2&quot;&gt;<br />
+						    &lt;div align=&quot;right&quot;&gt;<br />
+							    &lt;input type=&quot;button&quot; onclick=&quot;javascript<b></b>:document.NewCategoryForm.submi  t()&quot; value=&quot;Submit&quot;&gt;<br />
+						    &lt;/div&gt;<br />
+						&lt;/td&gt;<br />
+					&lt;/tr&gt;<br />
+				&lt;/table&gt;<br />
+			&lt;/form&gt;<br />
+		&lt;/div&gt;<br />
+<br />
+4. Clicking the form submit button gives the following:<br />
+<br />
+url produced is: (does not change from the previous step)<br />
+<a href="http://xxx.xxx.xxx.xxx/commerce/categoryTemplate.html?_flowExecutionId=EEFAC811-5DD3-B253-8D11-907D4F1B0CE0&amp;_eventId=addCategory&amp;action=add&amp;method=template&amp;category=6" target="_blank" rel="nofollow">http://xxx.xxx.xxx.xxx/commerce/cate...ate&amp;category=6</a><br />
+<br />
+Error:<br />
+<br />
+java.lang.ClassCastException<br />
+	at org.springframework.webflow.execution.servlet.Serv  letEvent.&lt;init&gt;(ServletEvent.java:83)<br />
+	at org.springframework.webflow.execution.servlet.Serv  letEvent.&lt;init&gt;(ServletEvent.java:55)<br />
+	at org.springframework.webflow.execution.servlet.Serv  letFlowExecutionManager.createEvent(ServletFlowExe  cutionManager.java:102)<br />
+	at org.springframework.webflow.execution.servlet.Serv  letFlowExecutionManager.handle(ServletFlowExecutio  nManager.java:77)<br />
+	at org.springframework.webflow.mvc.FlowController.han  dleRequestInternal(FlowController.java:137)<br />
+	at org.springframework.web.servlet.mvc.AbstractContro  ller.handleRequest(AbstractController.java:128)<br />
+	at org.springframework.web.servlet.mvc.SimpleControll  erHandlerAdapter.handle(SimpleControllerHandlerAda  pter.java:44)<br />
+	at org.springframework.web.servlet.DispatcherServlet.  doDispatch(DispatcherServlet.java:684)<br />
+	at org.springframework.web.servlet.DispatcherServlet.  doService(DispatcherServlet.java:625)<br />
+	at org.springframework.web.servlet.FrameworkServlet.s  erviceWrapper(FrameworkServlet.java:386)<br />
+	at org.springframework.web.servlet.FrameworkServlet.d  oPost(FrameworkServlet.java:355)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:152)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:90)<br />
+	at com.caucho.server.dispatch.ServletFilterChain.doFi  lter(ServletFilterChain.java:99)<br />
+	at org.springframework.orm.hibernate3.support.OpenSes  sionInViewFilter.doFilterInternal(OpenSessionInVie  wFilter.java:172)<br />
+	at org.springframework.web.filter.OncePerRequestFilte  r.doFilter(OncePerRequestFilter.java:76)<br />
+	at com.caucho.server.dispatch.FilterFilterChain.doFil  ter(FilterFilterChain.java:70)<br />
+	at com.caucho.server.webapp.WebAppFilterChain.doFilte  r(WebAppFilterChain.java:163)<br />
+	at com.caucho.server.dispatch.ServletInvocation.servi  ce(ServletInvocation.java:207)<br />
+	at com.caucho.server.http.HttpRequest.handleRequest(H  ttpRequest.java:249)<br />
+	at com.caucho.server.port.TcpConnection.run(TcpConnec  tion.java:327)<br />
+	at com.caucho.util.ThreadPool.runTasks(ThreadPool.jav  a:450)<br />
+	at com.caucho.util.ThreadPool.run(ThreadPool.java:394  )<br />
+	at java.lang.Thread.run(Thread.java:534)<br />
+<br />
+<br />
+Analysis:<br />
+<br />
+From what I can see is that although in my form view I am setting a new _eventId, I believe the eventId in the url and what is embedded<br />
+in the form is also getting submitted. Multiple events seems to be the problem?<br />
+<br />
+Also here is the relevant portion of my parent flow and subflow.<br />
+<br />
+I hope this was not to much information, but you never know...<br />
+<br />
+Parent flow:<br />
+<br />
+public void buildStates() throws FlowBuilderException {<br />
+<br />
+<br />
+<br />
+		addActionState (ACTION_SELECT_CATEGORY_ID, method (&quot;getSubcategories&quot;, actionRef (CatalogAction.class)), <br />
+<br />
+				new Transition[] { on (&quot;showOnlyCategories&quot;, VIEW_ONLY_CATEGORIES_ID),<br />
+<br />
+									on (&quot;showCategoriesAndProducts&quot;, VIEW_CATEGORIES_AND_PRODUCTS_ID)});<br />
+<br />
+<br />
+<br />
+		addViewState (VIEW_ONLY_CATEGORIES_ID, VIEW_ONLY_CATEGORIES,<br />
+<br />
+				new Transition[] {on(&quot;showCategory&quot;, ACTION_SELECT_CATEGORY_ID), <br />
+<br />
+									on (&quot;addCategory&quot;,SUB_FLOW_ADD_CATEGORY),<br />
+<br />
+									on (&quot;duplicateCategory&quot;, SUB_FLOW_DUPLICATE_CATEGORY), <br />
+<br />
+									on (&quot;applyCategory&quot;,SUB_FLOW_APPLY_CATEGORY),<br />
+<br />
+									on (&quot;updateCategory&quot;,SUB_FLOW_UPDATE_CATEGORY),<br />
+<br />
+									on (&quot;removeCategory&quot;,SUB_FLOW_REMOVE_CATEGORY),<br />
+<br />
+									on (&quot;deleteCategory&quot;,SUB_FLOW_DELETE_CATEGORY)});<br />
+<br />
+<br />
+<br />
+		addViewState (VIEW_CATEGORIES_AND_PRODUCTS_ID, VIEW_CATEGORIES_AND_PRODUCTS, <br />
+<br />
+				new Transition[] {on(&quot;showCategory&quot;, ACTION_SELECT_CATEGORY_ID),<br />
+<br />
+									on (&quot;showProduct&quot;, ACTION_GET_PRODUCT_ID)});<br />
+<br />
+<br />
+<br />
+		addSubFlowState(SUB_FLOW_DUPLICATE_CATEGORY, flow(SUB_FLOW_DUPLICATE_CATEGORY), new BrowseCatalogFlowAttributeMapper(),<br />
+<br />
+				new Transition[] { on(finish(), DUPLICATE_INLINE_REDIRECT), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+		addSubFlowState(SUB_FLOW_ADD_CATEGORY, flow(SUB_FLOW_ADD_CATEGORY), new BrowseCatalogFlowAttributeMapper(),<br />
+<br />
+				new Transition[] { on(finish(), UPDATE_INLINE_REDIRECT), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+		addSubFlowState(SUB_FLOW_APPLY_CATEGORY, flow(SUB_FLOW_APPLY_CATEGORY),<br />
+<br />
+				new Transition[] { on(finish(), APPLY_INLINE_REDIRECT), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+		addSubFlowState(SUB_FLOW_UPDATE_CATEGORY, flow(SUB_FLOW_UPDATE_CATEGORY),<br />
+<br />
+				new Transition[] { on(finish(), UPDATE_INLINE_REDIRECT), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+		addSubFlowState(SUB_FLOW_DELETE_CATEGORY, flow(SUB_FLOW_DELETE_CATEGORY), new BrowseCatalogFlowAttributeMapper(),<br />
+<br />
+				new Transition[] { on(finish(), DELETE_INLINE_REDIRECT), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+		addSubFlowState(SUB_FLOW_REMOVE_CATEGORY, flow(SUB_FLOW_REMOVE_CATEGORY), new BrowseCatalogFlowAttributeMapper(),<br />
+<br />
+				new Transition[] { on(finish(), REMOVE_INLINE_REDIRECT), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+		addActionState (ACTION_GET_PRODUCT_ID, method (ACTION_GET_PRODUCT_METHOD, actionRef (ProductAction.class)), on(&quot;showProductDetail&quot;,VIEW_PRODUCT_DETAIL_ID));<br />
+<br />
+<br />
+<br />
+		addEndState (VIEW_PRODUCT_DETAIL_ID, VIEW_PRODUCT_DETAIL);<br />
+<br />
+<br />
+Relevant child flow:<br />
+<br />
+public void buildStates() throws FlowBuilderException {<br />
+<br />
+<br />
+<br />
+		//determine which method to create a category (inline or via template).<br />
+<br />
+		addActionState (METHOD, method(METHOD, actionRef(CategoryFormAction.class)),<br />
+<br />
+				new Transition[] {on (TEMPLATE, CATEGORY_TEMPLATE_SETUP), on (INLINE, ADD_CATEGORY_INLINE)});<br />
+<br />
+<br />
+<br />
+		//adds a category inline<br />
+<br />
+		addActionState (ADD_CATEGORY_INLINE, method (ADD_CATEGORY_INLINE, actionRef(CategoryFormAction.class)),<br />
+<br />
+				new Transition[] {on (success(), FINISHED), on (error(), ERROR)});<br />
+<br />
+<br />
+<br />
+		//Properties for setting up named actions for creating category via template.<br />
+<br />
+		HashMap p1 = new HashMap();<br />
+<br />
+		p1.put (&quot;name&quot;, &quot;setup&quot;);<br />
+<br />
+		p1.put (&quot;method&quot;, SETUP_FORM);<br />
+<br />
+<br />
+<br />
+		HashMap p2 = new HashMap ();<br />
+<br />
+		p2.put (&quot;name&quot;, &quot;referenceData&quot;);<br />
+<br />
+		p2.put (&quot;method&quot;, &quot;setupReferenceData&quot;);<br />
+<br />
+<br />
+<br />
+		/*<br />
+<br />
+		 Setup Reference Data (Category Type list, Parent type list, etc)<br />
+<br />
+		 Note how both actions now have a name. <br />
+<br />
+		 Also note how there is only a transition for the success event of the referenceData action. <br />
+<br />
+		 This will result in the following behaviour: <br />
+<br />
+<br />
+<br />
+			1) 	The setupForm action is executed and it returns &quot;success&quot;. <br />
+<br />
+		   		Since there is no transition matching &quot;setup.success&quot;, the action state will continue action execution with the next action. <br />
+<br />
+<br />
+<br />
+			2) 	The setupReferenceData action is executed and it returns &quot;success&quot;. <br />
+<br />
+				Since the there is a matching transition &quot;referenceData.success&quot;, <br />
+<br />
+				the action state stops action execution and transitions to the next state: &quot;VIEW_CATEGORY_FORM&quot;. <br />
+<br />
+		*/<br />
+<br />
+		addActionState (CATEGORY_TEMPLATE_SETUP, new AnnotatedAction [] {annotate(actionRef(CategoryFormAction.class), p1),<br />
+<br />
+				annotate(actionRef (CategoryFormAction.class), p2)},<br />
+<br />
+				new Transition[] {on (&quot;referenceData.success&quot;, CATEGORY_TEMPLATE), on (&quot;referenceData.error&quot;, ERROR)});<br />
+<br />
+<br />
+<br />
+		//Display the input form view.<br />
+<br />
+		addViewState (CATEGORY_TEMPLATE, CATEGORY_TEMPLATE, new Transition[] {on(submit(), BIND_N_VALIDATE_FORM)});<br />
+<br />
+<br />
+<br />
+		//Bind and validate input data from the form. <br />
+<br />
+		addActionState (BIND_N_VALIDATE_FORM, method (BIND_N_VALIDATE_FORM, actionRef (CategoryFormAction.class)), <br />
+<br />
+				new Transition[] {on (error(), CATEGORY_TEMPLATE), on (success(), ADD_CATEGORY_TEMPLATE)});<br />
+<br />
+<br />
+<br />
+		//NOTE: If VIEW_CATEGORY_FORM does not work try CATEGORY_VIEW_SETUP on transition &quot;createAnother&quot;<br />
+<br />
+		addActionState (ADD_CATEGORY_TEMPLATE, method (ADD_CATEGORY_TEMPLATE, actionRef (CategoryFormAction.class)),<br />
+<br />
+				new Transition[] {on (success(), &quot;finish&quot;), on (&quot;createAnother&quot;, CATEGORY_TEMPLATE), on(error(), &quot;error&quot;) });<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+		addEndState(&quot;finish&quot;);<br />
+<br />
+<br />
+<br />
+		//end - an error occured<br />
+<br />
+		//addEndState(error(), &quot;error&quot;);<br />
+<br />
+	}
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26203" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26203" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26203" /></a>
+<a href="newreply.php?do=newreply&amp;p=26203" rel="nofollow" id="qr_26203" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26203 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26203_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26203 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26203 --><!-- post #26358 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26358" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26358" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26358&amp;postcount=5" target="new" rel="nofollow" id="postcount26358" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26358" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26358"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 5th, 2005, 07:44 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_26358">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26358", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26358">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26358">
+			
+			Something to double check: if you have the '_eventId' field accidently declared more than once for the same form, I believe the servlet API will treate the parameter as a String[] instead of a String--not sure exactly the repo steps, but I believe something like this is happening (it would help to do a debug of the http parameter list.)  We'll make a explicit check for this in the next release.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26358" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26358" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26358" /></a>
+<a href="newreply.php?do=newreply&amp;p=26358" rel="nofollow" id="qr_26358" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26358 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26358_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26358 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26358 --><!-- post #26449 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26449" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26449" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26449&amp;postcount=6" target="new" rel="nofollow" id="postcount26449" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26449" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26449"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 6th, 2005, 07:14 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26449">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26449", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26449">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26449">
+			
+			Yeah, I believe this is what is happening. In my form I am also submitting an '_eventId' and also in my url, from a previous request, their is also an '_eventId'. <br />
+If I do a redirct to strip the url of its '_eventId' then everything works. However, my flow does not work as it suppose to.<br />
+When I do a redirect I loose all of my flowScope attributes (used for conidtion logic in jsp) and my form object.<br />
+<br />
+So, I guess my question is how do I do a redirect without loosing these objects? I know you said this is possible, but I don't see it .  :cry: <br />
+<br />
+The following is flow snippet:<br />
+<br />
+This is the first state that is entered, determine whether or not a category only view or a category and product view is shown.<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">addActionState &#40;ACTION_SELECT_CATEGORY_ID, method &#40;&quot;getSubcategories&quot;, actionRef &#40;CatalogAction.class&#41;&#41;, 
+new Transition&#91;&#93; &#123; on &#40;&quot;showOnlyCategories&quot;, VIEW_ONLY_CATEGORIES_ID&#41;,
+on &#40;&quot;showCategoriesAndProducts&quot;, VIEW_CATEGORIES_AND_PRODUCTS_ID&#41;&#125;&#41;;</pre>
+</div>This is my main view, where depending on the user action, subflows are spawn.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">addViewState &#40;VIEW_ONLY_CATEGORIES_ID, VIEW_ONLY_CATEGORIES,
+new Transition&#91;&#93; &#123;on&#40;&quot;showCategory&quot;, ACTION_SELECT_CATEGORY_ID&#41;, 
+on &#40;&quot;addCategory&quot;,ADD_CATEGORY_INLINE&#41;,
+on &#40;&quot;duplicateCategory&quot;, SUB_FLOW_DUPLICATE_CATEGORY&#41;, 
+on &#40;&quot;applyCategory&quot;,SUB_FLOW_APPLY_CATEGORY&#41;,
+on &#40;&quot;updateCategory&quot;,SUB_FLOW_UPDATE_CATEGORY&#41;,
+on &#40;&quot;removeCategory&quot;,SUB_FLOW_REMOVE_CATEGORY&#41;,
+on &#40;&quot;deleteCategory&quot;,SUB_FLOW_DELETE_CATEGORY&#41;,
+on &#40;submit&#40;&#41;, BIND_N_VALIDATE&#41;&#125;&#41;;</pre>
+</div>The following  adds a default category, and set attributes within the flow that will be used<br />
+in my jsp page (conditionl ogic) .   <br />
+On 'success', if I do a redirect I loose my form  ojbect and flow scope attributes. <br />
+If I just go back to 'ACTION_SELECT_CATEGORY_ID'  state, I cannot submit the form because of &quot;double _eventId&quot; problem. I cannot go back to 'VIEW_ONLY_CATEGORIES_ID' state becaue  my view will not be updated/refresh.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">addActionState &#40;ADD_CATEGORY_INLINE, method &#40;ADD_CATEGORY_INLINE, actionRef&#40;CategoryFormAction.class&#41;&#41;,
+new Transition&#91;&#93; &#123;on &#40;success&#40;&#41;,UPDATE_INLINE_REDIRECT&#41;, on &#40;error&#40;&#41;, &quot;error&quot;&#41;&#125;&#41;;</pre>
+</div>If I do a redirect, then everything is gone<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">addEndState &#40;UPDATE_INLINE_REDIRECT,  new RedirectViewDescriptorCreator&#40;&quot;categoryBrowse.html?select=$&#123;flowScope.category&#125;&amp;category=$&#123;flowScope.category&#125;&amp;action=$&#123;flowScope.action&#125;&amp;method=$&#123;flowScope.method&#125;&amp;row=$&#123;flowScope.row&#125;&quot;&#41;&#41;;</pre>
+</div>I have been struggling with this for a while now, I can't see the solution. <br />
+<br />
+Any ideas? <img src="images/smilies/frown.gif" border="0" alt="" title="Sad" class="inlineimg" />
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26449" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26449" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26449" /></a>
+<a href="newreply.php?do=newreply&amp;p=26449" rel="nofollow" id="qr_26449" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26449 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26449_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26449 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26449 --><!-- post #26456 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26456" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26456" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26456&amp;postcount=7" target="new" rel="nofollow" id="postcount26456" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26456" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26456"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 6th, 2005, 08:00 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_26456">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26456", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26456">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26456">
+			
+			Curtney,<br />
+<br />
+It's a redirect triggered as the result of an end state entering, though.  This means that the flow will be terminated and anything in flow scope will be cleaned up.  So yes, in this case the form object, etc will NOT be available - the flow is history!<br />
+<br />
+Why is the flow ending at a state called &quot;update inline&quot;? Is it really done at that point? It doesn't sound like it.  <br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26456" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26456" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26456" /></a>
+<a href="newreply.php?do=newreply&amp;p=26456" rel="nofollow" id="qr_26456" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26456 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26456_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26456 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26456 --><!-- post #26462 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26462" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26462" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26462&amp;postcount=8" target="new" rel="nofollow" id="postcount26462" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26462" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26462"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 6th, 2005, 09:33 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26462">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26462", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26462">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26462">
+			
+			I looked at pr3 api and did not find an action state that is capable of redireting. I did try to redirect in a view state, but that did not work, using:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">addViewState&#40;java.lang.String stateId, ViewDescriptorCreator creater, Transition&#91;&#93; transitions, java.util.Map properties&#41;</pre>
+</div>The naming of my states are off. Initially, I was hoping to terminate the flow (redirect) and jump  into subflow (update inline) that would handle adding a category.<br />
+<br />
+I guess I need to put more time into designing my flows.<br />
+<br />
+_CJ
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26462" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26462" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26462" /></a>
+<a href="newreply.php?do=newreply&amp;p=26462" rel="nofollow" id="qr_26462" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26462 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26462_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26462 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26462 --><!-- post #26466 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26466" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26466" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26466&amp;postcount=9" target="new" rel="nofollow" id="postcount26466" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26466" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26466"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 6th, 2005, 10:00 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_26466">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26466", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26466">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26466">
+			
+			You could certainly terminate one flow via an end state and have that redirect to a URL that launches another (it wouldn't be a subflow in that case though, it'd just be another flow.)  In that case, you'd need to pass the flow everything it needs as input.  The flow launcher sample app demonstrates this.<br />
+<br />
+Is there a valid use case for redirecting mid flow? We'd likely need a custom state type for that.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26466" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26466" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26466" /></a>
+<a href="newreply.php?do=newreply&amp;p=26466" rel="nofollow" id="qr_26466" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26466 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26466_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26466 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26466 --><!-- post #26612 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26612" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post26612" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26612&amp;postcount=10" target="new" rel="nofollow" id="postcount26612" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26612" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26612"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 7th, 2005, 09:32 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26612">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26612", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26612">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26612">
+			
+			In my case, I don't think it was valid for me to redirect in the middle of the flow, it complicated things alot. I decided to refactor and was able to get the desired flow. However, it would be nice to have the ability to redirect from action states.<br />
+<br />
+In terms of the ClassCastException, it definetly was a &quot;double _eventId&quot; problem. After changing my form method from ' POST' to 'GET' the problem was solved, only a single '_eventId'  was sent.<br />
+<br />
+Thanks Keith. <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /> <br />
+<br />
+Curtney
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=26612" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=26612" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_26612" /></a>
+<a href="newreply.php?do=newreply&amp;p=26612" rel="nofollow" id="qr_26612" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26612 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26612_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26612 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26612 --><div id="lastpost"></div></div></body></html>

@@ -1,0 +1,2276 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #31282 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31282" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31282" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31282&amp;postcount=1" target="new" rel="nofollow" id="postcount31282" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31282" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31282"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 17th, 2005, 12:56 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31282">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31282", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31282">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Struts and roles</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31282">
+			
+			As I didn't manage to go through the default filter and pass through the login action (if you know how to do it please post) I've implemented my own, ActionMessages are residues of the old LoginAction, I don't know how to save them yet in the filter but that'll come later. Does it seem ok?<br />
+I manage to authenticate and the request has the roles attached to it. I tried to apply roles to my struts mapping but even with the correct role I'm getting HTTP Status 403 - User is not authorized to access action /InsertSociety. <br />
+Am I doing something wrong? How do I send the user to a login page instead of 403 message?<br />
+<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">/**
+ * 
+ */
+package it.linksystem.csai.web.util;
+
+import java.util.Iterator;
+
+import it.linksystem.csai.client.delegate.UserBusinessDelegate;
+import it.linksystem.csai.common.Error;
+import it.linksystem.csai.common.Warning;
+import it.linksystem.csai.common.dto.UserDTO;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import net.sf.acegisecurity.Authentication;
+import net.sf.acegisecurity.AuthenticationException;
+import net.sf.acegisecurity.providers.UsernamePasswordAuthenticationToken;
+import net.sf.acegisecurity.ui.AbstractProcessingFilter;
+
+/**
+ * @author Srepfler Srgjan
+ *
+ */
+public class LoginProcessingFilter extends AbstractProcessingFilter &#123;
+
+	/* &#40;non-Javadoc&#41;
+	 * @see net.sf.acegisecurity.ui.AbstractProcessingFilter#getDefaultFilterProcessesUrl&#40;&#41;
+	 */
+	public String getDefaultFilterProcessesUrl&#40;&#41; &#123;
+		return &quot;/LoginSubmit.do&quot;;
+	&#125;
+
+	/* &#40;non-Javadoc&#41;
+	 * @see net.sf.acegisecurity.ui.AbstractProcessingFilter#attemptAuthentication&#40;javax.servlet.http.HttpServletRequest&#41;
+	 */
+	public Authentication attemptAuthentication&#40;HttpServletRequest request&#41;
+			throws AuthenticationException &#123;
+		ActionMessages errors = new ActionMessages&#40;&#41;;
+		ActionMessages warnings = new ActionMessages&#40;&#41;;
+		
+		UserBusinessDelegate ubd = new UserBusinessDelegate&#40;&#41;;
+		String username = request.getParameter&#40;&quot;j_username&quot;&#41;;
+		String password = request.getParameter&#40;&quot;j_password&quot;&#41;;
+		if&#40;username == null&#41;&#123;
+			username =&quot;&quot;;
+		&#125;
+		if&#40;password == null&#41;&#123;
+			password=&quot;&quot;;
+		&#125;
+		UserDTO userDTO = new UserDTO&#40;&#41;;
+		userDTO.setUsername&#40;username&#41;;
+		userDTO.setPassword&#40;password&#41;;
+		UserDTO resultDTO = ubd.login&#40;userDTO.getUsername&#40;&#41;,userDTO.getPassword&#40;&#41;&#41;;
+		
+		if&#40;resultDTO.isError&#40;&#41;&#41;&#123;
+			for &#40;Iterator theiterator = resultDTO.errorsIterator&#40;&#41;; theiterator.hasNext&#40;&#41;;&#41; &#123;
+				Error theerror = &#40;Error&#41; theiterator.next&#40;&#41;;
+				errors.add&#40;theerror.getCode&#40;&#41;,new ActionMessage&#40;theerror.getCode&#40;&#41;&#41;&#41;;
+			&#125;
+		&#125; else &#123;
+			if&#40;resultDTO.isWarning&#40;&#41;&#41;&#123;
+				for &#40;Iterator theiterator = resultDTO.warningsIterator&#40;&#41;; theiterator.hasNext&#40;&#41;;&#41; &#123;
+					Warning thewarning = &#40;Warning&#41; theiterator.next&#40;&#41;;
+					warnings.add&#40;thewarning.getCode&#40;&#41;,new ActionMessage&#40;thewarning.getCode&#40;&#41;&#41;&#41;;
+				&#125;
+			&#125;
+			request.getSession&#40;&#41;.setAttribute&#40;Constants.USER_KEY,resultDTO&#41;;
+			logger.info&#40;&quot;Login dell utente&#58; &quot;+resultDTO.getUsername&#40;&#41;&#41;;
+		&#125;
+		
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken&#40;username,password&#41;;
+		authRequest.setDetails&#40;request.getRemoteAddr&#40;&#41;&#41;;
+		return this.getAuthenticationManager&#40;&#41;.authenticate&#40;authRequest&#41;;
+	&#125;
+
+&#125;</pre>
+</div>struts-config.xml<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;action forward=&quot;/pages/insertsociety.jsp&quot; path=&quot;/InsertSociety&quot; roles=&quot;ROLE_S&quot;/&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31282 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31282_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31282 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31282 --><!-- post #31386 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31386" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31386" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31386&amp;postcount=2" target="new" rel="nofollow" id="postcount31386" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31386" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31386"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 18th, 2005, 10:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31386">
+<a class="bigusername" href="member.php?u=10240">iksrazal</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="iksrazal is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31386", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Fortaleza, brazil</div>
+<div>
+						Posts: 67
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31386">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31386">
+			
+			Here's how I do something similair with struts: <br />
+<br />
+import java.io.IOException;<br />
+import java.util.Enumeration;<br />
+<br />
+import javax.servlet.http.HttpServletRequest;<br />
+import javax.servlet.http.HttpServletResponse;<br />
+<br />
+import org.apache.commons.logging.Log;<br />
+import org.apache.commons.logging.LogFactory;<br />
+<br />
+import net.sf.acegisecurity.Authentication;<br />
+import net.sf.acegisecurity.ui.webapp.AuthenticationProce  ssingFilter;<br />
+<br />
+/**<br />
+ * @author Robert<br />
+ *<br />
+ * A class which customizes the way ACEGI gets the username and password, and <br />
+ * allows for further processing such as commons validator.  <br />
+ * <br />
+ */<br />
+public class SWAAuthenticationProcessingFilter extends<br />
+        AuthenticationProcessingFilter {<br />
+<br />
+    /** commons logging declaration. **/<br />
+    private static Log logger = LogFactory.getLog(<br />
+            SWAAuthenticationProcessingFilter.class);<br />
+<br />
+    /** Form login key. **/<br />
+    public static final String LOGIN_KEY = &quot;login&quot;;<br />
+    /** Form password key. **/<br />
+    public static final String PASSWORD_KEY = &quot;password&quot;;<br />
+<br />
+    /**<br />
+     * Perform logging, and validation tasks if necessary, before <br />
+     * username/password is processed. <br />
+     * @param request HttpServletRequest<br />
+     * @param response HttpServletResponse<br />
+     */<br />
+    protected void onPreAuthentication(HttpServletRequest request, <br />
+            HttpServletResponse response) {<br />
+<br />
+        // put commons validator here if desired<br />
+<br />
+        if (logger.isDebugEnabled()) {<br />
+            for (Enumeration en = request.getParameterNames(); <br />
+                 en.hasMoreElements()<img src="images/smilies/wink.gif" border="0" alt="" title="Wink" class="inlineimg" /> {<br />
+<br />
+                Object obj = en.nextElement();<br />
+                String value = request.getParameterValues((String) obj) [0];<br />
+                if (logger.isDebugEnabled()) {<br />
+                    logger.debug(&quot;Retrieved Object: &quot; + obj.toString() <br />
+                        + &quot; , Value : &quot; + value);<br />
+                }<br />
+            }<br />
+        }<br />
+    }    <br />
+<br />
+    /**<br />
+     * Perform logging, and validation tasks if necessary, after <br />
+     * username/password is processed. <br />
+     * @param request HttpServletRequest<br />
+     * @param response HttpServletResponse<br />
+     * @param authResult Acegi security state of user<br />
+     * @throws IOException IOException <br />
+     */<br />
+    protected void onSuccessfulAuthentication(<br />
+            javax.servlet.http.HttpServletRequest request,<br />
+            javax.servlet.http.HttpServletResponse response,<br />
+            Authentication authResult) throws IOException {<br />
+<br />
+        if (logger.isDebugEnabled()) {<br />
+            logger.debug(&quot;isAuthenticated: &quot; + authResult.isAuthenticated()); <br />
+        }<br />
+    }<br />
+<br />
+    /**<br />
+     * Customize the way acegi retrieves password. <br />
+     * @param request HttpServletRequest<br />
+     * @return String password from request.<br />
+     */<br />
+    protected String obtainPassword(HttpServletRequest request) {<br />
+<br />
+        String password = request.getParameter(PASSWORD_KEY);<br />
+<br />
+        if (password == null) {<br />
+            throw new IllegalStateException(&quot;obtainPassword() cannot find &quot; <br />
+                    + PASSWORD_KEY);<br />
+        }<br />
+<br />
+        return password;<br />
+    } <br />
+<br />
+    /**<br />
+     * Customize the way acegi retrieves login. <br />
+     * @param request HttpServletRequest<br />
+     * @return String username from request.<br />
+     */<br />
+    protected String obtainUsername(HttpServletRequest request) {<br />
+<br />
+        String login = request.getParameter(LOGIN_KEY);<br />
+<br />
+        if (login == null) {<br />
+            throw new IllegalStateException(&quot;obtainUsername() cannot find &quot; <br />
+                    + LOGIN_KEY);<br />
+        }<br />
+<br />
+        return login;<br />
+    } <br />
+}<br />
+<br />
+That should get you to the point of your DAO, and on onSuccessfulAuthentication you should see your login state. <br />
+<br />
+Since you seem to authenticate, put not authorize, try posting your acegi config file. Furthermore, I'm not sure while you are trying to put roles in your struts config - why not just use filterInvocationInterceptor?<br />
+<br />
+HTH,<br />
+iksrazal
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31386 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31386_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">iksrazal</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10240">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10240" rel="nofollow">Send a private message to iksrazal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10240" rel="nofollow">Find all posts by iksrazal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10240">Add iksrazal to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31386 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31386 --><!-- post #31388 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31388" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31388" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31388&amp;postcount=3" target="new" rel="nofollow" id="postcount31388" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31388" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31388"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 18th, 2005, 10:45 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31388">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31388", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31388">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31388">
+			
+			I decided to use the interceptor yesterday, will be implementing it today.<br />
+Thx for the tips.<br />
+What do you mean by put not authorize?<br />
+In struts config you can do something like:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;action roles=&quot;ROLE_X&quot; forward=&quot;/pages/inserttechnician.jsp&quot; path=&quot;/InsertTechnician&quot;/&gt;</pre>
+</div>can you edit your post and add the code tags?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31388 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31388_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31388 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31388 --><!-- post #31407 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31407" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31407" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31407&amp;postcount=4" target="new" rel="nofollow" id="postcount31407" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31407" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31407"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 18th, 2005, 12:38 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31407">
+<a class="bigusername" href="member.php?u=10240">iksrazal</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="iksrazal is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31407", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Fortaleza, brazil</div>
+<div>
+						Posts: 67
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31407">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31407">
+			
+			Hi, <br />
+<br />
+I meant 'but' not 'put. <br />
+<br />
+Here's the config I use. Not that I didn't find the need to edit struts-config.xml . Here's my config - perhaps it will help. Also note that my filterChainProxy is untraditional - I advise filtering everything in your case. <br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE beans PUBLIC &quot;-//SPRING//DTD BEAN//EN&quot; &quot;http&#58;//www.springframework.org/dtd/spring-beans.dtd&quot;&gt;
+
+&lt;beans&gt;
+
+   &lt;!-- ======================== FILTER CHAIN ======================= --&gt;
+
+   &lt;!--  if you wish to use channel security, add &quot;channelProcessingFilter,&quot; in front
+         of &quot;httpSessionContextIntegrationFilter&quot; in the list below --&gt;
+   &lt;!-- Only filter URL's with *login* Struts actions&#58; 
+   httpSessionContextIntegrationFilter allows authentication/authorization info stored in HttpSession
+   authenticationProcessingFilter forces authentication against db
+   --&gt;
+   &lt;bean id=&quot;filterChainProxy&quot; class=&quot;net.sf.acegisecurity.util.FilterChainProxy&quot;&gt;
+      &lt;property name=&quot;filterInvocationDefinitionSource&quot;&gt;
+         &lt;value&gt;
+          CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+            \A/.*login.*do.*\Z=httpSessionContextIntegrationFilter,authenticationProcessingFilter,contextHolderAwareRequestFilter
+         &lt;/value&gt;
+      &lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- ======================== AUTHENTICATION ======================= --&gt;
+
+    &lt;!-- Authenticate via SWA DAO --&gt;
+    &lt;bean id=&quot;passwordAuthenticationDao&quot; 
+      class=&quot;com.siemens.swa.dao.AcegiDAOImpl&quot;&gt;
+	&lt;property name=&quot;sessionFactory&quot;&gt;&lt;ref bean=&quot;mySessionFactory&quot;/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- Simple Username/Password authentication --&gt;
+    &lt;bean id=&quot;authenticationProvider&quot; 
+      class=&quot;net.sf.acegisecurity.providers.dao.PasswordDaoAuthenticationProvider&quot;&gt;
+      &lt;property name=&quot;passwordAuthenticationDao&quot;&gt;
+        &lt;ref local=&quot;passwordAuthenticationDao&quot;/&gt;
+      &lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- Control access/authorization via Acegi class, stored in HTTP Session
+    --&gt;
+    &lt;bean id=&quot;authenticationManager&quot;
+      class=&quot;net.sf.acegisecurity.providers.ProviderManager&quot;&gt;
+      &lt;property name=&quot;providers&quot;&gt;
+        &lt;list&gt;
+          &lt;ref local=&quot;authenticationProvider&quot;/&gt;
+        &lt;/list&gt;
+      &lt;/property&gt;
+    &lt;/bean&gt; 
+
+    &lt;!-- use custom class overriding net.sf.acegisecurity.providers.ProviderManager
+       Control access/authorization via Acegi class, stored in HTTP Session 
+    &lt;bean id=&quot;authenticationManager&quot; 
+      class=&quot;com.siemens.swa.session.SessionAwareProviderManager&quot;&gt;
+      &lt;property name=&quot;providers&quot;&gt;
+        &lt;list&gt;
+          &lt;ref local=&quot;authenticationProvider&quot;/&gt;
+        &lt;/list&gt;
+      &lt;/property&gt;
+    &lt;/bean&gt; 
+    --&gt;
+
+     &lt;!-- ===================== AUTHORIZATION ==================== --&gt;
+     &lt;!-- An access decision voter that reads ROLE_* configuration settings --&gt;
+     &lt;bean id=&quot;roleVoter&quot; class=&quot;net.sf.acegisecurity.vote.RoleVoter&quot;/&gt;
+
+     &lt;bean id=&quot;accessDecisionManager&quot; class=&quot;net.sf.acegisecurity.vote.UnanimousBased&quot;&gt;
+       &lt;property name=&quot;decisionVoters&quot;&gt;
+       &lt;list&gt;
+         &lt;ref bean=&quot;roleVoter&quot; /&gt;
+       &lt;/list&gt;
+       &lt;/property&gt;
+     &lt;/bean&gt;
+
+     &lt;!-- Control authorization via Roles on listed methods --&gt;
+     &lt;bean id=&quot;userServiceSecurity&quot; class=&quot;net.sf.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor&quot;&gt;
+       &lt;property name=&quot;authenticationManager&quot;&gt;&lt;ref bean=&quot;authenticationManager&quot;/&gt;&lt;/property&gt;
+       &lt;property name=&quot;accessDecisionManager&quot;&gt;&lt;ref local=&quot;accessDecisionManager&quot;/&gt;&lt;/property&gt;
+       &lt;property name=&quot;objectDefinitionSource&quot;&gt;
+         &lt;value&gt;
+            com.siemens.swa.service.UserService.find*=ROLE_EVERYONE
+            com.siemens.swa.service.UserService.update*=ROLE_EVERYONE
+            com.siemens.swa.service.UserService.create*=ROLE_EVERYONE
+            com.siemens.swa.service.UserService.remove*=ROLE_ADMIN
+            com.siemens.swa.service.UserService.changePassword=ROLE_EVERYONE
+         &lt;/value&gt;
+       &lt;/property&gt;
+     &lt;/bean&gt;
+
+     &lt;!-- ===================== HTTP REQUEST SECURITY ==================== --&gt;
+  
+     &lt;!-- Allow SWA application to access Roles and other info via HttpServletRequest 
+          See MenuTag for an example
+      --&gt;
+     &lt;bean id=&quot;contextHolderAwareRequestFilter&quot; class=&quot;net.sf.acegisecurity.wrapper.ContextHolderAwareRequestFilter&quot;/&gt; 
+
+     &lt;!-- Bean definition forcing login on REGEX filters --&gt;
+     &lt;bean id=&quot;httpSessionContextIntegrationFilter&quot; class=&quot;net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter&quot;&gt;
+     &lt;/bean&gt;
+
+     &lt;!-- Define login key/value pair capture, pre/post filter tasks, error page, etc --&gt;
+     &lt;bean id=&quot;authenticationProcessingFilter&quot; class=&quot;com.siemens.swa.session.SWAAuthenticationProcessingFilter&quot;&gt;
+       &lt;property name=&quot;authenticationManager&quot;&gt;&lt;ref bean=&quot;authenticationManager&quot;/&gt;&lt;/property&gt;
+       &lt;property name=&quot;authenticationFailureUrl&quot;&gt;&lt;value&gt;/loginPage.do?login_error=1&lt;/value&gt;&lt;/property&gt;
+       &lt;property name=&quot;defaultTargetUrl&quot;&gt;&lt;value&gt;/&lt;/value&gt;&lt;/property&gt;
+       &lt;property name=&quot;filterProcessesUrl&quot;&gt;&lt;value&gt;/login.do&lt;/value&gt;&lt;/property&gt;
+     &lt;/bean&gt;
+
+&lt;/beans&gt;</pre>
+</div>HTH,<br />
+iksrazal
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31407 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31407_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">iksrazal</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10240">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10240" rel="nofollow">Send a private message to iksrazal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10240" rel="nofollow">Find all posts by iksrazal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10240">Add iksrazal to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31407 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31407 --><!-- post #31608 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31608" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31608" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31608&amp;postcount=5" target="new" rel="nofollow" id="postcount31608" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31608" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31608"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 21st, 2005, 09:56 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31608">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31608", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31608">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31608">
+			
+			I altered a little bit the final part of my processing filter and added some logging:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken&#40;username,password&#41;;
+authRequest.setDetails&#40;request.getRemoteAddr&#40;&#41;&#41;;
+Authentication authentication = this.getAuthenticationManager&#40;&#41;.authenticate&#40;authRequest&#41;;
+logger.info&#40;&quot;Remote User&#58; &quot;+request.getRemoteUser&#40;&#41;&#41;;
+logger.info&#40;&quot;User Principal&#58; &quot;+request.getUserPrincipal&#40;&#41;&#41;;
+logger.info&#40;&quot;Is user in ROLE_S&#58; &quot;+request.isUserInRole&#40;&quot;ROLE_S&quot;&#41;&#41;;
+return authentication;</pre>
+</div>output:<br />
+15:51:50,484 INFO  [AbstractProcessingFilter] Remote User: null<br />
+15:51:50,484 INFO  [AbstractProcessingFilter] User Principal: null<br />
+15:51:50,484 INFO  [AbstractProcessingFilter] Is user in ROLE_S: false<br />
+<br />
+Even though the user has the role applyed I thought the request object should contain the principal isuserinrole and other stuff, am I doing something wrong? thanks in advance
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31608 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31608_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31608 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31608 --><!-- post #31733 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31733" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31733" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31733&amp;postcount=6" target="new" rel="nofollow" id="postcount31733" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31733" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31733"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 22nd, 2005, 04:58 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31733">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31733", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31733">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31733">
+			
+			I don't see where you map your SWAAuthenticationProcessingFilter bean in the xml file?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31733 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31733_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31733 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31733 --><!-- post #31885 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31885" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31885" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31885&amp;postcount=7" target="new" rel="nofollow" id="postcount31885" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31885" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31885"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 23rd, 2005, 08:46 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31885">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31885", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31885">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31885">
+			
+			I missed this:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;contextHolderAwareRequestFilter&quot; class=&quot;net.sf.acegisecurity.wrapper.ContextHolderAwareRequestFilter&quot;/&gt;</pre>
+</div>Are you using an adapter? is the xml file in your WEB-INF/lib or the container  conf dir?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31885 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31885_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31885 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31885 --><!-- post #31895 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31895" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31895" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31895&amp;postcount=8" target="new" rel="nofollow" id="postcount31895" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31895" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31895"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 23rd, 2005, 09:06 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31895">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31895", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31895">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31895">
+			
+			Also why the 403 error and not the login page?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31895 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31895_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31895 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31895 --><!-- post #31896 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31896" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31896" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31896&amp;postcount=9" target="new" rel="nofollow" id="postcount31896" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31896" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31896"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 23rd, 2005, 09:07 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31896">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31896", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31896">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31896">
+			
+			Could you please clarify the question/problem? The last post correctly identified the missing bean. Is everything working correctly now, or is there a particular issue?
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31896 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31896_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31896 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31896 --><!-- post #31897 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31897" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post31897" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31897&amp;postcount=10" target="new" rel="nofollow" id="postcount31897" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31897" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31897"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 23rd, 2005, 09:08 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31897">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31897", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31897">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31897">
+			
+			A 403 is displayed if the user IS authentication, but they get an AccessDeniedException.<br />
+<br />
+AuthenticationEntryPoint is only launched in the case of a security exception and the user NOT being already authenticated.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31897 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31897_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31897 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31897 --><div id="lastpost"></div></div><div id="posts"><!-- post #31898 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31898" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31898" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31898&amp;postcount=11" target="new" rel="nofollow" id="postcount31898" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31898" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31898"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 23rd, 2005, 09:13 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31898">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31898", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31898">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31898">
+			
+			As my project is in a state of flux of not deploying (even after I added the bean) I'll be trying to figure out this tomorrow (here it's 3AM).<br />
+I'm posting my acegi security file:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE beans PUBLIC &quot;-//SPRING//DTD BEAN//EN&quot; &quot;http&#58;//www.springframework.org/dtd/spring-beans.dtd&quot;&gt;
+
+&lt;beans&gt;
+  &lt;bean id=&quot;filterChainProxy&quot; class=&quot;net.sf.acegisecurity.util.FilterChainProxy&quot;&gt;
+    &lt;property name=&quot;filterInvocationDefinitionSource&quot;&gt;
+      &lt;value&gt;
+        CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+        PATTERN_TYPE_APACHE_ANT
+        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,anonymousProcessingFilter,securityEnforcementFilter,contextHolderAwareRequestFilter
+      &lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;authenticationManager&quot; class=&quot;net.sf.acegisecurity.providers.ProviderManager&quot;&gt;
+    &lt;property name=&quot;providers&quot;&gt;
+      &lt;list&gt;
+        &lt;ref local=&quot;daoAuthenticationProvider&quot;/&gt;
+        &lt;ref local=&quot;anonymousAuthenticationProvider&quot;/&gt;
+        &lt;ref local=&quot;rememberMeAuthenticationProvider&quot;/&gt;
+      &lt;/list&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;daoAuthenticationProvider&quot; class=&quot;net.sf.acegisecurity.providers.dao.DaoAuthenticationProvider&quot;&gt;
+    &lt;property name=&quot;authenticationDao&quot;&gt;
+      &lt;ref local=&quot;jdbcDaoImpl&quot;/&gt;
+    &lt;/property&gt;
+	&lt;property name=&quot;forcePrincipalAsString&quot;&gt;
+	&lt;ref local=&quot;true&quot;/&gt;
+	&lt;/property&gt;
+  &lt;/bean&gt;
+
+  &lt;bean id=&quot;anonymousProcessingFilter&quot; class=&quot;net.sf.acegisecurity.providers.anonymous.AnonymousProcessingFilter&quot;&gt;
+    &lt;property name=&quot;key&quot;&gt;
+      &lt;value&gt;foobar&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;userAttribute&quot;&gt;
+      &lt;value&gt;anonymousUser,ROLE_ANONYMOUS&lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;anonymousAuthenticationProvider&quot; class=&quot;net.sf.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider&quot;&gt;
+    &lt;property name=&quot;key&quot;&gt;
+      &lt;value&gt;foobar&lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;httpSessionContextIntegrationFilter&quot; class=&quot;net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter&quot;&gt;
+  	&lt;property name=&quot;context&quot;&gt;&lt;value&gt;net.sf.acegisecurity.context.security.SecureContextImpl&lt;/value&gt;&lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;rememberMeProcessingFilter&quot; class=&quot;net.sf.acegisecurity.ui.rememberme.RememberMeProcessingFilter&quot;&gt;
+    &lt;property name=&quot;rememberMeServices&quot;&gt;
+      &lt;ref local=&quot;rememberMeServices&quot;/&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;rememberMeServices&quot; class=&quot;net.sf.acegisecurity.ui.rememberme.TokenBasedRememberMeServices&quot;&gt;
+    &lt;property name=&quot;authenticationDao&quot;&gt;
+      &lt;ref local=&quot;jdbcDaoImpl&quot;/&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;key&quot;&gt;
+      &lt;value&gt;springRocks&lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;rememberMeAuthenticationProvider&quot; class=&quot;net.sf.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider&quot;&gt;
+    &lt;property name=&quot;key&quot;&gt;
+      &lt;value&gt;springRocks&lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;securityEnforcementFilter&quot; class=&quot;net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter&quot;&gt;
+    &lt;property name=&quot;filterSecurityInterceptor&quot;&gt;
+      &lt;ref local=&quot;filterInvocationInterceptor&quot;/&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;authenticationEntryPoint&quot;&gt;
+      &lt;ref local=&quot;authenticationProcessingFilterEntryPoint&quot;/&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;!--  &lt;bean id=&quot;authenticationProcessingFilter&quot; class=&quot;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilter&quot;&gt;
+    &lt;property name=&quot;authenticationManager&quot;&gt;
+      &lt;ref bean=&quot;authenticationManager&quot;/&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;authenticationFailureUrl&quot;&gt;
+      &lt;value&gt;/Login.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;defaultTargetUrl&quot;&gt;
+      &lt;value&gt;/Welcome.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;filterProcessesUrl&quot;&gt;
+      &lt;value&gt;/LoginSubmit.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;rememberMeServices&quot;&gt;
+      &lt;ref local=&quot;rememberMeServices&quot;/&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;--&gt;
+  
+  &lt;bean id=&quot;authenticationProcessingFilter&quot; class=&quot;it.linksystem.csai.web.util.LoginProcessingFilter&quot;&gt;
+    &lt;property name=&quot;authenticationManager&quot;&gt;
+      &lt;ref bean=&quot;authenticationManager&quot;/&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;authenticationFailureUrl&quot;&gt;
+      &lt;value&gt;/Login.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;defaultTargetUrl&quot;&gt;
+      &lt;value&gt;/Welcome.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;filterProcessesUrl&quot;&gt;
+      &lt;value&gt;/LoginSubmit.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;rememberMeServices&quot;&gt;
+      &lt;ref local=&quot;rememberMeServices&quot;/&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+  
+  
+
+
+  &lt;bean id=&quot;authenticationProcessingFilterEntryPoint&quot; class=&quot;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint&quot;&gt;
+    &lt;property name=&quot;loginFormUrl&quot;&gt;
+      &lt;value&gt;/Login.do&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;forceHttps&quot;&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;httpRequestAccessDecisionManager&quot; class=&quot;net.sf.acegisecurity.vote.AffirmativeBased&quot;&gt;
+    &lt;property name=&quot;allowIfAllAbstainDecisions&quot;&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;decisionVoters&quot;&gt;
+      &lt;list&gt;
+        &lt;ref bean=&quot;roleVoter&quot;/&gt;
+      &lt;/list&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+
+  &lt;bean id=&quot;roleVoter&quot; class=&quot;net.sf.acegisecurity.vote.RoleVoter&quot;/&gt;
+
+
+  &lt;bean id=&quot;filterInvocationInterceptor&quot; class=&quot;net.sf.acegisecurity.intercept.web.FilterSecurityInterceptor&quot;&gt;
+    &lt;property name=&quot;authenticationManager&quot;&gt;
+      &lt;ref bean=&quot;authenticationManager&quot;/&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;accessDecisionManager&quot;&gt;
+      &lt;ref local=&quot;httpRequestAccessDecisionManager&quot;/&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;objectDefinitionSource&quot;&gt;
+      &lt;value&gt;
+        CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+        PATTERN_TYPE_APACHE_ANT
+        /pages/admin/**=ROLE_A
+        /pages/operator/**=ROLE_O
+        /InsertElevator.do**=ROLE_S,ROLE_A
+      &lt;/value&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+
+	&lt;alias alias=&quot;defaultDataSource&quot; name=&quot;dataSourcePostgresLocalhostJNDI&quot;/&gt;
+	
+	&lt;bean id=&quot;dataSourcePostgresLocalhostJNDI&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt;
+	    &lt;property name=&quot;jndiName&quot;&gt;
+	      &lt;value&gt;java&#58;jdbc/CSAIPOSTGRESLOCALHOSTDS&lt;/value&gt;
+	    &lt;/property&gt;
+  	&lt;/bean&gt;
+  	
+  	&lt;bean id=&quot;jdbcDaoImpl&quot; class=&quot;net.sf.acegisecurity.providers.dao.jdbc.JdbcDaoImpl&quot;&gt;
+  	&lt;property name=&quot;dataSource&quot;&gt;&lt;ref bean=&quot;defaultDataSource&quot;/&gt;&lt;/property&gt;
+  	&lt;property name=&quot;usersByUsernameQuery&quot;&gt;
+  		&lt;value&gt;SELECT username,password,accountstate FROM Users WHERE username=?&lt;/value&gt;
+  	&lt;/property&gt;
+  	&lt;property name=&quot;authoritiesByUsernameQuery&quot;&gt;
+  		&lt;value&gt;SELECT username,role FROM Users WHERE username=?&lt;/value&gt;
+  	&lt;/property&gt;
+	&lt;/bean&gt;
+
+	&lt;bean id=&quot;contextHolderAwareRequestFilter&quot; class=&quot;net.sf.acegisecurity.wrapper.ContextHolderAwareRequestFilter&quot;/&gt;
+	
+	&lt;bean id=&quot;daoEventsListener&quot; class=&quot;net.sf.acegisecurity.providers.dao.event.LoggerListener&quot;/&gt;
+	&lt;!--&lt;bean id=&quot;interceptEventsListener&quot; class=&quot;net.sf.acegisecurity.intercept.event.LoggerListener&quot;/&gt;--&gt;
+
+	&lt;bean id=&quot;authByAdapterProvider&quot; class=&quot;net.sf.acegisecurity.adapters.AuthByAdapterProvider&quot;&gt;
+  	&lt;property name=&quot;key&quot;&gt;&lt;value&gt;my_password&lt;/value&gt;&lt;/property&gt;
+	&lt;/bean&gt;
+
+&lt;/beans&gt;</pre>
+</div>(there are things commented as I'm still experimenting)<br />
+<br />
+beanRefFactory.xml:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE beans SYSTEM &quot;spring-beans.dtd&quot; &gt;
+&lt;beans&gt;
+  &lt;bean id=&quot;springRealm&quot; singleton=&quot;true&quot; lazy-init=&quot;true&quot; class=&quot;org.springframework.context.support.ClassPathXmlApplicationContext&quot;&gt;
+    &lt;constructor-arg&gt;
+      &lt;list&gt;
+        &lt;value&gt;acegisecurity.xml&lt;/value&gt;
+      &lt;/list&gt;
+    &lt;/constructor-arg&gt;
+  &lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div>and the attibute I've added in login-config<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;application-policy name = &quot;SpringPoweredRealm&quot;&gt;
+         &lt;authentication&gt;
+            &lt;login-module code = &quot;net.sf.acegisecurity.adapters.jboss.JbossSpringLoginModule&quot; flag = &quot;required&quot;&gt;
+               &lt;module-option name = &quot;appContextLocation&quot;&gt;acegisecurity.xml&lt;/module-option&gt;
+               &lt;module-option name = &quot;key&quot;&gt;my_password&lt;/module-option&gt;
+            &lt;/login-module&gt;
+         &lt;/authentication&gt;
+      &lt;/application-policy&gt;</pre>
+</div>error on deployment:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">02&#58;49&#58;38,578 ERROR &#91;&#91;/CSAIWeb&#93;&#93; Exception starting filter ContextHolderAware Filter
+javax.servlet.ServletException&#58; Bean context must contain at least one bean of type net.sf.acegisecurity.wrapper.ContextHolderAwareRequestFilter</pre>
+</div> web.xml:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 210px;
+		text-align: left;
+		overflow: auto">&lt;filter&gt;
+         &lt;filter-name&gt;ContextHolderAware Filter&lt;/filter-name&gt;
+         &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+         &lt;init-param&gt;
+			&lt;param-name&gt;targetClass&lt;/param-name&gt;
+			&lt;param-value&gt;net.sf.acegisecurity.wrapper.ContextHolderAwareRequestFilter&lt;/param-value&gt;
+         &lt;/init-param&gt;
+    &lt;/filter&gt;
+	&lt;filter-mapping&gt;
+    	&lt;filter-name&gt;ContextHolderAware Filter&lt;/filter-name&gt;
+   		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31898 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31898_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31898 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31898 --><!-- post #31913 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31913" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31913" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31913&amp;postcount=12" target="new" rel="nofollow" id="postcount31913" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31913" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31913"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 24th, 2005, 02:41 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31913">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31913", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31913">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31913">
+			
+			You shouldn't need ContextHolderAwareRequestFilter in web.xml, as you've also got it in your FilterChainProxy (the preferable location).<br />
+<br />
+I could not see the required declaration in the application context for that filter, though. You need:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;contextHolderAwareRequestFilter&quot; class=&quot;net.sf.acegisecurity.wrapper.ContextHolderAwareRequestFilter&quot;/&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31913 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31913_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31913 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31913 --><!-- post #31970 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit31970" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post31970" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=31970&amp;postcount=13" target="new" rel="nofollow" id="postcount31970" name="13"><strong>13</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=31970" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post31970"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 24th, 2005, 09:26 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_31970">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_31970", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_31970">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_31970">
+			
+			Aaaah, I think I understand now, your FilterChainProxy has the contextaware  thing in it. I only now figured what you mean by Filter as I thought I should have put two filters in web.xml and create a j2ee FilterChain in that way (similar nomenclature, gets very confusing at times).<br />
+Anyhow as I'd like to finish the work on which I'm working I abandoned the adapter integration. Your tip to underscore the url worked well and having the DTO in session is cool, only problem is to be seen how to report error messages. I have yet to see can I save ActionMessages the way struts does it but in the processing filter.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 31970 popup menu -->
+<div class="vbmenu_popup" id="postmenu_31970_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 31970 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #31970 --><!-- post #32027 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit32027" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post32027" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=32027&amp;postcount=14" target="new" rel="nofollow" id="postcount32027" name="14"><strong>14</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=32027" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post32027"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 24th, 2005, 06:24 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_32027">
+<a class="bigusername" href="member.php?u=11566">schrepfler</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="schrepfler is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_32027", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2005</div>
+<div>Location: Bologna, Italy</div>
+<div>
+						Posts: 78
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_32027">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_32027">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>Ben Alex</strong>
+</div>
+<div style="font-style:italic">A 403 is displayed if the user IS authentication, but they get an AccessDeniedException.<br />
+<br />
+AuthenticationEntryPoint is only launched in the case of a security exception and the user NOT being already authenticated.</div>
+</td>
+</tr>
+</table>
+</div>Except if the user anonymous right?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 32027 popup menu -->
+<div class="vbmenu_popup" id="postmenu_32027_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">schrepfler</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11566">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11566" rel="nofollow">Send a private message to schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11566" rel="nofollow">Find all posts by schrepfler</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11566">Add schrepfler to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 32027 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #32027 --><!-- post #33440 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33440" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post33440" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33440&amp;postcount=15" target="new" rel="nofollow" id="postcount33440" name="15"><strong>15</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33440" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33440"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 8th, 2005, 05:58 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33440">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33440", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33440">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33440">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>schrepfler</strong>
+</div>
+<div style="font-style:italic"><div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>Ben Alex</strong>
+</div>
+<div style="font-style:italic">A 403 is displayed if the user IS authentication, but they get an AccessDeniedException.<br />
+<br />
+AuthenticationEntryPoint is only launched in the case of a security exception and the user NOT being already authenticated.</div>
+</td>
+</tr>
+</table>
+</div>Except if the user anonymous right?</div>
+</td>
+</tr>
+</table>
+</div>An anonymous user will cause an AuthenticationEntryPoint to be launched if an AccessDeniedException is thrown.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33440 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33440_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33440 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33440 --><div id="lastpost"></div></div></body></html>

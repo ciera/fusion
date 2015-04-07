@@ -1,0 +1,518 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #4954 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit4954" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post4954" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=4954&amp;postcount=1" target="new" rel="nofollow" id="postcount4954" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=4954" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post4954"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 8th, 2004, 12:03 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_4954">
+<a class="bigusername" href="member.php?u=6560">khem</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="khem is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_4954", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 25
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_4954">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>globalError get the message in ResourceBundleMessageSource</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_4954">
+			
+			Hi,<br />
+<br />
+In my form, I ve 2 date fields which I define a &quot;From&quot; date and a &quot;To&quot; date.<br />
+When the user give a &quot;From&quot; date greater than the &quot;To&quot; date, I would like to throw an error.<br />
+<br />
+So in my validator, I have : <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">public void validate&#40;Object object, Errors errors&#41; &#123;
+		SomeObject so = &#40;SomeObject &#41; object;
+		Date date1 = so .getDateBegin&#40;&#41;;
+		Date date2 = so .getDateEnd&#40;&#41;;
+		if &#40;null != date1 &amp;&amp; null != date2 &amp;&amp; date1.getTime&#40;&#41; &gt; date2.getTime&#40;&#41;&#41; &#123;
+			errors.reject&#40;&quot;wrong dates&quot;,
+					&quot;The From date can not be greater than the To date&quot;&#41;;
+		&#125;
+	&#125;</pre>
+</div>And in my jsp I have :<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;spring&#58;hasBindErrors name=&quot;command&quot;&gt;
+&lt;c&#58;out value=&quot;$&#123;errors.globalError.defaultMessage&#125;&quot; /&gt;
+&lt;/spring&#58;hasBindErrors&gt;</pre>
+</div>In my JSP, I take the first globalError (there could be only one), but I ve seen in the API that  I can only display the default message with the method &quot;getDefaultMessage&quot; (the one defined in the validator) and not the one defined in the ResourceBundleMessageSource with the code &quot;wrong dates&quot;.<br />
+<br />
+Is there a way to display the message defined in the ResourceBundleMessageSource ?<br />
+<br />
+bye
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				We are a football tribe!
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=4954" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=4954" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_4954" /></a>
+<a href="newreply.php?do=newreply&amp;p=4954" rel="nofollow" id="qr_4954" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 4954 popup menu -->
+<div class="vbmenu_popup" id="postmenu_4954_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">khem</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6560">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6560" rel="nofollow">Send a private message to khem</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6560" rel="nofollow">Find all posts by khem</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6560">Add khem to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 4954 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #4954 --><!-- post #5006 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit5006" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post5006" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=5006&amp;postcount=2" target="new" rel="nofollow" id="postcount5006" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=5006" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post5006"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 9th, 2004, 06:27 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_5006">
+<a class="bigusername" href="member.php?u=6515">katentim</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="katentim is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_5006", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, Australia</div>
+<div>
+						Posts: 1,104
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_5006">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_5006">
+			
+			Yes. Try,<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;spring&#58;bind path=&quot;command&quot;&gt;
+  &lt;c&#58;out value=&quot;$&#123;status.errorMessage&#125;&quot;/&gt;
+&lt;/spring&#58;bind&gt;</pre>
+</div>Also, the error code (property key) shouldn't have whitespace. Try changing it to:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">wrongDates</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=5006" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=5006" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_5006" /></a>
+<a href="newreply.php?do=newreply&amp;p=5006" rel="nofollow" id="qr_5006" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 5006 popup menu -->
+<div class="vbmenu_popup" id="postmenu_5006_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">katentim</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6515">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6515" rel="nofollow">Send a private message to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=6515" rel="nofollow">Send email to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6515" rel="nofollow">Find all posts by katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6515">Add katentim to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 5006 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #5006 --><!-- post #5056 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit5056" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post5056" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=5056&amp;postcount=3" target="new" rel="nofollow" id="postcount5056" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=5056" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post5056"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 11th, 2004, 05:04 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_5056">
+<a class="bigusername" href="member.php?u=6560">khem</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="khem is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_5056", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 25
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_5056">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_5056">
+			
+			Hi,<br />
+<br />
+Thx for your answer katentim, it works well  <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /> <br />
+<br />
+But I have another problem :<br />
+<br />
+The &quot;wrongDates&quot; error should be thrown and displayed in my web page <u>only</u> when I have 2 valid dates and &quot;From date&quot;  &gt; &quot;To date&quot;.<br />
+But when I have this error displayed and then I fill a wrong date (like &quot;aaa&quot; instead of a valid date like &quot;20/01/2004&quot;), the field error is displayed (this is normal) but the &quot;wrongDates&quot; error is still displayed too.. :? <br />
+<br />
+How can I made this error not to be displayed when I have an &quot;invalid date&quot; error?
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				We are a football tribe!
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=5056" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=5056" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_5056" /></a>
+<a href="newreply.php?do=newreply&amp;p=5056" rel="nofollow" id="qr_5056" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 5056 popup menu -->
+<div class="vbmenu_popup" id="postmenu_5056_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">khem</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6560">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6560" rel="nofollow">Send a private message to khem</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6560" rel="nofollow">Find all posts by khem</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6560">Add khem to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 5056 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #5056 --><!-- post #5071 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit5071" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post5071" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=5071&amp;postcount=4" target="new" rel="nofollow" id="postcount5071" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=5071" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post5071"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 11th, 2004, 10:58 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_5071">
+<a class="bigusername" href="member.php?u=6560">khem</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="khem is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_5071", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 25
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_5071">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_5071">
+			
+			Hi,<br />
+<br />
+In my form controller, I have removed this lines as I don't need session:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">public ETradeQuoteController&#40;&#41; &#123;
+  setSessionForm&#40;true&#41;;
+&#125;</pre>
+</div>And all works well!  8)
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				We are a football tribe!
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=5071" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=5071" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_5071" /></a>
+<a href="newreply.php?do=newreply&amp;p=5071" rel="nofollow" id="qr_5071" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 5071 popup menu -->
+<div class="vbmenu_popup" id="postmenu_5071_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">khem</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6560">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6560" rel="nofollow">Send a private message to khem</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6560" rel="nofollow">Find all posts by khem</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6560">Add khem to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 5071 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #5071 --><div id="lastpost"></div></div></body></html>

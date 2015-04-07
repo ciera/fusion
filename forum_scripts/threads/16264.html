@@ -1,0 +1,2115 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #26582 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26582" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26582" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26582&amp;postcount=1" target="new" rel="nofollow" id="postcount26582" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26582" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26582"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 7th, 2005, 03:39 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26582">
+<a class="bigusername" href="member.php?u=11064">acesjca</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="acesjca is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26582", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>Location: San Jose, California</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26582">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Newbie - fail to build jar:install and multiwar:multiwar</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26582">
+			
+			I'm following the directions on <br />
+<a href="http://acegisecurity.sourceforge.net/building.html" target="_blank" rel="nofollow">http://acegisecurity.sourceforge.net/building.html</a> <br />
+and ran into few issues. <br />
+<br />
+1. It would be helpful to know that CVS is needed with Maven - if you include a sidenot or a link, it will save much pain to those who are new to these tools. <br />
+<br />
+2. I am trying to do the quick build, but it hasn't been so quick. <br />
+I've installed the commons-attributes-plugin-2.1.jar from the next step. <br />
+<br />
+Here's the problems: <br />
+<br />
+2.1 maven jar:install <br />
+---- <br />
+A) Following warning appears repeatedly <br />
+log4j:WARN Please initialize the log4j system properly. <br />
+<br />
+B) <br />
+<br />
+log4j:WARN No appenders could be found for logger (org.springframework.web.context.support.StaticWeb  ApplicationContext). <br />
+log4j:WARN Please initialize the log4j system properly. <br />
+java.lang.IllegalArgumentException: setContext(...) never called, ApplicationContext must not be null <br />
+at org.springframework.util.Assert.notNull(Assert.jav  a:91) <br />
+at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisher.getContext(HttpSessionEventPublisher.java:  122) <br />
+at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisherTests.testNullContextCheck(HttpSessionEvent  PublisherTests.java:90) <br />
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method) <br />
+at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39) <br />
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25) <br />
+at java.lang.reflect.Method.invoke(Method.java:324) <br />
+at junit.framework.TestCase.runTest(TestCase.java:154  ) <br />
+at junit.framework.TestCase.runBare(TestCase.java:127  ) <br />
+at junit.framework.TestResult$1.protect(TestResult.ja  va:106) <br />
+at junit.framework.TestResult.runProtected(TestResult  .java:124) <br />
+at junit.framework.TestResult.run(TestResult.java:109  ) <br />
+at junit.framework.TestCase.run(TestCase.java:118) <br />
+at junit.framework.TestSuite.runTest(TestSuite.java:2  08) <br />
+at junit.framework.TestSuite.run(TestSuite.java:203) <br />
+at org.apache.tools.ant.taskdefs.optional.junit.JUnit  TestRunner.run(JUnitTestRunner.java:325) <br />
+at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.executeInVM(JUnitTask.java:848) <br />
+at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.execute(JUnitTask.java:556) <br />
+at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.execute(JUnitTask.java:532) <br />
+at org.apache.tools.ant.Task.perform(Task.java:341) <br />
+at org.apache.commons.jelly.tags.ant.AntTag.doTag(Ant  Tag.java:185) <br />
+at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279) <br />
+at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135) <br />
+at org.apache.commons.jelly.TagSupport.invokeBody(Tag  Support.java:233) <br />
+at org.apache.commons.jelly.tags.core.IfTag.doTag(IfT  ag.java:8 <br />
+at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279) <br />
+at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135) <br />
+at org.apache.maven.jelly.tags.werkz.MavenGoalTag.run  BodyTag(MavenGoalTag.java:79) <br />
+at org.apache.maven.jelly.tags.werkz.MavenGoalTag$Mav  enGoalAction.performAction(MavenGoalTag.java:110) <br />
+at com.werken.werkz.Goal.fire(Goal.java:639) <br />
+at com.werken.werkz.Goal.attain(Goal.java:575) <br />
+at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88) <br />
+at com.werken.werkz.Goal.attain(Goal.java:573) <br />
+at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88) <br />
+at com.werken.werkz.Goal.attain(Goal.java:573) <br />
+at org.apache.maven.plugin.PluginManager.attainGoals(  PluginManager.java:671) <br />
+at org.apache.maven.MavenSession.attainGoals(MavenSes  sion.java:263) <br />
+at org.apache.maven.cli.App.doMain(App.java:488) <br />
+at org.apache.maven.cli.App.main(App.java:1239) <br />
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method) <br />
+at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39) <br />
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25) <br />
+at java.lang.reflect.Method.invoke(Method.java:324) <br />
+at com.werken.forehead.Forehead.run(Forehead.java:551  ) <br />
+at com.werken.forehead.Forehead.main(Forehead.java:58  1) <br />
+[junit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 1.641 sec <br />
+<br />
+<br />
+<br />
+C) <br />
+<br />
+log4j:WARN No appenders could be found for logger (org.springframework.core.CollectionFactory). <br />
+log4j:WARN Please initialize the log4j system properly. <br />
+[junit] Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.313 sec <br />
+<br />
+BUILD FAILED <br />
+File...... C:\Documents and Settings\bsingh\.maven\cache\maven-test-plugin-1.6.2\plugin.jelly <br />
+Element... fail <br />
+Line...... 181 <br />
+Column.... 54 <br />
+There were test failures. <br />
+Total time: 2 minutes 4 seconds <br />
+Finished at: Thu Jul 07 10:59:42 PDT 2005 <br />
+---- <br />
+<br />
+<br />
+<br />
+<br />
+<br />
+2.2 <br />
+<br />
+D:\acegisecurity\acegisecurity\samples\contacts&gt;ma  ven multiwar:multiwar <br />
+<br />
+__ __ <br />
+| \/ |__ _Apache__ ___ <br />
+| |\/| / _` \ V / -_) ' \ ~ intelligent projects ~ <br />
+|_| |_\__,_|\_/\___|_||_| v. 1.0.2 <br />
+<br />
+Attempting to download acegi-security-0.9.0-SNAPSHOT.jar. <br />
+WARNING: Failed to download acegi-security-0.9.0-SNAPSHOT.jar. <br />
+Attempting to download apacheds-main-0.9-SNAPSHOT.jar. <br />
+The build cannot continue because of the following unsatisfied dependency: <br />
+<br />
+acegi-security-0.9.0-SNAPSHOT.jar (try downloading from <a href="http://acegisecurity.sourceforge.net" target="_blank" rel="nofollow">http://acegisecurity.sourceforge.net</a>) <br />
+<br />
+Total time: 4 seconds <br />
+Finished at: Thu Jul 07 11:09:17 PDT 2005 <br />
+<br />
+----<br />
+Search for acegi-security-0.9.0-SNAPSHOT.jar on acegisecurity.sourceforge.net yields nothing.<br />
+<br />
+<br />
+-----<br />
+<br />
+Thanks in advance.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				--<br />
+BS
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26582 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26582_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">acesjca</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11064">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11064" rel="nofollow">Send a private message to acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11064" rel="nofollow">Find all posts by acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11064">Add acesjca to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26582 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26582 --><!-- post #26608 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26608" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26608" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26608&amp;postcount=2" target="new" rel="nofollow" id="postcount26608" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26608" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26608"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 7th, 2005, 09:08 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26608">
+<a class="bigusername" href="member.php?u=11064">acesjca</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="acesjca is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26608", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>Location: San Jose, California</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26608">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Mystery file acegi-security-0.9.0-SNAPSHOT.jar</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26608">
+			
+			Following instructions at <a href="http://acegisecurity.sourceforge.net/building.html" target="_blank" rel="nofollow">http://acegisecurity.sourceforge.net/building.html</a> <br />
+<br />
+maven multiwar:multiwar is attempting to download acegi-security-0.9.0-SNAPSHOT.jar<br />
+<br />
+<br />
+However, I don't see this jar at:<br />
+<a href="http://www.ibiblio.org/maven/acegisecurity/jars/" target="_blank" rel="nofollow">http://www.ibiblio.org/maven/acegisecurity/jars/</a><br />
+<br />
+The contracts app deploys and works fine against Tomcat 5.0.28<br />
+However, there is no acegi-security-0.9.0-SNAPSHOT.jar here either:<br />
+webapps\acegi-security-sample-contacts-filter\WEB-INF\lib<br />
+<br />
+There are also no references to this mystery file in the build.xml or maven.xml files either. The following grep yields nothing.<br />
+D:\acegisecurity\samples\contacts&gt;grep acegi-security-0.9.0-SNAPSHOT *
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				--<br />
+BS
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26608 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26608_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">acesjca</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11064">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11064" rel="nofollow">Send a private message to acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11064" rel="nofollow">Find all posts by acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11064">Add acesjca to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26608 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26608 --><!-- post #26695 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26695" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26695" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26695&amp;postcount=3" target="new" rel="nofollow" id="postcount26695" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26695" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26695"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2005, 01:10 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26695">
+<a class="bigusername" href="member.php?u=6881">Luke Taylor</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Luke Taylor is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26695", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Acegi Security System TeamSpring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Glasgow, Scotland</div>
+<div>
+						Posts: 3,010
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26695">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26695">
+			
+			acegi-security-0.9.0-SNAPSHOT.jar isn't at ibiblio. It is supposed to be built and installed as part of the local build. Since that is failing it isn't being found in the later stages of the build.<br />
+<br />
+I don't see how the contacts app can be &quot;deploying and working fine&quot; if you don't have a copy of the acegi-security jar somewhere. Are you using the downloaded one in tomcat?<br />
+<br />
+At what stage is Maven saying it needs CVS? If you are just doing a plain build (no site generation etc.) then the only thing you should need CVS for is to check out the source in the first place.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26695 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26695_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Luke Taylor</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6881">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6881" rel="nofollow">Find all posts by Luke Taylor</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6881">Add Luke Taylor to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26695 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26695 --><!-- post #26707 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26707" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26707" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26707&amp;postcount=4" target="new" rel="nofollow" id="postcount26707" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26707" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26707"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2005, 02:21 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26707">
+<a class="bigusername" href="member.php?u=11082">jjustice</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jjustice is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26707", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26707">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26707">
+			
+			I am having the same experience.  I checked out the code according to the instructions on the 'Building with Maven' page.  I've got a local copy of the SNAPSHOT file.  I get these messages when I run 'maven jar:install' from the core directory:<br />
+<br />
+Attempting to download apacheds-main-0.9-SNAPSHOT.jar.<br />
+Artifact /apache-directory/jars/apacheds-main-0.9-SNAPSHOT.jar doesn't exists in remote repository, but it exists locally<br />
+    [echo] Using root dir: /home/jjustice/Projects/acegisecurity<br />
+<br />
+OK, using local copy, so far so good, then:<br />
+<br />
+    [junit] Running net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisherTests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.web.context.support.StaticWeb  ApplicationContext).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+java.lang.IllegalArgumentException: setContext(...) never called, ApplicationContext must not be null<br />
+        at org.springframework.util.Assert.notNull(Assert.jav  a:91)<br />
+        at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisher.getContext(HttpSessionEventPublisher.java:  122)<br />
+        at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisherTests.testNullContextCheck(HttpSessionEvent  PublisherTests.java:90)<br />
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+        at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+        at java.lang.reflect.Method.invoke(Method.java:585)<br />
+        at junit.framework.TestCase.runTest(TestCase.java:154  )<br />
+<br />
+<br />
+And BTW, where do I need to put a log4j.properties file to get rid of the log4j warnings?  Or is it something I need to do in Maven?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26707 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26707_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jjustice</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11082">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11082" rel="nofollow">Send a private message to jjustice</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11082" rel="nofollow">Find all posts by jjustice</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11082">Add jjustice to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26707 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26707 --><!-- post #26708 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26708" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26708" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26708&amp;postcount=5" target="new" rel="nofollow" id="postcount26708" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26708" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26708"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2005, 02:25 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26708">
+<a class="bigusername" href="member.php?u=11064">acesjca</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="acesjca is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26708", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>Location: San Jose, California</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26708">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26708">
+			
+			Hello Luke ,<br />
+<br />
+Firslty, thanks for yor reply!<br />
+<br />
+Yes - I'm using the donwloaded one in Tomcat (When the build failed, I downloaded the acegi-security-0.8.2.zip which contained the prebuilt acegi-security-sample-contacts-filter.war which was then deployed to Tomcat.)<br />
+<br />
+And Yes! - Maven needed CVS to checkout the files. For first time users of Maven/cvs it is not obvious that cvs client does not come with maven and that it needs to be installed seperately and put in the path. Seems obvious after inspecting the error codes and reading a little on Maven. At this point, however, one is more interested in learning/using Acegi than the build/config tools, so a short note on this on building.htm may help future acegi-ers.<br />
+<br />
+Any pointers on why the builds don't work? I.e.<br />
+maven jar:install <br />
+maven multiwar:multiwar <br />
+<br />
+Thanks!
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				--<br />
+BS
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26708 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26708_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">acesjca</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11064">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11064" rel="nofollow">Send a private message to acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11064" rel="nofollow">Find all posts by acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11064">Add acesjca to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26708 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26708 --><!-- post #26710 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26710" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26710" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26710&amp;postcount=6" target="new" rel="nofollow" id="postcount26710" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26710" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26710"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2005, 02:34 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26710">
+<a class="bigusername" href="member.php?u=11082">jjustice</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jjustice is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26710", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26710">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26710">
+			
+			BTW, I was able to build the jar file by running <br />
+<br />
+maven -Dmaven.test.skip=true jar:install<br />
+<br />
+But then of course it didn't run properly.  :wink:
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26710 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26710_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jjustice</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11082">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11082" rel="nofollow">Send a private message to jjustice</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11082" rel="nofollow">Find all posts by jjustice</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11082">Add jjustice to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26710 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26710 --><!-- post #26711 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit26711" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post26711" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=26711&amp;postcount=7" target="new" rel="nofollow" id="postcount26711" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=26711" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post26711"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2005, 02:35 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_26711">
+<a class="bigusername" href="member.php?u=11064">acesjca</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="acesjca is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_26711", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>Location: San Jose, California</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_26711">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_26711">
+			
+			Hello jjustice,<br />
+<br />
+I found this helpful post from another forum re the log4j properties file.<br />
+You can tell java about this file using following flag:<br />
+<br />
+-Dlog4j.configuration=file:somepath/somelog.properties <br />
+<br />
+However, I still have to figure out where to put it.  The test:test<br />
+target is found in each test's xml file. E.g.<br />
+<br />
+./target/test-reports/TEST-net.sf.acegisecurity.wrapper.ContextHolderAwareReq  uestWrapperTests.xml
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				--<br />
+BS
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 26711 popup menu -->
+<div class="vbmenu_popup" id="postmenu_26711_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">acesjca</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11064">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11064" rel="nofollow">Send a private message to acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11064" rel="nofollow">Find all posts by acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11064">Add acesjca to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 26711 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #26711 --><!-- post #27078 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit27078" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post27078" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=27078&amp;postcount=8" target="new" rel="nofollow" id="postcount27078" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=27078" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post27078"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 13th, 2005, 02:11 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_27078">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_27078", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_27078">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_27078">
+			
+			CVS had a problem with one of the tests, which was corrected earlier this week. Please checkout again and try again. If it (maven jar:install from /core) still fails, please post the failing test output (see /core/target/test-reports) so we can troubleshoot it.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 27078 popup menu -->
+<div class="vbmenu_popup" id="postmenu_27078_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 27078 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #27078 --><!-- post #27180 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit27180" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post27180" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=27180&amp;postcount=9" target="new" rel="nofollow" id="postcount27180" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=27180" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post27180"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 13th, 2005, 01:50 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_27180">
+<a class="bigusername" href="member.php?u=11184">csandy</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="csandy is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_27180", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_27180">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_27180">
+			
+			Ben,<br />
+<br />
+After checking out from CVS and running maven jar:install from /core the build fails.  The failing test output is below.<br />
+<br />
+Test-net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests.txt contains:<br />
+<br />
+Testsuite: net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests<br />
+Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.032 sec<br />
+<br />
+Testcase: testFileConversion(net.sf.acegisecurity.util.WebXm  lToAcegiSecurityConverterTests):	Caused an ERROR<br />
+Provider for javax.xml.transform.TransformerFactory cannot be found<br />
+javax.xml.transform.TransformerFactoryConfiguratio  nError: Provider for javax.xml.transform.TransformerFactory cannot be found<br />
+	at javax.xml.transform.TransformerFactory.newInstance  (Unknown Source)<br />
+	at net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verter.&lt;init&gt;(WebXmlToAcegiSecurityConverter.java:  52)<br />
+	at net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests.testFileConversion(WebXmlToAcegiSecuri  tyConverterTests.java:32)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at org.apache.commons.jelly.tags.ant.AntTag.doTag(Ant  Tag.java:185)<br />
+	at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+	at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+	at org.apache.commons.jelly.TagSupport.invokeBody(Tag  Support.java:233)<br />
+	at org.apache.commons.jelly.tags.core.IfTag.doTag(IfT  ag.java:88)<br />
+	at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+	at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+	at org.apache.maven.jelly.tags.werkz.MavenGoalTag.run  BodyTag(MavenGoalTag.java:79)<br />
+	at org.apache.maven.jelly.tags.werkz.MavenGoalTag$Mav  enGoalAction.performAction(MavenGoalTag.java:110)<br />
+	at com.werken.werkz.Goal.fire(Goal.java:639)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:575)<br />
+	at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+	at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+	at org.apache.maven.plugin.PluginManager.attainGoals(  PluginManager.java:671)<br />
+	at org.apache.maven.MavenSession.attainGoals(MavenSes  sion.java:263)<br />
+	at org.apache.maven.cli.App.doMain(App.java:488)<br />
+	at org.apache.maven.cli.App.main(App.java:1239)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at com.werken.forehead.Forehead.run(Forehead.java:551  )<br />
+	at com.werken.forehead.Forehead.main(Forehead.java:58  1)<br />
+<br />
+Any help is greatly appreciated.  Thanks.<br />
+__________________________
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 27180 popup menu -->
+<div class="vbmenu_popup" id="postmenu_27180_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">csandy</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11184">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11184" rel="nofollow">Send a private message to csandy</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11184" rel="nofollow">Find all posts by csandy</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11184">Add csandy to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 27180 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #27180 --><!-- post #27226 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit27226" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post27226" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=27226&amp;postcount=10" target="new" rel="nofollow" id="postcount27226" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=27226" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post27226"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 13th, 2005, 05:37 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_27226">
+<a class="bigusername" href="member.php?u=6881">Luke Taylor</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Luke Taylor is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_27226", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Acegi Security System TeamSpring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Glasgow, Scotland</div>
+<div>
+						Posts: 3,010
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_27226">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_27226">
+			
+			What JDK version are you using? It has to have support for XSL transforms.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 27226 popup menu -->
+<div class="vbmenu_popup" id="postmenu_27226_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Luke Taylor</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6881">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6881" rel="nofollow">Find all posts by Luke Taylor</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6881">Add Luke Taylor to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 27226 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #27226 --><div id="lastpost"></div></div><div id="posts"><!-- post #27249 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit27249" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post27249" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=27249&amp;postcount=11" target="new" rel="nofollow" id="postcount27249" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=27249" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post27249"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 13th, 2005, 06:59 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_27249">
+<a class="bigusername" href="member.php?u=11184">csandy</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="csandy is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_27249", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_27249">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_27249">
+			
+			I've tried 1.5 and 1.4, I believe.  I haven't built with Maven before and couldn't find a java config anywhere so I've assumed it is just picking up the JAVA_HOME.  Maybe that is a bad assumption.  The test is complaining about not finding javax.xml.transform.TransformerFactory which makes me believe it is picking up 1.3 somewhere.  <br />
+<br />
+Is there a way I'm supposed to set the java version for the Maven build?<br />
+<br />
+Thanks.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 27249 popup menu -->
+<div class="vbmenu_popup" id="postmenu_27249_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">csandy</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11184">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11184" rel="nofollow">Send a private message to csandy</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11184" rel="nofollow">Find all posts by csandy</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11184">Add csandy to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 27249 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #27249 --><!-- post #27258 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit27258" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post27258" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=27258&amp;postcount=12" target="new" rel="nofollow" id="postcount27258" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=27258" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post27258"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 13th, 2005, 10:24 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_27258">
+<a class="bigusername" href="member.php?u=11064">acesjca</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="acesjca is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_27258", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2005</div>
+<div>Location: San Jose, California</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_27258">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_27258">
+			
+			Using j2sdk1.4.2_02<br />
+Got latest from CVS<br />
+followed by: maven jar:install <br />
+<br />
+<br />
+Tests still failed:<br />
+    [junit] Running net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisherTests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.web.context.support.StaticWeb  ApplicationContext).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+java.lang.IllegalArgumentException: setContext(...) never called, ApplicationContext must not be null<br />
+        at org.springframework.util.Assert.notNull(Assert.jav  a:90)<br />
+        at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisher.getContext(HttpSessionEventPublisher.java:  122)<br />
+        at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisherTests.testNullContextCheck(HttpSessionEvent  PublisherTests.java:90)<br />
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+        at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+        at java.lang.reflect.Method.invoke(Method.java:324)<br />
+        at junit.framework.TestCase.runTest(TestCase.java:154  )<br />
+        at junit.framework.TestCase.runBare(TestCase.java:127  )<br />
+        at junit.framework.TestResult$1.protect(TestResult.ja  va:106)<br />
+        at junit.framework.TestResult.runProtected(TestResult  .java:124)<br />
+        at junit.framework.TestResult.run(TestResult.java:109  )<br />
+        at junit.framework.TestCase.run(TestCase.java:118)<br />
+        at junit.framework.TestSuite.runTest(TestSuite.java:2  08)<br />
+        at junit.framework.TestSuite.run(TestSuite.java:203)<br />
+        at org.apache.tools.ant.taskdefs.optional.junit.JUnit  TestRunner.run(JUnitTestRunner.java:325)<br />
+        at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.executeInVM(JUnitTask.java:848)<br />
+        at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.execute(JUnitTask.java:556)<br />
+        at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.execute(JUnitTask.java:532)<br />
+        at org.apache.tools.ant.Task.perform(Task.java:341)<br />
+        at org.apache.commons.jelly.tags.ant.AntTag.doTag(Ant  Tag.java:185)<br />
+        at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+        at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+        at org.apache.commons.jelly.TagSupport.invokeBody(Tag  Support.java:233)<br />
+        at org.apache.commons.jelly.tags.core.IfTag.doTag(IfT  ag.java:88)<br />
+        at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+        at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+        at org.apache.maven.jelly.tags.werkz.MavenGoalTag.run  BodyTag(MavenGoalTag.java:79)<br />
+        at org.apache.maven.jelly.tags.werkz.MavenGoalTag$Mav  enGoalAction.performAction(MavenGoalTag.java:110)<br />
+        at com.werken.werkz.Goal.fire(Goal.java:639)<br />
+        at com.werken.werkz.Goal.attain(Goal.java:575)<br />
+        at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+        at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+        at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+        at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+        at org.apache.maven.plugin.PluginManager.attainGoals(  PluginManager.java:671)<br />
+        at org.apache.maven.MavenSession.attainGoals(MavenSes  sion.java:263)<br />
+        at org.apache.maven.cli.App.doMain(App.java:488)<br />
+        at org.apache.maven.cli.App.main(App.java:1239)<br />
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+        at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+        at java.lang.reflect.Method.invoke(Method.java:324)<br />
+        at com.werken.forehead.Forehead.run(Forehead.java:551  )<br />
+        at com.werken.forehead.Forehead.main(Forehead.java:58  1)<br />
+    [junit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 1.781 sec<br />
+    [junit] Running net.sf.acegisecurity.ui.webapp.AuthenticationProce  ssingFilterEntryPointTests<br />
+<br />
+<br />
+--------------<br />
+   [junit] Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.297 sec<br />
+   [junit] Running net.sf.acegisecurity.util.StringSplitUtilsTests<br />
+   [junit] Tests run: 6, Failures: 0, Errors: 0, Time elapsed: 0.031 sec<br />
+   [junit] Running net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests<br />
+   [junit] Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.031 sec<br />
+   [junit] [ERROR] TEST net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests FAILED<br />
+   [junit] Running net.sf.acegisecurity.vote.AbstractAccessDecisionMa  nagerTests<br />
+   [junit] Tests run: 9, Failures: 0, Errors: 0, Time elapsed: 0.047 sec<br />
+   [junit] Running net.sf.acegisecurity.vote.AffirmativeBasedTests<br />
+   [junit] Tests run: 6, Failures: 0, Errors: 0, Time elapsed: 0.187 sec<br />
+   [junit] Running net.sf.acegisecurity.vote.BasicAclEntryVoterTests<br />
+---------------<br />
+<br />
+<br />
+<br />
+<br />
+From test-report:<br />
+<br />
+Testsuite: net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests<br />
+Tests run: 1, Failures: 0, Errors: 1, Time elapsed: 0.031 sec<br />
+<br />
+Testcase: testFileConversion(net.sf.acegisecurity.util.WebXm  lToAcegiSecurityConverterTests):	Caused an ERROR<br />
+Provider for javax.xml.transform.TransformerFactory cannot be found<br />
+javax.xml.transform.TransformerFactoryConfiguratio  nError: Provider for javax.xml.transform.TransformerFactory cannot be found<br />
+	at javax.xml.transform.TransformerFactory.newInstance  (Unknown Source)<br />
+	at net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verter.&lt;init&gt;(WebXmlToAcegiSecurityConverter.java:  52)<br />
+	at net.sf.acegisecurity.util.WebXmlToAcegiSecurityCon  verterTests.testFileConversion(WebXmlToAcegiSecuri  tyConverterTests.java:32)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at org.apache.commons.jelly.tags.ant.AntTag.doTag(Ant  Tag.java:185)<br />
+	at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+	at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+	at org.apache.commons.jelly.TagSupport.invokeBody(Tag  Support.java:233)<br />
+	at org.apache.commons.jelly.tags.core.IfTag.doTag(IfT  ag.java:88)<br />
+	at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+	at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+	at org.apache.maven.jelly.tags.werkz.MavenGoalTag.run  BodyTag(MavenGoalTag.java:79)<br />
+	at org.apache.maven.jelly.tags.werkz.MavenGoalTag$Mav  enGoalAction.performAction(MavenGoalTag.java:110)<br />
+	at com.werken.werkz.Goal.fire(Goal.java:639)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:575)<br />
+	at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+	at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+	at org.apache.maven.plugin.PluginManager.attainGoals(  PluginManager.java:671)<br />
+	at org.apache.maven.MavenSession.attainGoals(MavenSes  sion.java:263)<br />
+	at org.apache.maven.cli.App.doMain(App.java:488)<br />
+	at org.apache.maven.cli.App.main(App.java:1239)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at com.werken.forehead.Forehead.run(Forehead.java:551  )<br />
+	at com.werken.forehead.Forehead.main(Forehead.java:58  1)<br />
+<br />
+<br />
+-----<br />
+<br />
+Thanks
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				--<br />
+BS
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 27258 popup menu -->
+<div class="vbmenu_popup" id="postmenu_27258_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">acesjca</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=11064">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=11064" rel="nofollow">Send a private message to acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=11064" rel="nofollow">Find all posts by acesjca</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=11064">Add acesjca to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 27258 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #27258 --><!-- post #28463 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit28463" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post28463" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=28463&amp;postcount=13" target="new" rel="nofollow" id="postcount28463" name="13"><strong>13</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=28463" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post28463"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 23rd, 2005, 07:09 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_28463">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_28463", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_28463">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_28463">
+			
+			That first exception is not an error. As shown further down with test failures of zero, it is just an expected exception message.<br />
+<br />
+I agree there is a problem in CVS right now. It seems a project.xml is missing dom4j.jar and also the shared resource files (like the stylesheet) are not in the classpath when executing the test. I'll ask Luke to look into it.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 28463 popup menu -->
+<div class="vbmenu_popup" id="postmenu_28463_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 28463 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #28463 --><!-- post #28490 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit28490" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post28490" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=28490&amp;postcount=14" target="new" rel="nofollow" id="postcount28490" name="14"><strong>14</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=28490" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post28490"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 23rd, 2005, 02:28 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_28490">
+<a class="bigusername" href="member.php?u=9066">Kiran Keshav</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Kiran Keshav is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_28490", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>
+						Posts: 14
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_28490">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_28490">
+			
+			I am getting the same error.  Further down the stack trace it shows that a test does in fact fail:<br />
+<br />
+log4j:WARN No appenders could be found for logger (org.springframework.web.context.support.StaticWeb  ApplicationContext).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+java.lang.IllegalArgumentException: setContext(...) never called, ApplicationContext must not be null<br />
+	at org.springframework.util.Assert.notNull(Assert.jav  a:90)<br />
+	at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisher.getContext(HttpSessionEventPublisher.java:  122)<br />
+	at net.sf.acegisecurity.ui.session.HttpSessionEventPu  blisherTests.testNullContextCheck(HttpSessionEvent  PublisherTests.java:90)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at java.lang.reflect.Method.invoke(Method.java:585)<br />
+	at junit.framework.TestCase.runTest(TestCase.java:154  )<br />
+	at junit.framework.TestCase.runBare(TestCase.java:127  )<br />
+	at junit.framework.TestResult$1.protect(TestResult.ja  va:106)<br />
+	at junit.framework.TestResult.runProtected(TestResult  .java:124)<br />
+	at junit.framework.TestResult.run(TestResult.java:109  )<br />
+	at junit.framework.TestCase.run(TestCase.java:118)<br />
+	at junit.framework.TestSuite.runTest(TestSuite.java:2  08)<br />
+	at junit.framework.TestSuite.run(TestSuite.java:203)<br />
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnit  TestRunner.run(JUnitTestRunner.java:325)<br />
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.executeInVM(JUnitTask.java:848)<br />
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.execute(JUnitTask.java:556)<br />
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnit  Task.execute(JUnitTask.java:532)<br />
+	at org.apache.tools.ant.Task.perform(Task.java:341)<br />
+	at org.apache.commons.jelly.tags.ant.AntTag.doTag(Ant  Tag.java:185)<br />
+	at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+	at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+	at org.apache.commons.jelly.TagSupport.invokeBody(Tag  Support.java:233)<br />
+	at org.apache.commons.jelly.tags.core.IfTag.doTag(IfT  ag.java:88)<br />
+	at org.apache.commons.jelly.impl.TagScript.run(TagScr  ipt.java:279)<br />
+	at org.apache.commons.jelly.impl.ScriptBlock.run(Scri  ptBlock.java:135)<br />
+	at org.apache.maven.jelly.tags.werkz.MavenGoalTag.run  BodyTag(MavenGoalTag.java:79)<br />
+	at org.apache.maven.jelly.tags.werkz.MavenGoalTag$Mav  enGoalAction.performAction(MavenGoalTag.java:110)    [junit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.875 sec<br />
+<br />
+	at com.werken.werkz.Goal.fire(Goal.java:639)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:575)<br />
+	at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+	at com.werken.werkz.Goal.attainPrecursors(Goal.java:4  88)<br />
+	at com.werken.werkz.Goal.attain(Goal.java:573)<br />
+	at org.apache.maven.plugin.PluginManager.attainGoals(  PluginManager.java:671)<br />
+	at org.apache.maven.MavenSession.attainGoals(MavenSes  sion.java:263)<br />
+	at org.apache.maven.cli.App.doMain(App.java:488)<br />
+	at org.apache.maven.cli.App.main(App.java:1239)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at java.lang.reflect.Method.invoke(Method.java:585)<br />
+	at com.werken.forehead.Forehead.run(Forehead.java:551  )<br />
+	at com.werken.forehead.Forehead.main(Forehead.java:58  1)<br />
+    [junit] Running net.sf.acegisecurity.ui.webapp.AuthenticationProce  ssingFilterEntryPointTests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.core.CollectionFactory).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+    [junit] Tests run: 8, Failures: 0, Errors: 0, Time elapsed: 0.203 sec<br />
+    [junit] Running net.sf.acegisecurity.ui.webapp.AuthenticationProce  ssingFilterTests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.core.CollectionFactory).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+    [junit] Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.172 sec<br />
+    [junit] Running net.sf.acegisecurity.ui.x509.X509ProcessingFilterE  ntryPointTests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.core.CollectionFactory).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.172 sec<br />
+    [junit] Running net.sf.acegisecurity.ui.x509.X509ProcessingFilterT  ests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.core.CollectionFactory).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+    [junit] Tests run: 6, Failures: 0, Errors: 0, Time elapsed: 0.219 sec<br />
+    [junit] Running net.sf.acegisecurity.util.FilterChainProxyTests<br />
+log4j:WARN No appenders could be found for logger (org.springframework.beans.factory.xml.XmlBeanDefi  nitionReader).<br />
+log4j:WARN Please initialize the log4j system properly.<br />
+<b>    [junit] Tests run: 5, Failures: 1, Errors: 0, Time elapsed: 0.672 sec<br />
+    [junit] [ERROR] TEST net.sf.acegisecurity.util.FilterChainProxyTests FAILED<br />
+    [junit] Running net.sf.acegisecurity.util.FilterToBeanProxyTests</b><br />
+<br />
+Also, what maven.repo.remote  are you putting in your maven build.properties file to get the apacheds-main-0.9-SNAPSHOT.jar file?  I have <a href="http://www.ibiblio.org/maven/" target="_blank" rel="nofollow">http://www.ibiblio.org/maven/</a> but this jar file is not listed there.  For now,  I have manually installed the apacheds-main-0.9.jar.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 28490 popup menu -->
+<div class="vbmenu_popup" id="postmenu_28490_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Kiran Keshav</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9066">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9066" rel="nofollow">Send a private message to Kiran Keshav</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9066" rel="nofollow">Find all posts by Kiran Keshav</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9066">Add Kiran Keshav to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 28490 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #28490 --><!-- post #28491 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit28491" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post28491" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=28491&amp;postcount=15" target="new" rel="nofollow" id="postcount28491" name="15"><strong>15</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=28491" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post28491"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 23rd, 2005, 02:33 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_28491">
+<a class="bigusername" href="member.php?u=9066">Kiran Keshav</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Kiran Keshav is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_28491", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>
+						Posts: 14
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_28491">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_28491">
+			
+			In the project.xml file, you have<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">&lt;dependency&gt;
+      &lt;groupId&gt;apache-directory&lt;/groupId&gt;
+      &lt;artifactId&gt;apacheds-main&lt;/artifactId&gt;
+      &lt;version&gt;0.9-SNAPSHOT&lt;/version&gt;
+      &lt;type&gt;jar&lt;/type&gt;
+&lt;/dependency&gt;</pre>
+</div>This should be: <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">&lt;dependency&gt;
+      &lt;groupId&gt;directory&lt;/groupId&gt;
+      &lt;artifactId&gt;apacheds-main&lt;/artifactId&gt;
+      &lt;version&gt;0.9-SNAPSHOT&lt;/version&gt;
+      &lt;type&gt;jar&lt;/type&gt;
+&lt;/dependency&gt;</pre>
+</div>On ibiblio, this jar file is under <i>directory</i>, not <i>apache-directory</i>.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 28491 popup menu -->
+<div class="vbmenu_popup" id="postmenu_28491_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Kiran Keshav</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9066">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9066" rel="nofollow">Send a private message to Kiran Keshav</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9066" rel="nofollow">Find all posts by Kiran Keshav</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9066">Add Kiran Keshav to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 28491 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #28491 --><!-- post #29357 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit29357" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post29357" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=29357&amp;postcount=16" target="new" rel="nofollow" id="postcount29357" name="16"><strong>16</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=29357" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post29357"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 30th, 2005, 08:36 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_29357">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_29357", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_29357">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_29357">
+			
+			Thanks Kiran, I have updated CVS. We use the iBiblio Maven repository where possible, although in this case we had a copy of the Apache Directory JAR on the Acegi Security repository (so it should have worked regardless).
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 29357 popup menu -->
+<div class="vbmenu_popup" id="postmenu_29357_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 29357 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #29357 --><div id="lastpost"></div></div></body></html>

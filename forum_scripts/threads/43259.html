@@ -1,0 +1,800 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #139531 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit139531" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post139531" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=139531&amp;postcount=1" target="new" rel="nofollow" id="postcount139531" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=139531" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post139531"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 30th, 2007, 06:32 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_139531">
+<a class="bigusername" href="member.php?u=28402">maitri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="maitri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_139531", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2007</div>
+<div>
+						Posts: 24
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_139531">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon9.gif" alt="Unhappy" border="0" />
+<strong>help! problem with binding</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_139531">
+			
+			Hello to everyone!<br />
+I'm new in Spring, I'm trying to do a small application wirh SpringWebFlow. My first state does nothing, just a Next button, the second states shows two radio button where you can choose your genedre, Male or Female, and depending on what you have chosen it has to redirect you to one  state or another. Instead of using a decision-state I'm using an action state like this:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 306px;
+		text-align: left;
+		overflow: auto">          &lt;start-state idref=&quot;pantalla1&quot;/&gt;	
+
+	&lt;view-state id=&quot;pantalla1&quot; view=&quot;pantalla1&quot;&gt;		
+		&lt;transition on=&quot;submit&quot; to=&quot;pantalla2&quot;&gt;
+			&lt;action bean=&quot;flowAction&quot; method=&quot;bindAndValidate&quot;&gt;&lt;/action&gt;
+		&lt;/transition&gt;
+	&lt;/view-state&gt;
+	
+	&lt;view-state id=&quot;pantalla2&quot; view=&quot;pantalla2&quot;&gt;
+		&lt;transition on=&quot;submit&quot; to=&quot;decision&quot;/&gt;
+	&lt;/view-state&gt;
+
+
+	&lt;action-state id=&quot;decision&quot;&gt;
+	&lt;action bean=&quot;flowAction&quot; method=&quot;pruebaAction&quot;/&gt;
+        &lt;transition on=&quot;success&quot; to=&quot;pantallaChica&quot;/&gt;
+        &lt;transition on=&quot;error&quot; to=&quot;pantallaChico&quot;/&gt;
+	&lt;/action-state&gt;</pre>
+</div>In the state Pantalla 1 it executes the bindAndValuate method which does the following things:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">public Event bindAndValidate(RequestContext arg0) throws Exception {
+
+		Persona persona = new Persona();
+		persona.setGenero(&quot;F&quot;);
+		arg0.getFlowScope().put(&quot;persona&quot;, persona);
+		super.bindAndValidate(arg0);
+		return success();
+	}</pre>
+</div>We put the gendre to Female.<br />
+<br />
+In the jsp we can see that the Female radio button is checked (everithing seems to work fine) but if I change it to male and I  press the submit button it executes the PruebaAction method.<br />
+If the method pruebaAction from the flowAction returns a success Event we'll go to the girl view, and if it returns error, we'll go to the boy view.<br />
+In the method PruebaAction:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">public Event pruebaAction(RequestContext ctx){
+		Persona personaGet = null;
+	        personaGet = (Persona) ctx.getFlowScope().get(&quot;persona&quot;);
+
+		if(personaGet.getGenero().equals(&quot;M&quot;))		
+			return error();
+		else
+			return success();	
+	}</pre>
+</div>If we run in debug mode, we can see that the gender has not changed, it's still Female, eventhough I 've changed it in the jsp!!!! <br />
+My jsp is the following:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;form:form method=&quot;post&quot; commandName=&quot;persona&quot; &gt;
+ &lt;spring:message code=&quot;mainPage.genero&quot;/&gt;
+ &lt;hr/&gt;
+&lt;spring:bind path=&quot;persona.genero&quot;&gt;
+ &lt;form:radiobutton  path=&quot;genero&quot; value=&quot;M&quot;/&gt; &lt;spring:message code=&quot;mainPage.genero.masc&quot;/&gt;
+ &lt;form:radiobutton  path=&quot;genero&quot; value=&quot;F&quot;/&gt; &lt;spring:message code=&quot;mainPage.genero.fem&quot;/&gt;
+ &lt;/spring:bind&gt;
+ &lt;input type=&quot;hidden&quot; name=&quot;_flowExecutionKey&quot; value=&quot;${flowExecutionKey}&quot;/&gt;
+ &lt;input type=&quot;submit&quot;  name=&quot;_eventId_submit&quot;  value=&quot;Siguiente&quot;/&gt; 
+&lt;/form:form&gt;</pre>
+</div>please help, I' dont kwon why is not passing the things I chose from the jsp!<br />
+helppppp!!!!
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by maitri; Aug 30th, 2007 at <span class="time">07:35 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=139531" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=139531" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_139531" /></a>
+<a href="newreply.php?do=newreply&amp;p=139531" rel="nofollow" id="qr_139531" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 139531 popup menu -->
+<div class="vbmenu_popup" id="postmenu_139531_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">maitri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=28402">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=28402" rel="nofollow">Send a private message to maitri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=28402" rel="nofollow">Find all posts by maitri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=28402">Add maitri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 139531 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #139531 --><!-- post #139539 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit139539" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post139539" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=139539&amp;postcount=2" target="new" rel="nofollow" id="postcount139539" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=139539" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post139539"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 30th, 2007, 07:24 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_139539">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_139539", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_139539">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_139539">
+			
+			First of all you misunderstood some concepts.<br />
+<br />
+I suggest that you don't override the <a href="http://static.springframework.org/spring-webflow/docs/current/api/org/springframework/webflow/action/FormAction.html#bindAndValidate(org.springframework.webflow.execution.RequestContext)">bindAndValidate</a> method but implement the <a href="http://static.springframework.org/spring-webflow/docs/current/api/org/springframework/webflow/action/FormAction.html#createFormObject(org.springframework.webflow.execution.RequestContext)">createFormObject</a> method, for more information read the <a href="http://static.springframework.org/spring-webflow/docs/current/api/org/springframework/webflow/action/FormAction.html">FormAction</a> javadocs.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">protected Object createFormObject(RequestContext context) throws Exception {
+  Persona persona = new Persona();
+  persona.setGenero(&quot;F&quot;);  
+  return persona;
+}</pre>
+</div>Your configuration of your formaction should contain a setting of the formObjectName property and set it to persona.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;property name=&quot;formObjectName&quot; value=&quot;persona&quot;/&gt;</pre>
+</div>Your flow definition needs to chaneg also (you could even remove the pantalla1 if you want a screen with merely a next button?!).<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 354px;
+		text-align: left;
+		overflow: auto">&lt;start-state idref=&quot;pantalla1&quot;/&gt;
+
+&lt;view-state id=&quot;pantalla1&quot; view=&quot;pantalla1&quot;&gt;
+  &lt;transition on=&quot;submit&quot; to=&quot;pantalla2&quot;/&gt;
+&lt;/transition&gt;
+&lt;/view-state&gt;
+
+&lt;view-state id=&quot;pantalla2&quot; view=&quot;pantalla2&quot;&gt;
+  &lt;entry-actions&gt;
+    &lt;action bean=&quot;flowAction&quot; method=&quot;setupForm&quot;/&gt;
+  &lt;/entry-actions&gt;
+  &lt;transition on=&quot;submit&quot; to=&quot;decision&quot;&gt;
+    &lt;action bean=&quot;flowAction&quot; method=&quot;bindAndValidate&quot;/&gt;
+  &lt;/transition&gt;
+&lt;/view-state&gt;
+
+&lt;action-state id=&quot;decision&quot;&gt;
+  &lt;action bean=&quot;flowAction&quot; method=&quot;pruebaAction&quot;/&gt;
+  &lt;transition on=&quot;success&quot; to=&quot;pantallaChica&quot;/&gt;
+  &lt;transition on=&quot;error&quot; to=&quot;pantallaChico&quot;/&gt;
+&lt;/action-state&gt;</pre>
+</div>Next change your pruaba method<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">public Event pruebaAction(RequestContext ctx){
+  Persona personaGet = (Persona) getFormObject(ctx);
+  if(personaGet.getGenero().equals(&quot;M&quot;))
+    return error();
+  else
+    return success();
+}</pre>
+</div>Although I would replace it with a decision state.<br />
+<br />
+1) If you want a decision state create a isFemale() method in your Persona class.<br />
+2) Create the decision state<br />
+3) Remove the action state<br />
+4) remove the pruebaAction method<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">public class Persona {
+
+public boolean isFemale() {
+   return &quot;F&quot;.equals(genero);
+}
+
+}</pre>
+</div>The decision state<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;decision-state id=&quot;decision&quot;&gt;
+  &lt;if test=&quot;${flowScope.persona.female}&quot; then=&quot;pantallaChica&quot; else=&quot;pantallaChico&quot;/&gt;
+&lt;/decision-state&gt;</pre>
+</div><div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				If we run in debug mode, we can see that the gender has not changed, it's still Female, eventhough I 've changed it in the jsp!!!!
+			
+		</td>
+</tr>
+</table>
+</div>That is because you don't have a formObject (you simple place an object in the flowscope which is something different than a formObject) and you don't call bindAndValidate after chaning the gender. It isn't going to change automatically if you don't tell Spring Web Flow to bind(AndValidate).<br />
+<br />
+The example/code you posted shows me that you need to graps the basic. I strongly suggest that you take a look at the reference guide for Spring Web Flow and take a look at the samples shipped with Spring Web Flow.<br />
+<br />
+As a final note please use <font color="Red">[ code][/code ] </font>tags when posting code....
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by Marten Deinum; Aug 30th, 2007 at <span class="time">07:33 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=139539" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=139539" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_139539" /></a>
+<a href="newreply.php?do=newreply&amp;p=139539" rel="nofollow" id="qr_139539" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 139539 popup menu -->
+<div class="vbmenu_popup" id="postmenu_139539_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 139539 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #139539 --><!-- post #139542 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit139542" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post139542" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=139542&amp;postcount=3" target="new" rel="nofollow" id="postcount139542" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=139542" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post139542"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 30th, 2007, 07:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_139542">
+<a class="bigusername" href="member.php?u=28402">maitri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="maitri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_139542", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2007</div>
+<div>
+						Posts: 24
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_139542">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Thanks</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_139542">
+			
+			Thanks million, I try with that, I had my formObjectName and formObjectClass defined, but I didn't called the bindAndValidate methos. thanks very much.<br />
+Next time I post the code with the tags (sorry, I didn't kwow it)
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=139542" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=139542" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_139542" /></a>
+<a href="newreply.php?do=newreply&amp;p=139542" rel="nofollow" id="qr_139542" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 139542 popup menu -->
+<div class="vbmenu_popup" id="postmenu_139542_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">maitri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=28402">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=28402" rel="nofollow">Send a private message to maitri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=28402" rel="nofollow">Find all posts by maitri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=28402">Add maitri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 139542 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #139542 --><!-- post #139544 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit139544" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post139544" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=139544&amp;postcount=4" target="new" rel="nofollow" id="postcount139544" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=139544" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post139544"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 30th, 2007, 07:37 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_139544">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_139544", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_139544">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_139544">
+			
+			But you did override the <b>bindAndValidate</b> method so even calling it isn't going to work for you... Because your <b>bindAndValidate</b> method only creates a new object, sets some stuff and puts it in the flowScope...<br />
+<br />
+Try to work with the framework not against it or around it, that is making things much harder...
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=139544" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=139544" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_139544" /></a>
+<a href="newreply.php?do=newreply&amp;p=139544" rel="nofollow" id="qr_139544" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 139544 popup menu -->
+<div class="vbmenu_popup" id="postmenu_139544_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 139544 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #139544 --><!-- post #139586 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit139586" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post139586" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=139586&amp;postcount=5" target="new" rel="nofollow" id="postcount139586" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=139586" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post139586"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 30th, 2007, 09:37 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_139586">
+<a class="bigusername" href="member.php?u=28402">maitri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="maitri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_139586", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2007</div>
+<div>
+						Posts: 24
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_139586">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_139586">
+			
+			Thanks everything works fine with the action state. But If I change to the decision state <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;decision-state id=&quot;decision&quot;&gt;
+      &lt;if test=&quot;${flowScope.persona.genero=='F'}&quot; then=&quot;pantallaChica&quot; else=&quot;pantallaChico&quot;/&gt;
+&lt;/decision-state&gt;</pre>
+</div>it raises a NumberFormatException, I have read about that happening with SpringWebFlow, and everyone points to OGNL, but I 've got the OGNL library in my project and still raising the exception.<br />
+Thanks very much for everything, it really helped me.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=139586" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=139586" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_139586" /></a>
+<a href="newreply.php?do=newreply&amp;p=139586" rel="nofollow" id="qr_139586" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 139586 popup menu -->
+<div class="vbmenu_popup" id="postmenu_139586_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">maitri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=28402">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=28402" rel="nofollow">Send a private message to maitri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=28402" rel="nofollow">Find all posts by maitri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=28402">Add maitri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 139586 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #139586 --><div id="lastpost"></div></div></body></html>

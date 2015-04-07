@@ -1,0 +1,909 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #112540 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit112540" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post112540" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=112540&amp;postcount=1" target="new" rel="nofollow" id="postcount112540" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=112540" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post112540"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 9th, 2007, 10:20 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_112540">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_112540", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_112540">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>[SWF-287] Add EL support to spring-binding</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_112540">
+			
+			With an eye towards further improving the JSF support in SWF, I have created a new JIRA issue as a proposal for adding EL support to spring-binding:<br />
+<a href="http://opensource.atlassian.com/projects/spring/browse/SWF-287" target="_blank" rel="nofollow">http://opensource.atlassian.com/proj...browse/SWF-287</a><br />
+<br />
+The idea for this enhancement started with the desire of SWF+JSF users to have access to JSF managed beans from within the flow definition.  Adding EL support to spring-binding will make it easier to enable such features.  I believe that this could potentially be useful to users of other view technologies as well, for example if using JSP 2.1 it would also be conceivable to provide access to the implicit EL variables such as requestScope and sessionScope.<br />
+<br />
+Along with the JIRA issue, I have submitted a first pass at the added EL support.  The proposed implementation is comprised of the following classes:<br />
+<br />
+<b>ELExpressionParser</b> - An implementation of org.springframework.binding.expression.ExpressionP  arser that is the initial integration point for enabling EL expressions.  EL support is enabled by defining this class as a bean in the Spring context and injecting it into the flow registry as in the following example:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;!-- Creates the registry of flow definitions for this application --&gt;
+&lt;bean id=&quot;flowRegistry&quot; class=&quot;org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean&quot;&gt;
+    &lt;property name=&quot;expressionParser&quot; ref=&quot;elExpressionParser&quot;/&gt;
+    &lt;property name=&quot;flowLocations&quot; 
+                  value=&quot;/WEB-INF/flows/sellitem-flow.xml&quot;/&gt;
+&lt;/bean&gt;
+	
+&lt;bean id=&quot;elExpressionParser&quot; class=&quot;org.springframework.binding.expression.support.ELExpressionParser&quot;/&gt;</pre>
+</div><b>ELExpression</b> - An implementation of org.springframework.binding.expression.SettableExp  ression that wraps an instance of javax.el.ValueExpression.<br />
+<br />
+<b>DelegatingELContext</b> - A very simple implementation of javax.el.ELContext that is ultimately meant to be used to aggregate the ELResolvers of other configured ELContexts such as that of JSF by wrapping them in a CompositeELResolver.<br />
+<br />
+<b>DefaultELResolver</b> - ELResolver to be used as the base resolver in DelegatingELContext if no other resolvers are configured.  This enables standalone use of EL in place of OGNL in a Java 5 environment.<br />
+<br />
+Also attached to the JIRA are unit tests and a version of the SWF + Spring MVC sellitem example application that has been modified to use EL in place of OGNL.<br />
+<br />
+I would appreciate any feedback on the issue.  In the meantime I will continue exploring the use of this implementation to enable JSF-aware EL expressions in the flow definition.  I will be sure to include support for JSF 1.1 for those not yet using Java 5 or JSF 1.2.<br />
+<br />
+Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=112540" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=112540" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_112540" /></a>
+<a href="newreply.php?do=newreply&amp;p=112540" rel="nofollow" id="qr_112540" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 112540 popup menu -->
+<div class="vbmenu_popup" id="postmenu_112540_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 112540 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #112540 --><!-- post #115338 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit115338" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post115338" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=115338&amp;postcount=2" target="new" rel="nofollow" id="postcount115338" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=115338" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post115338"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 21st, 2007, 09:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_115338">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_115338", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_115338">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_115338">
+			
+			I've added some new patches and an EL-based number guess example app to the JIRA.  <br />
+<br />
+The significant changes to the patch include:<br />
+<br />
+<b>DelegatingELContext</b> - Where in the first pass I was simply merging in a delegate context's ELResolvers, I am now actually storing the delegate contexts in a List as well.  I found this to be necessary when merging in the JSF ELContext, for example, because some of the JSF resolvers need access to the FacesContext which is stored in a Map in the JSF ELContext.<br />
+<br />
+<b>ELExpressionParser</b> - I had to further enhance this class in order to support the method invoking functionality that is commonly used in an SWF evalutate-action.  The unified EL has no out-of-the-box support for parsing an expression such as foo.bar(baz.moo) as an EL MethodExpression.  The approach I took was to break such an expression up into pieces, storing the method part of the expression for deferred parsing at evaluation time, and storing any arguments as parsed ValueExpressions.  This allows for a method-matching algorithm that is similar to that used in OGNL, while still using the EL spec's MethodExpression class to perform the method invocation.      In adding this functionality, I refactored the previous <b>ELExpression</b> into <b>ELValueExpression</b> and <b>ELMethodExpression</b>.<br />
+<br />
+Several new unit tests are included in the revised patch that exercise this new method parsing functionality, but they could stand to be filled out with some expected failure cases.<br />
+<br />
+The revised number guess example app demonstrates that no other changes are required other than swapping out the ExpressionParser implementation when using standalone in Spring MVC.<br />
+<br />
+Again, any feedback would be appreciated.   These changes have made it extremely simple to implement the ability to access JSF managed beans from the SWF flow definition anywhere that expressions are currently supported.    I will be adding that patch later today to a seperate JIRA issue.<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=115338" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=115338" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_115338" /></a>
+<a href="newreply.php?do=newreply&amp;p=115338" rel="nofollow" id="qr_115338" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 115338 popup menu -->
+<div class="vbmenu_popup" id="postmenu_115338_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 115338 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #115338 --><!-- post #115366 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit115366" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post115366" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=115366&amp;postcount=3" target="new" rel="nofollow" id="postcount115366" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=115366" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post115366"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 21st, 2007, 02:37 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_115366">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_115366", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_115366">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_115366">
+			
+			Nice work!<br />
+I'll try to check out the implementation next week.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=115366" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=115366" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_115366" /></a>
+<a href="newreply.php?do=newreply&amp;p=115366" rel="nofollow" id="qr_115366" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 115366 popup menu -->
+<div class="vbmenu_popup" id="postmenu_115366_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 115366 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #115366 --><!-- post #115649 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit115649" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post115649" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=115649&amp;postcount=4" target="new" rel="nofollow" id="postcount115649" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=115649" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post115649"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 23rd, 2007, 01:28 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_115649">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_115649", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_115649">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_115649">
+			
+			One additional item to note...the way that I implemented the method invocations is a bit of a hack overall.  I'm just doing some simple pattern-matching on the expressions to break them up into the needed parts.  The ideal way to handle this would be to actually roll the method handling into the EL parser implementation.  It appears that Jacob Hookom (Facelets, etc.) has already created an extended EL parser that will not only handle these sorts of method invocations, but also projections (another feature of OGNL that EL doesn't support directly in the spec).  It looks like his extension is going to be released as a JBoss project, mainly in order to support these features in Seam.  I'm thinking a better solution than my current hack would be to try and get the same functionality working with this new parser.  The current implementation already has a direct dependency on the Sun EL RI, so the net effect would essentially just be swapping one direct dependency for another.  <br />
+<br />
+Any thoughts?<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=115649" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=115649" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_115649" /></a>
+<a href="newreply.php?do=newreply&amp;p=115649" rel="nofollow" id="qr_115649" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 115649 popup menu -->
+<div class="vbmenu_popup" id="postmenu_115649_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 115649 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #115649 --><!-- post #115777 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit115777" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post115777" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=115777&amp;postcount=5" target="new" rel="nofollow" id="postcount115777" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=115777" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post115777"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 24th, 2007, 03:32 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_115777">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_115777", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_115777">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_115777">
+			
+			That certainly sounds like a better alternative. I don't think we want to maintain our own EL dialect as a side project of SWF.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=115777" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=115777" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_115777" /></a>
+<a href="newreply.php?do=newreply&amp;p=115777" rel="nofollow" id="qr_115777" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 115777 popup menu -->
+<div class="vbmenu_popup" id="postmenu_115777_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 115777 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #115777 --><!-- post #115887 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit115887" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post115887" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=115887&amp;postcount=6" target="new" rel="nofollow" id="postcount115887" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=115887" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post115887"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 24th, 2007, 08:30 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_115887">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_115887", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_115887">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_115887">
+			
+			Definitely, I agree.  I will go ahead and look at swapping out the parser implementation over the next couple of days.<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=115887" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=115887" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_115887" /></a>
+<a href="newreply.php?do=newreply&amp;p=115887" rel="nofollow" id="qr_115887" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 115887 popup menu -->
+<div class="vbmenu_popup" id="postmenu_115887_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 115887 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #115887 --><!-- post #120109 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit120109" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post120109" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=120109&amp;postcount=7" target="new" rel="nofollow" id="postcount120109" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=120109" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post120109"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 15th, 2007, 06:55 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_120109">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_120109", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_120109">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_120109">
+			
+			Well, obviously it's been more than a couple of days since I've gotten a chance to revisit this (I've had to divert my attention to some mainframe integration code for the last couple of weeks...lots of fun), but today I did finally get that opportunity and it took me all of 20 minutes to elmiminate the method parsing hack by swapping out the Sun EL implementation for JBoss-EL and get all of the same tests passing...a testament to Jacob's solid-as-usual work.  <br />
+<br />
+Basically, the ELExpressionParser now looks just as it did in the first patch, with the exception of using the new ExpressionFactory implementation...no more need to parse the method expressions differently.<br />
+<br />
+I have plugged this into the revised example apps to doubly verify that everything still works as expected, and I have submitted the much-simplified patch.<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by jeremyg484; May 15th, 2007 at <span class="time">11:09 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=120109" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=120109" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_120109" /></a>
+<a href="newreply.php?do=newreply&amp;p=120109" rel="nofollow" id="qr_120109" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 120109 popup menu -->
+<div class="vbmenu_popup" id="postmenu_120109_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 120109 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #120109 --><!-- post #121039 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit121039" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post121039" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=121039&amp;postcount=8" target="new" rel="nofollow" id="postcount121039" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=121039" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post121039"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 21st, 2007, 06:04 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_121039">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_121039", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_121039">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_121039">
+			
+			Great!<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ervacon - <a href="http://www.ervacon.com/products/swf" target="_blank">http://www.ervacon.com/products/swf</a><br />
+Working with Spring Web Flow - <a href="http://www.ervacon.com/products/swfbook" target="_blank">http://www.ervacon.com/products/swfbook</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=121039" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=121039" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_121039" /></a>
+<a href="newreply.php?do=newreply&amp;p=121039" rel="nofollow" id="qr_121039" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 121039 popup menu -->
+<div class="vbmenu_popup" id="postmenu_121039_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 121039 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #121039 --><div id="lastpost"></div></div></body></html>

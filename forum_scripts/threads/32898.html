@@ -1,0 +1,1259 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #92173 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92173" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92173" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92173&amp;postcount=1" target="new" rel="nofollow" id="postcount92173" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92173" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92173"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 21st, 2006, 06:56 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92173">
+<a class="bigusername" href="member.php?u=17367">ghettojava</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ghettojava is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92173", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: Maryland</div>
+<div>
+						Posts: 22
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '17367', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('msn', '17367', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '17367', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('skype', '17367', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/xaymaca2020" alt="Send a message via Skype&trade; to ghettojava" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92173">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Help with a web flow config</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92173">
+			
+			Hello.<br />
+I am using a demo of a cas server that is implemeted using Spring Web Flow.<br />
+<br />
+<br />
+I am getting this exception:<br />
+[java.lang.NoSuchMethodException: indexOf(java.lang.Character)] <br />
+<br />
+<br />
+that I think is being triggered by the &quot;indexOf('?')&quot; in this line in login-webflow.xml on the server:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">    &lt;end-state id=&quot;redirect&quot;
+        view=&quot;externalRedirect:${ externalContext.requestParameterMap['service']}${requestScope.ticket == null ? '' : (externalContext.requestParameterMap['service'].indexOf('?') != -1 ? '&amp;amp;' : '?') + 'ticket=' + requestScope.ticket}&quot; /&gt;</pre>
+</div><br />
+The full exception follows:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 274px;
+		text-align: left;
+		overflow: auto">8:05:31.496] org.springframework.web.util.NestedServletException: 
+Request processing failed; nested exception is org.springframework.binding.expression.EvaluationException: 
+Expression [EvaluationAttempt@99e98c expression = (requestScope.ticket == null) ? &quot;&quot; : (((externalContext.requestParameterMap[&quot;service&quot;].indexOf('?') != -1) ? '&amp;' : '?') + &quot;ticket=&quot; + requestScope.ticket), target = [RequestControlContextImpl@b3f813 
+externalContext = [ServletExternalContext@63bb3e requestParameterMap = map['lt' -&gt; '_cCDB5067F-28F5-085C-2A83-521065C289DA_kB1E777B5-5491-FE83-F0FE-18C17DC4F416', 'service' -&gt; 
+array&lt;String&gt;['https://demo.aaxistechnologies.com/ProjectBuilder/j_acegi_cas_security_check;jsessionid=abcp4lqggln11fk6TqN_q',
+ 'https%3A%2F%2Fdemo.aaxistechnologies.com%2FProjectBuilder%2Fj_acegi_cas_security_check'], 'username' -&gt; 'vstoessel', '_eventId' -&gt; 'submit',
+ 'password' -&gt; 'cc']], requestScope = map['ticket' -&gt; 'ST-5-3Yk5aOAAndRmvXSaRiF2JrPr2Ew4xBsiR6N-20', 'ticketGrantingTicketId' -&gt; 'TGT-5-wljZ9sNRXyPauL1m2Q4tT9F7ORLFvuOIBFr-50'], attributes = map[[empty]], flowExecution = [FlowExecutionImpl@9a1d9a flow = 'login-webflow', flowSessions = list[[FlowSessionImpl@d8fb9 flow = 'login-webflow', state = 'redirect', scope = map['credentials' -&gt; vstoessel, 'currentFormObject' -&gt; vstoessel], flashMap = map['org.springframework.validation.BindException.credentials' -&gt; org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 0 errors, 'org.springframework.validation.BindException.currentFormObject' -&gt; org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 0 errors], 
+status = Active]]]], evaluationAttributes = map[[empty]]] failed - make sure the expression is evaluatable on the target object; nested exception is ognl.MethodFailedException: Method &quot;indexOf&quot; failed for object [Ljava.lang.String;@4c6578 [java.lang.NoSuchMethodException: indexOf(java.lang.Character)]
+[18:05:31.496] Caused by: org.springframework.binding.expression.EvaluationException: Expression [EvaluationAttempt@99e98c 
+expression = (requestScope.ticket == null) ? &quot;&quot; : (((externalContext.requestParameterMap[&quot;service&quot;].indexOf('?') != -1) ? '&amp;' : '?') + &quot;ticket=&quot; + requestScope.ticket), 
+target = [RequestControlContextImpl@b3f813 externalContext = [ServletExternalContext@63bb3e 
+requestParameterMap = map['lt' -&gt; '_cCDB5067F-28F5-085C-2A83-521065C289DA_kB1E777B5-5491-FE83-F0FE-18C17DC4F416', 'service' -&gt; array&lt;String&gt;['https://demo.dd.com/ProjectBuilder/j_acegi_cas_security_check;jsessionid=abcp4lqggln11fk6TqN_q', 'https%3A%2F%2Fdemo.aaxistechnologies.com%2FProjectBuilder%2Fj_acegi_cas_security_check'], 'username' -&gt; 'vstoessel', '_eventId' -&gt; 'submit', 'password' -&gt; 'cc']], requestScope = map['ticket' -&gt; 'ST-5-3Yk5aOAAndRmvXSaRiF2JrPr2Ew4xBsiR6N-20', 'ticketGrantingTicketId' -&gt; 'TGT-5-wljZ9sNRXyPauL1m2Q4tT9F7ORLFvuOIBFr-50'], attributes = map[[empty]], flowExecution = [FlowExecutionImpl@9a1d9a flow = 'login-webflow', flowSessions = list[[FlowSessionImpl@d8fb9 flow = 'login-webflow', state = 'redirect', scope = map['credentials' -&gt; vstoessel, 'currentFormObject' -&gt; vstoessel], flashMap = map['org.springframework.validation.BindException.credentials' -&gt; org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 0 errors, 'org.springframework.validation.BindException.currentFormObject' -&gt; org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 0 errors], status = Active]]]], evaluationAttributes = map[[empty]]] failed - make sure the expression is evaluatable on the target object; nested exception is ognl.MethodFailedException: Method &quot;indexOf&quot; failed for object [Ljava.lang.String;@4c6578 [java.lang.NoSuchMethodException: indexOf(java.lang.Character)]
+[18:05:31.496] Caused by: ognl.MethodFailedException: Method &quot;indexOf&quot; failed for object [Ljava.lang.String;@4c6578 [java.lang.NoSuchMethodException: indexOf(java.lang.Character)]
+[18:05:31.496]  at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:796)
+[18:05:31.496]  at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:61)
+[18:05:31.496]  at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:819)</pre>
+</div>I'm also talking to the CAS guys but I wanted to see if this web flow xml seemed right to the experts, problem line is near the end of the file (&lt;end-state id=&quot;redirect&quot;) :<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;flow xmlns=&quot;http://www.springframework.org/schema/webflow&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd&quot;&gt;
+
+	&lt;start-state idref=&quot;automaticCookiePathSetter&quot; /&gt;
+
+	&lt;action-state id=&quot;automaticCookiePathSetter&quot;&gt;
+		&lt;action bean=&quot;automaticCookiePathSetterAction&quot; /&gt;
+		&lt;transition on=&quot;success&quot;
+			to=&quot;ticketGrantingTicketExistsCheckAction&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;ticketGrantingTicketExistsCheckAction&quot;&gt;
+		&lt;action bean=&quot;ticketGrantingTicketExistsAction&quot; /&gt;
+		&lt;transition on=&quot;ticketGrantingTicketExists&quot;
+			to=&quot;hasServiceCheck&quot; /&gt;
+		&lt;transition on=&quot;noTicketGrantingTicketExists&quot;
+			to=&quot;gatewayRequestCheck&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;gatewayRequestCheck&quot;&gt;
+		&lt;action bean=&quot;gatewayRequestCheckAction&quot; /&gt;
+		&lt;transition on=&quot;gateway&quot; to=&quot;redirect&quot; /&gt;
+		&lt;transition on=&quot;authenticationRequired&quot; to=&quot;viewLoginForm&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;hasServiceCheck&quot;&gt;
+		&lt;action bean=&quot;hasServiceCheckAction&quot; /&gt;
+		&lt;transition on=&quot;authenticatedButNoService&quot;
+			to=&quot;viewGenericLoginSuccess&quot; /&gt;
+		&lt;transition on=&quot;hasService&quot; to=&quot;renewRequestCheck&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;renewRequestCheck&quot;&gt;
+		&lt;action bean=&quot;renewRequestCheckAction&quot; /&gt;
+		&lt;transition on=&quot;authenticationRequired&quot; to=&quot;viewLoginForm&quot; /&gt;
+		&lt;transition on=&quot;generateServiceTicket&quot;
+			to=&quot;generateServiceTicket&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;!-- 
+		&lt;action-state id=&quot;startAuthenticate&quot;&gt;
+		&lt;action bean=&quot;x509Check&quot; /&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;sendTicketGrantingTicket&quot; /&gt;
+		&lt;transition on=&quot;error&quot; to=&quot;viewLoginForm&quot; /&gt;
+		&lt;/action-state&gt;
+	--&gt;
+	&lt;view-state id=&quot;viewLoginForm&quot; view=&quot;casLoginView&quot;&gt;
+		&lt;transition on=&quot;submit&quot; to=&quot;bindAndValidate&quot; /&gt;
+	&lt;/view-state&gt;
+
+	&lt;action-state id=&quot;bindAndValidate&quot;&gt;
+		&lt;action bean=&quot;authenticationViaFormAction&quot; /&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;submit&quot; /&gt;
+		&lt;transition on=&quot;error&quot; to=&quot;viewLoginForm&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;submit&quot;&gt;
+		&lt;action bean=&quot;authenticationViaFormAction&quot; method=&quot;submit&quot; /&gt;
+		&lt;transition on=&quot;warn&quot; to=&quot;warn&quot; /&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;sendTicketGrantingTicket&quot; /&gt;
+		&lt;transition on=&quot;error&quot; to=&quot;viewLoginForm&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;sendTicketGrantingTicket&quot;&gt;
+		&lt;action bean=&quot;sendTicketGrantingTicketAction&quot; /&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;serviceCheck&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;serviceCheck&quot;&gt;
+		&lt;action bean=&quot;hasServiceCheckAction&quot; /&gt;
+		&lt;transition on=&quot;authenticatedButNoService&quot;
+			to=&quot;viewGenericLoginSuccess&quot; /&gt;
+		&lt;transition on=&quot;hasService&quot; to=&quot;generateServiceTicket&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;action-state id=&quot;generateServiceTicket&quot;&gt;
+		&lt;action bean=&quot;generateServiceTicketAction&quot; /&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;warn&quot; /&gt;
+		&lt;transition on=&quot;error&quot; to=&quot;viewLoginForm&quot; /&gt;
+		&lt;transition on=&quot;gateway&quot; to=&quot;redirect&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;!-- 
+		The &quot;warn&quot; action makes the determination of whether to redirect directly to the requested
+		service or display the &quot;confirmation&quot; page to go back to the server.
+	--&gt;
+	&lt;action-state id=&quot;warn&quot;&gt;
+		&lt;action bean=&quot;warnAction&quot; /&gt;
+		&lt;transition on=&quot;redirect&quot; to=&quot;redirect&quot; /&gt;
+		&lt;transition on=&quot;warn&quot; to=&quot;showWarningView&quot; /&gt;
+	&lt;/action-state&gt;
+
+	&lt;!-- 
+		the &quot;viewGenericLogin&quot; is the end state for when a user attempts to login without coming directly from a service.
+		They have only initialized their single-sign on session.
+	--&gt;
+	&lt;end-state id=&quot;viewGenericLoginSuccess&quot;
+		view=&quot;casLoginGenericSuccessView&quot; /&gt;
+
+
+	&lt;!-- 
+		The &quot;showWarningView&quot; end state is the end state for when the user has requested privacy settings (to be &quot;warned&quot;) to be turned on.  It delegates to a 
+		view defines in default_views.properties that display the &quot;Please click here to go to the service.&quot; message.
+	--&gt;
+	&lt;end-state id=&quot;showWarningView&quot; view=&quot;casLoginConfirmView&quot; /&gt;
+
+	&lt;!-- 
+		The &quot;redirect&quot; end state allows CAS to properly end the workflow while still redirecting
+		the user back to the service required.
+	--&gt;
+	&lt;end-state id=&quot;redirect&quot;
+		view=&quot;externalRedirect:${externalContext.requestParameterMap['service']}${requestScope.ticket == null ? '' : (externalContext.requestParameterMap['service'].indexOf('?') != -1 ? '&amp;amp;' : '?') + 'ticket=' + requestScope.ticket}&quot; /&gt;
+		
+	&lt;global-transitions&gt;
+		&lt;transition to=&quot;viewServiceErrorView&quot;
+			on-exception=&quot;org.jasig.cas.services.UnauthorizedServiceException&quot; /&gt;
+	&lt;/global-transitions&gt;
+&lt;/flow&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92173" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92173" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92173" /></a>
+<a href="newreply.php?do=newreply&amp;p=92173" rel="nofollow" id="qr_92173" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92173 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92173_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ghettojava</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17367">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17367" rel="nofollow">Send a private message to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17367" rel="nofollow">Send email to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ghettojava.com">Visit ghettojava's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17367" rel="nofollow">Find all posts by ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17367">Add ghettojava to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92173 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92173 --><!-- post #92220 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92220" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92220" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92220&amp;postcount=2" target="new" rel="nofollow" id="postcount92220" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92220" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92220"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 22nd, 2006, 04:12 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92220">
+<a class="bigusername" href="member.php?u=18150">jamesclinton</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jamesclinton is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92220", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>Location: London</div>
+<div>
+						Posts: 492
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92220">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92220">
+			
+			Sounds like a jar library issue. Check you dont have 2 jars of different versions deployed.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92220" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92220" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92220" /></a>
+<a href="newreply.php?do=newreply&amp;p=92220" rel="nofollow" id="qr_92220" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92220 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92220_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jamesclinton</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18150">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18150" rel="nofollow">Send a private message to jamesclinton</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18150" rel="nofollow">Send email to jamesclinton</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18150" rel="nofollow">Find all posts by jamesclinton</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18150">Add jamesclinton to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92220 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92220 --><!-- post #92240 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92240" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92240" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92240&amp;postcount=3" target="new" rel="nofollow" id="postcount92240" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92240" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92240"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 22nd, 2006, 05:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92240">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92240", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92240">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92240">
+			
+			You are correct that the problem is caused during the evaluation of the view expression. The following part of the exception message seems pretty descriptive:<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Caused by: ognl.MethodFailedException: Method &quot;indexOf&quot; failed for object [Ljava.lang.String;@4c6578 [java.lang.NoSuchMethodException: indexOf(java.lang.Character)]
+			
+		</td>
+</tr>
+</table>
+</div>There is no method indexOf on the String class that takes a Character object wrapper argument. It seems like OGNL is treating the '?' as on object rather than a primitive. I can imagine that this could work on a Java 5 environment but not on Java 1.3 or Java 1.4, but I haven't verified that.<br />
+<br />
+Anyway, this is not a SWF issue but an ONGL issue. Check <a href="http://www.ognl.org" target="_blank" rel="nofollow">www.ognl.org</a> for more details about the expression language used by SWF.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92240" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92240" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92240" /></a>
+<a href="newreply.php?do=newreply&amp;p=92240" rel="nofollow" id="qr_92240" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92240 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92240_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92240 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92240 --><!-- post #92323 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92323" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92323" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92323&amp;postcount=4" target="new" rel="nofollow" id="postcount92323" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92323" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92323"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 22nd, 2006, 11:48 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92323">
+<a class="bigusername" href="member.php?u=17367">ghettojava</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ghettojava is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92323", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: Maryland</div>
+<div>
+						Posts: 22
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '17367', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('msn', '17367', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '17367', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('skype', '17367', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/xaymaca2020" alt="Send a message via Skype&trade; to ghettojava" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92323">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92323">
+			
+			FYI: <br />
+Definitely in a java 5 enviroment. Also, just for laughs I tried putting in the unicode &quot;code&quot; and got this exception:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">nested exception is ognl.MethodFailedException: Method &quot;indexOf&quot; failed for object [Ljava.lang.String;@d21e14 [java.lang.NoSuchMethodException: indexOf(java.lang.String)]
+[11:42:05.161] Caused by: ognl.MethodFailedException: Method &quot;indexOf&quot; failed for object [Ljava.lang.String;@d21e14 [java.lang.NoSuchMethodException: indexOf(java.lang.String)]</pre>
+</div>Not exactly what one would expect from String.indexOf() .<br />
+Being that I am not a web flow expert, I wanted to know if there is an alternate syntax I can use to redirect to an external url? I will continue the ognl portion of the discussion over at ognl.org as suggested.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92323" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92323" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92323" /></a>
+<a href="newreply.php?do=newreply&amp;p=92323" rel="nofollow" id="qr_92323" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92323 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92323_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ghettojava</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17367">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17367" rel="nofollow">Send a private message to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17367" rel="nofollow">Send email to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ghettojava.com">Visit ghettojava's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17367" rel="nofollow">Find all posts by ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17367">Add ghettojava to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92323 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92323 --><!-- post #92366 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92366" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92366" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92366&amp;postcount=5" target="new" rel="nofollow" id="postcount92366" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92366" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92366"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 22nd, 2006, 03:16 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92366">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92366", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92366">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92366">
+			
+			What the flow is doing there is using an OGNL expression to calculate the url in a SWF ViewSelector, in this case an ExternalRedirectSelector.<br />
+You could just code a custom ViewSelector and reference that using the bean: syntax. Check the SWF XSD docs and TextToViewSelector JavaDocs for details.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by klr8; Dec 22nd, 2006 at <span class="time">03:51 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92366" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92366" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92366" /></a>
+<a href="newreply.php?do=newreply&amp;p=92366" rel="nofollow" id="qr_92366" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92366 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92366_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92366 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92366 --><!-- post #92665 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92665" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92665" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92665&amp;postcount=6" target="new" rel="nofollow" id="postcount92665" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92665" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92665"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 27th, 2006, 01:05 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92665">
+<a class="bigusername" href="member.php?u=17367">ghettojava</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ghettojava is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92665", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: Maryland</div>
+<div>
+						Posts: 22
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '17367', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('msn', '17367', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '17367', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('skype', '17367', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/xaymaca2020" alt="Send a message via Skype&trade; to ghettojava" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92665">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92665">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>klr8</strong>
+<a href="showthread.php?p=92240#post92240" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic"><br />
+Anyway, this is not a SWF issue but an ONGL issue. Check <a href="http://www.ognl.org" target="_blank" rel="nofollow">www.ognl.org</a> for more details about the expression language used by SWF.<br />
+<br />
+Erwin</div>
+</td>
+</tr>
+</table>
+</div>Just an FYI the mailing list at ognl.org are no longer available. Everything has been moved to opensymphony.org. I spoke to the author of OGNL (Drew) , he was saying that development has been kind of slow lately. Hopefully it will pick up if more people get involved with it.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92665" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92665" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92665" /></a>
+<a href="newreply.php?do=newreply&amp;p=92665" rel="nofollow" id="qr_92665" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92665 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92665_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ghettojava</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17367">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17367" rel="nofollow">Send a private message to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17367" rel="nofollow">Send email to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ghettojava.com">Visit ghettojava's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17367" rel="nofollow">Find all posts by ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17367">Add ghettojava to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92665 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92665 --><!-- post #92707 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92707" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92707" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92707&amp;postcount=7" target="new" rel="nofollow" id="postcount92707" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92707" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92707"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 27th, 2006, 06:35 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92707">
+<a class="bigusername" href="member.php?u=17367">ghettojava</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ghettojava is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92707", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: Maryland</div>
+<div>
+						Posts: 22
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '17367', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('msn', '17367', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '17367', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('skype', '17367', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/xaymaca2020" alt="Send a message via Skype&trade; to ghettojava" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92707">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon7.gif" alt="Smile" border="0" />
+<strong>Help with a web flow config: Problem resolved</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92707">
+			
+			It appears as if the problem was caused by that fact that <br />
+externalContext.requestParameterMap['service'] sometimes return a String in the form of a url (expected result) and othertimes it will return a String array (which is why indexOf() failed earlier) of 2 elements; <br />
+[0] a plain string url <br />
+and <br />
+[1] a urlencoded url. <br />
+Very weird.<br />
+Anyway, I believe in fighting voodoo with voodoo. This incantation to check for an array  is working for me now:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 210px;
+		text-align: left;
+		overflow: auto">        &lt;end-state id=&quot;redirect&quot;
+view=&quot;externalRedirect:${
+externalContext.requestParameterMap['service'].getClass().isArray() ?
+  externalContext.requestParameterMap['service'][0]   : externalContext.requestParameterMap['service']
+}${requestScope.ticket == null ? '' :
+   (
+      (externalContext.requestParameterMap['service'].getClass().isArray() ?
+     externalContext.requestParameterMap['service'][0].indexOf('?')
+   : externalContext.requestParameterMap['service'].indexOf('?')
+    )
+     != -1 ? '&amp;amp;'   : '?') + 'ticket=' + requestScope.ticket}&quot;
+/&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92707" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92707" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92707" /></a>
+<a href="newreply.php?do=newreply&amp;p=92707" rel="nofollow" id="qr_92707" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92707 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92707_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ghettojava</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17367">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17367" rel="nofollow">Send a private message to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17367" rel="nofollow">Send email to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ghettojava.com">Visit ghettojava's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17367" rel="nofollow">Find all posts by ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17367">Add ghettojava to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92707 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92707 --><!-- post #92711 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92711" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post92711" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92711&amp;postcount=8" target="new" rel="nofollow" id="postcount92711" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92711" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92711"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 27th, 2006, 08:04 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92711">
+<a class="bigusername" href="member.php?u=17367">ghettojava</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ghettojava is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92711", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: Maryland</div>
+<div>
+						Posts: 22
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '17367', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('msn', '17367', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '17367', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to ghettojava" border="0" /></a> <a href="#" onclick="imwindow('skype', '17367', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/xaymaca2020" alt="Send a message via Skype&trade; to ghettojava" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92711">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92711">
+			
+			ugh, I figured out the problem a request parameter (service) was being sent twice. No Spring Web flow problem at all.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>ghettojava</strong>
+<a href="showthread.php?p=92707#post92707" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">It appears as if the problem was caused by that fact that <br />
+externalContext.requestParameterMap['service'] sometimes return a String in the form of a url (expected result) and othertimes it will return a String array (which is why indexOf() failed earlier) of 2 elements; <br />
+[0] a plain string url <br />
+and <br />
+[1] a urlencoded url. <br />
+Very weird.<br />
+Anyway, I believe in fighting voodoo with voodoo. This incantation to check for an array  is working for me now:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 210px;
+		text-align: left;
+		overflow: auto">        &lt;end-state id=&quot;redirect&quot;
+view=&quot;externalRedirect:${
+externalContext.requestParameterMap['service'].getClass().isArray() ?
+  externalContext.requestParameterMap['service'][0]   : externalContext.requestParameterMap['service']
+}${requestScope.ticket == null ? '' :
+   (
+      (externalContext.requestParameterMap['service'].getClass().isArray() ?
+     externalContext.requestParameterMap['service'][0].indexOf('?')
+   : externalContext.requestParameterMap['service'].indexOf('?')
+    )
+     != -1 ? '&amp;amp;'   : '?') + 'ticket=' + requestScope.ticket}&quot;
+/&gt;</pre>
+</div></div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92711" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92711" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92711" /></a>
+<a href="newreply.php?do=newreply&amp;p=92711" rel="nofollow" id="qr_92711" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92711 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92711_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ghettojava</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17367">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17367" rel="nofollow">Send a private message to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=17367" rel="nofollow">Send email to ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ghettojava.com">Visit ghettojava's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17367" rel="nofollow">Find all posts by ghettojava</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17367">Add ghettojava to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92711 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92711 --><!-- post #92725 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit92725" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post92725" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=92725&amp;postcount=9" target="new" rel="nofollow" id="postcount92725" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=92725" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post92725"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 28th, 2006, 03:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_92725">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_92725", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_92725">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_92725">
+<img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /><br />
+<br />
+That's definately better than that OGNL voodoo incantation you had going at first!<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=92725" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=92725" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_92725" /></a>
+<a href="newreply.php?do=newreply&amp;p=92725" rel="nofollow" id="qr_92725" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 92725 popup menu -->
+<div class="vbmenu_popup" id="postmenu_92725_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 92725 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #92725 --><div id="lastpost"></div></div></body></html>

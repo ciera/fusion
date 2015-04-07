@@ -1,0 +1,1726 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="vBulletin 3.8.4" />
+  <meta name="keywords" content="spring framework,vbulletin,forum,discussion,bulletin board" />
+  <meta name="description" content="Spring Framework Support Forums" />
+  <!-- CSS Stylesheet -->
+  <style type="text/css" id="vbulletin_css">
+   /**
+* vBulletin 3.8.4 CSS
+* Style: 'Default Style'; Style ID: 1
+*/
+body
+{
+	background: #FFFFFF;
+	color: #000000;
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	margin: 5px 0px 10px 0px;
+	padding: 0px;
+}
+a:link, body_alink
+{
+	color: #22229C;
+}
+a:visited, body_avisited
+{
+	color: #22229C;
+}
+a:hover, a:active, body_ahover
+{
+	color: #FF4400;
+}
+.page
+{
+	background: #FFFFFF;
+	color: #000000;
+}
+td, th, p, li
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.tborder
+{
+	background: #D1D1E1;
+	color: #000000;
+	border: 1px solid #0B198C;
+}
+.tcat
+{
+	background: #004812;
+	color: #FFFFFF;
+	font: bold 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.tcat a:link, .tcat_alink
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.tcat a:visited, .tcat_avisited
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.tcat a:hover, .tcat a:active, .tcat_ahover
+{
+	color: #FFFF66;
+	text-decoration: underline;
+}
+.thead
+{
+	background: #004812;
+	color: #FFFFFF;
+	font: bold 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.thead a:link, .thead_alink
+{
+	color: #FFFFFF;
+}
+.thead a:visited, .thead_avisited
+{
+	color: #FFFFFF;
+}
+.thead a:hover, .thead a:active, .thead_ahover
+{
+	color: #FFFF00;
+}
+.tfoot
+{
+	background: #004812;
+	color: #E0E0F6;
+}
+.tfoot a:link, .tfoot_alink
+{
+	color: #E0E0F6;
+}
+.tfoot a:visited, .tfoot_avisited
+{
+	color: #E0E0F6;
+}
+.tfoot a:hover, .tfoot a:active, .tfoot_ahover
+{
+	color: #FFFF66;
+}
+.alt1, .alt1Active
+{
+	background: #F5F5FF;
+	color: #000000;
+}
+.alt2, .alt2Active
+{
+	background: #E1E4F2;
+	color: #000000;
+}
+.inlinemod
+{
+	background: #FFFFCC;
+	color: #000000;
+}
+.wysiwyg
+{
+	background: #F5F5FF;
+	color: #000000;
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	margin: 5px 10px 10px 10px;
+	padding: 0px;
+}
+.wysiwyg a:link, .wysiwyg_alink
+{
+	color: #22229C;
+}
+.wysiwyg a:visited, .wysiwyg_avisited
+{
+	color: #22229C;
+}
+.wysiwyg a:hover, .wysiwyg a:active, .wysiwyg_ahover
+{
+	color: #FF4400;
+}
+textarea, .bginput
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.bginput option, .bginput optgroup
+{
+	font-size: 10pt;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.button
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+select
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+option, optgroup
+{
+	font-size: 11px;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.smallfont
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.time
+{
+	color: #666686;
+}
+.navbar
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.highlight
+{
+	color: #FF0000;
+	font-weight: bold;
+}
+.fjsel
+{
+	background: #3E5C92;
+	color: #E0E0F6;
+}
+.fjdpth0
+{
+	background: #F7F7F7;
+	color: #000000;
+}
+.panel
+{
+	background: #E4E7F5 url(images/gradients/gradient_panel.gif) repeat-x top left;
+	color: #000000;
+	padding: 10px;
+	border: 2px outset;
+}
+.panelsurround
+{
+	background: #D1D4E0 url(images/gradients/gradient_panelsurround.gif) repeat-x top left;
+	color: #000000;
+}
+legend
+{
+	color: #22229C;
+	font: 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.vbmenu_control
+{
+	background: #004812;
+	color: #FFFFFF;
+	font: bold 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	padding: 3px 6px 3px 6px;
+	white-space: nowrap;
+}
+.vbmenu_control a:link, .vbmenu_control_alink
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:visited, .vbmenu_control_avisited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:hover, .vbmenu_control a:active, .vbmenu_control_ahover
+{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+.vbmenu_popup
+{
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #0B198C;
+}
+.vbmenu_option
+{
+	background: #BBC7CE;
+	color: #000000;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vbmenu_option a:link, .vbmenu_option_alink
+{
+	color: #22229C;
+	text-decoration: none;
+}
+.vbmenu_option a:visited, .vbmenu_option_avisited
+{
+	color: #22229C;
+	text-decoration: none;
+}
+.vbmenu_option a:hover, .vbmenu_option a:active, .vbmenu_option_ahover
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite
+{
+	background: #8A949E;
+	color: #FFFFFF;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vbmenu_hilite a:link, .vbmenu_hilite_alink
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:visited, .vbmenu_hilite_avisited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:hover, .vbmenu_hilite a:active, .vbmenu_hilite_ahover
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/* ***** styling for 'big' usernames on postbit etc. ***** */
+.bigusername { font-size: 14pt; }
+
+/* ***** small padding on 'thead' elements ***** */
+td.thead, th.thead, div.thead { padding: 4px; }
+
+/* ***** basic styles for multi-page nav elements */
+.pagenav a { text-decoration: none; }
+.pagenav td { padding: 2px 4px 2px 4px; }
+
+/* ***** de-emphasized text */
+.shade, a.shade:link, a.shade:visited { color: #777777; text-decoration: none; }
+a.shade:active, a.shade:hover { color: #FF4400; text-decoration: underline; }
+.tcat .shade, .thead .shade, .tfoot .shade { color: #DDDDDD; }
+
+/* ***** define margin and font-size for elements inside panels ***** */
+.fieldset { margin-bottom: 6px; }
+.fieldset, .fieldset td, .fieldset p, .fieldset li { font-size: 11px; }
+  </style>
+  <link rel="stylesheet" type="text/css" href="clientscript/vbulletin_important.css?v=384" />
+  <!-- / CSS Stylesheet -->
+  <script type="text/javascript" src="clientscript/yui/yahoo-dom-event/yahoo-dom-event.js?v=384">
+  </script>
+  <script type="text/javascript" src="clientscript/yui/connection/connection-min.js?v=384">
+  </script>
+  <script type="text/javascript">
+   <!--
+var SESSIONURL = "s=d8e9c07a8d5ba74471ba98708fecd9a3&";
+var SECURITYTOKEN = "guest";
+var IMGDIR_MISC = "images/misc";
+var vb_disable_ajax = parseInt("0", 10);
+// -->
+  </script>
+  <script type="text/javascript" src="clientscript/vbulletin_global.js?v=384">
+  </script>
+  <link rel="alternate" type="application/rss+xml" title="Spring Community Forums RSS Feed" href="external.php?type=RSS2" />
+  <!-- linque -->
+  <style>
+   body { margin: 8px; padding:0px }
+	#header { background:transparent url(http://www.springframework.org/sites/all/themes/zen/framework/images/header-bg-right2.jpg) no-repeat scroll right top; }
+	#header-inner { background:transparent url(http://www.springframework.org/sites/all/themes/zen/framework/images/header-bg-left2.jpg) no-repeat scroll left top; height: 100px; }
+	#logo-image { margin-left:20px; margin-top:20px; border:0; }
+	#community-image {position:absolute; top:48px; left:265px; border:0; }
+	#forumad { position:absolute; right:12px; top:45px; display:none;}
+	#greenmenu { background:transparent url(http://www.springframework.org/sites/all/themes/zen/framework/images/greenmenu.gif) repeat-x scroll 0 0; height:26px; margin-bottom:5px; padding:1px 1px 1px 15px; }
+	#greenmenu a, #greenmenu a:link, #greenmenu a:visited { color:white; font-weight:bold; position:relative; text-decoration:none; top:5px; padding:5px;}
+	#greenmenu a:hover { color:#7BB401; background:#EEEEEE; }
+  </style>
+  <!-- /linque -->
+  <title>
+   Spring Community Forums
+  </title>
+ </head>
+ <body>
+  <br />
+  <br />
+  <br />
+  <br />
+  <form action="http://forum.springsource.org/index.php?s=f60ce69b3708ce9db0cfe802a3aa917d" method="post" name="postvarform">
+   <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="70%" align="center">
+    <tr>
+     <td class="tcat">
+      Redirecting...
+     </td>
+    </tr>
+    <tr>
+     <td class="panelsurround" align="center">
+      <div class="panel">
+       <blockquote>
+        <p>
+         &nbsp;
+        </p>
+        <p>
+         <strong>
+          Thank you for logging in, ciera.
+         </strong>
+        </p>
+        <p class="smallfont">
+         <a href="http://forum.springsource.org/index.php?s=f60ce69b3708ce9db0cfe802a3aa917d">
+          Click here if your browser does not automatically redirect you.
+         </a>
+        </p>
+        <div>
+         &nbsp;
+        </div>
+       </blockquote>
+      </div>
+     </td>
+    </tr>
+   </table>
+  </form>
+  <noscript>
+   <meta http-equiv="Refresh" content="2; URL=http://forum.springsource.org/index.php?s=f60ce69b3708ce9db0cfe802a3aa917d" />
+  </noscript>
+  <script type="text/javascript">
+   <!--
+function exec_refresh()
+{
+	window.status = "Redirecting..." + myvar;
+	myvar = myvar + " .";
+	var timerID = setTimeout("exec_refresh();", 100);
+	if (timeout > 0)
+	{
+		timeout -= 1;
+	}
+	else
+	{
+		clearTimeout(timerID);
+		window.status = "";
+		window.location = "http://forum.springsource.org/index.php?s=f60ce69b3708ce9db0cfe802a3aa917d";
+	}
+}
+
+var myvar = "";
+var timeout = 20;
+exec_refresh();
+//-->
+  </script>
+ </body>
+</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="vBulletin 3.8.4" />
+  <meta name="keywords" content="spring framework,vbulletin,forum,discussion,bulletin board" />
+  <meta name="description" content="Spring Framework Support Forums" />
+  <!-- CSS Stylesheet -->
+  <style type="text/css" id="vbulletin_css">
+   /**
+* vBulletin 3.8.4 CSS
+* Style: 'Default Style'; Style ID: 1
+*/
+body
+{
+	background: #FFFFFF;
+	color: #000000;
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	margin: 5px 0px 10px 0px;
+	padding: 0px;
+}
+a:link, body_alink
+{
+	color: #22229C;
+}
+a:visited, body_avisited
+{
+	color: #22229C;
+}
+a:hover, a:active, body_ahover
+{
+	color: #FF4400;
+}
+.page
+{
+	background: #FFFFFF;
+	color: #000000;
+}
+td, th, p, li
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.tborder
+{
+	background: #D1D1E1;
+	color: #000000;
+	border: 1px solid #0B198C;
+}
+.tcat
+{
+	background: #004812;
+	color: #FFFFFF;
+	font: bold 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.tcat a:link, .tcat_alink
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.tcat a:visited, .tcat_avisited
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.tcat a:hover, .tcat a:active, .tcat_ahover
+{
+	color: #FFFF66;
+	text-decoration: underline;
+}
+.thead
+{
+	background: #004812;
+	color: #FFFFFF;
+	font: bold 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.thead a:link, .thead_alink
+{
+	color: #FFFFFF;
+}
+.thead a:visited, .thead_avisited
+{
+	color: #FFFFFF;
+}
+.thead a:hover, .thead a:active, .thead_ahover
+{
+	color: #FFFF00;
+}
+.tfoot
+{
+	background: #004812;
+	color: #E0E0F6;
+}
+.tfoot a:link, .tfoot_alink
+{
+	color: #E0E0F6;
+}
+.tfoot a:visited, .tfoot_avisited
+{
+	color: #E0E0F6;
+}
+.tfoot a:hover, .tfoot a:active, .tfoot_ahover
+{
+	color: #FFFF66;
+}
+.alt1, .alt1Active
+{
+	background: #F5F5FF;
+	color: #000000;
+}
+.alt2, .alt2Active
+{
+	background: #E1E4F2;
+	color: #000000;
+}
+.inlinemod
+{
+	background: #FFFFCC;
+	color: #000000;
+}
+.wysiwyg
+{
+	background: #F5F5FF;
+	color: #000000;
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	margin: 5px 10px 10px 10px;
+	padding: 0px;
+}
+.wysiwyg a:link, .wysiwyg_alink
+{
+	color: #22229C;
+}
+.wysiwyg a:visited, .wysiwyg_avisited
+{
+	color: #22229C;
+}
+.wysiwyg a:hover, .wysiwyg a:active, .wysiwyg_ahover
+{
+	color: #FF4400;
+}
+textarea, .bginput
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.bginput option, .bginput optgroup
+{
+	font-size: 10pt;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.button
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+select
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+option, optgroup
+{
+	font-size: 11px;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.smallfont
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.time
+{
+	color: #666686;
+}
+.navbar
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.highlight
+{
+	color: #FF0000;
+	font-weight: bold;
+}
+.fjsel
+{
+	background: #3E5C92;
+	color: #E0E0F6;
+}
+.fjdpth0
+{
+	background: #F7F7F7;
+	color: #000000;
+}
+.panel
+{
+	background: #E4E7F5 url(images/gradients/gradient_panel.gif) repeat-x top left;
+	color: #000000;
+	padding: 10px;
+	border: 2px outset;
+}
+.panelsurround
+{
+	background: #D1D4E0 url(images/gradients/gradient_panelsurround.gif) repeat-x top left;
+	color: #000000;
+}
+legend
+{
+	color: #22229C;
+	font: 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.vbmenu_control
+{
+	background: #004812;
+	color: #FFFFFF;
+	font: bold 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	padding: 3px 6px 3px 6px;
+	white-space: nowrap;
+}
+.vbmenu_control a:link, .vbmenu_control_alink
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:visited, .vbmenu_control_avisited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:hover, .vbmenu_control a:active, .vbmenu_control_ahover
+{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+.vbmenu_popup
+{
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #0B198C;
+}
+.vbmenu_option
+{
+	background: #BBC7CE;
+	color: #000000;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vbmenu_option a:link, .vbmenu_option_alink
+{
+	color: #22229C;
+	text-decoration: none;
+}
+.vbmenu_option a:visited, .vbmenu_option_avisited
+{
+	color: #22229C;
+	text-decoration: none;
+}
+.vbmenu_option a:hover, .vbmenu_option a:active, .vbmenu_option_ahover
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite
+{
+	background: #8A949E;
+	color: #FFFFFF;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vbmenu_hilite a:link, .vbmenu_hilite_alink
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:visited, .vbmenu_hilite_avisited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:hover, .vbmenu_hilite a:active, .vbmenu_hilite_ahover
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/* ***** styling for 'big' usernames on postbit etc. ***** */
+.bigusername { font-size: 14pt; }
+
+/* ***** small padding on 'thead' elements ***** */
+td.thead, th.thead, div.thead { padding: 4px; }
+
+/* ***** basic styles for multi-page nav elements */
+.pagenav a { text-decoration: none; }
+.pagenav td { padding: 2px 4px 2px 4px; }
+
+/* ***** de-emphasized text */
+.shade, a.shade:link, a.shade:visited { color: #777777; text-decoration: none; }
+a.shade:active, a.shade:hover { color: #FF4400; text-decoration: underline; }
+.tcat .shade, .thead .shade, .tfoot .shade { color: #DDDDDD; }
+
+/* ***** define margin and font-size for elements inside panels ***** */
+.fieldset { margin-bottom: 6px; }
+.fieldset, .fieldset td, .fieldset p, .fieldset li { font-size: 11px; }
+  </style>
+  <link rel="stylesheet" type="text/css" href="clientscript/vbulletin_important.css?v=384" />
+  <!-- / CSS Stylesheet -->
+  <script type="text/javascript" src="clientscript/yui/yahoo-dom-event/yahoo-dom-event.js?v=384">
+  </script>
+  <script type="text/javascript" src="clientscript/yui/connection/connection-min.js?v=384">
+  </script>
+  <script type="text/javascript">
+   <!--
+var SESSIONURL = "s=6dbaf45f3a87c2e5682df232cf286113&";
+var SECURITYTOKEN = "guest";
+var IMGDIR_MISC = "images/misc";
+var vb_disable_ajax = parseInt("0", 10);
+// -->
+  </script>
+  <script type="text/javascript" src="clientscript/vbulletin_global.js?v=384">
+  </script>
+  <link rel="alternate" type="application/rss+xml" title="Spring Community Forums RSS Feed" href="external.php?type=RSS2" />
+  <!-- linque -->
+  <style>
+   body { margin: 8px; padding:0px }
+	#header { background:transparent url(http://www.springframework.org/sites/all/themes/zen/framework/images/header-bg-right2.jpg) no-repeat scroll right top; }
+	#header-inner { background:transparent url(http://www.springframework.org/sites/all/themes/zen/framework/images/header-bg-left2.jpg) no-repeat scroll left top; height: 100px; }
+	#logo-image { margin-left:20px; margin-top:20px; border:0; }
+	#community-image {position:absolute; top:48px; left:265px; border:0; }
+	#forumad { position:absolute; right:12px; top:45px; display:none;}
+	#greenmenu { background:transparent url(http://www.springframework.org/sites/all/themes/zen/framework/images/greenmenu.gif) repeat-x scroll 0 0; height:26px; margin-bottom:5px; padding:1px 1px 1px 15px; }
+	#greenmenu a, #greenmenu a:link, #greenmenu a:visited { color:white; font-weight:bold; position:relative; text-decoration:none; top:5px; padding:5px;}
+	#greenmenu a:hover { color:#7BB401; background:#EEEEEE; }
+  </style>
+  <!-- /linque -->
+  <title>
+   Spring Community Forums - Search Forums
+  </title>
+  <style type="text/css">
+   a.tagcloudlink:link, a.tagcloudlink:visited { text-decoration:none; }
+a.tagcloudlink:hover, a.tagcloudlink:active { text-decoration:underline; }
+a.level1 { font-size: xx-small; }
+a.level2 { font-size: small; }
+a.level3 { font-size: medium; }
+a.level4 { font-size: large; }
+a.level5 { font-size: xx-large; }
+  </style>
+ </head>
+ <body>
+  <a name="top">
+  </a>
+  <!-- linque -->
+  <div id="header">
+   <div id="header-inner">
+    <a title="www.springsource.com" href="http://www.springsource.com">
+     <img id="logo-image" alt="www.springsource.com" src="http://www.springframework.org/sites/all/themes/zen/framework/logo.png" />
+    </a>
+    <a href="http://www.springsource.org">
+     <img id="community-image" src="http://www.springframework.org/sites/all/themes/zen/framework/images/community_ex.png" alt="" border="0" />
+    </a>
+    <!-- ad -->
+    <div id="forumad">
+     <script language="JavaScript" type="text/javascript" src="http://wwwa.springframework.org/adx.js">
+     </script>
+     <script language="JavaScript" type="text/javascript">
+      <!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("http://wwwa.springframework.org/adjs.php?n=" + phpAds_random);
+   document.write ("&amp;clientid=2");
+   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+     </script>
+     <noscript>
+      <a href="http://wwwa.springframework.org/adclick.php?n=a227b8ca" target="_blank">
+       <img src="http://wwwa.springframework.org/adview.php?clientid=2&amp;n=a227b8ca" border="0" alt="" />
+      </a>
+     </noscript>
+    </div>
+    <!-- /ad -->
+   </div>
+   <!-- header-inner -->
+  </div>
+  <!-- header -->
+  <div id="greenmenu">
+   <a href="http://www.springsource.org">
+    Community
+   </a>
+   &nbsp;
+   <a href="http://www.springsource.com/">
+    SpringSource
+   </a>
+   &nbsp;
+   <a href="http://www.springsource.org/projects">
+    Projects
+   </a>
+   &nbsp;&nbsp;
+   <a href="http://www.springsource.org/download">
+    Downloads
+   </a>
+   &nbsp;&nbsp;
+   <a href="http://www.springsource.org/documentation">
+    Documentation
+   </a>
+   &nbsp;&nbsp;
+   <a href="http://forum.springsource.org">
+    Forums
+   </a>
+   &nbsp;&nbsp;
+   <a href="http://www.springsource.com/training/?Fnav">
+    Training
+   </a>
+   &nbsp;&nbsp;
+   <a href="http://www.springsource.com/exchange">
+    Exchange
+   </a>
+   &nbsp;&nbsp;
+   <a href="http://blog.springsource.com/main/">
+    Blogs
+   </a>
+  </div>
+  <!-- /linque -->
+  <!-- content table -->
+  <!-- open content container -->
+  <div align="center">
+   <div class="page" style="width:100%; text-align:left">
+    <div style="padding:0px 0px 0px 0px" align="left">
+     <!-- CS: 20051214 -->
+     <!-- CS: end 20051214 -->
+     <br />
+     <!-- breadcrumb, login, pm info -->
+     <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+      <tr>
+       <td class="alt1" width="100%">
+        <table cellpadding="0" cellspacing="0" border="0">
+         <tr valign="bottom">
+          <td>
+           <a href="#" onclick="history.back(1); return false;">
+            <img src="images/misc/navbits_start.gif" alt="Go Back" border="0" />
+           </a>
+          </td>
+          <td>
+           &nbsp;
+          </td>
+          <td width="100%">
+           <span class="navbar">
+            <a href="index.php?s=6dbaf45f3a87c2e5682df232cf286113" accesskey="1">
+             Spring Community Forums
+            </a>
+           </span>
+          </td>
+         </tr>
+         <tr>
+          <td class="navbar" style="font-size:10pt; padding-top:1px" colspan="3">
+           <img class="inlineimg" src="images/misc/navbits_finallink_ltr.gif" alt="" border="0" />
+           <strong>
+            Search Forums
+           </strong>
+          </td>
+         </tr>
+        </table>
+       </td>
+       <td class="alt2" nowrap="nowrap" style="padding:0px">
+        <!-- login form -->
+        <form action="login.php?do=login" method="post" onsubmit="md5hash(vb_login_password, vb_login_md5password, vb_login_md5password_utf, 0)">
+         <script type="text/javascript" src="clientscript/vbulletin_md5.js?v=384">
+         </script>
+         <table cellpadding="0" cellspacing="3" border="0">
+          <tr>
+           <td class="smallfont" style="white-space: nowrap;">
+            <label for="navbar_username">
+             User Name
+            </label>
+           </td>
+           <td>
+            <input type="text" class="bginput" style="font-size: 11px" name="vb_login_username" id="navbar_username" size="10" accesskey="u" tabindex="101" value="User Name" onfocus="if (this.value == 'User Name') this.value = '';" />
+           </td>
+           <td class="smallfont" nowrap="nowrap">
+            <label for="cb_cookieuser_navbar">
+             <input type="checkbox" name="cookieuser" value="1" tabindex="103" id="cb_cookieuser_navbar" accesskey="c" />
+             Remember Me?
+            </label>
+           </td>
+          </tr>
+          <tr>
+           <td class="smallfont">
+            <label for="navbar_password">
+             Password
+            </label>
+           </td>
+           <td>
+            <input type="password" class="bginput" style="font-size: 11px" name="vb_login_password" id="navbar_password" size="10" tabindex="102" />
+           </td>
+           <td>
+            <input type="submit" class="button" value="Log in" tabindex="104" title="Enter your username and password in the boxes provided to login, or click the 'register' button to create a profile for yourself." accesskey="s" />
+           </td>
+          </tr>
+         </table>
+         <input type="hidden" name="s" value="6dbaf45f3a87c2e5682df232cf286113" />
+         <input type="hidden" name="securitytoken" value="guest" />
+         <input type="hidden" name="do" value="login" />
+         <input type="hidden" name="vb_login_md5password" />
+         <input type="hidden" name="vb_login_md5password_utf" />
+        </form>
+        <!-- / login form -->
+       </td>
+      </tr>
+     </table>
+     <!-- / breadcrumb, login, pm info -->
+     <!-- nav buttons bar -->
+     <div class="tborder" style="padding:1px; border-top-width:0px">
+      <table cellpadding="0" cellspacing="0" border="0" width="100%" align="center">
+       <tr align="center">
+        <td class="vbmenu_control">
+         <a href="register.php?s=6dbaf45f3a87c2e5682df232cf286113" rel="nofollow">
+          Register
+         </a>
+        </td>
+        <td class="vbmenu_control">
+         <a rel="help" href="faq.php?s=6dbaf45f3a87c2e5682df232cf286113" accesskey="5">
+          FAQ
+         </a>
+        </td>
+        <td class="vbmenu_control">
+         <a href="calendar.php?s=6dbaf45f3a87c2e5682df232cf286113">
+          Calendar
+         </a>
+        </td>
+        <td class="vbmenu_control">
+         <a href="search.php?s=6dbaf45f3a87c2e5682df232cf286113" accesskey="4">
+          Search
+         </a>
+        </td>
+        <td class="vbmenu_control">
+         <a href="search.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;do=getdaily" accesskey="2">
+          Today's Posts
+         </a>
+        </td>
+        <td class="vbmenu_control">
+         <a href="forumdisplay.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;do=markread" rel="nofollow">
+          Mark Forums Read
+         </a>
+        </td>
+       </tr>
+      </table>
+     </div>
+     <!-- / nav buttons bar -->
+     <br />
+     <form action="search.php?do=process" method="post" name="vbform" id="searchform" style="display:block; margin:0px">
+      <input type="hidden" name="s" value="6dbaf45f3a87c2e5682df232cf286113" />
+      <input type="hidden" name="securitytoken" value="guest" />
+      <input type="hidden" name="do" value="process" />
+      <input type="hidden" name="searchthreadid" value="" />
+      <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+       <tr>
+        <td class="tcat">
+         Search Forums
+        </td>
+       </tr>
+       <tr>
+        <td class="panelsurround" align="center">
+         <table class="panel" cellpadding="0" cellspacing="3" border="0" width="100%">
+          <tr>
+           <td align="left" valign="top" width="50%">
+            <fieldset class="fieldset" style="margin:0px">
+             <legend>
+              Search by Keyword
+             </legend>
+             <table cellpadding="0" cellspacing="3" border="0">
+              <tr>
+               <td colspan="2">
+                <div>
+                 Keyword(s):
+                </div>
+                <div>
+                 <input type="text" class="bginput" name="query" size="35" value="" style="width:250px" />
+                </div>
+               </td>
+              </tr>
+              <tr>
+               <td>
+                <select name="titleonly">
+                 <option value="0" selected="selected">
+                  Search Entire Posts
+                 </option>
+                 <option value="1">
+                  Search Titles Only
+                 </option>
+                </select>
+               </td>
+              </tr>
+             </table>
+            </fieldset>
+           </td>
+           <td align="left" valign="top" width="50%">
+            <fieldset class="fieldset" style="margin:0px">
+             <legend>
+              Search by User Name
+             </legend>
+             <table cellpadding="0" cellspacing="3" border="0">
+              <tr>
+               <td colspan="2">
+                <div>
+                 User Name:
+                </div>
+                <div id="userfield">
+                 <input type="text" class="bginput" name="searchuser" id="userfield_txt" size="35" value="ciera" style="width:250px" />
+                </div>
+               </td>
+              </tr>
+              <tr>
+               <td>
+                <select name="starteronly">
+                 <option value="0" selected="selected">
+                  Find Posts by User
+                 </option>
+                 <option value="1">
+                  Find Threads Started by User
+                 </option>
+                </select>
+               </td>
+               <td>
+                <label for="cb_exactname">
+                 <input type="checkbox" name="exactname" value="1" id="cb_exactname" checked="checked" />
+                 Exact name
+                </label>
+               </td>
+              </tr>
+             </table>
+            </fieldset>
+           </td>
+          </tr>
+          <tr>
+           <td align="left" valign="top" colspan="2">
+            <fieldset class="fieldset">
+             <legend>
+              Image Verification
+             </legend>
+             <input id="hash" type="hidden" name="humanverify[hash]" value="814a9927489444b5c9ac8ab44a90569e" />
+             <script type="text/javascript">
+              var RecaptchaOptions = {
+			theme : 'blackglass'
+			,lang : 'en'
+		};
+             </script>
+             <div dir="ltr">
+              <script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6LeDyAMAAAAAAKtpQuwhHSMxm2eKXWyuLPXKDb0z">
+              </script>
+             </div>
+             <noscript>
+              <iframe src="http://api.recaptcha.net/noscript?k=6LeDyAMAAAAAAKtpQuwhHSMxm2eKXWyuLPXKDb0z" height="300" width="400" frameborder="0">
+              </iframe>
+              <br />
+              <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+              </textarea>
+              <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+             </noscript>
+            </fieldset>
+           </td>
+          </tr>
+         </table>
+         <div align="left">
+          <div class="thead" style="padding:6px">
+           <a style="float:right" href="#top" onclick="return toggle_collapse('search_adv')">
+            <img id="collapseimg_search_adv" src="images/buttons/collapse_thead.gif" alt="" border="0" />
+           </a>
+           Search Options
+          </div>
+          <div id="collapseobj_search_adv" style="">
+           <table class="panel" cellpadding="0" cellspacing="3" border="0" width="100%">
+            <tr valign="top">
+             <td width="50%">
+              <fieldset class="fieldset">
+               <legend>
+                Find Threads with
+               </legend>
+               <div style="padding:3px">
+                <select name="replyless" style="width:150px">
+                 <option value="0" selected="selected">
+                  At Least
+                 </option>
+                 <option value="1">
+                  At Most
+                 </option>
+                </select>
+                <input type="text" class="bginput" style="font-size:11px" name="replylimit" size="3" value="0" />
+                Replies
+               </div>
+              </fieldset>
+              <fieldset class="fieldset">
+               <legend>
+                Find Posts from
+               </legend>
+               <div style="padding:3px">
+                <select name="searchdate" style="width:150px">
+                 <option value="0">
+                  Any Date
+                 </option>
+                 <option value="lastvisit">
+                  Your Last Visit
+                 </option>
+                 <option value="1">
+                  Yesterday
+                 </option>
+                 <option value="7">
+                  A Week Ago
+                 </option>
+                 <option value="14">
+                  2 Weeks Ago
+                 </option>
+                 <option value="30">
+                  A Month Ago
+                 </option>
+                 <option value="90">
+                  3 Months Ago
+                 </option>
+                 <option value="180">
+                  6 Months Ago
+                 </option>
+                 <option value="365" selected="selected">
+                  A Year Ago
+                 </option>
+                </select>
+                <select name="beforeafter">
+                 <option value="after">
+                  and Newer
+                 </option>
+                 <option value="before" selected="selected">
+                  and Older
+                 </option>
+                </select>
+               </div>
+              </fieldset>
+              <fieldset class="fieldset">
+               <legend>
+                Sort Results by
+               </legend>
+               <div style="padding:3px">
+                <select name="sortby" style="width:150px">
+                 <option value="rank">
+                  Relevancy
+                 </option>
+                 <option value="title">
+                  Title
+                 </option>
+                 <option value="replycount">
+                  Number of Replies
+                 </option>
+                 <option value="views">
+                  Number of Views
+                 </option>
+                 <option value="threadstart">
+                  Thread Start Date
+                 </option>
+                 <option value="lastpost" selected="selected">
+                  Last Posting Date
+                 </option>
+                 <option value="postusername">
+                  User Name
+                 </option>
+                 <option value="forum">
+                  Forum
+                 </option>
+                </select>
+                <select name="order">
+                 <option value="descending" selected="selected">
+                  in Descending Order
+                 </option>
+                 <option value="ascending">
+                  in Ascending Order
+                 </option>
+                </select>
+               </div>
+              </fieldset>
+              <fieldset class="fieldset">
+               <legend>
+                Show Results as
+               </legend>
+               <div style="padding:3px">
+                <label for="rb_showposts_0">
+                 <input type="radio" name="showposts" value="0" id="rb_showposts_0" checked="checked" />
+                 Threads
+                </label>
+                <label for="rb_showposts_1">
+                 <input type="radio" name="showposts" value="1" id="rb_showposts_1" />
+                 Posts
+                </label>
+               </div>
+              </fieldset>
+             </td>
+             <td width="50%">
+              <fieldset class="fieldset">
+               <legend>
+                Search by Tag
+               </legend>
+               <div style="padding:3px">
+                <div>
+                 Tag:
+                </div>
+                <div id="tag_add">
+                 <input type="text" class="bginput" name="tag" id="tag_add_input" size="35" value="" style="width:250px" />
+                </div>
+               </div>
+              </fieldset>
+              <fieldset class="fieldset" style="margin:0px">
+               <legend>
+                Search in Forum(s)
+               </legend>
+               <div style="padding:3px">
+                <div>
+                 <select style="width:100%" name="forumchoice[]" size="13" multiple="multiple">
+                  <option value="0" selected="selected">
+                   Search All Open Forums
+                  </option>
+                  <option value="subscribed">
+                   Search Subscribed Forums
+                  </option>
+                  <option value="21" class="fjdpth0">
+                   Spring Projects
+                  </option>
+                  <option value="24" class="fjdpth1">
+                   &nbsp; &nbsp;  Announcements
+                  </option>
+                  <option value="26" class="fjdpth1">
+                   &nbsp; &nbsp;  Container
+                  </option>
+                  <option value="31" class="fjdpth1">
+                   &nbsp; &nbsp;  AOP
+                  </option>
+                  <option value="27" class="fjdpth1">
+                   &nbsp; &nbsp;  Data
+                  </option>
+                  <option value="80" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  NoSQL
+                  </option>
+                  <option value="77" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  GemFire
+                  </option>
+                  <option value="40" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  LDAP
+                  </option>
+                  <option value="33" class="fjdpth1">
+                   &nbsp; &nbsp;  Security
+                  </option>
+                  <option value="79" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  OAuth
+                  </option>
+                  <option value="25" class="fjdpth1">
+                   &nbsp; &nbsp;  Web
+                  </option>
+                  <option value="36" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Web Flow
+                  </option>
+                  <option value="61" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Flex
+                  </option>
+                  <option value="82" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Social
+                  </option>
+                  <option value="85" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Mobile
+                  </option>
+                  <option value="83" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Greenhouse
+                  </option>
+                  <option value="39" class="fjdpth1">
+                   &nbsp; &nbsp;  Web Services
+                  </option>
+                  <option value="42" class="fjdpth1">
+                   &nbsp; &nbsp;  Integration
+                  </option>
+                  <option value="30" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  JMS
+                  </option>
+                  <option value="74" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  AMQP
+                  </option>
+                  <option value="81" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Payment Services
+                  </option>
+                  <option value="41" class="fjdpth1">
+                   &nbsp; &nbsp;  Batch
+                  </option>
+                  <option value="38" class="fjdpth1">
+                   &nbsp; &nbsp;  Management
+                  </option>
+                  <option value="71" class="fjdpth2">
+                   &nbsp; &nbsp; &nbsp; &nbsp;  Insight
+                  </option>
+                  <option value="32" class="fjdpth1">
+                   &nbsp; &nbsp;  SpringSource Tool Suite
+                  </option>
+                  <option value="67" class="fjdpth1">
+                   &nbsp; &nbsp;  Roo
+                  </option>
+                  <option value="22" class="fjdpth0">
+                   Other Spring Related
+                  </option>
+                  <option value="84" class="fjdpth1">
+                   &nbsp; &nbsp;  Remoting
+                  </option>
+                  <option value="29" class="fjdpth1">
+                   &nbsp; &nbsp;  EJB
+                  </option>
+                  <option value="28" class="fjdpth1">
+                   &nbsp; &nbsp;  Swing
+                  </option>
+                  <option value="35" class="fjdpth1">
+                   &nbsp; &nbsp;  Architecture
+                  </option>
+                  <option value="76" class="fjdpth1">
+                   &nbsp; &nbsp;  Grails
+                  </option>
+                  <option value="34" class="fjdpth1">
+                   &nbsp; &nbsp;  Meta
+                  </option>
+                  <option value="62" class="fjdpth0">
+                   SpringSource tc Server
+                  </option>
+                  <option value="63" class="fjdpth1">
+                   &nbsp; &nbsp;  tc Server Announcements
+                  </option>
+                  <option value="64" class="fjdpth1">
+                   &nbsp; &nbsp;  tc Server General
+                  </option>
+                  <option value="68" class="fjdpth0">
+                   SpringSource Cloud Foundry
+                  </option>
+                  <option value="69" class="fjdpth1">
+                   &nbsp; &nbsp;  Cloud Foundry Announcements
+                  </option>
+                  <option value="70" class="fjdpth1">
+                   &nbsp; &nbsp;  Cloud Foundry General
+                  </option>
+                  <option value="44" class="fjdpth0">
+                   Spring Extensions
+                  </option>
+                  <option value="46" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring Extensions
+                  </option>
+                  <option value="45" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring Python
+                  </option>
+                  <option value="47" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring db4o
+                  </option>
+                  <option value="49" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring sqlj
+                  </option>
+                  <option value="59" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring Workflow
+                  </option>
+                  <option value="60" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring Actionscript
+                  </option>
+                  <option value="65" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring se-jcr
+                  </option>
+                  <option value="72" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring Surf
+                  </option>
+                  <option value="53" class="fjdpth0">
+                   OSGi Related
+                  </option>
+                  <option value="43" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring Dynamic Modules
+                  </option>
+                  <option value="58" class="fjdpth1">
+                   &nbsp; &nbsp;  dm Server Announcements
+                  </option>
+                  <option value="54" class="fjdpth1">
+                   &nbsp; &nbsp;  dm Server Installation and Configuration
+                  </option>
+                  <option value="55" class="fjdpth1">
+                   &nbsp; &nbsp;  dm Server Application Development and Deployment
+                  </option>
+                  <option value="56" class="fjdpth1">
+                   &nbsp; &nbsp;  dm Server Tooling
+                  </option>
+                  <option value="57" class="fjdpth1">
+                   &nbsp; &nbsp;  dm Server General
+                  </option>
+                  <option value="78" class="fjdpth0">
+                   Attic
+                  </option>
+                  <option value="48" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring JavaConfig
+                  </option>
+                  <option value="37" class="fjdpth1">
+                   &nbsp; &nbsp;  Spring-Modules
+                  </option>
+                 </select>
+                </div>
+                <div>
+                 <label for="cb_childforums">
+                  <input type="checkbox" name="childforums" value="1" id="cb_childforums" checked="checked" />
+                  Also search in child forums
+                 </label>
+                </div>
+               </div>
+              </fieldset>
+             </td>
+            </tr>
+           </table>
+          </div>
+         </div>
+         <div style="margin-top:6px">
+          <input type="submit" class="button" name="dosearch" value="Search Now" accesskey="s" />
+          <input type="reset" class="button" value="Reset Fields" accesskey="r" onclick="window.location='search.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;type=advanced';" />
+         </div>
+        </td>
+       </tr>
+      </table>
+     </form>
+     <div style="margin-top:20px">
+      <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+       <tr>
+        <td class="tcat">
+         <div class="smallfont" style="float:right">
+          These are the 70 most-searched-for thread tags
+         </div>
+         Search Tag Cloud
+        </td>
+       </tr>
+       <tr>
+        <td class="alt1" style="text-align:justify">
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=activemq" class="tagcloudlink level2">
+          activemq
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=arguments" class="tagcloudlink level1">
+          arguments
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=autowire" class="tagcloudlink level2">
+          autowire
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=bitronix" class="tagcloudlink level1">
+          bitronix
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=blazeds" class="tagcloudlink level2">
+          blazeds
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=context" class="tagcloudlink level1">
+          context
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=csrf" class="tagcloudlink level3">
+          csrf
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=datetimeformat" class="tagcloudlink level3">
+          datetimeformat
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=defaulthtmlescape" class="tagcloudlink level3">
+          defaulthtmlescape
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=dojo" class="tagcloudlink level2">
+          dojo
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=domain" class="tagcloudlink level1">
+          domain
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=dwr" class="tagcloudlink level2">
+          dwr
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=envers" class="tagcloudlink level3">
+          envers
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=form" class="tagcloudlink level1">
+          form
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=freemarker" class="tagcloudlink level2">
+          freemarker
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=ftp" class="tagcloudlink level2">
+          ftp
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=gwt" class="tagcloudlink level4">
+          gwt
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=javascript+dojo+examples" class="tagcloudlink level2">
+          javascript dojo examples
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jbossts" class="tagcloudlink level1">
+          jbossts
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jdbc-user-service" class="tagcloudlink level3">
+          jdbc-user-service
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jmstemplate" class="tagcloudlink level2">
+          jmstemplate
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jmx" class="tagcloudlink level2">
+          jmx
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jobparameters" class="tagcloudlink level1">
+          jobparameters
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jotm" class="tagcloudlink level2">
+          jotm
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jpa" class="tagcloudlink level1">
+          jpa
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jquery+javascript+roo" class="tagcloudlink level2">
+          jquery javascript roo
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=json+requestbody" class="tagcloudlink level2">
+          json requestbody
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=jta" class="tagcloudlink level2">
+          jta
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=junit" class="tagcloudlink level2">
+          junit
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=j_spring_security_check" class="tagcloudlink level2">
+          j_spring_security_check
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=ldap" class="tagcloudlink level2">
+          ldap
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=liferay" class="tagcloudlink level2">
+          liferay
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=log4j" class="tagcloudlink level2">
+          log4j
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=maven" class="tagcloudlink level2">
+          maven
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=memory+leak" class="tagcloudlink level2">
+          memory leak
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=namespace" class="tagcloudlink level2">
+          namespace
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=pathvariable" class="tagcloudlink level1">
+          pathvariable
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=poller" class="tagcloudlink level2">
+          poller
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=popup" class="tagcloudlink level2">
+          popup
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=portlet" class="tagcloudlink level2">
+          portlet
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=quartz" class="tagcloudlink level2">
+          quartz
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=requestmapping" class="tagcloudlink level5">
+          requestmapping
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=resourcemapping" class="tagcloudlink level2">
+          resourcemapping
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=resttemplate" class="tagcloudlink level2">
+          resttemplate
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=richfaces+popup+dialog" class="tagcloudlink level2">
+          richfaces popup dialog
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=rmi" class="tagcloudlink level2">
+          rmi
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=roo" class="tagcloudlink level2">
+          roo
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=session" class="tagcloudlink level2">
+          session
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=sftp" class="tagcloudlink level2">
+          sftp
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=simpleformcontroller" class="tagcloudlink level2">
+          simpleformcontroller
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring" class="tagcloudlink level1">
+          spring
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring.adddecoration" class="tagcloudlink level2">
+          spring.adddecoration
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring+3.0" class="tagcloudlink level2">
+          spring 3.0
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring+mvc" class="tagcloudlink level2">
+          spring mvc
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring+roo" class="tagcloudlink level2">
+          spring roo
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring+security" class="tagcloudlink level2">
+          spring security
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=spring+web+flow" class="tagcloudlink level3">
+          spring web flow
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=sts" class="tagcloudlink level3">
+          sts
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=sts+maven+m2e" class="tagcloudlink level4">
+          sts maven m2e
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=tcp+socket+server+di" class="tagcloudlink level3">
+          tcp socket server di
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=tomcat" class="tagcloudlink level2">
+          tomcat
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=tutorial" class="tagcloudlink level2">
+          tutorial
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=urlrewrite" class="tagcloudlink level2">
+          urlrewrite
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=vaadin" class="tagcloudlink level2">
+          vaadin
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=validation" class="tagcloudlink level2">
+          validation
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=viewresolver" class="tagcloudlink level2">
+          viewresolver
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=webflow" class="tagcloudlink level2">
+          webflow
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=weblogic" class="tagcloudlink level3">
+          weblogic
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=websphere" class="tagcloudlink level3">
+          websphere
+         </a>
+         <a href="tags.php?s=6dbaf45f3a87c2e5682df232cf286113&amp;tag=xml" class="tagcloudlink level2">
+          xml
+         </a>
+        </td>
+       </tr>
+      </table>
+     </div>
+     <br />
+     <div class="smallfont" align="center">
+      All times are GMT -5. The time now is
+      <span class="time">
+       05:16 PM
+      </span>
+      .
+     </div>
+     <br />
+    </div>
+   </div>
+  </div>
+  <!-- / close content container -->
+  <!-- /content area table -->
+  <form action="index.php" method="get">
+   <table cellpadding="6" cellspacing="0" border="0" width="100%" class="page" align="center">
+    <tr>
+     <td class="tfoot" align="right" width="100%">
+      <div class="smallfont">
+       <strong>
+        <a href="sendmessage.php?s=6dbaf45f3a87c2e5682df232cf286113" rel="nofollow">
+         Contact Us
+        </a>
+        -
+        <a href="http://www.springsource.org">
+         Spring Framework
+        </a>
+        -
+        <a href="archive/index.php">
+         Archive
+        </a>
+        -
+        <a href="#top" onclick="self.scrollTo(0, 0); return false;">
+         Top
+        </a>
+       </strong>
+      </div>
+     </td>
+    </tr>
+   </table>
+   <br />
+   <div align="center">
+    <div align="center">
+     <a href="http://www.contegix.com">
+      Contegix
+     </a>
+     provides first-class managed hosting and partial sponsorship of these forums.
+    </div>
+    <br />
+    <div class="smallfont" align="center">
+     <!-- Do not remove this copyright notice -->
+     Powered by vBulletin&reg; Version 3.8.4
+     <br />
+     Copyright &copy;2000 - 2010, Jelsoft Enterprises Ltd.
+     <!-- Do not remove this copyright notice -->
+    </div>
+    <div class="smallfont" align="center">
+    </div>
+   </div>
+  </form>
+  <script type="text/javascript">
+   <!--
+	// Main vBulletin Javascript Initialization
+	vBulletin_init();
+//-->
+  </script>
+  <!-- Begin Google Analytics code -->
+  <script type="text/javascript">
+   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+   var pageTracker = _gat._getTracker("UA-2728886-3");
+pageTracker._setDomainName("springsource.org");
+pageTracker._setAllowHash(false);
+pageTracker._setAllowLinker(true);
+pageTracker._trackPageview();
+var OrgTracker = _gat._getTracker("UA-2728886-4");
+OrgTracker._setDomainName("springsource.org");
+OrgTracker._setAllowHash(false);
+OrgTracker._setAllowLinker(true);
+OrgTracker._trackPageview();
+  </script>
+  <!-- End Google Analytics code -->
+  <!-- Do not remove  or your scheduled tasks will cease to function -->
+  <!-- Do not remove  or your scheduled tasks will cease to function -->
+ </body>
+</html>

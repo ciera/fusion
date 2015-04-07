@@ -1,0 +1,695 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #86136 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit86136" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post86136" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=86136&amp;postcount=1" target="new" rel="nofollow" id="postcount86136" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=86136" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post86136"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 15th, 2006, 08:59 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_86136">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_86136", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_86136">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Set attribute from Map property within a flowScoped class</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_86136">
+			
+			I'm attempting to set an attribute from a Map property within a class I've added to the flow scope.  The class is a bean wired-in with a map that contains key/values of templates for use at different action-steps.  I'm not sure, however, if it's possible to set an attribute from a key within a Map.<br />
+<br />
+Example (this <b>doesn't</b> work):<br />
+applicationContext:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">    &lt;bean id=&quot;apiTemplates&quot; class=&quot;mypackage.TemplateLoader&quot;&gt;
+        &lt;property name=&quot;apiTemplateMap&quot;&gt;
+            &lt;map&gt;
+                &lt;entry key=&quot;template1&quot; value=&quot;/path/to/template1.xml&quot; /&gt;
+                &lt;entry key=&quot;template2&quot; value=&quot;/path/to/template2.xml&quot; /&gt;
+            &lt;/map&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;</pre>
+</div>app-flow.xml<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 370px;
+		text-align: left;
+		overflow: auto">    &lt;start-state idref=&quot;initFlow&quot; /&gt;
+
+    &lt;action-state id=&quot;initFlow&quot; &gt;
+        <b>&lt;bean-action bean=&quot;apiTemplates&quot; method=&quot;getLoader&quot;&gt;
+            &lt;method-result name=&quot;templateLoader&quot; scope=&quot;flow&quot; /&gt;
+        &lt;/bean-action&gt;</b>
+        &lt;transition on=&quot;success&quot; to=&quot;displayForm&quot; /&gt;
+    &lt;/action-state&gt;
+
+    &lt;view-state id=&quot;displayForm&quot; view=&quot;signup&quot;&gt;
+        ...
+        &lt;transition on=&quot;submit&quot; to=&quot;processSubmit&quot;&gt;
+            ...
+        &lt;/transition&gt;
+    &lt;/view-state&gt;
+
+    &lt;action-state id=&quot;processSubmit&quot;&gt;
+        <b>&lt;set attribute=&quot;template&quot; value=&quot;${flowScope.templateLoader.apiTemplateMap['template1']}&quot; scope=&quot;flash&quot; /&gt;</b>
+        &lt;action bean=&quot;formAction&quot; method=&quot;doSomethingWithThisTemplate&quot; /&gt;
+        &lt;transition on=&quot;success&quot; to=&quot;finish&quot; /&gt;
+        &lt;transition on=&quot;failure&quot; to=&quot;displayForm&quot; /&gt;
+    &lt;/action-state&gt;</pre>
+</div>However, as soon as I enter the &quot;processSubmit&quot; action-state, I get thrown an exception:<br />
+<br />
+org.springframework.web.util.NestedServletExceptio  n: Request processing failed; nested exception is org.springframework.webflow.execution.repository.N  oSuchFlowExecutionException: No flow execution could be found with key '_c7CF435FC-7768-2050-4098-EB43736F4926_k5586018E-E984-4336-6823-0EE04A0EB89D' -- perhaps this executing flow has ended or expired? This could happen if your users are relying on browser history (typically via the back button) that references ended flows.; nested exception is org.springframework.webflow.conversation.NoSuchCon  versationException: No conversation could be found with id '7CF435FC-7768-2050-4098-EB43736F4926' -- perhaps this conversation has ended? <br />
+<br />
+However, I can see while tailing the log that the session isn't being killed before this step, so some error is ending the conversation prematurely.  This is likely due to me not configuring my &lt;set attribute ...&gt; correctly...<br />
+<br />
+I feel like an absolutely green programmer having to ask all these questions to get my initial webflow app functioning... so I apologize!
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=86136" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=86136" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_86136" /></a>
+<a href="newreply.php?do=newreply&amp;p=86136" rel="nofollow" id="qr_86136" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 86136 popup menu -->
+<div class="vbmenu_popup" id="postmenu_86136_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 86136 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #86136 --><!-- post #86184 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit86184" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post86184" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=86184&amp;postcount=2" target="new" rel="nofollow" id="postcount86184" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=86184" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post86184"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 16th, 2006, 04:21 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_86184">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_86184", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_86184">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_86184">
+			
+			The expression is correct and what you're trying to do with the SetAction works correctly. I even added a unit test to verify this:<br />
+<br />
+<a href="http://springframework.svn.sourceforge.net/viewvc/springframework/spring-projects/trunk/spring-webflow/spring-webflow/src/test/java/org/springframework/webflow/action/SetActionTests.java?revision=5276&amp;view=markup" target="_blank" rel="nofollow">http://springframework.svn.sourcefor...76&amp;view=markup</a><br />
+<br />
+Are you sure you don't have some problem in the JSPs where you're submitting the wrong flow execution key? My guess is that you never reach the processSubmit action but that the exception occurs when you submit the &quot;processSubmit&quot; event in the &quot;displayForm&quot; view state.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=86184" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=86184" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_86184" /></a>
+<a href="newreply.php?do=newreply&amp;p=86184" rel="nofollow" id="qr_86184" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 86184 popup menu -->
+<div class="vbmenu_popup" id="postmenu_86184_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 86184 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #86184 --><!-- post #86298 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit86298" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post86298" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=86298&amp;postcount=3" target="new" rel="nofollow" id="postcount86298" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=86298" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post86298"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 16th, 2006, 02:44 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_86298">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_86298", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_86298">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_86298">
+			
+			Ok.. it's kinda weird.. here's the test case:<br />
+<br />
+Removed my session invalidation code from the FlowExecutionListener (just to eliminate that possibility).  Commented out my &lt;set...&gt;.  Rebuilt and tested... flow worked (sans the &lt;set...&gt; attribute of course).<br />
+<br />
+Second test, left the session invalidation out again, but uncommented my &lt;set...&gt;.  This time the flow never calls the FormAction method in &lt;action bean=&quot;formAction&quot; method=&quot;doSomethingWithThisTemplate&quot; /&gt;, but jumps immediately to the &quot;success&quot; transition.  Thinking that it was picking up the first transition listed, I swapped &quot;success&quot; with &quot;failure&quot; (so failure was first) and again, &quot;success&quot; was the transition that was taken.<br />
+<br />
+Third test, left the session invalidation out again, left the uncommented &lt;set...&gt; as it was, this time, in my &quot;doSomethingWithThisTemplate&quot; method within &lt;action bean=&quot;formAction&quot; method=&quot;doSomethingWithThisTemplate&quot; /&gt;, instead of executing &quot;return success()&quot;, I changed it to &quot;return result(&quot;ok&quot;);&quot; and changed my &quot;success&quot; transition to &quot;ok&quot;.  When I ran it this time, it executed properly, calling the FormAction method, however, the value of the &lt;set...&gt; was still null.<br />
+<br />
+I'm not sure what's causing &lt;set...&gt; to immediately jump to the &quot;success&quot; transition, but with the default &quot;success&quot; transition changed to something else, it seems to continue on ok, sans the value for the set.  So I'm assuming that something in my &lt;set...&gt; must be causing some error that's bypassing the rest of the interaction and going straight to the &quot;success&quot; transition.<br />
+<br />
+I've tried setting my bean's property to public and exposing a getter method just incase OGNL is attempting to get the property by either means, and neither seem to work.  Here's a greatly simplified snippet of my bean, just for context:<br />
+<br />
+TemplateLoader.java<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 418px;
+		text-align: left;
+		overflow: auto">package mypackage;
+
+import java.util.Map;
+import java.util.HashMap;
+
+public class TemplateLoader implements Serializable {
+    
+    public static Map apiTemplateMap = new HashMap();
+    
+    public TemplateLoader() {
+    }
+
+    public TemplateLoader getLoader(){
+        return this;
+    }
+    
+    public Map getApiTemplateMap() {
+        return apiTemplateMap;
+    }
+
+    public void setApiTemplateMap(Map apiTemplatemap) {
+        this.apiTemplateMap = apiTemplateMap;
+    }
+
+}</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=86298" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=86298" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_86298" /></a>
+<a href="newreply.php?do=newreply&amp;p=86298" rel="nofollow" id="qr_86298" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 86298 popup menu -->
+<div class="vbmenu_popup" id="postmenu_86298_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 86298 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #86298 --><!-- post #86302 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit86302" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post86302" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=86302&amp;postcount=4" target="new" rel="nofollow" id="postcount86302" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=86302" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post86302"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 16th, 2006, 02:58 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_86302">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_86302", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_86302">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_86302">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Second test, left the session invalidation out again, but uncommented my &lt;set...&gt;. This time the flow never calls the FormAction method in &lt;action bean=&quot;formAction&quot; method=&quot;doSomethingWithThisTemplate&quot; /&gt;, but jumps immediately to the &quot;success&quot; transition. Thinking that it was picking up the first transition listed, I swapped &quot;success&quot; with &quot;failure&quot; (so failure was first) and again, &quot;success&quot; was the transition that was taken.
+			
+		</td>
+</tr>
+</table>
+</div>This is normal. The first action executed (the &lt;set&gt; action) signals a &quot;success&quot; event. The action state tries to match this to a transition and finds one so it aborts further action execution and follows the transition. Use named actions here, like so:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">&lt;action-state id=&quot;processSubmit&quot;&gt;
+  &lt;set attribute=&quot;template&quot; value=&quot;${flowScope.templateLoader.apiTemplateMap['template1']}&quot; scope=&quot;flash&quot; /&gt;
+  &lt;action name=&quot;form&quot; bean=&quot;formAction&quot; method=&quot;doSomethingWithThisTemplate&quot; /&gt;
+  &lt;transition on=&quot;form.success&quot; to=&quot;finish&quot; /&gt;
+  &lt;transition on=&quot;form.failure&quot; to=&quot;displayForm&quot; /&gt;
+&lt;/action-state&gt;</pre>
+</div>See how it's only responding to the name-prefixed events. The &quot;success&quot; event signaled by the set action is effectively ignored. Check the SWF XSD for more info on named actions:<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				An optional name qualifier for this action. When specified this action will<br />
+qualify execution result event identifiers by this name.  For example, if this<br />
+action is named &quot;placeOrder&quot; and signals a &quot;success&quot; result event after execution,<br />
+the fully qualified result event the flow can respond to would be &quot;placeOrder.success&quot;.<br />
+&lt;br&gt;<br />
+This can be used to execute actions in an ordered chain, where the flow responds <br />
+to the the last action result in the chain:<br />
+&lt;pre&gt;<br />
+    &amp;lt;action-state id=&quot;setupForm&quot;&amp;gt;<br />
+        &amp;lt;action name=&quot;setupForm&quot; bean=&quot;formAction&quot; method=&quot;setupForm&quot;/&amp;gt;<br />
+        &amp;lt;action name=&quot;loadReferenceData&quot; bean=&quot;formAction&quot; method=&quot;loadReferenceData&quot;/&amp;gt;<br />
+        &amp;lt;transition on=&quot;loadReferenceData.success&quot; to=&quot;displayForm&quot;&amp;gt;<br />
+    &amp;lt;/action-state&amp;gt;<br />
+&lt;/pre&gt;<br />
+... will execute 'setupForm' followed by 'loadRefenceData', then transition the flow to<br />
+the 'displayForm' state on a successful 'loadReferenceData' invocation.<br />
+&lt;br&gt;<br />
+An action with a name is often referred to as a &quot;named action&quot;.
+			
+		</td>
+</tr>
+</table>
+</div>Erwin
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by klr8; Nov 16th, 2006 at <span class="time">03:45 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=86302" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=86302" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_86302" /></a>
+<a href="newreply.php?do=newreply&amp;p=86302" rel="nofollow" id="qr_86302" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 86302 popup menu -->
+<div class="vbmenu_popup" id="postmenu_86302_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 86302 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #86302 --><!-- post #86334 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit86334" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post86334" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=86334&amp;postcount=5" target="new" rel="nofollow" id="postcount86334" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=86334" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post86334"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 16th, 2006, 04:51 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_86334">
+<a class="bigusername" href="member.php?u=17860">RShelley</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="RShelley is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_86334", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 135
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_86334">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_86334">
+			
+			Ok.. thanks for clarifying that.  I've managed to get the remainder working now.  Thanks once again for your patience and assistance!
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=86334" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=86334" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_86334" /></a>
+<a href="newreply.php?do=newreply&amp;p=86334" rel="nofollow" id="qr_86334" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 86334 popup menu -->
+<div class="vbmenu_popup" id="postmenu_86334_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">RShelley</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17860">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17860" rel="nofollow">Send a private message to RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17860" rel="nofollow">Find all posts by RShelley</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17860">Add RShelley to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 86334 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #86334 --><div id="lastpost"></div></div></body></html>

@@ -1,0 +1,409 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #137708 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit137708" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post137708" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=137708&amp;postcount=1" target="new" rel="nofollow" id="postcount137708" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=137708" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post137708"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 20th, 2007, 03:42 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_137708">
+<a class="bigusername" href="member.php?u=13240">rappa</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="rappa is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_137708", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2005</div>
+<div>Location: Leesburg, VA</div>
+<div>
+						Posts: 11
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_137708">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Assorted Spring Web Flow Questions</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_137708">
+			
+			Hi All,<br />
+<br />
+I'm gearing up for a new application and wondering if SWF is the right choice.  This application is a fairly basic and involves searching a table of read-only data and displaying the results, with pagination (it's a big table).  There are a few lookup views off of the results but that is about it.  This app is basically stateless, although I plan to use session to store the search parameters;  I could go completely stateless but that would involve validating the search parameters on each pagination request, and storing them in hidden inputs.<br />
+<br />
+I've been playing around with SWF for the past few days and compiling a list of questions/observations.<br />
+<br />
+- I think the user should be allowed to use the back-button.  There are no transactions in this application and the data is read-only, so I can't see any harm in using the back button.  It seems that SWF was designed with transactional applications in mind, so I'm wondering if I will run into problems.  I plan to not have a end state defined, as the end state appears to automatically kill the flow (back button won't work).<br />
+<br />
+- How to handle NoSuchFlowExecutionException?  I'm currently using a HandlerExceptionResolver to send the user to a &quot;Your session has expired page&quot;.  Does this seem reasonable?  I think &quot;your flow&quot; or &quot;your conversation&quot; has ended is not going to convey well.  Ideally I want to send them to the start page with a validation like message, indicating the session has expired.<br />
+<br />
+- Disabling flow:alwaysRedirectOnPause.  This drove me nuts for a while as I was trying to figure out why my objects in request scope were disappearing.  Note: you must set flow:alwaysRedirectOnPause to false if you place view objects in request scope.<br />
+<br />
+- What's the best way to bind URL querystring parameters?  For example, the pagination request sends the info in the querystring (e.g. startAt=100&amp;show=50).  The following configuration works except for validation (probably an error on my part).  What is a bit odd is that this configuration is for a form but this is just a querystring GET request.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">		&lt;bean-action bean=&quot;eproto&quot; method=&quot;processPaginationRequest&quot;&gt;
+			&lt;method-arguments&gt;
+				&lt;!-- &lt;argument expression=&quot;flowExecutionContext&quot;/&gt;--&gt;
+				&lt;argument expression=&quot;flowScope.searchForm&quot;/&gt;
+				&lt;argument expression=&quot;requestScope.pageParameters&quot;/&gt;			
+			&lt;/method-arguments&gt;
+			&lt;method-result name=&quot;results&quot; scope=&quot;request&quot;/&gt;
+		&lt;/bean-action&gt;</pre>
+</div>Here's my bean def:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">	&lt;bean id=&quot;pageParametersAction&quot; class=&quot;org.springframework.webflow.action.FormAction&quot;&gt;
+		&lt;property name=&quot;formObjectClass&quot; value=&quot;gov.xxxx.eproto.PageParameters&quot;/&gt;
+		
+		&lt;property name=&quot;formObjectName&quot; value=&quot;pageParameters&quot;/&gt;
+		&lt;!-- REQUEST scope since this is stateless --&gt;
+		&lt;property name=&quot;formObjectScope&quot; value=&quot;REQUEST&quot;/&gt;
+		
+		&lt;property name=&quot;validator&quot;&gt;
+			&lt;bean class=&quot;gov.xxxx.eproto.PageParametersValidator&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>- This is just a bit of a gripe.  The form:form taglib doesn't seem to support url-rewriting.  My app needs to work without cookies, so instead I plan on using &lt;c:url value=&quot;/index.html&quot;/&gt; to write the URL.<br />
+<br />
+- What's the best way to start the flow?  I currently have my index.jsp (welcome page) with:<br />
+<br />
+&lt;c:redirect url=&quot;/index.html?_flowId=eproto-flow&quot;/&gt;<br />
+<br />
+Is there any way to avoid this redirect?<br />
+<br />
+- I'm planning on using the &quot;get&quot; method for the search form.  Again, this is read-only data and I want to avoid the &quot;postdata&quot; alert on the back button.  Any issues with this?<br />
+<br />
+- Lastly, I have noticed an unhealthy build up of webflow.conversation.container objects in session.  Any ideas on what causes this?  Thanks
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=137708" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=137708" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_137708" /></a>
+<a href="newreply.php?do=newreply&amp;p=137708" rel="nofollow" id="qr_137708" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 137708 popup menu -->
+<div class="vbmenu_popup" id="postmenu_137708_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">rappa</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=13240">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=13240" rel="nofollow">Send a private message to rappa</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=13240" rel="nofollow">Send email to rappa</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=13240" rel="nofollow">Find all posts by rappa</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=13240">Add rappa to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 137708 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #137708 --><!-- post #137861 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit137861" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post137861" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=137861&amp;postcount=2" target="new" rel="nofollow" id="postcount137861" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=137861" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post137861"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 21st, 2007, 09:49 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_137861">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_137861", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_137861">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_137861">
+			
+			Hi Rappa,<br />
+<br />
+Web Flow works perfectly fine for use with the back-button for both stateless (aka RESTful) and stateful flows.  We're working on making supporting the RESTful case easier in our next major release, by introducing a simple configuration dialect for engineering flows that bind to stateless services.<br />
+<br />
+Yes, right now there is no consistent way provided out-of-the-box to handle flow execution restoration failures.  We're working on this for the next release, and it's a highly demanded feature.  Your HandlerExceptionResolver solution sounds fine.  I know of some folks who have go so far to support flow execution restart on exception by submitting the flowId along with each request as well.<br />
+<br />
+alwaysRedirectOnPause is a nice default, but I agree it can be confusing until you understand whats going on (make sure you read Erwin's tip on the matter at <a href="http://www.ervacon.com" target="_blank" rel="nofollow">www.ervacon.com</a>).  You can do selective redirects with it off by using the &quot;redirect&quot; prefix.<br />
+<br />
+Assuming such mapping happens on flow startup, the best way to do this is to map those parameters in as input to your flow using a input-mapper.  Map them to a model object in flow scope and go from there.  We're going to make this easier, too, in the next major release.<br />
+<br />
+Good point about the form tag.  You might want to consider SWF with JSF as a view technology, as well btw.  The next major of release features greatly enhanced JSF integration, and JSF as a view technology and component model is improving as a choice for stateless and stateful interactions, as well.<br />
+<br />
+The best way to start a flow is to simply hit the URL of the flow definition.  You can configure the format of this url format by installing a custom flow executor argument handler on your flow controller.  Parameter-based launching is the default; request-path based is also an option and will become the default in the next major release.<br />
+<br />
+Unhealthy build up of conversation containers is one of the few bugs in 1.0.4, but it's unfortunately still there.  It has been fixed for the upcoming 1.0.5 due out next week, and the upcoming m1 release for our next major release which we will recommend use for new development mode.<br />
+<br />
+HTH - Stick with Web Flow -- you're going to find it a unified, universal controller engine for stateless and stateful interactions, and our support for simple stateless interactions is going to get much simpler in future milestones released in the upcoming weeks / months.  See the roadmap on our JIRA, which has recently been updated in detail.<br />
+<br />
+Cheers,<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=137861" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=137861" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_137861" /></a>
+<a href="newreply.php?do=newreply&amp;p=137861" rel="nofollow" id="qr_137861" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 137861 popup menu -->
+<div class="vbmenu_popup" id="postmenu_137861_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 137861 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #137861 --><!-- post #139833 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit139833" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post139833" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=139833&amp;postcount=3" target="new" rel="nofollow" id="postcount139833" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=139833" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post139833"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 31st, 2007, 03:52 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_139833">
+<a class="bigusername" href="member.php?u=13240">rappa</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="rappa is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_139833", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2005</div>
+<div>Location: Leesburg, VA</div>
+<div>
+						Posts: 11
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_139833">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_139833">
+			
+			Keith,<br />
+<br />
+Thanks for the response.  I was incorrect in saying that the form:form taglib didn't handle url-rewriting -- it does.  I will look into the input-mapper, but the FormAction I'm using now works well and provides validation.  <br />
+<br />
+Something else I noticed was that SWF seems to write no-cache headers on all responses.  The net effect is the browser issues GET requests on the back button, instead of retrieving the page from cache.  I understand why this was implemented, but it is highly undesirable for my read-only app as each GET will perform an unnecessary query on the database.  Is there anyway to change this behavior?  Thanks
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=139833" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=139833" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_139833" /></a>
+<a href="newreply.php?do=newreply&amp;p=139833" rel="nofollow" id="qr_139833" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 139833 popup menu -->
+<div class="vbmenu_popup" id="postmenu_139833_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">rappa</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=13240">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=13240" rel="nofollow">Send a private message to rappa</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=13240" rel="nofollow">Send email to rappa</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=13240" rel="nofollow">Find all posts by rappa</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=13240">Add rappa to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 139833 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #139833 --><div id="lastpost"></div></div></body></html>

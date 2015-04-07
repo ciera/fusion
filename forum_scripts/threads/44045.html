@@ -1,0 +1,556 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #142791 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit142791" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post142791" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=142791&amp;postcount=1" target="new" rel="nofollow" id="postcount142791" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=142791" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post142791"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 20th, 2007, 05:48 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_142791">
+<a class="bigusername" href="member.php?u=25017">TSH</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="TSH is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_142791", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2007</div>
+<div>
+						Posts: 86
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_142791">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Dependency injection not working on debian</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_142791">
+			
+			Hello,<br />
+<br />
+I developed a spring based servlet and it works fine on Windows and Mac OS (Tomcat 5.5 and Tomcat 6). Now I want to deploy it inside a Debian/Tomcat 5.5 environment, but I get an <b>org.springframework.beans.factory.BeanCreationExce  ption</b>:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">exception
+
+javax.servlet.ServletException: Servlet.init() for servlet spreadr threw exception
+	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+	org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)
+	org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)
+	org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)
+	org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)
+	org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)
+	java.lang.Thread.run(Thread.java:595)
+root cause
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'contextProcessor' defined in ServletContext resource [/WEB-INF/springbeans/spreadr-beans.xml]: Cannot resolve reference to bean 'contextReasoner' while setting bean property 'contextReasoner'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'contextReasoner': Initialization of bean failed; nested exception is java.lang.NoClassDefFoundError
+	org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:253)
+	org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:124)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1019)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:809)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:425)
+	org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:250)
+	org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:141)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:247)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:161)
+	org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:273)
+	org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:346)
+	org.springframework.web.context.support.AbstractRefreshableWebApplicationContext.refresh(AbstractRefreshableWebApplicationContext.java:156)
+	org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:308)
+	org.springframework.web.servlet.FrameworkServlet.initWebApplicationContext(FrameworkServlet.java:252)
+	org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:221)
+	org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:115)
+	javax.servlet.GenericServlet.init(GenericServlet.java:211)
+	sun.reflect.GeneratedMethodAccessor43.invoke(Unknown Source)
+	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	java.lang.reflect.Method.invoke(Method.java:585)
+	org.apache.catalina.security.SecurityUtil$1.run(SecurityUtil.java:243)
+	java.security.AccessController.doPrivileged(Native Method)
+	javax.security.auth.Subject.doAsPrivileged(Subject.java:517)
+	org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:275)
+	org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:161)
+	org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:114)
+	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+	org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)
+	org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)
+	org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)
+	org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)
+	org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)
+	java.lang.Thread.run(Thread.java:595)
+root cause
+
+java.lang.NoClassDefFoundError
+	org.springframework.aop.framework.Cglib2AopProxy.createEnhancer(Cglib2AopProxy.java:228)
+	org.springframework.aop.framework.Cglib2AopProxy.getProxy(Cglib2AopProxy.java:155)
+	org.springframework.aop.framework.Cglib2AopProxy.getProxy(Cglib2AopProxy.java:145)
+	org.springframework.aop.framework.ProxyFactory.getProxy(ProxyFactory.java:72)
+	org.springframework.aop.scope.ScopedProxyFactoryBean.setBeanFactory(ScopedProxyFactoryBean.java:103)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1076)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:429)
+	org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:250)
+	org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:141)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:247)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:161)
+	org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:245)
+	org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:124)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1019)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:809)
+	org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:425)
+	org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:250)
+	org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:141)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:247)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:161)
+	org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:273)
+	org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:346)
+	org.springframework.web.context.support.AbstractRefreshableWebApplicationContext.refresh(AbstractRefreshableWebApplicationContext.java:156)
+	org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:308)
+	org.springframework.web.servlet.FrameworkServlet.initWebApplicationContext(FrameworkServlet.java:252)
+	org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:221)
+	org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:115)
+	javax.servlet.GenericServlet.init(GenericServlet.java:211)
+	sun.reflect.GeneratedMethodAccessor43.invoke(Unknown Source)
+	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	java.lang.reflect.Method.invoke(Method.java:585)
+	org.apache.catalina.security.SecurityUtil$1.run(SecurityUtil.java:243)
+	java.security.AccessController.doPrivileged(Native Method)
+	javax.security.auth.Subject.doAsPrivileged(Subject.java:517)
+	org.apache.catalina.security.SecurityUtil.execute(SecurityUtil.java:275)
+	org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:161)
+	org.apache.catalina.security.SecurityUtil.doAsPrivilege(SecurityUtil.java:114)
+	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+	org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)
+	org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)
+	org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)
+	org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)
+	org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)
+	java.lang.Thread.run(Thread.java:595)</pre>
+</div>Beans without dependendy injections work fine. But as soon as I want to inject a bean via &lt;property name=&quot;...&quot; ref=&quot;...&quot; /&gt; it stops working.<br />
+<br />
+Any ideas? Any libs missing on Debian?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=142791" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=142791" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_142791" /></a>
+<a href="newreply.php?do=newreply&amp;p=142791" rel="nofollow" id="qr_142791" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 142791 popup menu -->
+<div class="vbmenu_popup" id="postmenu_142791_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">TSH</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=25017">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=25017" rel="nofollow">Send a private message to TSH</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=25017" rel="nofollow">Find all posts by TSH</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=25017">Add TSH to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 142791 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #142791 --><!-- post #142793 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit142793" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post142793" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=142793&amp;postcount=2" target="new" rel="nofollow" id="postcount142793" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=142793" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post142793"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 20th, 2007, 05:58 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_142793">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_142793", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_142793">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_142793">
+			
+			Well have you looked at the stacktrace?<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">nested exception is <font color="Red">java.lang.NoClassDefFoundError</font></pre>
+</div>Which means you mis a Class file and probably mis some jar in your environment. Also check the (file)rights on each jar, that also might cause some trouble loading jars.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=142793" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=142793" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_142793" /></a>
+<a href="newreply.php?do=newreply&amp;p=142793" rel="nofollow" id="qr_142793" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 142793 popup menu -->
+<div class="vbmenu_popup" id="postmenu_142793_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 142793 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #142793 --><!-- post #142812 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit142812" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post142812" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=142812&amp;postcount=3" target="new" rel="nofollow" id="postcount142812" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=142812" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post142812"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 20th, 2007, 08:59 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_142812">
+<a class="bigusername" href="member.php?u=25017">TSH</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="TSH is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_142812", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2007</div>
+<div>
+						Posts: 86
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_142812">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_142812">
+			
+			Seems to be a Debian/Tomcat related issue. After setting TOMCAT5_SECURITY=NO in /etc/default/tomcat5.5 everything works fine. But I know this is not a really good solution...
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=142812" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=142812" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_142812" /></a>
+<a href="newreply.php?do=newreply&amp;p=142812" rel="nofollow" id="qr_142812" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 142812 popup menu -->
+<div class="vbmenu_popup" id="postmenu_142812_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">TSH</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=25017">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=25017" rel="nofollow">Send a private message to TSH</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=25017" rel="nofollow">Find all posts by TSH</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=25017">Add TSH to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 142812 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #142812 --><!-- post #142833 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit142833" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post142833" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=142833&amp;postcount=4" target="new" rel="nofollow" id="postcount142833" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=142833" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post142833"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 20th, 2007, 10:14 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_142833">
+<a class="bigusername" href="member.php?u=7382">pmularien</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="pmularien is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_142833", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Manchester, NH</div>
+<div>
+						Posts: 1,115
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_142833">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_142833">
+			
+			There are known issues when running Tomcat with the SecurityManager enabled, see <a href="http://forum.springframework.org/showthread.php?t=12548&amp;highlight=tomcat+securitymanager">this thread</a> for another example. If you enabled Tomcat security on Windows it would most likely also fail.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+<font size="-2">Peter Mularien | <a href="http://www.mularien.com/blog" target="_blank" rel="nofollow">Blog</a><br />
+</font><font size="-2">Author, <a href="http://www.springsecuritybook.com/" target="_blank" rel="nofollow"><i>Spring Security 3</i></a> (Book) - </font><font size="-2">Packt Publishing</font><font size="-2">, <b>Available in print and eBook form</b><br />
+SCJP 5, Oracle DBA<br />
+<i>Any postings are my own opinion, and should not be attributed to my employer or clients.</i><br />
+</font><font size="-2"> <br />
+</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=142833" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=142833" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_142833" /></a>
+<a href="newreply.php?do=newreply&amp;p=142833" rel="nofollow" id="qr_142833" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 142833 popup menu -->
+<div class="vbmenu_popup" id="postmenu_142833_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">pmularien</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7382">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7382" rel="nofollow">Send a private message to pmularien</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7382" rel="nofollow">Find all posts by pmularien</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7382">Add pmularien to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 142833 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #142833 --><div id="lastpost"></div></div></body></html>

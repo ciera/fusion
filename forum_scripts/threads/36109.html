@@ -1,0 +1,930 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #106984 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit106984" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post106984" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=106984&amp;postcount=1" target="new" rel="nofollow" id="postcount106984" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=106984" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post106984"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 13th, 2007, 09:33 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_106984">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_106984", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_106984">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>problem: migration spring mvc to SWF</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_106984">
+			
+			Hi guys<br />
+<br />
+i am in a project spring(mvc)/hibernate<br />
+<br />
+now , i have new requeriments, so , SWF is the solution<br />
+<br />
+pls i need your help<br />
+check this part of code<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 402px;
+		text-align: left;
+		overflow: auto">
+&lt;!-- Manages setting up, binding input to, and validating a Sale &quot;backing wizard form object&quot; --&gt;
+&lt;bean id=&quot;transaccionentradaalmacenAction&quot; class=&quot;org.springframework.webflow.action.FormAction&quot;&gt;
+	&lt;property name=&quot;formObjectClass&quot; value=&quot;com.lagranjita.modelo.entidades.CabeceraEntradaAlmacen&quot;/&gt;
+	&lt;property name=&quot;formObjectName&quot;	 value=&quot;cabeceraEntradaAlmacenCommand&quot; /&gt;
+	&lt;property name=&quot;validator&quot;&gt;
+		&lt;ref bean=&quot;idCabeceraAlmacenValidator&quot;/&gt;
+	&lt;/property&gt;
+	&lt;property name=&quot;propertyEditorRegistrar&quot;&gt;
+		&lt;bean class=&quot;com.lagranjita.editors.DatePropertyEditorRegistrar&quot;/&gt;
+	&lt;/property&gt;		
+&lt;/bean&gt;	
+
+
+&lt;view-state id=&quot;transaccionentradaalmacen-uno&quot; view=&quot;transaccionEntradaAlmacen-PasoUno&quot; &gt;
+	&lt;render-actions&gt;
+		&lt;action bean=&quot;transaccionentradaalmacenAction&quot; method=&quot;setupForm&quot; /&gt;
+		&lt;bean-action bean=&quot;idConcreteCabeceraEntradaAlmacenImplManagerObjectTransactional&quot; 
+		         method=&quot;getCabeceraEntradaAlmacenIdGeneradoBO&quot; &gt;
+			&lt;method-result name=&quot;flowScope.cabeceraEntradaAlmacenCommand&quot;/&gt;
+                 &lt;/bean-action&gt;		
+	&lt;/render-actions&gt;
+	&lt;transition on=&quot;next&quot; to=&quot;transaccionentradaalmacen-dos&quot; /&gt;
+&lt;/view-state&gt;</pre>
+</div>well, by parts<br />
+<br />
+<b>view=&quot;transaccionEntradaAlmacen-PasoUno&quot;</b><br />
+is the first view and is almost the same jsp file that i used without SWF<br />
+the formObjectClass have relation to other classes, and i know that<br />
+<b>bean=&quot;idConcreteCabeceraEntradaAlmacenImplManagerO  bjectTransactional&quot; </b><br />
+works excelent, i have 2 links in my menu, with/out swf<br />
+so without swf the method works fine<br />
+<br />
+the probelm is with SWF<br />
+<br />
+in the first jsp i have a lot of &lt;spring:bind tags<br />
+<br />
+like theses<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 274px;
+		text-align: left;
+		overflow: auto">&lt;spring:nestedPath path=&quot;cabeceraEntradaAlmacenCommand&quot;&gt;
+  &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+	&lt;h1&gt;&lt;fmt:message key=&quot;tituloEntradaAlmacen&quot;/&gt; - &lt;c:out value=&quot;${a}&quot; /&gt; &lt;/h1&gt;
+	&lt;table&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;fmt:message key=&quot;numeroDocumentoLabel&quot;/&gt;&lt;/td&gt;
+			&lt;td&gt;				
+				&lt;spring:bind path=&quot;almacenPK.idnumero&quot;&gt;    	
+		    		&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot; id=&quot;idCodigoCabecera&quot; readonly=&quot;true&quot;/&gt;
+    			&lt;/spring:bind&gt;
+    			&lt;spring:bind path=&quot;almacenPK.serie&quot;&gt;    	
+		    		&lt;input type=&quot;hidden&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot; id=&quot;serie&quot;/&gt;
+    			&lt;/spring:bind&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;</pre>
+</div>so all the references to theother classes , like <b>almacenPK.idnumero</b> are null , <br />
+and i recieve this error message in the console<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">org.springframework.beans.NullValueInNestedPathException: Invalid property 'almacenPK' of bean class [com.lagranjita.modelo.entidades.CabeceraEntradaAlmacen]: Value of nested property 'almacenPK' is null
+	at org.springframework.beans.BeanWrapperImpl.getNestedBeanWrapper(BeanWrapperImpl.java:419)
+	at org.springframework.beans.BeanWrapperImpl.getBeanWrapperForPropertyPath(BeanWrapperImpl.java:394)</pre>
+</div>so if i avoid the part of the jsp file alredy shown and only show the parts of the Object without references to the other variables class ,like<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;tr&gt;
+	&lt;td&gt;&lt;fmt:message key=&quot;documentoLabel&quot;/&gt;&lt;/td&gt;
+	&lt;td&gt;
+		&lt;spring:bind path=&quot;documento&quot;&gt;    	
+    		&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot; size=&quot;50&quot; id=&quot;idEmpresa&quot; readonly=&quot;true&quot;/&gt;
+		&lt;/spring:bind&gt;			
+	&lt;/td&gt;
+&lt;/tr&gt;</pre>
+</div>show the the fields empty<br />
+<br />
+that means that<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">&lt;bean-action bean=&quot;idConcreteCabeceraEntradaAlmacenImplManagerObjectTransactional&quot; 
+		         method=&quot;getCabeceraEntradaAlmacenIdGeneradoBO&quot; &gt;
+<b>			&lt;method-result name=&quot;flowScope.cabeceraEntradaAlmacenCommand&quot;/&gt;</b>
+                 &lt;/bean-action&gt;</pre>
+</div>is not filling the values to the formObjectClass<br />
+<br />
+how i can resolve this????<br />
+<br />
+thanks so much for advanced<br />
+<br />
+p.d: <b>			&lt;method-result name=&quot;flowScope.cabeceraEntradaAlmacenCommand&quot;/&gt;</b><br />
+maybe is wrong, pls help
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by dr_pompeii; Mar 13th, 2007 at <span class="time">10:01 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=106984" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=106984" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_106984" /></a>
+<a href="newreply.php?do=newreply&amp;p=106984" rel="nofollow" id="qr_106984" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 106984 popup menu -->
+<div class="vbmenu_popup" id="postmenu_106984_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 106984 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #106984 --><!-- post #107188 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit107188" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post107188" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=107188&amp;postcount=2" target="new" rel="nofollow" id="postcount107188" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=107188" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post107188"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 14th, 2007, 01:08 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_107188">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_107188", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_107188">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_107188">
+			
+			It is... <br />
+<br />
+For filling the command object call the <b>setupForm</b> method and override the <b>createFormObject</b> method. Then for your action simply configure what the name of the command should be and the scope.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=107188" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=107188" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_107188" /></a>
+<a href="newreply.php?do=newreply&amp;p=107188" rel="nofollow" id="qr_107188" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 107188 popup menu -->
+<div class="vbmenu_popup" id="postmenu_107188_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 107188 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #107188 --><!-- post #107228 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit107228" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post107228" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=107228&amp;postcount=3" target="new" rel="nofollow" id="postcount107228" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=107228" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post107228"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 14th, 2007, 02:45 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_107228">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_107228", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_107228">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_107228">
+			
+			Hi mdeinum<br />
+<br />
+thanks so much for the reply, i did it, thanks!<br />
+pls, check my code, if you have some obeservation/advice<br />
+pls tell me<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 354px;
+		text-align: left;
+		overflow: auto">public class TransaccionEntradaAlmacenAction extends FormAction {
+
+	private ConcreteCabeceraEntradaAlmacenImpl concreteCabeceraEntradaAlmacenImpl;
+	
+	public void setConcreteCabeceraEntradaAlmacenImpl(
+			ConcreteCabeceraEntradaAlmacenImpl concreteCabeceraEntradaAlmacenImpl) {
+		this.concreteCabeceraEntradaAlmacenImpl = concreteCabeceraEntradaAlmacenImpl;
+	}
+
+	@Override
+	public Event setupForm(RequestContext context) throws Exception {
+		createFormObject(context);
+		return new Event(this,&quot;succes&quot;);
+	}
+	
+	@Override
+	protected Object createFormObject(RequestContext context) throws Exception{
+		context.getRequestScope().put(&quot;cabeceraEntradaAlmacenCommand&quot;, 
+				concreteCabeceraEntradaAlmacenImpl.getCabeceraEntradaAlmacenIdGeneradoBO());		
+		return context;
+	}</pre>
+</div>where <b>concreteCabeceraEntradaAlmacenImpl.getCabeceraEntr  adaAlmacenIdGeneradoBO()</b><br />
+return an object from Hibernate that represents the header of a document , so this works<br />
+<br />
+but i am seeing this weird behaviours<br />
+<b>One</b><br />
+here, in this jsp part<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">	&lt;td&gt;	
+		&lt;spring:bind path=&quot;fecha&quot;&gt;    	
+		&lt;fmt:formatDate pattern=&quot;dd/MM/yyyy&quot; value=&quot;${fecha}&quot; /&gt;
+	    	&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot; readonly=&quot;true&quot;/&gt;
+    		&lt;/spring:bind&gt;			
+	&lt;/td&gt;</pre>
+</div>when the form is shown the fisrt time, the date/fecha is not formated, show the all clasic format , like <b>Wed Mar 14 13:37:20 PET 2007</b> , but if i work without SWF (other jsp), works normal, same code <img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" /> <br />
+<br />
+se now the new action, the bold part<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 242px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;newtransaccionentradaalmacenAction&quot; class=&quot;com.lagranjita.swf.actions.TransaccionEntradaAlmacenAction&quot;&gt;
+	&lt;property name=&quot;formObjectClass&quot; value=&quot;com.lagranjita.modelo.entidades.CabeceraEntradaAlmacen&quot;/&gt;
+	&lt;property name=&quot;formObjectName&quot;	 value=&quot;cabeceraEntradaAlmacenCommand&quot; /&gt;
+	&lt;property name=&quot;formObjectScope&quot; value=&quot;FLOW&quot; /&gt;
+	&lt;property name=&quot;validator&quot;&gt;
+		&lt;ref bean=&quot;idCabeceraAlmacenValidator&quot;/&gt;
+	&lt;/property&gt;
+<b>	&lt;property name=&quot;propertyEditorRegistrar&quot;&gt;
+		&lt;bean class=&quot;com.lagranjita.editors.DatePropertyEditorRegistrar&quot;/&gt;
+	&lt;/property&gt;		</b>
+	&lt;property name=&quot;concreteCabeceraEntradaAlmacenImpl&quot;&gt;
+		&lt;ref bean=&quot;idConcreteCabeceraEntradaAlmacenImplManagerObjectTransactional&quot; /&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div>where the class is this<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">public class DatePropertyEditorRegistrar implements PropertyEditorRegistrar {
+
+	public void registerCustomEditors(PropertyEditorRegistry registry) {
+		DateFormat dateFormat = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);
+	    dateFormat.setLenient(false);		    
+		registry.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+	}
+
+}</pre>
+</div>thanks for advanced<br />
+<br />
+regards<br />
+<br />
+what is wrong???
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=107228" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=107228" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_107228" /></a>
+<a href="newreply.php?do=newreply&amp;p=107228" rel="nofollow" id="qr_107228" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 107228 popup menu -->
+<div class="vbmenu_popup" id="postmenu_107228_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 107228 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #107228 --><!-- post #107259 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit107259" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post107259" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=107259&amp;postcount=4" target="new" rel="nofollow" id="postcount107259" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=107259" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post107259"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 14th, 2007, 03:44 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_107259">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_107259", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_107259">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_107259">
+			
+			First off all don't override <b>setupForm</b> just override the <b>createForm</b> method and let that method simply return your command object.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 242px;
+		text-align: left;
+		overflow: auto">public class TransaccionEntradaAlmacenAction extends FormAction {
+
+	private ConcreteCabeceraEntradaAlmacenImpl concreteCabeceraEntradaAlmacenImpl;
+	
+	public void setConcreteCabeceraEntradaAlmacenImpl(
+			ConcreteCabeceraEntradaAlmacenImpl concreteCabeceraEntradaAlmacenImpl) {
+		this.concreteCabeceraEntradaAlmacenImpl = concreteCabeceraEntradaAlmacenImpl;
+	}
+
+	@Override
+	protected Object createFormObject(RequestContext context) throws Exception{
+		return concreteCabeceraEntradaAlmacenImpl.getCabeceraEntradaAlmacenIdGeneradoBO();		
+	}
+}</pre>
+</div>That will bind your object to the correct scope and will use it as the formObject. <br />
+<br />
+In your jsp you don't need the fmt tag to format the date, you already have a property editor. Also make sure that the <b>setupForm</b> method is part of your render-actions, this will re-register any property editors.<br />
+<br />
+However the problem might also be solved by implementing the methods in the correct way as I suggested.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=107259" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=107259" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_107259" /></a>
+<a href="newreply.php?do=newreply&amp;p=107259" rel="nofollow" id="qr_107259" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 107259 popup menu -->
+<div class="vbmenu_popup" id="postmenu_107259_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 107259 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #107259 --><!-- post #107307 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit107307" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post107307" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=107307&amp;postcount=5" target="new" rel="nofollow" id="postcount107307" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=107307" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post107307"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 14th, 2007, 07:00 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_107307">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_107307", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_107307">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_107307">
+			
+			hi mdeinum<br />
+<br />
+thanks so much for all, works!!!!<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				First off all don't override setupForm just override the createForm method and let that method simply return your command object.
+			
+		</td>
+</tr>
+</table>
+</div>yes, i read wrong this part<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				For filling the command object call the setupForm method and override the createFormObject method.
+			
+		</td>
+</tr>
+</table>
+</div>thanks so much friend, <br />
+<br />
+i hope have you support ...<br />
+<br />
+regards
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=107307" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=107307" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_107307" /></a>
+<a href="newreply.php?do=newreply&amp;p=107307" rel="nofollow" id="qr_107307" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 107307 popup menu -->
+<div class="vbmenu_popup" id="postmenu_107307_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 107307 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #107307 --><div id="lastpost"></div></div></body></html>

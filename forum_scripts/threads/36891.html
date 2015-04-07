@@ -1,0 +1,2226 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #110865 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit110865" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post110865" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=110865&amp;postcount=1" target="new" rel="nofollow" id="postcount110865" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=110865" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post110865"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 30th, 2007, 03:16 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_110865">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_110865", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_110865">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>problem with viewResolver order attribute</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_110865">
+			
+			Hi to all,<br />
+<br />
+I've one problem with multi view resolver and there are 2 days that I tried all solution for resolve it!!<br />
+I've 2 viewResolver in myapp:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;jspViewResolver&quot; class=&quot;org.springframework.web.servlet.view.Intern alResourceViewResolver&quot;&gt;
+&lt;property name=&quot;order&quot; value=&quot;1&quot;/&gt;
+&lt;property name=&quot;viewClass&quot; value=&quot;org.springframework.web.servlet.view.JstlVi ew&quot;/&gt;
+&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;
+&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;alternativeViewResolver&quot; class=&quot;org.springframework.web.servlet.view.Resour ceBundleViewResolver&quot;&gt;
+&lt;property name=&quot;order&quot; value=&quot;2&quot;/&gt;
+&lt;property name=&quot;basename&quot; value=&quot;views&quot;/&gt;
+&lt;/bean&gt;</pre>
+</div>but application doesn't use the second. If I remove order from InternalResourceViewResolver my application doesn't start with this exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 290px;
+		text-align: left;
+		overflow: auto">java.util.MissingResourceException: Can't find bundle for base name views, locale it_IT
+java.util.ResourceBundle.throwMissingResourceExcep tion(ResourceBundle.java:836)
+java.util.ResourceBundle.getBundleImpl(ResourceBun dle.java:805)
+java.util.ResourceBundle.getBundle(ResourceBundle. java:699)
+org.springframework.web.servlet.view.ResourceBundl eViewResolver.getBundle(ResourceBundleViewResolver .java:232)
+org.springframework.web.servlet.view.ResourceBundl eViewResolver.initFactory(ResourceBundleViewResolv er.java:185)
+org.springframework.web.servlet.view.ResourceBundl eViewResolver.loadView(ResourceBundleViewResolver. java:156)
+org.springframework.web.servlet.view.AbstractCachi ngViewResolver.createView(AbstractCachingViewResol ver.java:159)
+org.springframework.web.servlet.view.AbstractCachi ngViewResolver.resolveViewName(AbstractCachingView Resolver.java:79)
+org.springframework.web.servlet.DispatcherServlet. resolveViewName(DispatcherServlet.java:1142)
+org.springframework.web.servlet.DispatcherServlet. render(DispatcherServlet.java:1086)
+org.springframework.web.servlet.DispatcherServlet. doDispatch(DispatcherServlet.java:841)
+org.springframework.web.servlet.DispatcherServlet. doService(DispatcherServlet.java:755)
+org.springframework.web.servlet.FrameworkServlet.p rocessRequest(FrameworkServlet.java:396)
+org.springframework.web.servlet.FrameworkServlet.d oGet(FrameworkServlet.java:350)
+javax.servlet.http.HttpServlet.service(HttpServlet .java:689)
+javax.servlet.http.HttpServlet.service(HttpServlet .java:802)</pre>
+</div>how like doesn't use chain of viewResolver.<br />
+My web.xml it's simple with servlet mapping .htm and myapp-servlet.xml I've urlmapping:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 306px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;urlMappingLogin&quot; class=&quot;org.springframework.web.servlet.handler.Sim pleUrlHandlerMapping&quot;&gt;
+&lt;property name=&quot;interceptors&quot;&gt;
+&lt;list&gt;
+&lt;ref bean=&quot;sessionInterceptor&quot;/&gt;
+&lt;/list&gt;
+&lt;/property&gt;
+&lt;property name=&quot;mappings&quot;&gt;
+&lt;props&gt;
+&lt;prop key=&quot;/index.htm&quot;&gt;index&lt;/prop&gt;
+
+&lt;prop key=&quot;/ordine_registrati.htm&quot;&gt;ordineRegistratiController&lt;/prop&gt;
+&lt;prop key=&quot;/ordine_registra.htm&quot;&gt;ordineRegistraController&lt;/prop&gt;
+&lt;prop key=&quot;/ordine_chiusura.htm&quot;&gt;ordineChiusuraController&lt;/prop&gt;
+&lt;prop key=&quot;/ordine_modifica.htm&quot;&gt;ordineModificaController&lt;/prop&gt;
+&lt;prop key=&quot;/report.htm&quot;&gt;reportProposteConsolidateController&lt;/prop&gt;
+&lt;/props&gt;
+&lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div>spring is 2.0.2
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=110865" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=110865" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_110865" /></a>
+<a href="newreply.php?do=newreply&amp;p=110865" rel="nofollow" id="qr_110865" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 110865 popup menu -->
+<div class="vbmenu_popup" id="postmenu_110865_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 110865 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #110865 --><!-- post #110867 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit110867" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post110867" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=110867&amp;postcount=2" target="new" rel="nofollow" id="postcount110867" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=110867" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post110867"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 30th, 2007, 03:40 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_110867">
+<a class="bigusername" href="member.php?u=18661">Rossen Stoyanchev</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Rossen Stoyanchev is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_110867", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: London</div>
+<div>
+						Posts: 404
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_110867">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_110867">
+			
+			InternalResourceViewResolver should be the last in your line of resolvers. It tries to match the view name to a JSP and stops if it doesn't find one.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=110867" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=110867" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_110867" /></a>
+<a href="newreply.php?do=newreply&amp;p=110867" rel="nofollow" id="qr_110867" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 110867 popup menu -->
+<div class="vbmenu_popup" id="postmenu_110867_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Rossen Stoyanchev</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18661">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18661" rel="nofollow">Send a private message to Rossen Stoyanchev</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.rossenstoyanchev.org/blog">Visit Rossen Stoyanchev's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18661" rel="nofollow">Find all posts by Rossen Stoyanchev</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18661">Add Rossen Stoyanchev to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 110867 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #110867 --><!-- post #111109 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111109" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111109" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111109&amp;postcount=3" target="new" rel="nofollow" id="postcount111109" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111109" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111109"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 06:26 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111109">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111109", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111109">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111109">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>rstoya05-aop</strong>
+<a href="showthread.php?p=110867#post110867" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">InternalResourceViewResolver should be the last in your line of resolvers. It tries to match the view name to a JSP and stops if it doesn't find one.</div>
+</td>
+</tr>
+</table>
+</div>if InternalResourceViewResolver is the last in my line of resolvers application doesn't start with this exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 402px;
+		text-align: left;
+		overflow: auto">org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'index' must be of type [org.springframework.web.servlet.View], but was actually of type [it.nexus.acquista.controller.IndexController]
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:408)
+	org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:350)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+
+root cause
+
+org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'index' must be of type [org.springframework.web.servlet.View], but was actually of type [it.nexus.acquista.controller.IndexController]
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:313)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:228)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:165)
+	org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:646)
+	org.springframework.web.servlet.view.ResourceBundleViewResolver.loadView(ResourceBundleViewResolver.java:158)
+	org.springframework.web.servlet.view.AbstractCachingViewResolver.createView(AbstractCachingViewResolver.java:159)
+	org.springframework.web.servlet.view.AbstractCachingViewResolver.resolveViewName(AbstractCachingViewResolver.java:79)
+	org.springframework.web.servlet.DispatcherServlet.resolveViewName(DispatcherServlet.java:1142)
+	org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1086)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:841)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:755)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:396)
+	org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:350)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)</pre>
+</div>why it doesn't use second resolver? It use only first on he resolvers chain!! <img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" />
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111109" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111109" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111109" /></a>
+<a href="newreply.php?do=newreply&amp;p=111109" rel="nofollow" id="qr_111109" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111109 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111109_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111109 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111109 --><!-- post #111150 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111150" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111150" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111150&amp;postcount=4" target="new" rel="nofollow" id="postcount111150" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111150" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111150"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 09:08 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111150">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111150", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111150">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111150">
+			
+			You have probably configured something in your views.properties which returns something when the value index is submitted. Can we see your views.properties.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111150" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111150" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111150" /></a>
+<a href="newreply.php?do=newreply&amp;p=111150" rel="nofollow" id="qr_111150" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111150 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111150_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111150 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111150 --><!-- post #111154 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111154" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111154" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111154&amp;postcount=5" target="new" rel="nofollow" id="postcount111154" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111154" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111154"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 09:33 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111154">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111154", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111154">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111154">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>mdeinum</strong>
+<a href="showthread.php?p=111150#post111150" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">You have probably configured something in your views.properties which returns something when the value index is submitted. Can we see your views.properties.</div>
+</td>
+</tr>
+</table>
+</div>I've changed views.proporties with views.xml in order to try.<br />
+In my views.properties there are only:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">reportPdf.class=it.mycompany.myapp.view.ReportPdfView</pre>
+</div>Now in my views.xml: <br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE beans PUBLIC &quot;-//SPRING//DTD BEAN//EN&quot; &quot;http://www.springframework.org/dtd/spring-beans.dtd&quot; &gt;
+
+&lt;beans&gt;
+	&lt;bean id=&quot;reportPdf&quot; class=&quot;it.mycompany.myapp.view.ReportPdfView&quot;/&gt;
+&lt;/beans&gt;</pre>
+</div>and my new resolver:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 418px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;viewResolver&quot;
+		class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+		&lt;property name=&quot;viewClass&quot;&gt;
+			&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;prefix&quot;&gt;
+			&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;suffix&quot;&gt;
+			&lt;value&gt;.jsp&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;order&quot;&gt;
+			&lt;value&gt;1&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;pdfViewResolver&quot;
+		class=&quot;org.springframework.web.servlet.view.XmlViewResolver&quot;&gt;
+		&lt;property name=&quot;location&quot;&gt;
+			&lt;value&gt;/WEB-INF/views.xml&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;order&quot;&gt;
+			&lt;value&gt;2&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>And my urlmapping:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 226px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;urlMappingLogin&quot; class=&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;&gt;
+		&lt;property name=&quot;interceptors&quot;&gt;
+			&lt;list&gt;
+				&lt;ref bean=&quot;sessionInterceptor&quot;/&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;mappings&quot;&gt;
+			&lt;props&gt;
+				&lt;prop key=&quot;/index.htm&quot;&gt;index&lt;/prop&gt;
+				&lt;prop key=&quot;/report.htm&quot;&gt;reportPdfController&lt;/prop&gt;
+			&lt;/props&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>In my ReportPdfController:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">public class ReportPdfController implements Controller {
+	
+	public ModelAndView handleRequest(HttpServletRequest arg0,
+			HttpServletResponse arg1) throws Exception {
+		
+		Map proposte = (Map)arg0.get(&quot;proposte&quot;);
+    	        return new ModelAndView(&quot;reportPdf&quot;, &quot;proposte&quot;, proposte);
+	}
+}</pre>
+</div>In my ReportPdfView:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">public class ReportPdfView extends AbstractPdfView {
+	
+              protected void buildPdfDocument(Map arg0, Document document, PdfWriter writer, HttpServletRequest arg3, HttpServletResponse arg4) throws Exception {
+
+		
+		document.add(new Paragraph(&quot;test1&quot;));
+		document.add(new Paragraph(&quot;test2&quot;));
+              }
+}</pre>
+</div>what's wrong????
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111154" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111154" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111154" /></a>
+<a href="newreply.php?do=newreply&amp;p=111154" rel="nofollow" id="qr_111154" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111154 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111154_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111154 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111154 --><!-- post #111175 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111175" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111175" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111175&amp;postcount=6" target="new" rel="nofollow" id="postcount111175" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111175" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111175"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 10:47 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111175">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111175", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111175">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111175">
+			
+			As stated before your InternalResourceViewResolver has to be the last in the line. As stated in the javadocs of the <a href="http://www.springframework.org/docs/api/org/springframework/web/servlet/view/InternalResourceViewResolver.html">InternalResourceViewResolver</a> it ALWAYS returns a view if it exists or not. So switch the order. First your XmlViewResolver.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>javadocs</strong>
+</div>
+<div style="font-style:italic"><b>Note:</b> When chaining ViewResolvers, an InternalResourceViewResolver always needs to be last, as it will attempt to resolve any view name, no matter whether the underlying resource actually exists.</div>
+</td>
+</tr>
+</table>
+</div><div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;pdfViewResolver&quot; class=&quot;org.springframework.web.servlet.view.XmlViewResolver&quot;&gt;
+	&lt;property name=&quot;order&quot; value=&quot;1&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;viewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+	&lt;property name=&quot;viewClass&quot; value=&quot;org.springframework.web.servlet.view.JstlView&quot;/&gt;
+	&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;
+	&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+	&lt;property name=&quot;order&quot; value=&quot;2&quot;/&gt;
+&lt;/bean&gt;</pre>
+</div>This is something you need if you ever want it to work. The other issue that arises is a bit hard to uncover without those parts of the configuration. Can we see your complete configuration, regarding controllers/views/dispatcherservlet.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by Marten Deinum; Apr 2nd, 2007 at <span class="time">10:51 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111175" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111175" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111175" /></a>
+<a href="newreply.php?do=newreply&amp;p=111175" rel="nofollow" id="qr_111175" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111175 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111175_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111175 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111175 --><!-- post #111181 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111181" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111181" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111181&amp;postcount=7" target="new" rel="nofollow" id="postcount111181" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111181" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111181"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:00 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111181">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111181", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111181">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>problem with viewResolver order attribute [SOLVED]</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111181">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>mdeinum</strong>
+<a href="showthread.php?p=111175#post111175" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">As stated before your InternalResourceViewResolver has to be the last in the line. As stated in the javadocs of the <a href="http://www.springframework.org/docs/api/org/springframework/web/servlet/view/InternalResourceViewResolver.html">InternalResourceViewResolver</a> it ALWAYS returns a view if it exists or not. So switch the order. First your XmlViewResolver.<br />
+<br />
+<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;pdfViewResolver&quot; class=&quot;org.springframework.web.servlet.view.XmlViewResolver&quot;&gt;
+	&lt;property name=&quot;order&quot; value=&quot;1&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;viewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+	&lt;property name=&quot;viewClass&quot; value=&quot;org.springframework.web.servlet.view.JstlView&quot;/&gt;
+	&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;
+	&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+	&lt;property name=&quot;order&quot; value=&quot;2&quot;/&gt;
+&lt;/bean&gt;</pre>
+</div></div>
+</td>
+</tr>
+</table>
+</div>I tried with your solution, but myapp doesn't start with this exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 402px;
+		text-align: left;
+		overflow: auto">org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'index' must be of type [org.springframework.web.servlet.View], but was actually of type [it.nexus.acquista.controller.IndexController]
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:408)
+	org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:350)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+
+root cause
+
+org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'index' must be of type [org.springframework.web.servlet.View], but was actually of type [it.nexus.acquista.controller.IndexController]
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:313)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:228)
+	org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:165)
+	org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:646)
+	org.springframework.web.servlet.view.XmlViewResolver.loadView(XmlViewResolver.java:105)
+	org.springframework.web.servlet.view.AbstractCachingViewResolver.createView(AbstractCachingViewResolver.java:159)
+	org.springframework.web.servlet.view.AbstractCachingViewResolver.resolveViewName(AbstractCachingViewResolver.java:79)
+	org.springframework.web.servlet.DispatcherServlet.resolveViewName(DispatcherServlet.java:1142)
+	org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1086)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:841)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:755)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:396)
+	org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:350)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)</pre>
+</div>It's like chaining doesn't start, but only first viewResolver it's started.<br />
+<br />
+however I solved my problem with a new report-servlet.xml and in web.xml I added:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;servlet&gt;
+		&lt;servlet-name&gt;report&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;   
+	
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;report&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;*.rpt&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;</pre>
+</div>thanx
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111181" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111181" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111181" /></a>
+<a href="newreply.php?do=newreply&amp;p=111181" rel="nofollow" id="qr_111181" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111181 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111181_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111181 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111181 --><!-- post #111183 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111183" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111183" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111183&amp;postcount=8" target="new" rel="nofollow" id="postcount111183" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111183" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111183"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:03 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111183">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111183", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111183">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111183">
+			
+			Chaining does work. We work with 3 viewResolver in a chain. Works perfectly. It has to do something with your other configuration, that is why I asked for the rest of your config.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111183" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111183" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111183" /></a>
+<a href="newreply.php?do=newreply&amp;p=111183" rel="nofollow" id="qr_111183" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111183 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111183_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111183 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111183 --><!-- post #111185 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111185" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111185" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111185&amp;postcount=9" target="new" rel="nofollow" id="postcount111185" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111185" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111185"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:10 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111185">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111185", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111185">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111185">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>mdeinum</strong>
+<a href="showthread.php?p=111183#post111183" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">Chaining does work. We work with 3 viewResolver in a chain. Works perfectly. It has to do something with your other configuration, that is why I asked for the rest of your config.</div>
+</td>
+</tr>
+</table>
+</div>I posted my configuration and you see that it's very simple. <br />
+On my new app I'll try again to use it.<br />
+<br />
+thanx
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111185" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111185" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111185" /></a>
+<a href="newreply.php?do=newreply&amp;p=111185" rel="nofollow" id="qr_111185" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111185 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111185_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111185 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111185 --><!-- post #111187 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111187" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post111187" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111187&amp;postcount=10" target="new" rel="nofollow" id="postcount111187" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111187" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111187"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:19 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111187">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111187", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111187">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111187">
+			
+			You didn't post your full configuration. However you have found a solution although it may not be your desired solution.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111187" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111187" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111187" /></a>
+<a href="newreply.php?do=newreply&amp;p=111187" rel="nofollow" id="qr_111187" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111187 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111187_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111187 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111187 --><div id="lastpost"></div></div><div id="posts"><!-- post #111193 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111193" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111193" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111193&amp;postcount=11" target="new" rel="nofollow" id="postcount111193" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111193" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111193"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:33 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111193">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111193", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111193">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111193">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>mdeinum</strong>
+<a href="showthread.php?p=111187#post111187" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">You didn't post your full configuration. However you have found a solution although it may not be your desired solution.</div>
+</td>
+</tr>
+</table>
+</div>web.xml:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot; &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;&gt;
+
+&lt;web-app&gt;
+
+	&lt;display-name&gt;myapp&lt;/display-name&gt;	
+			
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;/WEB-INF/applicationContext*.xml&lt;/param-value&gt;
+	&lt;/context-param&gt;
+	
+	&lt;listener&gt;
+        &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+    &lt;/listener&gt; 
+    
+    &lt;servlet&gt;
+		&lt;servlet-name&gt;myapp&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;   
+	
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;myapp&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;*.htm&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+	
+	&lt;welcome-file-list&gt;
+		&lt;welcome-file&gt;home.jsp&lt;/welcome-file&gt;
+	&lt;/welcome-file-list&gt;	
+	
+	&lt;taglib&gt;
+		&lt;taglib-uri&gt;spring&lt;/taglib-uri&gt;
+		&lt;taglib-location&gt;/WEB-INF/spring.tld&lt;/taglib-location&gt;
+	&lt;/taglib&gt;
+	
+&lt;/web-app&gt;</pre>
+</div>myapp-servlet.xml :<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE beans PUBLIC &quot;-//SPRING//DTD BEAN//EN&quot; &quot;http://www.springframework.org/dtd/spring-beans.dtd&quot;&gt;
+
+&lt;beans&gt;		
+	&lt;bean id=&quot;paramResolver&quot; 
+		class=&quot;org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver&quot;&gt;
+		&lt;property name=&quot;paramName&quot;&gt;
+			&lt;value&gt;method&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;exceptionResolver&quot; class=&quot;it.mycompany.myapp.exception.ExceptionResolver&quot;&gt;
+		&lt;property name=&quot;exceptionMappings&quot;&gt;
+			&lt;props&gt;
+				&lt;prop key=&quot;java.lang.Exception&quot;&gt;error&lt;/prop&gt;
+			&lt;/props&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;sessionInterceptor&quot; class=&quot;it.mycompany.myapp.interceptor.SessionInterceptor&quot;&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+			
+    &lt;bean id=&quot;pdfViewResolver&quot; class=&quot;org.springframework.web.servlet.view.XmlViewResolver&quot;&gt;
+    	&lt;property name=&quot;order&quot; value=&quot;1&quot;/&gt;
+    &lt;/bean&gt;
+    
+    &lt;bean id=&quot;viewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+    	&lt;property name=&quot;viewClass&quot; value=&quot;org.springframework.web.servlet.view.JstlView&quot;/&gt;
+    	&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;
+    	&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+    	&lt;property name=&quot;order&quot; value=&quot;2&quot;/&gt;
+    &lt;/bean&gt;
+	
+	&lt;bean id=&quot;urlMappingLogin&quot; class=&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;&gt;
+		&lt;property name=&quot;interceptors&quot;&gt;
+			&lt;list&gt;
+				&lt;ref bean=&quot;sessionInterceptor&quot;/&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;mappings&quot;&gt;
+			&lt;props&gt;
+				&lt;prop key=&quot;/index.htm&quot;&gt;index&lt;/prop&gt;
+				
+				&lt;prop key=&quot;/ordine_dettaglio.htm&quot;&gt;ordineDettaglioController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine.htm&quot;&gt;ordineController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_registrazione.htm&quot;&gt;ordineRegistrazioneController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_ricerca_p.htm&quot;&gt;ordineRicercaPController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_ricerca_o.htm&quot;&gt;ordineRicercaOController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_registrati.htm&quot;&gt;ordineRegistratiController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_registra.htm&quot;&gt;ordineRegistraController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_chiusura.htm&quot;&gt;ordineChiusuraController&lt;/prop&gt;
+				&lt;prop key=&quot;/ordine_modifica.htm&quot;&gt;ordineModificaController&lt;/prop&gt;
+				&lt;prop key=&quot;/report.htm&quot;&gt;reportPdfController&lt;/prop&gt;
+			&lt;/props&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;	
+	
+	&lt;!-- HOME --&gt;	
+	&lt;bean id=&quot;index&quot; class=&quot;it.mycompany.myapp.controller.IndexController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;index&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;!-- ORDINE --&gt;
+	&lt;bean id=&quot;ordineController&quot; class=&quot;it.mycompany.myapp.controller.OrdineController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;ordine&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;ordineDettaglioController&quot; class=&quot;it.mycompany.myapp.controller.NotiziaDettaglioController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;ordine_dettaglio&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;notiziaMan&quot;&gt;
+			&lt;ref bean=&quot;notiziaManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;	
+	
+	&lt;bean id=&quot;ordineRicercaPController&quot; class=&quot;it.mycompany.myapp.controller.OrdineRicercaPController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;ordine_registrazione&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;ordine_ricerca_p&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandName&quot;&gt;
+			&lt;value&gt;offerta&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;it.mycompany.myapp.view.model.Offerta&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;biblioMan&quot;&gt;
+			&lt;ref bean=&quot;biblioManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;fornitoriMan&quot;&gt;
+			&lt;ref bean=&quot;fornitoriManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;notiziaMan&quot;&gt;
+			&lt;ref bean=&quot;notiziaManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;ordineRicercaOController&quot; class=&quot;it.mycompany.myapp.controller.OrdineRicercaOController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;ordine_registrati&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;ordine_ricerca_o&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandName&quot;&gt;
+			&lt;value&gt;offerta&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;it.mycompany.myapp.view.model.Offerta&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;fornitoriMan&quot;&gt;
+			&lt;ref bean=&quot;fornitoriManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;ordineMan&quot;&gt;
+			&lt;ref bean=&quot;ordineManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;ordineRegistrazioneController&quot; class=&quot;it.mycompany.myapp.controller.OrdineRegistrazioneController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;ordine_registra&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;ordine_registrazione&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandName&quot;&gt;
+			&lt;value&gt;richiesta&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;it.mycompany.myapp.view.model.Elenco_proposte&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;propostaMan&quot;&gt;
+			&lt;ref bean=&quot;propostaManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;fornitoriMan&quot;&gt;
+			&lt;ref bean=&quot;fornitoriManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;ordineMan&quot;&gt;
+			&lt;ref bean=&quot;ordineManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;valutaMan&quot;&gt;
+			&lt;ref bean=&quot;valutaManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;tipoPagamentoMan&quot;&gt;
+			&lt;ref bean=&quot;tipoPagamentoManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;tipoFornituraMan&quot;&gt;
+			&lt;ref bean=&quot;tipoFornituraManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;modalitaTrasportoMan&quot;&gt;
+			&lt;ref bean=&quot;modalitaTrasportoManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;notiziaMan&quot;&gt;
+			&lt;ref bean=&quot;notiziaManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;	
+	
+	&lt;bean id=&quot;ordineRegistraController&quot; class=&quot;it.mycompany.myapp.controller.OrdineRegistraController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;ordine_confermato&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandName&quot;&gt;
+			&lt;value&gt;ordine&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;it.mycompany.myapp.view.model.Ordine&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;fornitoriMan&quot;&gt;
+			&lt;ref bean=&quot;fornitoriManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;ordineMan&quot;&gt;
+			&lt;ref bean=&quot;ordineManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;	
+	
+	&lt;bean id=&quot;ordineRegistratiController&quot; class=&quot;it.mycompany.myapp.controller.OrdineRegistratiController&quot;&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;ordine_registrati&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;ordineMan&quot;&gt;
+			&lt;ref bean=&quot;ordineManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;	
+	
+	&lt;bean id=&quot;ordineChiusuraController&quot; class=&quot;it.mycompany.myapp.controller.OrdineChiusuraController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;redirect:ordine_registrati.htm&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;ordineMan&quot;&gt;
+			&lt;ref bean=&quot;ordineManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;ordineModificaController&quot; class=&quot;it.mycompany.myapp.controller.OrdineModificaController&quot;&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;redirect:ordine_registrati.htm&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;ordine_modifica&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandName&quot;&gt;
+			&lt;value&gt;ordine&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;it.mycompany.myapp.view.model.Ordine&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;ordineMan&quot;&gt;
+			&lt;ref bean=&quot;ordineManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;valutaMan&quot;&gt;
+			&lt;ref bean=&quot;valutaManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;tipoPagamentoMan&quot;&gt;
+			&lt;ref bean=&quot;tipoPagamentoManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;tipoFornituraMan&quot;&gt;
+			&lt;ref bean=&quot;tipoFornituraManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;modalitaTrasportoMan&quot;&gt;
+			&lt;ref bean=&quot;modalitaTrasportoManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	
+	&lt;!-- REPORT --&gt;
+	
+	&lt;bean id=&quot;reportPdfController&quot; class=&quot;it.mycompany.myapp.controller.ReportPdfController&quot;&gt;
+		&lt;property name=&quot;userMan&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;propostaMan&quot;&gt;
+			&lt;ref bean=&quot;propostaManager&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div>there are also applicationContext-manager.xml and applicationContext-database.xml with only the beans' definitions (DAO, manager etc.)<br />
+<br />
+views.xml:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE beans PUBLIC &quot;-//SPRING//DTD BEAN//EN&quot; &quot;http://www.springframework.org/dtd/spring-beans.dtd&quot; &gt;
+&lt;beans&gt;
+	&lt;bean id=&quot;reportPdf&quot; class=&quot;it.mycompany.myapp.view.ReportPdfView&quot;/&gt;
+&lt;/beans&gt;</pre>
+</div>that's all.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111193" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111193" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111193" /></a>
+<a href="newreply.php?do=newreply&amp;p=111193" rel="nofollow" id="qr_111193" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111193 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111193_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111193 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111193 --><!-- post #111196 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111196" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post111196" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111196&amp;postcount=12" target="new" rel="nofollow" id="postcount111196" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111196" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111196"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:41 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111196">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111196", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111196">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111196">
+			
+			Your problem with your resolver is the following controller<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;<font color="Red"><b>index</b></font>&quot; class=&quot;it.mycompany.myapp.controller.IndexController&quot;&gt;
+	&lt;property name=&quot;successView&quot;&gt;
+		&lt;value&gt;<b><font color="Red">index</font></b>&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div>It has to do with the internal working of the ResourceBundleViewResolver and XmlViewResolver. They use the current application context to lookup beans with a certain name, if they don't find a bean with the given name they use the property/xm file to construct one. So when your application is starting/receiving it's first request (when ResourceBundleViewResolver is the first resolver) it looks for a bean with the name index (as that is the configured succesview of your controller) it finds the bean BUT the bean is a Controller and not a view. Hence your error.<br />
+<br />
+Tweaking your configuration would solve it.<br />
+<br />
+Rename your IndexController from index to indexController, change your mapping accordingly and it should work.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;<b>indexController</b>&quot; class=&quot;it.mycompany.myapp.controller.IndexController&quot;&gt;
+	&lt;property name=&quot;successView&quot; value=&quot;index&quot;/&gt;
+&lt;/bean</pre>
+</div>Mappings<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;urlMappingLogin&quot; class=&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;&gt;
+    [.. removed interceptors ..]
+	&lt;property name=&quot;mappings&quot;&gt;
+		&lt;props&gt;
+			&lt;prop key=&quot;/index.htm&quot;&gt;<b>indexController</b>&lt;/prop&gt;
+			 [.. removed mappings ..]
+		&lt;/props&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111196" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111196" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111196" /></a>
+<a href="newreply.php?do=newreply&amp;p=111196" rel="nofollow" id="qr_111196" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111196 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111196_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111196 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111196 --><!-- post #111200 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit111200" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post111200" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=111200&amp;postcount=13" target="new" rel="nofollow" id="postcount111200" name="13"><strong>13</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=111200" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post111200"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 2nd, 2007, 11:54 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_111200">
+<a class="bigusername" href="member.php?u=14892">ilpata</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ilpata is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_111200", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Santa Fiora</div>
+<div>
+						Posts: 10
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '14892', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marilpata" alt="Send a message via Skype&trade; to ilpata" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_111200">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_111200">
+			
+			it work fine!!<br />
+<br />
+I lost 3 days for a stupid error!!!<br />
+<br />
+many, many, many thanks.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=111200" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=111200" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_111200" /></a>
+<a href="newreply.php?do=newreply&amp;p=111200" rel="nofollow" id="qr_111200" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 111200 popup menu -->
+<div class="vbmenu_popup" id="postmenu_111200_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ilpata</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=14892">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=14892" rel="nofollow">Send a private message to ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=14892" rel="nofollow">Find all posts by ilpata</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=14892">Add ilpata to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 111200 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #111200 --><div id="lastpost"></div></div></body></html>

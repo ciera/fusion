@@ -1,0 +1,1211 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #83180 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83180" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83180" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83180&amp;postcount=1" target="new" rel="nofollow" id="postcount83180" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83180" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83180"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 27th, 2006, 06:28 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83180">
+<a class="bigusername" href="member.php?u=17764">Miel</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Miel is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83180", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 19
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83180">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Exposing Velocity generic tool results in NullPointer</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83180">
+			
+			I'm trying to expose Velocity's generic ListTool...<br />
+When i add a toolbox config location to the ViewResolver, however, i get the following nullpointer:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">java.lang.NullPointerException
+	at org.springframework.web.servlet.view.velocity.VelocityToolboxView.createVelocityContext(VelocityToolboxView.java:106)</pre>
+</div>My ViewResolver configuration;<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 418px;
+		text-align: left;
+		overflow: auto">	&lt;!--  view resolver --&gt;
+	&lt;bean id=&quot;viewResolver&quot;
+		class=&quot;org.springframework.web.servlet.view.velocity.VelocityViewResolver&quot;&gt;
+		&lt;property name=&quot;viewClass&quot;&gt;
+			&lt;value&gt;
+	org.springframework.web.servlet.view.velocity.VelocityView
+			&lt;/value&gt;
+		&lt;/property&gt;
+		
+		&lt;property name=&quot;toolboxConfigLocation&quot;&gt;
+			&lt;value&gt;
+				/WEB-INF/toolbox.xml
+			&lt;/value&gt;		
+		&lt;/property&gt;
+	
+		&lt;property name=&quot;prefix&quot;&gt;
+			&lt;value&gt;/velocity/&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;suffix&quot;&gt;
+			&lt;value&gt;.vm&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;exposeSpringMacroHelpers&quot;&gt;
+			&lt;value&gt;true&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>My toolbox XML:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;toolbox&gt;
+ &lt;tool&gt;
+   &lt;key&gt;list&lt;/key&gt;
+   &lt;scope&gt;application&lt;/scope&gt;
+   &lt;class&gt;org.apache.velocity.tools.generic.ListTool&lt;/class&gt;
+ &lt;/tool&gt;
+&lt;/toolbox&gt;</pre>
+</div>I haven't got a clue what's wrong here, anyone does?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83180" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83180" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83180" /></a>
+<a href="newreply.php?do=newreply&amp;p=83180" rel="nofollow" id="qr_83180" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83180 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83180_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Miel</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17764">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17764" rel="nofollow">Send a private message to Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17764" rel="nofollow">Find all posts by Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17764">Add Miel to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83180 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83180 --><!-- post #83189 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83189" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83189" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83189&amp;postcount=2" target="new" rel="nofollow" id="postcount83189" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83189" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83189"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 27th, 2006, 07:52 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83189">
+<a class="bigusername" href="member.php?u=10907">Dave Syer</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dave Syer is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83189", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 2,950
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83189">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83189">
+			
+			What version of Spring / Velocity are you using?  Did you see any logs from Velocity Tools - it looks to me like the toolbox didn't get initialised.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83189" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83189" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83189" /></a>
+<a href="newreply.php?do=newreply&amp;p=83189" rel="nofollow" id="qr_83189" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83189 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83189_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dave Syer</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10907">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10907" rel="nofollow">Send a private message to Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10907" rel="nofollow">Find all posts by Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10907">Add Dave Syer to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83189 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83189 --><!-- post #83190 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83190" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83190" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83190&amp;postcount=3" target="new" rel="nofollow" id="postcount83190" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83190" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83190"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 27th, 2006, 07:54 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83190">
+<a class="bigusername" href="member.php?u=17764">Miel</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Miel is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83190", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 19
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83190">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83190">
+			
+			Spring 1.2.8<br />
+Velocity 1.4<br />
+<br />
+I think the toolbox didnt initialize...<br />
+Loading an empty toolbox xml gives the same nullpointer...
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83190" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83190" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83190" /></a>
+<a href="newreply.php?do=newreply&amp;p=83190" rel="nofollow" id="qr_83190" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83190 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83190_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Miel</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17764">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17764" rel="nofollow">Send a private message to Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17764" rel="nofollow">Find all posts by Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17764">Add Miel to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83190 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83190 --><!-- post #83193 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83193" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83193" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83193&amp;postcount=4" target="new" rel="nofollow" id="postcount83193" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83193" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83193"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 27th, 2006, 08:08 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83193">
+<a class="bigusername" href="member.php?u=10907">Dave Syer</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dave Syer is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83193", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 2,950
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83193">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83193">
+			
+			You should see some logging from Velocity tools that will tell you about the exception it encountered: probably the resource doesn't exist (i.e. you put the toolbox xml in the wrong place).  Try enabling logging on org.apache.velocity or org.apache.velocity.tools if you don't already.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83193" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83193" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83193" /></a>
+<a href="newreply.php?do=newreply&amp;p=83193" rel="nofollow" id="qr_83193" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83193 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83193_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dave Syer</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10907">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10907" rel="nofollow">Send a private message to Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10907" rel="nofollow">Find all posts by Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10907">Add Dave Syer to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83193 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83193 --><!-- post #83673 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83673" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83673" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83673&amp;postcount=5" target="new" rel="nofollow" id="postcount83673" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83673" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83673"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 31st, 2006, 05:23 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83673">
+<a class="bigusername" href="member.php?u=17764">Miel</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Miel is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83673", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 19
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83673">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83673">
+			
+			When i deploy my war, i see the following log statement:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">2006-10-31 11:14:08,866 INFO  [org.springframework.web.servlet.view.velocity.VelocityViewResolver] Using VelocityToolboxView instead of default VelocityView due to specified toolboxConfigLocation</pre>
+</div>I see no specific toolbox logging there, should i see that?<br />
+<br />
+When a page request is made, the nullpointer occurs:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">2006-10-31 11:21:14,348 DEBUG [org.springframework.web.servlet.view.velocity.VelocityToolboxView] Rendering view with name 'CMSproductCategoryList' with model {ctx={pclist=[Lcom.tmg.propertymodel.dto.ProductCategory;@18caee7}} and static attributes {}
+2006-10-31 11:21:14,363 INFO  [org.springframework.ui.context.support.ResourceBundleThemeSource] Theme created: name 'theme', basename [theme]
+2006-10-31 11:21:14,363 DEBUG [org.springframework.web.servlet.DispatcherServlet] Could not complete request
+java.lang.NullPointerException
+	at org.springframework.web.servlet.view.velocity.VelocityToolboxView.createVelocityContext(VelocityToolboxView.java:106)
+	at org.springframework.web.servlet.view.velocity.VelocityView.renderMergedTemplateModel(VelocityView.java:318)
+	at org.springframework.web.servlet.view.AbstractTemplateView.renderMergedOutputModel(AbstractTemplateView.java:160)
+	at org.springframework.web.servlet.view.AbstractView.render(AbstractView.java:250)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:965)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:744)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:663)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:394)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:348)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:697)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:810)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:252)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.jboss.web.tomcat.filters.ReplyHeaderFilter.doFilter(ReplyHeaderFilter.java:81)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)
+	at org.jboss.web.tomcat.security.CustomPrincipalValve.invoke(CustomPrincipalValve.java:39)
+	at org.jboss.web.tomcat.security.SecurityAssociationValve.invoke(SecurityAssociationValve.java:159)
+	at org.jboss.web.tomcat.security.JaccContextValve.invoke(JaccContextValve.java:59)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:856)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.processConnection(Http11Protocol.java:744)
+	at org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)
+	at org.apache.tomcat.util.net.MasterSlaveWorkerThread.run(MasterSlaveWorkerThread.java:112)
+	at java.lang.Thread.run(Thread.java:595)</pre>
+</div>I haven't got a clue what's wrong here...
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83673" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83673" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83673" /></a>
+<a href="newreply.php?do=newreply&amp;p=83673" rel="nofollow" id="qr_83673" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83673 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83673_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Miel</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17764">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17764" rel="nofollow">Send a private message to Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17764" rel="nofollow">Find all posts by Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17764">Add Miel to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83673 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83673 --><!-- post #83745 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83745" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83745" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83745&amp;postcount=6" target="new" rel="nofollow" id="postcount83745" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83745" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83745"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 31st, 2006, 10:24 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83745">
+<a class="bigusername" href="member.php?u=10907">Dave Syer</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dave Syer is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83745", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 2,950
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83745">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83745">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>Miel</strong>
+<a href="showthread.php?p=83673#post83673" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">When i deploy my war, i see the following log statement:<br />
+I see no specific toolbox logging there, should i see that?</div>
+</td>
+</tr>
+</table>
+</div>I would expect to see a message from the velocity toolbox factory saying why it had returned a null toolbox.  Did you switch on logging on org.apache.velocity (I'm pretty sure that's where it should be coming out)?<br />
+<br />
+I can't see anything obviously wrong with your configuration.  Are you sure that the toolbox config file is actually deployed in the war?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83745" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83745" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83745" /></a>
+<a href="newreply.php?do=newreply&amp;p=83745" rel="nofollow" id="qr_83745" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83745 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83745_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dave Syer</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10907">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10907" rel="nofollow">Send a private message to Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10907" rel="nofollow">Find all posts by Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10907">Add Dave Syer to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83745 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83745 --><!-- post #83752 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83752" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83752" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83752&amp;postcount=7" target="new" rel="nofollow" id="postcount83752" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83752" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83752"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 31st, 2006, 10:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83752">
+<a class="bigusername" href="member.php?u=17764">Miel</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Miel is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83752", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 19
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83752">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83752">
+			
+			David,<br />
+<br />
+JBoss log4j config limited all org.apache logging to INFO and higher...<br />
+Turning that off results in an exponentially growing logfile (27mb just after starting jboss <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /> )...<br />
+<br />
+However, the logfile shows nothing Toolbox specific... (except the 'Using VelocityToolboxView instead of...' line)<br />
+<br />
+The toolbox is definately in the right place (in web-inf, named toolbox.xml)
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83752" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83752" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83752" /></a>
+<a href="newreply.php?do=newreply&amp;p=83752" rel="nofollow" id="qr_83752" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83752 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83752_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Miel</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17764">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17764" rel="nofollow">Send a private message to Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17764" rel="nofollow">Find all posts by Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17764">Add Miel to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83752 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83752 --><!-- post #83877 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83877" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83877" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83877&amp;postcount=8" target="new" rel="nofollow" id="postcount83877" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83877" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83877"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 1st, 2006, 04:24 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83877">
+<a class="bigusername" href="member.php?u=17764">Miel</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Miel is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83877", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 19
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83877">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83877">
+			
+			Ok, did some further testing...<br />
+<br />
+completely f*cking up the toolbox xml file, specifying another toolboxConfigLocation (one that doesn't exist), both had no effect whatsoever.<br />
+<br />
+So it seems the toolbox config doesn't get loaded at all. Spring does notice that i specified a toolbox-location, since it replaced VelocityView with VelocityToolboxView, but nothing else happens..<br />
+<br />
+Maybe i'm missing something fundamental here, but as far i reckon, the following steps are all that's needed to expose tools to my view templates:<br />
+* specify toolboxConfigLocation in ViewResolver<br />
+* place toolbox config file at that location...<br />
+<br />
+Do i need to do anything else?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83877" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83877" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83877" /></a>
+<a href="newreply.php?do=newreply&amp;p=83877" rel="nofollow" id="qr_83877" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83877 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83877_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Miel</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17764">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17764" rel="nofollow">Send a private message to Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17764" rel="nofollow">Find all posts by Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17764">Add Miel to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83877 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83877 --><!-- post #83935 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83935" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post83935" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83935&amp;postcount=9" target="new" rel="nofollow" id="postcount83935" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83935" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83935"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 1st, 2006, 08:11 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83935">
+<a class="bigusername" href="member.php?u=17764">Miel</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Miel is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83935", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 19
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83935">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83935">
+			
+			Took me a while, but here goes:<br />
+<br />
+This fails:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">		
+&lt;property name=&quot;toolboxConfigLocation&quot;&gt;
+	&lt;value&gt;
+		/WEB-INF/toolbox.xml
+	&lt;/value&gt;		
+&lt;/property&gt;</pre>
+</div>However, this works:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;property name=&quot;toolboxConfigLocation&quot; value=&quot;/WEB-INF/toolbox.xml&quot;/&gt;</pre>
+</div>Is it just me or is this weird...<br />
+Other param values can be specified through either a nested value element or a value attribute... The only exception is the darn toolbox config location!
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83935" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83935" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83935" /></a>
+<a href="newreply.php?do=newreply&amp;p=83935" rel="nofollow" id="qr_83935" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83935 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83935_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Miel</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17764">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17764" rel="nofollow">Send a private message to Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17764" rel="nofollow">Find all posts by Miel</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17764">Add Miel to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83935 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83935 --><!-- post #83949 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit83949" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post83949" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=83949&amp;postcount=10" target="new" rel="nofollow" id="postcount83949" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=83949" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post83949"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 1st, 2006, 09:47 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_83949">
+<a class="bigusername" href="member.php?u=10907">Dave Syer</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dave Syer is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_83949", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 2,950
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_83949">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_83949">
+			
+			Must be the whitespace I guess.  Good to know it's not trimmed.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=83949" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=83949" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_83949" /></a>
+<a href="newreply.php?do=newreply&amp;p=83949" rel="nofollow" id="qr_83949" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 83949 popup menu -->
+<div class="vbmenu_popup" id="postmenu_83949_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dave Syer</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10907">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10907" rel="nofollow">Send a private message to Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10907" rel="nofollow">Find all posts by Dave Syer</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10907">Add Dave Syer to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 83949 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #83949 --><div id="lastpost"></div></div></body></html>

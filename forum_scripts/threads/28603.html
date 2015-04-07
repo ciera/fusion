@@ -1,0 +1,729 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #75016 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit75016" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post75016" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=75016&amp;postcount=1" target="new" rel="nofollow" id="postcount75016" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=75016" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post75016"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 29th, 2006, 01:40 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_75016">
+<a class="bigusername" href="member.php?u=18319">gurnard</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="gurnard is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_75016", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 30
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_75016">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>posting form to self</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_75016">
+			
+			Hello.<br />
+<br />
+What I am trying to do is have a page where the user first selects from a select box and then details are displayed depending upon this select, firing a form with an onChange, and a form displayed.<br />
+<br />
+I am trying to do this with the simple form controller but wondering if the multiAction controller or wizardFormController maybe better.<br />
+<br />
+<b>At the moment I am getting this error with my work on the simple form controller </b><br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">Neither Errors instance nor plain target object for bean name 'command' available as request attribute</pre>
+</div>This is my servlet definition<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 434px;
+		text-align: left;
+		overflow: auto">	&lt;bean name=&quot;userController&quot;
+		class=&quot;be.eurodyn.costDB.controller.UserGroupController&quot;&gt;
+		&lt;property name=&quot;sessionForm&quot;&gt;
+			&lt;value&gt;true&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;commandClass&quot;&gt;
+			&lt;value&gt;be.eurodyn.costDB.model.UserGroup&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;formView&quot;&gt;
+			&lt;value&gt;users&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;successView&quot;&gt;
+			&lt;value&gt;redirect:users.htm&lt;/value&gt;
+		&lt;/property&gt;		
+		&lt;!-- 
+	 	&lt;property name=&quot;validator&quot;&gt;
+			&lt;ref bean=&quot;userValidator&quot; /&gt;
+		&lt;/property&gt;  
+		 --&gt;
+		&lt;property name=&quot;userManager&quot;&gt;
+			&lt;ref bean=&quot;userManager&quot;/&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;applicationSecurityManager&quot;&gt;
+			&lt;ref bean=&quot;applicationSecurityManager&quot; /&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>This is my controller class, onSubmit() it is after this the problem occurs:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 322px;
+		text-align: left;
+		overflow: auto">	protected ModelAndView onSubmit(HttpServletRequest req, HttpServletResponse res,Object command, BindException errors){
+
+   Map retMap = new HashMap();
+    int myGroupId = Integer.parseInt(req.getParameter(&quot;groupID&quot;));
+    logger.info(&quot;++++++++ here we are in the onsubmit&quot;);
+    //the user has just selected a group from the top nav to show to the users
+
+    //so go get the relevant users
+    if(req.getParameter(&quot;getUsers&quot;) != null){
+	logger.info(&quot;+++++ get users in the onsubmit &quot;+req.getParameter(&quot;getUsers&quot;));
+	retMap.put(&quot;singleGroup&quot;, userManager.getSingleGroup(myGroupId));
+	retMap.put(&quot;selectedGroupID&quot;, myGroupId);
+     }
+     else{
+	      retMap.put(&quot;selectedGroupID&quot;, null);
+     }
+		
+	return new ModelAndView(&quot;users&quot;, retMap);
+}</pre>
+</div>Now I have tried many ways to return the singleGroup, which is a list of objects, back to the form once the select box is submitted but all throwing up errors this is the closest I have got so far.<br />
+<br />
+This is my JSP outputting the select list:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">   &lt;spring:bind path=&quot;command.groupID&quot;&gt;
+	&lt;select name='groupID' onchange=&quot;forms.selectGroup.submit();&quot;&gt;
+        	&lt;option value=&quot;&quot;&gt;Select a Group :.&lt;/option&gt;
+	  &lt;c:forEach items=&quot;${groupList}&quot; var=&quot;gl&quot;&gt;
+		&lt;option value=&quot;&lt;c:out value='${gl.groupID}'/&gt;&quot;
+			&lt;c:if test=&quot;${gl.groupID == selGroupID}&quot;&gt;SELECTED&lt;/c:if&gt;&gt;
+				&lt;c:out value=&quot;${gl.groupACYN}&quot;/&gt; &lt;c:out value=&quot;${gl.groupDESC}&quot;/&gt;
+		&lt;/option&gt;
+        &lt;/c:forEach&gt;
+        &lt;/select&gt;
+    &lt;/spring:bind&gt;</pre>
+</div>singleGroup that I am returning to the form is going to be an output of details of the group that has been selected by the user originallly.<br />
+<br />
+Any pointers in the right direction would be superb.<br />
+<br />
+Thanks for reading<br />
+cheers<br />
+Martin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=75016" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=75016" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_75016" /></a>
+<a href="newreply.php?do=newreply&amp;p=75016" rel="nofollow" id="qr_75016" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 75016 popup menu -->
+<div class="vbmenu_popup" id="postmenu_75016_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">gurnard</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18319">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18319" rel="nofollow">Send a private message to gurnard</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18319" rel="nofollow">Find all posts by gurnard</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18319">Add gurnard to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 75016 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #75016 --><!-- post #75018 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit75018" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post75018" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=75018&amp;postcount=2" target="new" rel="nofollow" id="postcount75018" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=75018" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post75018"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 29th, 2006, 01:43 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_75018">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_75018", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_75018">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_75018">
+			
+			Just picked up your error message without reading the rest of your message, so I have no idea about what you are trying to do <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /><br />
+<br />
+You need to add errors.getModel() to the ModelAndView you return from onSubmit.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Colin Yates<br />
+SpringSource - <a href="http://www.springsource.com" target="_blank">http://www.springsource.com</a> - Spring Training, Consulting, and Support - &quot;From the Source&quot;<br />
+Please read <a href="http://www.springframework.org/docs/reference/" target="_blank">http://www.springframework.org/documentation</a><br />
+Co-Author of Expert Spring MVC + Web Flow.
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=75018" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=75018" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_75018" /></a>
+<a href="newreply.php?do=newreply&amp;p=75018" rel="nofollow" id="qr_75018" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 75018 popup menu -->
+<div class="vbmenu_popup" id="postmenu_75018_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 75018 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #75018 --><!-- post #75120 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit75120" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post75120" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=75120&amp;postcount=3" target="new" rel="nofollow" id="postcount75120" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=75120" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post75120"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 30th, 2006, 06:05 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_75120">
+<a class="bigusername" href="member.php?u=18319">gurnard</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="gurnard is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_75120", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 30
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_75120">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>posting form to self</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_75120">
+			
+			Ok I managed to get this going in the end although I don't know if this is the best approach.<br />
+<br />
+I have a group select box that is set up by reference data:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">  Map retMap = new HashMap();
+  //list of groups to output to the select list
+  retMap.put(&quot;groupList&quot;,userManager.getAllGroups());
+  return retMap;</pre>
+</div>This user selects from this group select box which fires the form in an onChange handler, this select box is NOT bound to anything.  <br />
+The class is then called with onSubmit method which has logic to determine if the group select box has been selected from it then goes and gets relevant details<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 274px;
+		text-align: left;
+		overflow: auto">protected ModelAndView onSubmit(HttpServletRequest req, HttpServletResponse res,Object command, BindException errors){
+  Map retMap = new HashMap();
+  int myGroupId = Integer.parseInt(req.getParameter(&quot;groupID&quot;));
+
+  //the user has just selected a group from the top nav to show to the users
+  //so go get the relevant users
+  if(req.getParameter(&quot;getUsers&quot;) != null){
+        //put the id from the group select box back to the form
+	retMap.put(&quot;selectedGroupID&quot;, myGroupId);
+       //go get the group of users that is requested from the select box
+	retMap.put(&quot;singleGroup&quot;,userManager.getSingleGroup(myGroupId));
+  }
+//here we can have more if/else if we are doing a third post of the form etc
+  else{
+       	  retMap.put(&quot;selectedGroupID&quot;, null);
+	}</pre>
+</div>Now the problem is when we go get the single group our original group select box has no data so we need to go and get the reference data again and send it back to the form<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">  try {retMap.putAll(referenceData(req));} 
+  catch (Exception e) {e.printStackTrace();}</pre>
+</div>Now we send back the model with all the stuff that we have setup for the form<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">  ModelAndView mav = new ModelAndView(&quot;users&quot;,retMap);
+  mav.addObject(&quot;errors&quot;, errors.getModel());
+  return mav;</pre>
+</div>My question is I am sure there is a better way to do this like using formBackingObject or something.  here there is a lot going on in the onSubmit function.<br />
+<br />
+Any advice or theories on a better cleaner way to do this or is this technique the norm, it works!<br />
+<br />
+thanks for reading and happy springing.<br />
+cheers<br />
+Martin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=75120" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=75120" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_75120" /></a>
+<a href="newreply.php?do=newreply&amp;p=75120" rel="nofollow" id="qr_75120" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 75120 popup menu -->
+<div class="vbmenu_popup" id="postmenu_75120_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">gurnard</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18319">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18319" rel="nofollow">Send a private message to gurnard</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18319" rel="nofollow">Find all posts by gurnard</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18319">Add gurnard to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 75120 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #75120 --><!-- post #76733 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit76733" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post76733" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=76733&amp;postcount=4" target="new" rel="nofollow" id="postcount76733" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=76733" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post76733"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 11th, 2006, 08:42 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_76733">
+<a class="bigusername" href="member.php?u=18319">gurnard</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="gurnard is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_76733", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2006</div>
+<div>
+						Posts: 30
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_76733">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>getting the error again</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_76733">
+			
+			Ok I am getting this error again, the main reason is I have put the form binding back into the mix.  I would like to be able to do this posting a form to itself with the binding.... <br />
+<br />
+<b>so can someone explain what exactly is going on, what does this error mean and what produces it</b><br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">Neither Errors instance nor plain target object for bean name 'frameProfile' available as request attribute</pre>
+</div>With that info I maybe able to sort this out.<br />
+<br />
+thanks for reading:<br />
+cheers<br />
+Martin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=76733" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=76733" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_76733" /></a>
+<a href="newreply.php?do=newreply&amp;p=76733" rel="nofollow" id="qr_76733" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 76733 popup menu -->
+<div class="vbmenu_popup" id="postmenu_76733_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">gurnard</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18319">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18319" rel="nofollow">Send a private message to gurnard</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18319" rel="nofollow">Find all posts by gurnard</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18319">Add gurnard to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 76733 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #76733 --><!-- post #76789 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit76789" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post76789" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=76789&amp;postcount=5" target="new" rel="nofollow" id="postcount76789" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=76789" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post76789"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 11th, 2006, 03:11 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_76789">
+<a class="bigusername" href="member.php?u=19165">kfranklin</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="kfranklin is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_76789", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2006</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_76789">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_76789">
+			
+			I dont have a complete answer for you, but was running into the same type of problem when I created a form that paged through a list and wanted the next button on the form to post to the same page with the next batch of data.  What was happening to me when I was getting that error was that I did not fully understand the life cycle of the controller I was using.  When using the simpleFormController, a GET transaction will run my formBackingObject and referenceData methods so that I can set up the form initially, but after a POST, those methods do not run and the beans that the JSP expect so see are not there so I get the error.  Spring makes the assumption (at least with the SimpleFormController) that a GET means form entry and a POST means form submission.  I was trying to pervert that model and got into trouble.  I fixed my problem by extending abstract controller and just did a request.getParameter to pick off the one form value that I wanted (next or prior on list navigation).  A cheap answer, but it got me out of a similar bind (ok, bad pun).  <br />
+<br />
+You might be able to manually populate the model with the necessary beans in the onSubmit method so that they are there when you re-view the form, or perhaps pervert the validation to actually run your form logic, throwing an &quot;error&quot; with each submission so that the reference data is there on each pass back through the form, and just don't put an error in the errors object when you want to exit to the successView, but you also might find yourself jurry rigging the logic in a manner that will make future support difficult.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=76789" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=76789" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_76789" /></a>
+<a href="newreply.php?do=newreply&amp;p=76789" rel="nofollow" id="qr_76789" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 76789 popup menu -->
+<div class="vbmenu_popup" id="postmenu_76789_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">kfranklin</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=19165">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=19165" rel="nofollow">Send a private message to kfranklin</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=19165" rel="nofollow">Send email to kfranklin</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=19165" rel="nofollow">Find all posts by kfranklin</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=19165">Add kfranklin to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 76789 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #76789 --><div id="lastpost"></div></div></body></html>

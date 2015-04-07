@@ -1,0 +1,501 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #69165 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit69165" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post69165" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=69165&amp;postcount=1" target="new" rel="nofollow" id="postcount69165" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=69165" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post69165"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 17th, 2006, 07:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_69165">
+<a class="bigusername" href="member.php?u=16713">manish.bhadoria</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="manish.bhadoria is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_69165", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2006</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_69165">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon9.gif" alt="Unhappy" border="0" />
+<strong>[Struts+Spring+SWF] Problem in managing continuations</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_69165">
+			
+			Hi,<br />
+We are using Struts and Spring in our application development.<br />
+<br />
+While evaluating SWF for implementing wizard based screens, I came across problem in managing continuation in the flow (i.e. the click of 'refresh', 'back', 'forward' button in the browser window make the application to crash <img src="images/smilies/rolleyes.gif" border="0" alt="" title="Roll Eyes (Sarcastic)" class="inlineimg" />). This also happens in the 'birthDate' example distributed as SWF samples. I observed that 'birthDate' example doesn't makes use of 'flowExecutor' which is responsible for creating and starting new flow executions as well as signaling events for processing by existing, paused executions.<br />
+<br />
+Therefore, I introduced the following extra piece of configuration in webflow-context.xml of birthDate example:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;flowExecutor&quot; class=&quot;org.springframework.webflow.executor.FlowExecutorImpl&quot;&gt;
+	&lt;constructor-arg ref=&quot;repositoryFactory&quot;/&gt;
+	&lt;property name=&quot;redirectOnPause&quot; value=&quot;FLOW_EXECUTION&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;repositoryFactory&quot; class=&quot;org.springframework.webflow.execution.repository.continuation.ContinuationFlowExecutionRepositoryFactory&quot;&gt;
+	&lt;constructor-arg ref=&quot;flowLocator&quot;/&gt;
+&lt;/bean&gt;</pre>
+</div>Rest of the file is still the same as distributed with sample application. Upon doing this alteration to the configuration file and running the application, I get the following exception:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">PHP Code:</div>
+<div class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 226px;
+		text-align: left;
+		overflow: auto">
+<code style="white-space:nowrap">
+<!-- php buffer start --></code><code><span style="color: #000000">
+<span style="color: #0000BB">javax</span><span style="color: #007700">.</span><span style="color: #0000BB">servlet</span><span style="color: #007700">.</span><span style="color: #0000BB">ServletException</span><span style="color: #007700">:&nbsp;</span><span style="color: #0000BB">No&nbsp;getter&nbsp;method&nbsp;</span><span style="color: #007700">for&nbsp;</span><span style="color: #0000BB">property</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">"name"&nbsp;</span><span style="color: #0000BB">of&nbsp;bean</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">"org.springframework.web.struts.SpringBindingActionForm"<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jasper</span><span style="color: #007700">.</span><span style="color: #0000BB">runtime</span><span style="color: #007700">.</span><span style="color: #0000BB">PageContextImpl</span><span style="color: #007700">.</span><span style="color: #0000BB">doHandlePageException</span><span style="color: #007700">(</span><span style="color: #0000BB">PageContextImpl</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">848</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jasper</span><span style="color: #007700">.</span><span style="color: #0000BB">runtime</span><span style="color: #007700">.</span><span style="color: #0000BB">PageContextImpl</span><span style="color: #007700">.</span><span style="color: #0000BB">handlePageException</span><span style="color: #007700">(</span><span style="color: #0000BB">PageContextImpl</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">781</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jsp</span><span style="color: #007700">.</span><span style="color: #0000BB">jsp</span><span style="color: #007700">.</span><span style="color: #0000BB">birthdateForm_jsp</span><span style="color: #007700">.</span><span style="color: #0000BB">_jspService</span><span style="color: #007700">(</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jsp</span><span style="color: #007700">.</span><span style="color: #0000BB">jsp</span><span style="color: #007700">.</span><span style="color: #0000BB">birthdateForm_jsp</span><span style="color: #007700">:</span><span style="color: #0000BB">112</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jasper</span><span style="color: #007700">.</span><span style="color: #0000BB">runtime</span><span style="color: #007700">.</span><span style="color: #0000BB">HttpJspBase</span><span style="color: #007700">.</span><span style="color: #0000BB">service</span><span style="color: #007700">(</span><span style="color: #0000BB">HttpJspBase</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">97</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">javax</span><span style="color: #007700">.</span><span style="color: #0000BB">servlet</span><span style="color: #007700">.</span><span style="color: #0000BB">http</span><span style="color: #007700">.</span><span style="color: #0000BB">HttpServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">service</span><span style="color: #007700">(</span><span style="color: #0000BB">HttpServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">802</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jasper</span><span style="color: #007700">.</span><span style="color: #0000BB">servlet</span><span style="color: #007700">.</span><span style="color: #0000BB">JspServletWrapper</span><span style="color: #007700">.</span><span style="color: #0000BB">service</span><span style="color: #007700">(</span><span style="color: #0000BB">JspServletWrapper</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">322</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jasper</span><span style="color: #007700">.</span><span style="color: #0000BB">servlet</span><span style="color: #007700">.</span><span style="color: #0000BB">JspServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">serviceJspFile</span><span style="color: #007700">(</span><span style="color: #0000BB">JspServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">314</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">jasper</span><span style="color: #007700">.</span><span style="color: #0000BB">servlet</span><span style="color: #007700">.</span><span style="color: #0000BB">JspServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">service</span><span style="color: #007700">(</span><span style="color: #0000BB">JspServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">264</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">javax</span><span style="color: #007700">.</span><span style="color: #0000BB">servlet</span><span style="color: #007700">.</span><span style="color: #0000BB">http</span><span style="color: #007700">.</span><span style="color: #0000BB">HttpServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">service</span><span style="color: #007700">(</span><span style="color: #0000BB">HttpServlet</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">802</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">struts</span><span style="color: #007700">.</span><span style="color: #0000BB">action</span><span style="color: #007700">.</span><span style="color: #0000BB">RequestProcessor</span><span style="color: #007700">.</span><span style="color: #0000BB">doForward</span><span style="color: #007700">(</span><span style="color: #0000BB">RequestProcessor</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">1085</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">struts</span><span style="color: #007700">.</span><span style="color: #0000BB">action</span><span style="color: #007700">.</span><span style="color: #0000BB">RequestProcessor</span><span style="color: #007700">.</span><span style="color: #0000BB">processForwardConfig</span><span style="color: #007700">(</span><span style="color: #0000BB">RequestProcessor</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">398</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">org</span><span style="color: #007700">.</span><span style="color: #0000BB">apache</span><span style="color: #007700">.</span><span style="color: #0000BB">struts</span><span style="color: #007700">.</span><span style="color: #0000BB">action</span><span style="color: #007700">.</span><span style="color: #0000BB">RequestProcessor</span><span style="color: #007700">.</span><span style="color: #0000BB">process</span><span style="color: #007700">(</span><span style="color: #0000BB">RequestProcessor</span><span style="color: #007700">.</span><span style="color: #0000BB">java</span><span style="color: #007700">:</span><span style="color: #0000BB">241</span><span style="color: #007700">)&nbsp;<br /></span><span style="color: #0000BB"></span>
+</span>
+</code><!-- php buffer end -->
+
+</div>
+</div>In a nutshell, rather than solving my problems, It overloaded me with new problems now. I am sure that someone would have definitely succeded in implementing continuations in struts application too. Can anybody guide me doing the same in my application also. Also, can someone tell me that where I went wrong <img src="images/smilies/mad.gif" border="0" alt="" title="Mad" class="inlineimg" />   ?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=69165" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=69165" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_69165" /></a>
+<a href="newreply.php?do=newreply&amp;p=69165" rel="nofollow" id="qr_69165" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 69165 popup menu -->
+<div class="vbmenu_popup" id="postmenu_69165_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">manish.bhadoria</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=16713">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=16713" rel="nofollow">Send a private message to manish.bhadoria</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=16713" rel="nofollow">Send email to manish.bhadoria</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=16713" rel="nofollow">Find all posts by manish.bhadoria</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=16713">Add manish.bhadoria to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 69165 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #69165 --><!-- post #69177 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit69177" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post69177" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=69177&amp;postcount=2" target="new" rel="nofollow" id="postcount69177" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=69177" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post69177"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 17th, 2006, 09:04 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_69177">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_69177", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_69177">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_69177">
+			
+			What version are you using?  You should upgrade to 1.0 RC3 first off.<br />
+<br />
+&quot;redirectOnPause&quot;=true will cause problems if your form object is not in flow scope in 1.0 RC3.  Try setting to false with 1.0 RC3 if you still experience this problem.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=69177" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=69177" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_69177" /></a>
+<a href="newreply.php?do=newreply&amp;p=69177" rel="nofollow" id="qr_69177" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 69177 popup menu -->
+<div class="vbmenu_popup" id="postmenu_69177_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 69177 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #69177 --><!-- post #69320 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit69320" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post69320" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=69320&amp;postcount=3" target="new" rel="nofollow" id="postcount69320" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=69320" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post69320"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 18th, 2006, 06:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_69320">
+<a class="bigusername" href="member.php?u=16713">manish.bhadoria</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="manish.bhadoria is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_69320", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2006</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_69320">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_69320">
+			
+			Thanks Donald for the quick and prompt response. I was earlier using SWF1.0 RC2. As per your suggestion, I upgraded to 1.0 RC3 and the things started working as per expectations. Now I am able to navigate through the screens in the Wizard and the browser buttons ('back', 'forward', 'Refresh') also behave properly.<br />
+<br />
+I have come across a new problem now. If, upon completion of all the steps in the flow (i.e. after passing the 'end-state'), I press the 'refresh' or 'back' button, then I get the following exception.<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">HTML Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">org.springframework.webflow.execution.repository.NoSuchFlowExecutionException: No flow execution could be found with key '_cC5979645-E73F-13D2-621C-751123F676F9_kDA7D82DB-5EBC-8451-F6EF-6D38F146EA8F' -- perhaps this executing flow has ended or expired? This could happen if your users are relying on browser history (typically via the back button) that reference ended flows.; nested exception is org.springframework.webflow.execution.repository.conversation.NoSuchConversationException: No conversation could be found with id 'C5979645-E73F-13D2-621C-751123F676F9' -- perhaps this conversation has ended? 
+org.springframework.webflow.execution.repository.support.AbstractConversationFlowExecutionRepository.getConversation(AbstractConversationFlowExecutionRepository.java:178)
+org.springframework.webflow.execution.repository.support.AbstractConversationFlowExecutionRepository.getLock(AbstractConversationFlowExecutionRepository.java:99)
+org.springframework.webflow.execution.repository.support.RebindingFlowExecutionRepository.getLock(RebindingFlowExecutionRepository.java:60)
+org.springframework.webflow.executor.FlowExecutorImpl.signalEvent(FlowExecutorImpl.java:224)
+org.springframework.webflow.executor.support.FlowRequestHandler.handleFlowRequest(FlowRequestHandler.java:113)
+org.springframework.webflow.executor.struts.FlowAction.execute(FlowAction.java:227)
+org.apache.struts.action.RequestProcessor.processActionPerform(RequestProcessor.java:431)</pre>
+</div>Is there a way to start another instance of the same Flow from the begening by catching this exception? I am sure this is a simple one, but currently I m blacked out. Please suggest.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=69320" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=69320" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_69320" /></a>
+<a href="newreply.php?do=newreply&amp;p=69320" rel="nofollow" id="qr_69320" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 69320 popup menu -->
+<div class="vbmenu_popup" id="postmenu_69320_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">manish.bhadoria</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=16713">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=16713" rel="nofollow">Send a private message to manish.bhadoria</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=16713" rel="nofollow">Send email to manish.bhadoria</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=16713" rel="nofollow">Find all posts by manish.bhadoria</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=16713">Add manish.bhadoria to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 69320 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #69320 --><!-- post #69332 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit69332" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post69332" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=69332&amp;postcount=4" target="new" rel="nofollow" id="postcount69332" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=69332" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post69332"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 18th, 2006, 08:13 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_69332">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_69332", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_69332">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_69332">
+			
+			There is no easy way at present to do this--I'd recommend routing to a generic error page for now.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=69332" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=69332" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_69332" /></a>
+<a href="newreply.php?do=newreply&amp;p=69332" rel="nofollow" id="qr_69332" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 69332 popup menu -->
+<div class="vbmenu_popup" id="postmenu_69332_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 69332 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #69332 --><div id="lastpost"></div></div></body></html>

@@ -1,0 +1,582 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #24672 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit24672" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post24672" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=24672&amp;postcount=1" target="new" rel="nofollow" id="postcount24672" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=24672" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post24672"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 16th, 2005, 11:06 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_24672">
+<a class="bigusername" href="member.php?u=9624">benw</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="benw is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_24672", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Mar 2005</div>
+<div>
+						Posts: 15
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_24672">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>generateNewContext throws NullPointerException</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_24672">
+			
+			Hi everyone,<br />
+<br />
+I have been trying to figure out how to get a simple example to work using Tapestry + Spring + Acegi + Hibernate.  I have been following the hispacta example, searching this forum, and trying to understand the changes that have been made with the latest version (0.8.2).  <br />
+<br />
+All I am trying to do is to authenciate a user from the database (via Hibernate).  Nothing fancy or extra.  <br />
+<br />
+Using Acegi 0.8.2 and Spring 1.2.1, however, I got a NullPointerException when the HttpSessionContextIntegrationFilter.generateNewCon  text() method call when I tried to bring up the Home page (the very first page of the app).<br />
+<br />
+My app server is JBoss 4.0.1sp1.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">21&#58;38&#58;52,735 DEBUG &#91;HttpSessionContextIntegrationFilter&#93; No HttpSession currently exists
+21&#58;38&#58;52,735 ERROR &#91;Engine&#93; StandardWrapperValve&#91;core&#93;&#58; Servlet.service&#40;&#41; for servlet core threw exception
+java.lang.NullPointerException
+        at net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter.generateNewContext&#40;HttpSessionContextIntegrationFilter.
+        at net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter&#40;HttpSessionContextIntegrationFilter.java&#58;210&#41;
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter&#40;ApplicationFilterChain.java&#58;186&#41;
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter&#40;ApplicationFilterChain.java&#58;157&#41;
+        at org.jboss.web.tomcat.filters.ReplyHeaderFilter.doFilter&#40;ReplyHeaderFilter.java&#58;75&#41;
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter&#40;ApplicationFilterChain.java&#58;186&#41;
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter&#40;ApplicationFilterChain.java&#58;157&#41;
+        at org.apache.catalina.core.StandardWrapperValve.invoke&#40;StandardWrapperValve.java&#58;214&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;104&#41;
+        at org.apache.catalina.core.StandardPipeline.invoke&#40;StandardPipeline.java&#58;520&#41;
+        at org.apache.catalina.core.StandardContextValve.invokeInternal&#40;StandardContextValve.java&#58;198&#41;
+        at org.apache.catalina.core.StandardContextValve.invoke&#40;StandardContextValve.java&#58;152&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;104&#41;
+        at org.jboss.web.tomcat.security.CustomPrincipalValve.invoke&#40;CustomPrincipalValve.java&#58;66&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;102&#41;
+        at org.jboss.web.tomcat.security.SecurityAssociationValve.invoke&#40;SecurityAssociationValve.java&#58;150&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;102&#41;
+        at org.jboss.web.tomcat.security.JaccContextValve.invoke&#40;JaccContextValve.java&#58;54&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;102&#41;
+        at org.apache.catalina.core.StandardPipeline.invoke&#40;StandardPipeline.java&#58;520&#41;
+        at org.apache.catalina.core.StandardHostValve.invoke&#40;StandardHostValve.java&#58;137&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;104&#41;
+        at org.apache.catalina.valves.ErrorReportValve.invoke&#40;ErrorReportValve.java&#58;118&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;102&#41;
+        at org.apache.catalina.core.StandardPipeline.invoke&#40;StandardPipeline.java&#58;520&#41;
+        at org.apache.catalina.core.StandardEngineValve.invoke&#40;StandardEngineValve.java&#58;109&#41;
+        at org.apache.catalina.core.StandardValveContext.invokeNext&#40;StandardValveContext.java&#58;104&#41;
+        at org.apache.catalina.core.StandardPipeline.invoke&#40;StandardPipeline.java&#58;520&#41;
+        at org.apache.catalina.core.ContainerBase.invoke&#40;ContainerBase.java&#58;929&#41;
+        at org.apache.coyote.tomcat5.CoyoteAdapter.service&#40;CoyoteAdapter.java&#58;160&#41;
+        at org.apache.coyote.http11.Http11Processor.process&#40;Http11Processor.java&#58;799&#41;
+        at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.processConnection&#40;Http11Protocol.java&#58;705&#41;
+        at org.apache.tomcat.util.net.TcpWorkerThread.runIt&#40;PoolTcpEndpoint.java&#58;577&#41;
+        at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run&#40;ThreadPool.java&#58;683&#41;
+        at java.lang.Thread.run&#40;Thread.java&#58;595&#41;</pre>
+</div>Below is my web.xml and spring configuration file.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;web-app&gt;
+   &lt;display-name&gt;Core Web Application&lt;/display-name&gt;
+
+   &lt;context-param&gt;
+      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+      &lt;param-value&gt;
+         /WEB-INF/classes/applicationContext.xml
+      &lt;/param-value&gt;
+   &lt;/context-param&gt; 
+    
+
+   &lt;filter&gt;
+      &lt;filter-name&gt;Acegi HTTP Session Context Integration Filter&lt;/filter-name&gt;
+      &lt;filter-class&gt;net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter&lt;/filter-class&gt;
+   &lt;/filter&gt;
+
+   &lt;filter&gt;
+      &lt;filter-name&gt;Acegi Authentication Processing Filter&lt;/filter-name&gt;
+      &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+      &lt;init-param&gt;
+         &lt;param-name&gt;targetClass&lt;/param-name&gt;
+         &lt;param-value&gt;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilter&lt;/param-value&gt;
+      &lt;/init-param&gt;
+   &lt;/filter&gt;
+      
+   &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi HTTP Session Context Integration Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+   &lt;/filter-mapping&gt;
+
+   &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi Authentication Processing Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+   &lt;/filter-mapping&gt;   
+   
+   &lt;listener&gt;
+      &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+   &lt;/listener&gt;   
+        
+
+   &lt;servlet&gt;
+      &lt;servlet-name&gt;core&lt;/servlet-name&gt;
+      &lt;servlet-class&gt;org.apache.tapestry.ApplicationServlet&lt;/servlet-class&gt;
+      &lt;load-on-startup&gt;0&lt;/load-on-startup&gt;
+   &lt;/servlet&gt;
+
+
+   &lt;servlet-mapping&gt;
+      &lt;servlet-name&gt;core&lt;/servlet-name&gt;
+      &lt;url-pattern&gt;/app&lt;/url-pattern&gt;
+   &lt;/servlet-mapping&gt;
+
+
+   &lt;session-config&gt;
+      &lt;session-timeout&gt;15&lt;/session-timeout&gt;
+   &lt;/session-config&gt;
+
+   &lt;welcome-file-list&gt;
+      &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;
+   &lt;/welcome-file-list&gt;
+&lt;/web-app&gt;</pre>
+</div>and my acegi related configuration:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">
+&lt;beans&gt;
+   
+   &lt;bean id=&quot;authenticationManager&quot; class=&quot;net.sf.acegisecurity.providers.ProviderManager&quot;&gt;
+      &lt;property name=&quot;providers&quot;&gt;
+         &lt;list&gt;
+            &lt;ref bean=&quot;daoAuthenticationProvider&quot;/&gt;
+         &lt;/list&gt;
+      &lt;/property&gt;
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;daoAuthenticationProvider&quot; class=&quot;net.sf.acegisecurity.providers.dao.DaoAuthenticationProvider&quot;&gt;
+      &lt;property name=&quot;authenticationDao&quot;&gt;&lt;ref bean=&quot;gemExUserDao&quot;/&gt;&lt;/property&gt;
+      &lt;property name=&quot;passwordEncoder&quot;&gt;&lt;ref bean=&quot;passwordEncoder&quot;/&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+      
+   &lt;bean id=&quot;passwordEncoder&quot; class=&quot;net.sf.acegisecurity.providers.encoding.Md5PasswordEncoder&quot;&gt;      
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;authenticationProcessingFilter&quot; class=&quot;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilter&quot;&gt;
+      &lt;property name=&quot;authenticationManager&quot;&gt;&lt;ref bean=&quot;authenticationManager&quot;/&gt;&lt;/property&gt;
+      &lt;property name=&quot;authenticationFailureUrl&quot;&gt;&lt;value&gt;/app?service=page/Login&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;defaultTargetUrl&quot;&gt;&lt;value&gt;/app&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;filterProcessesUrl&quot;&gt;&lt;value&gt;/j_acegi_security_check&lt;/value&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;httpSessionContextIntegrationFilter&quot; class=&quot;net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter&quot; abstract=&quot;false&quot; singleton=&quot;true&quot; lazy-init=&quot;default&quot; autowire=&quot;default&quot; dependency-check=&quot;default&quot;&gt;
+      &lt;property name=&quot;context&quot;&gt;
+         &lt;value&gt;net.sf.acegisecurity.context.security.SecureContextImpl&lt;/value&gt; 
+      &lt;/property&gt;
+   &lt;/bean&gt;
+          
+&lt;/beans&gt;</pre>
+</div>Am I missing anything in particular?  Any pointers will be greatly appreciated.  <br />
+<br />
+Thanks,<br />
+Ben
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 24672 popup menu -->
+<div class="vbmenu_popup" id="postmenu_24672_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">benw</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9624">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9624" rel="nofollow">Send a private message to benw</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9624" rel="nofollow">Find all posts by benw</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9624">Add benw to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 24672 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #24672 --><!-- post #25463 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit25463" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post25463" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=25463&amp;postcount=2" target="new" rel="nofollow" id="postcount25463" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=25463" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post25463"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 24th, 2005, 11:58 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_25463">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_25463", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_25463">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_25463">
+			
+			What line of HttpSessionContextIntegrationFilter is throwing the exception? Also, are you trying to use JBoss container adapters or the recommended filters-based approach? Have you got an old version of Acegi Security somewhere in the JBoss classloader? Are you using the official 0.8.2 release, or a separately compiled version?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 25463 popup menu -->
+<div class="vbmenu_popup" id="postmenu_25463_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 25463 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #25463 --><!-- post #25758 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit25758" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post25758" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=25758&amp;postcount=3" target="new" rel="nofollow" id="postcount25758" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=25758" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post25758"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 28th, 2005, 10:29 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_25758">
+<a class="bigusername" href="member.php?u=9624">benw</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="benw is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_25758", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Mar 2005</div>
+<div>
+						Posts: 15
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_25758">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_25758">
+			
+			Hi Alex,<br />
+<br />
+I didn't think anyone would replied to my post after 8 days!!  I really appreciate your efforts.  I initially was trying to have only the minimum setup working (e.g. only a simple authentication without all the other stuff).  Since I didn't get any help, I decide to add more to the setup scouring the net for examples and stuff.  After a few tries, I finally got it working.  Basically, this is now my configuration (in case people are interested):<br />
+<br />
+As a newcomer, I like to say that the documentation needs some serious work.  I had a very hard time figuring out what I need to do to get a basic setup going.  I understand this is open source and the work of volunteers, so please understand I am in no way complaining.  Just giving some feedback...<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">
+&lt;beans&gt;
+   
+   &lt;bean id=&quot;authenticationManager&quot; class=&quot;net.sf.acegisecurity.providers.ProviderManager&quot;&gt;
+      &lt;property name=&quot;providers&quot;&gt;
+         &lt;list&gt;
+            &lt;ref bean=&quot;daoAuthenticationProvider&quot;/&gt;
+            &lt;ref local=&quot;anonymousAuthenticationProvider&quot;/&gt;
+         &lt;/list&gt;
+      &lt;/property&gt;
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;daoAuthenticationProvider&quot; class=&quot;net.sf.acegisecurity.providers.dao.DaoAuthenticationProvider&quot;&gt;
+      &lt;property name=&quot;authenticationDao&quot;&gt;&lt;ref bean=&quot;gemExUserDao&quot;/&gt;&lt;/property&gt;
+      &lt;!-- &lt;property name=&quot;passwordEncoder&quot;&gt;&lt;ref bean=&quot;passwordEncoder&quot;/&gt;&lt;/property&gt; --&gt;
+   &lt;/bean&gt;
+            
+   &lt;bean id=&quot;passwordEncoder&quot; class=&quot;net.sf.acegisecurity.providers.encoding.Md5PasswordEncoder&quot;&gt;      
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;anonymousAuthenticationProvider&quot; class=&quot;net.sf.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider&quot;&gt;
+      &lt;property name=&quot;key&quot;&gt;&lt;value&gt;foobar&lt;/value&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+      
+   &lt;bean id=&quot;filterChainProxy&quot; class=&quot;net.sf.acegisecurity.util.FilterChainProxy&quot;&gt;
+      &lt;property name=&quot;filterInvocationDefinitionSource&quot;&gt;
+         &lt;value&gt;
+		      CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+		      PATTERN_TYPE_APACHE_ANT
+            /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,anonymousProcessingFilter,securityEnforcementFilter
+         &lt;/value&gt;
+      &lt;/property&gt;
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;httpSessionContextIntegrationFilter&quot; class=&quot;net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter&quot; abstract=&quot;false&quot; singleton=&quot;true&quot; lazy-init=&quot;default&quot; autowire=&quot;default&quot; dependency-check=&quot;default&quot;&gt;
+      &lt;property name=&quot;context&quot;&gt;
+         &lt;value&gt;net.sf.acegisecurity.context.security.SecureContextImpl&lt;/value&gt; 
+      &lt;/property&gt;
+   &lt;/bean&gt;
+          
+   &lt;bean id=&quot;authenticationProcessingFilter&quot; class=&quot;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilter&quot;&gt;
+      &lt;property name=&quot;authenticationManager&quot;&gt;&lt;ref bean=&quot;authenticationManager&quot;/&gt;&lt;/property&gt;
+      &lt;property name=&quot;authenticationFailureUrl&quot;&gt;&lt;value&gt;/app?service=page/Login&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;defaultTargetUrl&quot;&gt;&lt;value&gt;/app?service=page/Home&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;alwaysUseDefaultTargetUrl&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;filterProcessesUrl&quot;&gt;&lt;value&gt;/j_acegi_security_check&lt;/value&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+      
+   &lt;bean id=&quot;anonymousProcessingFilter&quot; class=&quot;net.sf.acegisecurity.providers.anonymous.AnonymousProcessingFilter&quot;&gt;
+      &lt;property name=&quot;key&quot;&gt;&lt;value&gt;foobar&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;userAttribute&quot;&gt;&lt;value&gt;anonymousUser,ROLE_ANONYMOUS&lt;/value&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+            
+   &lt;bean id=&quot;securityEnforcementFilter&quot; class=&quot;net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter&quot;&gt;
+      &lt;property name=&quot;filterSecurityInterceptor&quot;&gt;&lt;ref local=&quot;filterInvocationInterceptor&quot;/&gt;&lt;/property&gt;
+      &lt;property name=&quot;authenticationEntryPoint&quot;&gt;&lt;ref local=&quot;authenticationProcessingFilterEntryPoint&quot;/&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;authenticationProcessingFilterEntryPoint&quot; class=&quot;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint&quot;&gt;
+      &lt;property name=&quot;loginFormUrl&quot;&gt;&lt;value&gt;/app?service=page/Login&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;forceHttps&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;
+   &lt;/bean&gt;
+   
+   &lt;bean id=&quot;filterInvocationInterceptor&quot; class=&quot;net.sf.acegisecurity.intercept.web.FilterSecurityInterceptor&quot;&gt;
+      &lt;property name=&quot;authenticationManager&quot;&gt;&lt;ref bean=&quot;authenticationManager&quot;/&gt;&lt;/property&gt;
+      &lt;property name=&quot;accessDecisionManager&quot;&gt;&lt;ref local=&quot;httpRequestAccessDecisionManager&quot;/&gt;&lt;/property&gt;
+      &lt;property name=&quot;objectDefinitionSource&quot;&gt;
+         &lt;value&gt;
+	         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+		      PATTERN_TYPE_APACHE_ANT
+            /app=ROLE_ANONYMOUS,ROLE_USER
+		      /app?service?page/home=ROLE_ANONYMOUS,ROLE_USER
+		      /app?service?page/login=ROLE_ANONYMOUS
+		      /app**=ROLE_USER
+            /**=ROLE_ANONYMOUS,ROLE_USER
+         &lt;/value&gt;
+      &lt;/property&gt;
+   &lt;/bean&gt;      
+   
+   &lt;bean id=&quot;httpRequestAccessDecisionManager&quot; class=&quot;net.sf.acegisecurity.vote.AffirmativeBased&quot;&gt;
+      &lt;property name=&quot;allowIfAllAbstainDecisions&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;
+      &lt;property name=&quot;decisionVoters&quot;&gt;
+         &lt;list&gt;
+            &lt;ref bean=&quot;roleVoter&quot;/&gt;
+         &lt;/list&gt;
+      &lt;/property&gt;
+   &lt;/bean&gt;   
+   
+   &lt;bean id=&quot;roleVoter&quot; class=&quot;net.sf.acegisecurity.vote.RoleVoter&quot;/&gt;        
+   
+&lt;/beans&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 25758 popup menu -->
+<div class="vbmenu_popup" id="postmenu_25758_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">benw</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9624">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9624" rel="nofollow">Send a private message to benw</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9624" rel="nofollow">Find all posts by benw</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9624">Add benw to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 25758 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #25758 --><div id="lastpost"></div></div></body></html>

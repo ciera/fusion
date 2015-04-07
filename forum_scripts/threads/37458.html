@@ -1,0 +1,2002 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #113809 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit113809" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post113809" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=113809&amp;postcount=1" target="new" rel="nofollow" id="postcount113809" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=113809" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post113809"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 16th, 2007, 06:02 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_113809">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_113809", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_113809">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>AbstractWizardFormController and Validation</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_113809">
+			
+			Hi, i'm using an AbstractWizardFormController to register a new user to my site...<br />
+The user has to type a lot of information. I want to validate all of them. The most important thing is that the user hasn't left the field blank.<br />
+<br />
+Now i have overwritten the function validatePage.<br />
+Here is a part of it.<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 338px;
+		text-align: left;
+		overflow: auto">      			if (IsNullOrEmpty(register.getName())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;name&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getFirstName())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;firstname&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getGender())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;gender&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getBirthday())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;birthday&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}</pre>
+</div>That are only 4 things i check.<br />
+Thats my function IsNullOrEmpty<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">    private boolean IsNullOrEmpty(String string)
+    {
+    	if(string == null)
+    		return true;
+
+    	return string.trim().equalsIgnoreCase(&quot;&quot;);
+    }</pre>
+</div>So the question is. Does anybody know, how to validate this automatically? Is there a way to check the values whether they are empty or not?? Or does i have to type this validation as many times as i have properties?<br />
+<br />
+And how to determinate that there is an error? I have a global variable hasErrors of boolean. Is there a better way??
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=113809" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=113809" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_113809" /></a>
+<a href="newreply.php?do=newreply&amp;p=113809" rel="nofollow" id="qr_113809" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 113809 popup menu -->
+<div class="vbmenu_popup" id="postmenu_113809_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 113809 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #113809 --><!-- post #113811 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit113811" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post113811" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=113811&amp;postcount=2" target="new" rel="nofollow" id="postcount113811" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=113811" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post113811"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 16th, 2007, 06:44 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_113811">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_113811", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_113811">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_113811">
+			
+			Just override the initBind method and the suppressValidation method (assuming you are using Spring 2.0.4 or greater)<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception
+
+    binder.setRequiredFields(new String[] {&quot;name&quot;, &quot;firstName&quot;, &quot;gender&quot;, &quot;firstName&quot;});</pre>
+</div>By default normal validation still occurs, so if you have registered some other validators they will still be called. If you want to prevent this override the suppressValidation method also.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">protected boolean suppressValidation(HttpServletRequest request, Object command, BindException errors) {
+    if (errors.hasErrors) {
+        return true;
+    }
+    return super.suppressValidation(request, command, errors);
+}</pre>
+</div>That should do the trick.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=113811" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=113811" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_113811" /></a>
+<a href="newreply.php?do=newreply&amp;p=113811" rel="nofollow" id="qr_113811" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 113811 popup menu -->
+<div class="vbmenu_popup" id="postmenu_113811_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 113811 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #113811 --><!-- post #113894 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit113894" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post113894" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=113894&amp;postcount=3" target="new" rel="nofollow" id="postcount113894" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=113894" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post113894"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 16th, 2007, 11:08 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_113894">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_113894", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_113894">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_113894">
+			
+			I tried the initBinder-Method... So my wizard consists of many pages.. so if i make <br />
+binder.setRequiredFields(new String[] {&quot;name&quot;, &quot;firstName&quot;, &quot;gender&quot;, &quot;firstName&quot;});<br />
+<br />
+He thinks all these pages are already need in the first page. But they are need in page three... How can i tell this funktion that i only should check this on page three??<br />
+<br />
+and if this works, how can i find out in the jsp-file, which field was blank???
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=113894" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=113894" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_113894" /></a>
+<a href="newreply.php?do=newreply&amp;p=113894" rel="nofollow" id="qr_113894" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 113894 popup menu -->
+<div class="vbmenu_popup" id="postmenu_113894_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 113894 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #113894 --><!-- post #113972 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit113972" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post113972" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=113972&amp;postcount=4" target="new" rel="nofollow" id="postcount113972" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=113972" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post113972"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 16th, 2007, 04:31 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_113972">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_113972", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_113972">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_113972">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				and if this works, how can i find out in the jsp-file, which field was blank???
+			
+		</td>
+</tr>
+</table>
+</div>Spring will generate messagecodes for the missing fields. For example required.name or required.gender. If you use spring 2.0 you can simply use the form:errors tag. It will resolve the message for you. Check the <a href="http://www.springframework.org/docs/api/org/springframework/validation/DefaultMessageCodesResolver.html">DefaultMessageCodesResolver</a> for an explaination of which codes are generated.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				He thinks all these pages are already need in the first page. But they are need in page three... How can i tell this funktion that i only should check this on page three??
+			
+		</td>
+</tr>
+</table>
+</div>Check the API of the <a href="http://www.springframework.org/docs/api/org/springframework/web/servlet/mvc/AbstractWizardFormController.html">AbstractWizardFormController</a> it has a very convenient getCurrentPage method.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception
+	if (getCurrentPage(request) == 3) {	
+    		binder.setRequiredFields(new String[] {&quot;name&quot;, &quot;firstName&quot;, &quot;gender&quot;, &quot;firstName&quot;});
+	}
+}</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=113972" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=113972" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_113972" /></a>
+<a href="newreply.php?do=newreply&amp;p=113972" rel="nofollow" id="qr_113972" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 113972 popup menu -->
+<div class="vbmenu_popup" id="postmenu_113972_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 113972 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #113972 --><!-- post #114242 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit114242" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post114242" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=114242&amp;postcount=5" target="new" rel="nofollow" id="postcount114242" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=114242" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post114242"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 17th, 2007, 01:09 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_114242">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_114242", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_114242">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_114242">
+			
+			I got the following exception while using the function getCurrentPage(request)<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">java.lang.IllegalStateException: Page attribute [de.nfranze.sf.controller.RegisterWizardController.PAGE.register] neither found in session nor in request
+	at org.springframework.web.servlet.mvc.AbstractWizardFormController.getCurrentPage(AbstractWizardFormController.java:547)
+	at de.nfranze.sf.controller.RegisterWizardController.initBinder(RegisterWizardController.java:87)
+	at org.springframework.web.servlet.mvc.BaseCommandController.createBinder(BaseCommandController.java:416)
+	at org.springframework.web.servlet.mvc.AbstractFormController.getErrorsForNewForm(AbstractFormController.java:353)
+	at org.springframework.web.servlet.mvc.AbstractFormController.showNewForm(AbstractFormController.java:323)
+	at org.springframework.web.servlet.mvc.AbstractWizardFormController.handleInvalidSubmit(AbstractWizardFormController.java:455)
+	at org.springframework.web.servlet.mvc.AbstractFormController.handleRequestInternal(AbstractFormController.java:257)
+	at org.springframework.web.servlet.mvc.AbstractController.handleRequest(AbstractController.java:153)
+	at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:45)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:820)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:396)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:360)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:709)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:252)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at de.nfranze.sf.servlets.URLFilter.doFilter(URLFilter.java:23)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:174)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:77)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:138)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)
+	at org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)
+	at org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)
+	at org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)
+	at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)
+	at java.lang.Thread.run(Unknown Source)</pre>
+</div>Is there also a way to make that the wizard will not validate a page, when i go back in the wizard???<br />
+<br />
+There are still some problems with this wizard... mhh...
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=114242" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=114242" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_114242" /></a>
+<a href="newreply.php?do=newreply&amp;p=114242" rel="nofollow" id="qr_114242" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 114242 popup menu -->
+<div class="vbmenu_popup" id="postmenu_114242_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 114242 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #114242 --><!-- post #114257 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit114257" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post114257" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=114257&amp;postcount=6" target="new" rel="nofollow" id="postcount114257" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=114257" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post114257"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 17th, 2007, 01:50 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_114257">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_114257", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_114257">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_114257">
+			
+			I think there is something else wrong in your controller, form or configuration. FOr some reason the <b>handleInvalidSubmit</b> method is called, instead of the expected processFormSubmission (well it is getting called but something seems wrong).<br />
+<br />
+Have you set the sessionForm property to true?
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=114257" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=114257" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_114257" /></a>
+<a href="newreply.php?do=newreply&amp;p=114257" rel="nofollow" id="qr_114257" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 114257 popup menu -->
+<div class="vbmenu_popup" id="postmenu_114257_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 114257 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #114257 --><!-- post #114567 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit114567" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post114567" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=114567&amp;postcount=7" target="new" rel="nofollow" id="postcount114567" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=114567" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post114567"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 18th, 2007, 11:26 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_114567">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_114567", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_114567">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_114567">
+			
+			yes, sessionForm is true... <br />
+<br />
+Ok, now i'll collect all my errors, hope anybody can solve some of them.<br />
+<br />
+If i go backward in the wizard, i want not to validate a page. is that possible?<br />
+<br />
+Next is, and that is why i needed the getCurrentSite-Function, if somebody goes forward and there is an error in the site, the GetTargetPage-Method increments the page counter, whyever. But i have a progress on my site, depending on this functions. The progress shows all pages in the wizard and highlights the current page. So the problem is, if somebody has an invalid page and presses next, the current site is loaded again, but the progress shows the next site... Does anybody understand this???<br />
+<br />
+The last one is:<br />
+I have bound many textboxes to some properties. If the user once wrote something in the textbox and pressed next, it is writte in the property. but if he goes back and removes the text, the text is still written in the property. it is not set back to null or &quot;&quot; or whatever...<br />
+<br />
+So, these are all my wizard problems. <br />
+For solving some of them, i would be very thankfull...
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=114567" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=114567" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_114567" /></a>
+<a href="newreply.php?do=newreply&amp;p=114567" rel="nofollow" id="qr_114567" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 114567 popup menu -->
+<div class="vbmenu_popup" id="postmenu_114567_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 114567 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #114567 --><!-- post #114571 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit114571" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post114571" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=114571&amp;postcount=8" target="new" rel="nofollow" id="postcount114571" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=114571" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post114571"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 18th, 2007, 11:45 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_114571">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_114571", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_114571">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_114571">
+			
+			if somebody is interested, thats my entire wizardcontroller...<br />
+I think there is a lot that could be optimized...<br />
+<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">public class RegisterWizardController extends AbstractWizardFormController {
+	private ILanguageManager langManager;
+	private ISystabManager systabManager;
+	private ICustomerManager customerManager;
+	private IKeynumberManager keynumberManager;
+	private MailManager mailManager;
+
+	private int currentPage;
+	private boolean hasErrors = false; // Try to find out the errors...
+
+	private Register register;
+
+	public RegisterWizardController() {
+		setPages(new String[]{&quot;2a&quot;, &quot;2b&quot;, &quot;2c&quot;,  &quot;2c1&quot;, &quot;2i&quot;});
+		setCommandName(&quot;register&quot;);
+	}
+
+    protected Object formBackingObject(HttpServletRequest request) {
+   		// Notwendig für die Sprachausgabe in der ersten Seite.
+		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
+
+		langManager = (ILanguageManager) context.getBean(&quot;languageManager&quot;);
+		systabManager = (ISystabManager)context.getBean(&quot;systabManager&quot;);
+		customerManager = (ICustomerManager)context.getBean(&quot;customerManager&quot;);
+		keynumberManager = (IKeynumberManager)context.getBean(&quot;keynumberManager&quot;);
+		mailManager = (MailManager)context.getBean(&quot;mailManager&quot;);
+
+    	Register register = new Register();
+   		register.setMaxSites(getPageCount());
+    	return register;
+    }
+
+// Here i bound all my fields, that i not neet to check whether they are empty...
+// Not finished yet, have much more fields... :-)
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		// TODO Auto-generated method stub
+
+		List&lt;String&gt; list = new LinkedList&lt;String&gt;();
+
+		switch(currentPage)
+       	{
+       		case 1:
+       		{
+       			list.add(&quot;customer.mail&quot;);
+       			list.add(&quot;customer.password&quot;);
+       			list.add(&quot;repeatPassword&quot;);
+       			list.add(&quot;customer.pwquestion&quot;);
+       			list.add(&quot;customer.pwanswer&quot;);
+
+       			binder.setRequiredFields((String[])list.toArray(new String[list.size()]));//new String[] {&quot;customer.mail&quot;});
+       			break;
+       		}
+       	}
+
+		super.initBinder(request, binder);
+
+	}
+
+	protected int getTargetPage(HttpServletRequest request, int arg1) {
+		// Here i get the targetpage...
+    	currentPage = super.getTargetPage(request, arg1);
+
+		// Here i try to find out with my own variable, wether there was an error on my site.
+     	if(hasErrors &amp;&amp; currentPage&gt;arg1)
+    		currentPage--;
+	// Here i tried to find out, whether there was an error on the site.
+    	BindException ex;
+    	try
+    	{
+    		ex =  this.getErrorsForNewForm(request);
+    		if(ex == null);
+    	}
+    	catch(Exception exc)
+    	{
+
+    	}
+
+       	switch(currentPage)
+       	{
+	       	case 2:
+			{
+			   	request.setAttribute(&quot;gender&quot;, systabManager.GetSysTabPosArray(&quot;gender&quot;, request, langManager) );
+	      	   	request.setAttribute(&quot;nativelanguage&quot;, systabManager.GetSysTabPosArray(&quot;nativelanguage&quot;) );
+	      	   	request.setAttribute(&quot;countries&quot;, systabManager.GetSysTabPosArray(&quot;country&quot;) );
+	      	   	break;
+	       	}
+       	}
+
+      	if(currentPage&gt;register.getMaxVisitedSite())
+       		register.setMaxVisitedSite(currentPage);
+
+       	register.setCurrentVisitedSite(currentPage);
+
+		return super.getTargetPage(request, arg1);
+	}
+
+// Here is my monster validation...
+    protected void validatePage(Object command, Errors errors, int page) {
+       	register = (Register) command;
+       	hasErrors=false;
+
+       	switch(page)
+       	{
+      		case 1:
+      		{
+/*      			if (IsNullOrEmpty(register.getMail())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;mail&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+
+
+      			if (IsNullOrEmpty(register.getPassword())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;password&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+*/
+      			break;
+      		}
+      		case 2:
+      		{
+				// Here i had test everything whether its empty or null,
+				// before i have had the initBinder... :-)
+      			if (IsNullOrEmpty(register.getName())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;name&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getFirstName())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;firstName&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getGender())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;gender&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getBirthday())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;birthday&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+       	       	}
+      			if (IsNullOrEmpty(register.getNativeLanguage())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;nativeLanguage&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+       	       	}
+
+      			if (IsNullOrEmpty(register.getCustomer().getMail())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;mail&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+
+      			if (IsNullOrEmpty(register.getStreet())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;street&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getZipCode())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;zipCode&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getCity())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;city&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			if (IsNullOrEmpty(register.getCountry())) {
+      				//ValidationUtils.rejectIfEmptyOrWhitespace (errors, &quot;mail&quot;, &quot;mail&quot;, &quot;mail&quot;);
+      				errors.rejectValue(&quot;country&quot;, null, &quot;First name must not be empty&quot;);
+       	       		hasErrors=true;
+      			}
+      			break;
+      		}
+      		case 3:
+
+      		case 4:
+      		case 5:
+       	}
+    }
+// Check whether password and repeatedpassword are the same
+    private boolean PasswordsAreEqual(String password, String repeatedPW)
+    {
+    	if (password == null)
+    		return false;
+    	if (repeatedPW == null)
+    		return false;
+
+    	boolean result;
+    	result = password.equals((String) repeatedPW);
+    	return result;
+    }
+
+    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors)
+    {
+       	Register register = (Register) command;
+
+       	Customer customer=register.getCustomer();
+      	customerManager.Create(customer);
+
+      	try
+      	{
+           	mailManager.Send(customer, request);
+      	}catch(Exception ex)
+      	{
+      		ex.printStackTrace();
+      	}
+
+        return new ModelAndView(&quot;2j&quot;, &quot;register&quot;, register);
+    }
+
+    private String NullOrEmpty(String string)
+    {
+    	if(string == null)
+    		return &quot;&quot;;
+    	else
+    		return string;
+    }
+
+    private boolean IsNullOrEmpty(String string)
+    {
+    	if(string == null)
+    		return true;
+
+    	return string.trim().equalsIgnoreCase(&quot;&quot;);
+    }
+
+    protected ModelAndView processCancel(HttpServletRequest request,
+            HttpServletResponse response, Object command, BindException errors) {
+        return new ModelAndView(new RedirectView(&quot;index&quot;));
+    }
+}</pre>
+</div>And thats the way the controller is registered in my SprindDispatcher-servlet.xml<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">	&lt;bean id=&quot;registerForm&quot; class=&quot;de.nfranze.sf.controller.RegisterWizardController&quot;/&gt;</pre>
+</div>Thats all.. are there some important properties that should be set?
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by Dosihris; Apr 18th, 2007 at <span class="time">11:52 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=114571" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=114571" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_114571" /></a>
+<a href="newreply.php?do=newreply&amp;p=114571" rel="nofollow" id="qr_114571" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 114571 popup menu -->
+<div class="vbmenu_popup" id="postmenu_114571_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 114571 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #114571 --><!-- post #114589 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit114589" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post114589" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=114589&amp;postcount=9" target="new" rel="nofollow" id="postcount114589" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=114589" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post114589"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 18th, 2007, 01:10 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_114589">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_114589", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_114589">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_114589">
+			
+			Wow, i have solved Problem 2. So now always the right site is highlighted. I have overwritten the GetcurrentPage-Method.. It is working. <br />
+<br />
+Now i only have the error that he validates a page when i go a step back in the wizard and the error that if i have once written something in a field, i cannot delete it. He always takes the old value...
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by Dosihris; Apr 18th, 2007 at <span class="time">02:11 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=114589" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=114589" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_114589" /></a>
+<a href="newreply.php?do=newreply&amp;p=114589" rel="nofollow" id="qr_114589" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 114589 popup menu -->
+<div class="vbmenu_popup" id="postmenu_114589_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 114589 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #114589 --><!-- post #186708 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit186708" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post186708" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=186708&amp;postcount=10" target="new" rel="nofollow" id="postcount186708" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=186708" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post186708"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 17th, 2008, 08:58 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_186708">
+<a class="bigusername" href="member.php?u=39727">MECADAMIA</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MECADAMIA is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_186708", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2008</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_186708">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_186708">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>Dosihris</strong>
+<a href="showthread.php?p=114589#post114589" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">Wow, i have solved Problem 2. So now always the right site is highlighted. I have overwritten the GetcurrentPage-Method.. It is working. <br />
+<br />
+Now i only have the error that he validates a page when i go a step back in the wizard and the error that if i have once written something in a field, i cannot delete it. He always takes the old value...</div>
+</td>
+</tr>
+</table>
+</div>Hello could you please tell me what is your implementation for getCurrentPageMethod. I'm getting the same error as you.<br />
+<br />
+Thanks<br />
+Rgds,<br />
+Meck<img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" />
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=186708" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=186708" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_186708" /></a>
+<a href="newreply.php?do=newreply&amp;p=186708" rel="nofollow" id="qr_186708" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 186708 popup menu -->
+<div class="vbmenu_popup" id="postmenu_186708_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MECADAMIA</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=39727">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=39727" rel="nofollow">Send a private message to MECADAMIA</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=39727" rel="nofollow">Find all posts by MECADAMIA</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=39727">Add MECADAMIA to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 186708 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #186708 --><div id="lastpost"></div></div><div id="posts"><!-- post #186711 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit186711" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post186711" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=186711&amp;postcount=11" target="new" rel="nofollow" id="postcount186711" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=186711" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post186711"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 17th, 2008, 09:16 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_186711">
+<a class="bigusername" href="member.php?u=22195">Dosihris</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Dosihris is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_186711", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 150
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_186711">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_186711">
+			
+			Well, this is more than one year ago.. i just tried to pick all the code together i wrote at this time. i found some files and i think what you mean i have finally solved without overwriting the getCurrentPage method.<br />
+<br />
+I overwrote getTargetPage, but i'm not sure whether that would help you... actually i'm not even sure what the problem was. :-)<br />
+<br />
+if it helps, this is the code of my getTargetPAge method.<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 370px;
+		text-align: left;
+		overflow: auto">	protected int getTargetPage(HttpServletRequest request, Object obj, Errors errors, int page) 
+	{
+
+		Register register = (Register) obj;
+		
+		int tarPage = super.getTargetPage(request, obj, errors, page);
+		
+		try 
+		{
+			if(errors.getErrorCount() == 0)
+			{
+				SetRegisterPages(register, request, tarPage);
+				//register.setCurrentVisitedSpecialSite(tarPage);
+			}
+		} 
+		catch (Exception ex) 
+		{
+			return 0;
+		}
+
+		return super.getTargetPage(request, obj, errors, page);
+	}</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=186711" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=186711" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_186711" /></a>
+<a href="newreply.php?do=newreply&amp;p=186711" rel="nofollow" id="qr_186711" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 186711 popup menu -->
+<div class="vbmenu_popup" id="postmenu_186711_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Dosihris</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22195">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22195" rel="nofollow">Send a private message to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=22195" rel="nofollow">Send email to Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22195" rel="nofollow">Find all posts by Dosihris</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22195">Add Dosihris to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 186711 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #186711 --><!-- post #186816 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit186816" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post186816" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=186816&amp;postcount=12" target="new" rel="nofollow" id="postcount186816" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=186816" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post186816"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 17th, 2008, 01:31 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_186816">
+<a class="bigusername" href="member.php?u=39727">MECADAMIA</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MECADAMIA is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_186816", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2008</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_186816">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>IllegalStateException</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_186816">
+			
+			Thanks a lot for the quick reply. Unfortunately mine is still throwing the same error. Here is the stack trace. Hopefully someone can give me some advice.<br />
+<br />
+Caused by: java.lang.IllegalStateException: Page attribute [com.vignette.portal.stii.controller.UpdateControll  er.PAGE.incident] neither found in session nor in request<br />
+	at org.springframework.web.portlet.mvc.AbstractWizard  FormController.getCurrentPage(AbstractWizardFormCo  ntroller.java:713)<br />
+	at org.springframework.web.portlet.mvc.AbstractWizard  FormController.renderFormSubmission(AbstractWizard  FormController.java:587)<br />
+	at org.springframework.web.portlet.mvc.AbstractFormCo  ntroller.handleRenderRequestInternal(AbstractFormC  ontroller.java:436)<br />
+	at org.springframework.web.portlet.mvc.AbstractContro  ller.handleRenderRequest(AbstractController.java:2  19)<br />
+	at org.springframework.web.portlet.mvc.SimpleControll  erHandlerAdapter.handleRender(SimpleControllerHand  lerAdapter.java:52)<br />
+	at org.springframework.web.portlet.DispatcherPortlet.  doRenderService(DispatcherPortlet.java:811)<br />
+	at org.springframework.web.portlet.FrameworkPortlet.p  rocessRequest(FrameworkPortlet.java:483)<br />
+	... 83 more<br />
+<br />
+Nested Exception is java.lang.IllegalStateException: Page attribute [com.vignette.portal.stii.controller.UpdateControll  er.PAGE.incident] neither found in session nor in request<br />
+	at org.springframework.web.portlet.mvc.AbstractWizard  FormController.getCurrentPage(AbstractWizardFormCo  ntroller.java:713)<br />
+	at org.springframework.web.portlet.mvc.AbstractWizard  FormController.renderFormSubmission(AbstractWizard  FormController.java:587)<br />
+	at org.springframework.web.portlet.mvc.AbstractFormCo  ntroller.handleRenderRequestInternal(AbstractFormC  ontroller.java:436)<br />
+	at org.springframework.web.portlet.mvc.AbstractContro  ller.handleRenderRequest(AbstractController.java:2  19)<br />
+	at org.springframework.web.portlet.mvc.SimpleControll  erHandlerAdapter.handleRender(SimpleControllerHand  lerAdapter.java:52)<br />
+	at org.springframework.web.portlet.DispatcherPortlet.  doRenderService(DispatcherPortlet.java:811)<br />
+	at org.springframework.web.portlet.FrameworkPortlet.p  rocessRequest(FrameworkPortlet.java:483)<br />
+	at org.springframework.web.portlet.FrameworkPortlet.d  oDispatch(FrameworkPortlet.java:453)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServlet.do  Dispatch(PortletServlet.java:344)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:109)<br />
+	at com.ibm.isclite.container.collaborator.PortletServ  letCollaborator.doRender(PortletServletCollaborato  r.java:60)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:100)<br />
+	at com.ibm.ws.portletcontainer.rrd.RRDServerPortletSe  rvletCollaborator.doRender(RRDServerPortletServlet  Collaborator.java:123)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:100)<br />
+	at com.ibm.ws.portletcontainer.cache.CacheCollaborato  r.doRender(CacheCollaborator.java:81)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:100)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServlet.do  Dispatch(PortletServlet.java:240)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:77)<br />
+	at com.ibm.isclite.container.collaborator.PortletServ  letCollaborator.doDispatch(PortletServletCollabora  tor.java:77)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:69)<br />
+	at com.ibm.ws.portletcontainer.rrd.RRDServerPortletSe  rvletCollaborator.doDispatch(RRDServerPortletServl  etCollaborator.java:60)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:69)<br />
+	at com.ibm.ws.portletcontainer.cache.CacheCollaborato  r.doDispatch(CacheCollaborator.java:63)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServletCol  laboratorChainImpl.doCollaborator(PortletServletCo  llaboratorChainImpl.java:69)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServlet.di  spatch(PortletServlet.java:183)<br />
+	at com.ibm.ws.portletcontainer.core.PortletServlet.do  Get(PortletServlet.java:118)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:743)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:856)<br />
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.ser  vice(ServletWrapper.java:966)<br />
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.ser  vice(ServletWrapper.java:907)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.d  oFilter(WebAppFilterChain.java:118)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain._  doFilter(WebAppFilterChain.java:87)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterManager  .doFilter(WebAppFilterManager.java:696)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterManager  .doFilter(WebAppFilterManager.java:641)<br />
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.han  dleRequest(ServletWrapper.java:475)<br />
+	at com.ibm.ws.wswebcontainer.servlet.ServletWrapper.h  andleRequest(ServletWrapper.java:463)<br />
+	at com.ibm.wsspi.webcontainer.servlet.GenericServletW  rapper.handleRequest(GenericServletWrapper.java:11  5)<br />
+	at com.ibm.ws.webcontainer.webapp.WebAppRequestDispat  cher.include(WebAppRequestDispatcher.java:606)<br />
+	at com.ibm.ws.portletcontainer.invoker.impl.PortletIn  vokerImpl.invoke(PortletInvokerImpl.java:143)<br />
+	at com.ibm.ws.portletcontainer.invoker.impl.PortletIn  vokerCollaboratorChainImpl.doCollaborator(PortletI  nvokerCollaboratorChainImpl.java:70)<br />
+	at com.ibm.ws.portletcontainer.ext.PortletInvokerPerf  ormanceCollaborator.invoke(PortletInvokerPerforman  ceCollaborator.java:247)<br />
+	at com.ibm.ws.portletcontainer.ext.PortletInvokerPerf  ormanceCollaborator.doInvoke(PortletInvokerPerform  anceCollaborator.java:93)<br />
+	at com.ibm.ws.portletcontainer.ext.PortletInvokerPerf  ormanceCollaborator.invokePMI(PortletInvokerPerfor  manceCollaborator.java:137)<br />
+	at com.ibm.ws.portletcontainer.ext.PortletInvokerPerf  ormanceCollaborator.doInvoke(PortletInvokerPerform  anceCollaborator.java:83)<br />
+	at com.ibm.ws.portletcontainer.ext.PortletInvokerPerf  ormanceCollaborator.doRender(PortletInvokerPerform  anceCollaborator.java:68)<br />
+	at com.ibm.ws.portletcontainer.invoker.impl.PortletIn  vokerCollaboratorChainImpl.doCollaborator(PortletI  nvokerCollaboratorChainImpl.java:57)<br />
+	at com.ibm.ws.portletcontainer.invoker.impl.PortletIn  vokerImpl.render(PortletInvokerImpl.java:83)<br />
+	at com.ibm.ws.portletcontainer.PortletContainerImpl.d  oRender(PortletContainerImpl.java:115)<br />
+	at com.ibm.ws.portletcontainer.PortletContainerInvoke  rCollaboratorChainImpl.doCollaborator(PortletConta  inerInvokerCollaboratorChainImpl.java:79)<br />
+	at com.ibm.ws.portletcontainer.ext.ExtCollaborator.do  Render(ExtCollaborator.java:69)<br />
+	at com.ibm.ws.portletcontainer.PortletContainerInvoke  rCollaboratorChainImpl.doCollaborator(PortletConta  inerInvokerCollaboratorChainImpl.java:67)<br />
+	at com.ibm.ws.portletcontainer.PortletContainerImpl.r  enderPortlet(PortletContainerImpl.java:87)<br />
+	at com.ibm.ws.portletcontainer.pcinvoker.PortletInvok  erImpl$2.run(PortletInvokerImpl.java:81)<br />
+	at java.security.AccessController.doPrivileged(Access  Controller.java:241)<br />
+	at com.ibm.ws.portletcontainer.pcinvoker.PortletInvok  erImpl.invokeRender(PortletInvokerImpl.java:79)<br />
+	at com.ibm.ws.portletcontainer.portletserving.Portlet  ServingServlet.invokePortletRender(PortletServingS  ervlet.java:247)<br />
+	at com.ibm.ws.portletcontainer.portletserving.Portlet  ServingServlet.service(PortletServingServlet.java:  131)<br />
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.ser  vice(ServletWrapper.java:966)<br />
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.ser  vice(ServletWrapper.java:907)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.d  oFilter(WebAppFilterChain.java:145)<br />
+	at com.ibm.ws.portletcontainer.portletserving.filter.  PortletDocumentFilterContainer.doFilterEnd(Portlet  DocumentFilterContainer.java:60)<br />
+	at com.ibm.ws.portletcontainer.portletserving.filter.  PortletDocumentFilterChain.doFilter(PortletDocumen  tFilterChain.java:55)<br />
+	at com.ibm.ws.portletcontainer.portletserving.filter.  DefaultFilter.doFilter(DefaultFilter.java:104)<br />
+	at com.ibm.ws.portletcontainer.portletserving.filter.  PortletDocumentFilterChain.doFilter(PortletDocumen  tFilterChain.java:49)<br />
+	at com.ibm.ws.portletcontainer.portletserving.filter.  PortletDocumentFilterContainer.doFilter(PortletDoc  umentFilterContainer.java:51)<br />
+	at com.ibm.ws.webcontainer.filter.FilterInstanceWrapp  er.doFilter(FilterInstanceWrapper.java:190)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.d  oFilter(WebAppFilterChain.java:130)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain._  doFilter(WebAppFilterChain.java:87)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterManager  .doFilter(WebAppFilterManager.java:696)<br />
+	at com.ibm.ws.webcontainer.filter.WebAppFilterManager  .doFilter(WebAppFilterManager.java:641)<br />
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.han  dleRequest(ServletWrapper.java:475)<br />
+	at com.ibm.ws.wswebcontainer.servlet.ServletWrapper.h  andleRequest(ServletWrapper.java:463)<br />
+	at com.ibm.wsspi.webcontainer.servlet.GenericServletW  rapper.handleRequest(GenericServletWrapper.java:11  5)<br />
+	at com.ibm.ws.webcontainer.webapp.WebApp.handleReques  t(WebApp.java:3107)<br />
+	at com.ibm.ws.webcontainer.webapp.WebGroup.handleRequ  est(WebGroup.java:238)<br />
+	at com.ibm.ws.webcontainer.WebContainer.handleRequest  (WebContainer.java:811)<br />
+	at com.ibm.ws.wswebcontainer.WebContainer.handleReque  st(WebContainer.java:1425)<br />
+	at com.ibm.ws.webcontainer.channel.WCChannelLink.read  y(WCChannelLink.java:92)<br />
+	at com.ibm.ws.http.channel.inbound.impl.HttpInboundLi  nk.handleDiscrimination(HttpInboundLink.java:465)<br />
+	at
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=186816" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=186816" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_186816" /></a>
+<a href="newreply.php?do=newreply&amp;p=186816" rel="nofollow" id="qr_186816" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 186816 popup menu -->
+<div class="vbmenu_popup" id="postmenu_186816_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MECADAMIA</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=39727">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=39727" rel="nofollow">Send a private message to MECADAMIA</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=39727" rel="nofollow">Find all posts by MECADAMIA</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=39727">Add MECADAMIA to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 186816 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #186816 --><!-- post #187315 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit187315" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post187315" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=187315&amp;postcount=13" target="new" rel="nofollow" id="postcount187315" name="13"><strong>13</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=187315" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post187315"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 19th, 2008, 11:43 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_187315">
+<a class="bigusername" href="member.php?u=39727">MECADAMIA</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MECADAMIA is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_187315", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2008</div>
+<div>
+						Posts: 10
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_187315">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_187315">
+			
+			Ok i got this thing resolved. I am actually redirecting the user from one SimpleFormcontroller(1) to abstractwizardformcontroller(2) as follows.<br />
+<br />
+<br />
+response.setRenderParameter(&quot;action&quot;, &quot;update&quot;); This caused the problem as it tried to submit the form rather than displaying the form.<br />
+<br />
+so i changed it to as follows and the problem got solved. hope this helps somebody<br />
+<br />
+response.setRenderParameter(&quot;requestedAction&quot;, &quot;update&quot;);
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=187315" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=187315" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_187315" /></a>
+<a href="newreply.php?do=newreply&amp;p=187315" rel="nofollow" id="qr_187315" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 187315 popup menu -->
+<div class="vbmenu_popup" id="postmenu_187315_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MECADAMIA</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=39727">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=39727" rel="nofollow">Send a private message to MECADAMIA</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=39727" rel="nofollow">Find all posts by MECADAMIA</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=39727">Add MECADAMIA to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 187315 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #187315 --><div id="lastpost"></div></div></body></html>

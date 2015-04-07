@@ -1,0 +1,1011 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #94421 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit94421" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post94421" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=94421&amp;postcount=1" target="new" rel="nofollow" id="postcount94421" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=94421" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post94421"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 8th, 2007, 03:49 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_94421">
+<a class="bigusername" href="member.php?u=22247">buri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="buri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_94421", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_94421">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>IllegalArgumentException: Cannot deal with result object</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_94421">
+			
+			Hello,<br />
+<br />
+I have a peculiar bug occurring on a test environment that does not occur on my local dev environment.<br />
+<br />
+I have a web flow view state with a render action as follows:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;view-state id=&quot;showUploadMessages&quot; view=&quot;add/uploadMessages&quot;&gt;
+  &lt;render-actions&gt;
+    &lt;bean-action bean=&quot;uploadAction&quot; method=&quot;validate&quot;&gt;
+      &lt;method-arguments&gt;
+        &lt;argument expression=&quot;flowScope.uploadCriteria&quot;/&gt;
+      &lt;/method-arguments&gt;
+      &lt;method-result name=&quot;messages&quot;/&gt;
+     &lt;/bean-action&gt;	
+  &lt;/render-actions&gt;
+&lt;/view-state&gt;</pre>
+</div>Here is the action method called:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">public List validate(UploadCriteria criteria) throws Exception {
+  // this method examines the criteria about an uploaded schema
+  // and creates a List of messages about that schema.
+  List list = new ArrayList();
+  list.add(new SchemaMessage(&quot;message 1&quot;));
+  list.add(new SchemaMessage(&quot;message 2&quot;));
+  list.add(new SchemaMessage(&quot;message 3&quot;));
+  return (list);
+}</pre>
+</div>The SchemaMessage class is a simple data class which is Serializable.<br />
+<br />
+When I reach this view-state on my dev box, I can successfully use ${messages} to access the list of SchemaMessage's.<br />
+<br />
+However, when this same code is run on the test box, which should be using the same versions of all the JARs, I get the following Exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 386px;
+		text-align: left;
+		overflow: auto">org.springframework.webflow.engine.ActionExecutionException: 
+  Exception thrown executing [AnnotatedAction@3337f41 targetAction = org.springframework.webflow.action.LocalBeanInvokingAction@3337f45, attributes = map[[empty]]] 
+  in state 'showUploadMessages' of flow 'addUpload-flow' -- action execution attributes were 'map[[empty]]'; 
+nested exception is java.lang.IllegalArgumentException: Cannot deal with result object '[mil.disa.mdr.add.SchemaMessage@12f5116]' of type 'class java.util.ArrayList' 
+Caused by: java.lang.IllegalArgumentException: Cannot deal with result object '[mil.disa.mdr.add.SchemaMessage@12f5116]' of type 'class java.util.ArrayList'
+at org.springframework.webflow.action.ResultObjectBasedEventFactory.createResultEvent(ResultObjectBasedEventFactory.java:98) 
+at org.springframework.webflow.action.AbstractBeanInvokingAction.doExecute(AbstractBeanInvokingAction.java:136) 
+at org.springframework.webflow.action.AbstractAction.execute(AbstractAction.java:203) 
+at org.springframework.webflow.engine.AnnotatedAction.execute(AnnotatedAction.java:142) 
+at org.springframework.webflow.engine.ActionExecutor.execute(ActionExecutor.java:61) 
+at org.springframework.webflow.engine.ActionList.execute(ActionList.java:160) 
+at org.springframework.webflow.engine.ViewState.refresh(ViewState.java:114) 
+at org.springframework.webflow.engine.impl.FlowExecutionImpl.refresh(FlowExecutionImpl.java:238) 
+at org.springframework.webflow.executor.FlowExecutorImpl.refresh(FlowExecutorImpl.java:259) 
+at org.springframework.webflow.executor.support.FlowRequestHandler.handleFlowRequest(FlowRequestHandler.java:122) 
+at org.springframework.webflow.executor.mvc.FlowController.handleRequestInternal(FlowController.java:170) 
+at org.springframework.web.servlet.mvc.AbstractController.handleRequest(AbstractController.java:153) 
+at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:45) 
+at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:806) 
+at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:736) 
+at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:396) 
+at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:350)
+&lt;...snipped the rest...&gt;</pre>
+</div>I obviously don't expect anyone to tediously troubleshoot the differences between the two environments, but was hoping to get a better understanding of the error itself so I could puzzle out why it might occur in only one environment.<br />
+<br />
+Thanks!<br />
+BU
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by buri; Jan 13th, 2007 at <span class="time">08:54 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=94421" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=94421" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_94421" /></a>
+<a href="newreply.php?do=newreply&amp;p=94421" rel="nofollow" id="qr_94421" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 94421 popup menu -->
+<div class="vbmenu_popup" id="postmenu_94421_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">buri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22247">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22247" rel="nofollow">Send a private message to buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22247" rel="nofollow">Find all posts by buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22247">Add buri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 94421 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #94421 --><!-- post #94553 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit94553" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post94553" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=94553&amp;postcount=2" target="new" rel="nofollow" id="postcount94553" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=94553" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post94553"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 9th, 2007, 06:00 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_94553">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_94553", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_94553">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_94553">
+			
+			My guess would be that the resultEventFactory property of the AbstractBeanInvokingAction is a SuccessEventFactory (the default) in the environment where it's working and a ResultObjectBasedEventFactory (see the stack trace) in the test environment.<br />
+<br />
+The ResultEventFactory subclass used is decided in the BeanInvokingActionFactory. It uses a ResultEventFactorySelector to examine the method to be called (public List doSomething(UploadCriteria criteria) throws Exception) to determine the strategy to use. It boils down to this:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">protected ResultEventFactory forType(Class resultType) {
+	if (resultObjectBasedEventFactory.isMappedValueType(resultType)) {
+		return resultObjectBasedEventFactory;
+	}
+	else {
+		return successEventFactory;
+	}
+}</pre>
+</div>Where resultType should be java.util.List in this case. List is not mapped so it should use a SuccessFactory. Try to find out why it's using a ResultObjectBasedEventFactory in the test environment.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=94553" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=94553" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_94553" /></a>
+<a href="newreply.php?do=newreply&amp;p=94553" rel="nofollow" id="qr_94553" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 94553 popup menu -->
+<div class="vbmenu_popup" id="postmenu_94553_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 94553 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #94553 --><!-- post #94573 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit94573" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post94573" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=94573&amp;postcount=3" target="new" rel="nofollow" id="postcount94573" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=94573" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post94573"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 9th, 2007, 07:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_94573">
+<a class="bigusername" href="member.php?u=22247">buri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="buri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_94573", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_94573">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_94573">
+			
+			Thanks for the reply Erwin -- this makes sense.<br />
+<br />
+I would like to reproduce the failure on my dev box before I start debugging the configuration of the test environment. <i>Solely for testing</i>, I've created a small factory selector that forces use of the ResultObjectEventFactory:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 258px;
+		text-align: left;
+		overflow: auto">public class TestResultEventFactorySelector extends ResultEventFactorySelector {
+	private ResultObjectBasedEventFactory resultObjectBasedEventFactory = new ResultObjectBasedEventFactory();
+
+	public ResultEventFactory forMethod(Method method) {
+		return resultObjectBasedEventFactory;
+	}
+
+	public ResultEventFactory forResult(Object result) {
+		return resultObjectBasedEventFactory;
+	}
+	
+	protected ResultEventFactory forType(Class resultType) {
+		return resultObjectBasedEventFactory;
+	}
+}</pre>
+</div>Any help would be appreciated. Thanks!<br />
+BU
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by buri; Jan 10th, 2007 at <span class="time">10:27 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=94573" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=94573" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_94573" /></a>
+<a href="newreply.php?do=newreply&amp;p=94573" rel="nofollow" id="qr_94573" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 94573 popup menu -->
+<div class="vbmenu_popup" id="postmenu_94573_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">buri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22247">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22247" rel="nofollow">Send a private message to buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22247" rel="nofollow">Find all posts by buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22247">Add buri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 94573 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #94573 --><!-- post #94670 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit94670" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post94670" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=94670&amp;postcount=4" target="new" rel="nofollow" id="postcount94670" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=94670" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post94670"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 9th, 2007, 12:18 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_94670">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_94670", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_94670">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_94670">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				I would like to inject this into the BeanInvokingActionFactory for my flows and then watch the specific action from the first post fail, but I'm not sure of where exactly to go about this.
+			
+		</td>
+</tr>
+</table>
+</div>This is a bit non-trivial but not impossible either. You won't be able to use the Spring config XSD anymore, you'll have to use low-level bean definitions to get this configured.<br />
+<br />
+Inject a custom BeanInvokingActionFactory into the XmlFlowRegistryFactoryBean. Configure that BeanInvokingActionFactory to use the ResultEventFactorySelector that you made.<br />
+<br />
+Something like this:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;flowRegistry&quot; class=&quot;org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean&quot;&gt;
+	&lt;property name=&quot;flowLocations&quot; value=&quot;=&quot;/WEB-INF/flows/**-flow.xml&quot;/&gt;
+	&lt;property name=&quot;beanInvokingActionFactory&quot;&gt;
+		&lt;bean class=&quot;org.springframework.webflow.action.BeanInvokingActionFactory&quot;&gt;
+			&lt;property name=&quot;resultEventFactorySelector&quot;&gt;
+				&lt;bean class=&quot;foo.bar.TestResultEventFactorySelector&quot;/&gt;
+			&lt;/property&gt;
+		&lt;/bean&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div>Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=94670" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=94670" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_94670" /></a>
+<a href="newreply.php?do=newreply&amp;p=94670" rel="nofollow" id="qr_94670" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 94670 popup menu -->
+<div class="vbmenu_popup" id="postmenu_94670_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 94670 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #94670 --><!-- post #94922 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit94922" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post94922" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=94922&amp;postcount=5" target="new" rel="nofollow" id="postcount94922" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=94922" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post94922"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 10th, 2007, 10:21 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_94922">
+<a class="bigusername" href="member.php?u=22247">buri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="buri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_94922", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_94922">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_94922">
+			
+			I was able to get it to fail on my dev box by forcing the use of the ResultObjectEventFactory (injecting it as described in the post above this one). The next step I did was to extend the SWF FactorySelector, overriding the methods to insert a few logging statements. <br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 258px;
+		text-align: left;
+		overflow: auto">  public ResultEventFactory forMethod(Method method) {
+    logger.debug(&quot;FactorySelector.forMethod(&quot; + method.getName() + &quot; returns &quot; + method.getReturnType() + &quot;)&quot;);
+    return forType(method.getReturnType());
+  }
+
+  protected ResultEventFactory forType(Class resultType) {
+    if (resultObjectBasedEventFactory.isMappedValueType(resultType)) {
+       logger.debug(&quot;\tReturning a resultObjectBasedEventFactory.&quot;);
+       return resultObjectBasedEventFactory;
+    }
+    else {
+      logger.debug(&quot;\tReturning a successEventFactory.&quot;);
+      return successEventFactory;
+    }
+  }</pre>
+</div>I injected this extended FactorySelector into the test box to get proof that the resultObjectBasedEventFactory is getting picked and discovered something strange: The Method ReturnType for the SAME method is different in each environment.<br />
+<br />
+Again, here is the method signature from my original post. This action method is exactly the same in both environments:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">public List validate(UploadCriteria criteria) throws Exception {
+  // ...
+}</pre>
+</div>When I inject the logging Selector into my dev box, I see:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">FactorySelector.forMethod(doSomething returns interface java.util.List)
+    Returning a successEventFactory.</pre>
+</div>When I inject the logging Selector into the test box, I see:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">FactorySelector.forMethod(doSomething returns class org.springframework.webflow.execution.Event)
+    Returning a resultObjectBasedEventFactory.</pre>
+</div>Any idea why the real return type might be getting replaced with a SFW Event in one environment? Both environments are running Java 1.5.0_04 with SWF 1.0.<br />
+<br />
+Thanks for all your help!<br />
+BU
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by buri; Jan 13th, 2007 at <span class="time">08:54 AM</span>.
+					
+					
+						Reason: Fixed typos in code.
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=94922" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=94922" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_94922" /></a>
+<a href="newreply.php?do=newreply&amp;p=94922" rel="nofollow" id="qr_94922" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 94922 popup menu -->
+<div class="vbmenu_popup" id="postmenu_94922_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">buri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22247">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22247" rel="nofollow">Send a private message to buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22247" rel="nofollow">Find all posts by buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22247">Add buri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 94922 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #94922 --><!-- post #95719 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit95719" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post95719" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=95719&amp;postcount=6" target="new" rel="nofollow" id="postcount95719" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=95719" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post95719"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 15th, 2007, 05:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_95719">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_95719", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_95719">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_95719">
+			
+			I have no real idea what could be happening here.<br />
+The only thing I can think of that you have some kind of classpath issue in the test environment that is somehow screwing things up.<br />
+It might be usefull to log the type that is passed to the isMappedValueType() method.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=95719" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=95719" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_95719" /></a>
+<a href="newreply.php?do=newreply&amp;p=95719" rel="nofollow" id="qr_95719" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 95719 popup menu -->
+<div class="vbmenu_popup" id="postmenu_95719_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 95719 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #95719 --><!-- post #95760 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit95760" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post95760" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=95760&amp;postcount=7" target="new" rel="nofollow" id="postcount95760" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=95760" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post95760"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 15th, 2007, 08:32 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_95760">
+<a class="bigusername" href="member.php?u=22247">buri</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="buri is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_95760", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2006</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_95760">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_95760">
+			
+			I found the cause:<br />
+<br />
+My called method, &quot;public List validate(UploadCriteria criteria)&quot; happened to be on a bean that implemented FormAction, which of course comes with the method &quot;public Event validate(RequestContext context)&quot;.<br />
+<br />
+When the webflow was first loaded, somehow the test environment was selecting a factory for the latter one, while the dev environment was using the first.<br />
+<br />
+Changing my method name to completely avoid conflicts with inherited method names fixed the issue (I still don't know what made this work differently on the other box, but the issue is now resolved and I know how to prevent it in the future).<br />
+<br />
+Regards,<br />
+BU
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=95760" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=95760" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_95760" /></a>
+<a href="newreply.php?do=newreply&amp;p=95760" rel="nofollow" id="qr_95760" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 95760 popup menu -->
+<div class="vbmenu_popup" id="postmenu_95760_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">buri</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=22247">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=22247" rel="nofollow">Send a private message to buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=22247" rel="nofollow">Find all posts by buri</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=22247">Add buri to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 95760 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #95760 --><div id="lastpost"></div></div></body></html>

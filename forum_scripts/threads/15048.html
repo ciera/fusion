@@ -1,0 +1,1578 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #22231 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22231" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22231" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22231&amp;postcount=1" target="new" rel="nofollow" id="postcount22231" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22231" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22231"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 19th, 2005, 03:02 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22231">
+<a class="bigusername" href="member.php?u=10211">MadOtis</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MadOtis is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22231", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>
+						Posts: 17
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22231">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Problem with &quot;Neither Errors instance nor plain ...&quo;</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22231">
+			
+			Hello all.<br />
+<br />
+I am very new to Spring.  I have a problem with one form and I can't find anything that looks like my problem on the forums here...  So, if this has been answered many times before, please, just point me to the correct link and be merciful...<br />
+<br />
+My situation is:  I have one form (which works just great) that displays a list of events.  A user can select one of the events to display, edit, delete, etc that event.  Or, he can create a new one.  Once I select one to, say, modify. I get this exception: <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">javax.servlet.ServletException&#58; Neither Errors instance nor plain target object for bean name '1' available as request attribute</pre>
+</div>...only, the '1' is replaced with the ID of the record from the event table (via Hibernate).  The number displayed IS the ID of the event that is being selected.<br />
+<br />
+Here are my particulars:<br />
+<br />
+<b>bean definition</b><br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;eventDetail&quot; class=&quot;com.dpm.controllers.EventDetailFormController&quot;&gt;
+    &lt;property name=&quot;dao&quot;&gt;&lt;ref bean=&quot;eventDao&quot;/&gt;&lt;/property&gt;
+    &lt;property name=&quot;sessionForm&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;
+    &lt;property name=&quot;commandName&quot;&gt;&lt;value&gt;eventDetail&lt;/value&gt;&lt;/property&gt;
+    &lt;property name=&quot;commandClass&quot;&gt;&lt;value&gt;com.dpm.forms.EventDataForm&lt;/value&gt;&lt;/property&gt;
+    &lt;property name=&quot;formView&quot;&gt;&lt;value&gt;eventdetail&lt;/value&gt;&lt;/property&gt;
+    &lt;property name=&quot;successView&quot;&gt;&lt;value&gt;eventmaint.dpm&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div><b>Form controller code</b><br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 466px;
+		text-align: left;
+		overflow: auto">public class EventDetailFormController extends SimpleFormController &#123;
+	private EventDAO dao;
+	
+	public EventDetailFormController&#40;&#41; &#123;
+		setCommandName&#40;&quot;eventdetail&quot;&#41;;
+	&#125;
+	
+	public void setDao&#40;EventDAO dao&#41; &#123;
+		this.dao = dao;
+	&#125;
+	
+	protected Object formBackingObject&#40;HttpServletRequest request&#41; throws ServletException &#123;
+		EventDataForm eventForm = null;
+		HttpSession session = request.getSession&#40;&#41;;
+		Integer action = &#40;Integer&#41;session.getAttribute&#40;&quot;action&quot;&#41;;
+		String eventId = &#40;String&#41;session.getAttribute&#40;&quot;event&quot;&#41;;
+		if &#40;&#40;null != eventId&#41; &amp;&amp; &#40;eventId.length&#40;&#41; &gt; 0&#41;&#41; &#123;
+			eventForm = new EventDataForm&#40;&#40;Events&#41;dao.getEvent&#40;new Integer&#40;eventId&#41;&#41;&#41;;
+			System.out.println&#40;&quot;fetched event&#58; &quot; + eventForm.getEventId&#40;&#41;&#41;;
+		&#125;
+		return eventForm;
+	&#125;
+	
+	public ModelAndView onSubmit&#40;HttpServletRequest request, HttpServletResponse response, Object command, BindException errors&#41; throws ServletException &#123;
+		System.out.println&#40;&quot;got here too!&quot;&#41;;
+		return new ModelAndView&#40;getSuccessView&#40;&#41;, errors.getModel&#40;&#41;&#41;;
+	&#125;
+&#125;</pre>
+</div><b>the .JSP code</b><br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;%@ include file=&quot;/WEB-INF/jsp/include.jsp&quot; %&gt;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;&lt;fmt&#58;message key=&quot;event.detail.title&quot;/&gt;&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  	&lt;h1&gt;&lt;fmt&#58;message key=&quot;event.detail.title&quot;/&gt;&lt;br&gt;
+  	&lt;form method=&quot;post&quot;&gt;
+  		&lt;table width=&quot;90%&quot; border=&quot;0&quot; cellpadding=&quot;3&quot; cellspacing=&quot;3&quot;&gt;
+  			&lt;spring&#58;bind path=&quot;$&#123;eventDetail.eventId&#125;&quot;&gt;
+	  			&lt;tr&gt;&lt;td&gt;&lt;fmt&#58;message key=&quot;event.detail.id&quot;/&gt;&lt;/td&gt;
+	  			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c&#58;out value=&quot;$&#123;status.expression&#125;&quot;/&gt;&quot; value=&quot;&lt;c&#58;out value=&quot;$&#123;status.value&#125;&quot;/&gt;&quot; readonly=&quot;true&quot;/&gt;
+	  			&lt;font color=&quot;red&quot;&gt;&lt;b&gt;&lt;c&#58;out value=&quot;$&#123;status.errorMessage&#125;&quot;/&gt;&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+  			&lt;/spring&#58;bind&gt;
+  			&lt;spring&#58;bind path=&quot;$&#123;eventDetail.eventName&#125;&quot;&gt;
+	  			&lt;tr&gt;&lt;td&gt;&lt;fmt&#58;message key=&quot;event.detail.name&quot;/&gt;&lt;/td&gt;
+	  			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c&#58;out value=&quot;$&#123;status.expression&#125;&quot;/&gt;&quot; value=&quot;&lt;c&#58;out value=&quot;$&#123;status.value&#125;&quot;/&gt;&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+  			&lt;/spring&#58;bind&gt;
+  			&lt;spring&#58;bind path=&quot;$&#123;eventDetail.eventDate&#125;&quot;&gt;
+	  			&lt;tr&gt;&lt;td&gt;&lt;fmt&#58;message key=&quot;event.detail.date&quot;/&gt;&lt;td&gt;
+	  			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c&#58;out value=&quot;$&#123;status.expression&#125;&quot;/&gt;&quot; value=&quot;&lt;c&#58;out value=&quot;$&#123;status.value&#125;&quot;/&gt;&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+  			&lt;/spring&#58;bind&gt;
+  			&lt;spring&#58;bind path=&quot;$&#123;eventDetail.eventDescription&#125;&quot;&gt;
+	  			&lt;tr&gt;&lt;td&gt;&lt;fmt&#58;message key=&quot;event.detail.description&quot;/&gt;&lt;/td&gt;
+	  			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c&#58;out value=&quot;$&#123;status.expression&#125;&quot;/&gt;&quot; value=&quot;&lt;c&#58;out value=&quot;$&#123;status.value&#125;&quot;/&gt;&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+  			&lt;/spring&#58;bind&gt;
+  			&lt;spring&#58;bind path=&quot;$&#123;eventDetail.region.regionName&#125;&quot;&gt;
+	  			&lt;tr&gt;&lt;td&gt;&lt;fmt&#58;message key=&quot;event.detail.region&quot;/&gt;&lt;/td&gt;
+	  			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c&#58;out value=&quot;$&#123;status.expression&#125;&quot;/&gt;&quot; value=&quot;&lt;c&#58;out value=&quot;$&#123;status.value&#125;&quot;/&gt;&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+  			&lt;/spring&#58;bind&gt;
+  			&lt;spring&#58;bind path=&quot;$&#123;eventDetail.sponsor.sponsorName&#125;&quot;&gt;
+	  			&lt;tr&gt;&lt;td&gt;&lt;fmt&#58;message key=&quot;event.detail.sponsor&quot;/&gt;&lt;/td&gt;
+	  			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c&#58;out value=&quot;$&#123;status.expression&#125;&quot;/&gt;&quot; value=&quot;&lt;c&#58;out value=&quot;$&#123;status.value&#125;&quot;/&gt;&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+  			&lt;/spring&#58;bind&gt;
+  		&lt;/table&gt;
+  	&lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>I KNOW I must be missing something, or simply doing something WRONG.  But, right now, I'm frustrated, lost, and don't know where to turn other than the forums here.  I've been fighting this for 2 days now.  I'm lost.<br />
+<br />
+Thanks in advance for any advice.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22231" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22231" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22231" /></a>
+<a href="newreply.php?do=newreply&amp;p=22231" rel="nofollow" id="qr_22231" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22231 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22231_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MadOtis</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10211">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10211" rel="nofollow">Send a private message to MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10211" rel="nofollow">Find all posts by MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10211">Add MadOtis to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22231 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22231 --><!-- post #22433 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22433" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22433" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22433&amp;postcount=2" target="new" rel="nofollow" id="postcount22433" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22433" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22433"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 23rd, 2005, 07:23 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22433">
+<a class="bigusername" href="member.php?u=6515">katentim</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="katentim is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22433", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, Australia</div>
+<div>
+						Posts: 1,104
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22433">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22433">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				So, if this has been answered many times before, please, just point me to the correct link and be merciful...
+			
+		</td>
+</tr>
+</table>
+</div>Don't worry, this forum is friendly.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Neither Errors instance nor plain target object for <b>bean name '1'</b> available as request attribute
+			
+		</td>
+</tr>
+</table>
+</div>This error normally occurs when you have a mismatch between JSP bean name and the command name - not sure why you'd get the ID as the missing bean name - what's in the <i>include.jsp</i>?<br />
+<br />
+This probably doesn't have anything to do with it, but you set the command name in the constructor (incorrectly) as well as in the bean definition (correctly - this setting should reset it after the contructor).
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22433" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22433" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22433" /></a>
+<a href="newreply.php?do=newreply&amp;p=22433" rel="nofollow" id="qr_22433" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22433 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22433_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">katentim</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6515">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6515" rel="nofollow">Send a private message to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=6515" rel="nofollow">Send email to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6515" rel="nofollow">Find all posts by katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6515">Add katentim to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22433 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22433 --><!-- post #22436 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22436" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22436" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22436&amp;postcount=3" target="new" rel="nofollow" id="postcount22436" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22436" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22436"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 23rd, 2005, 08:47 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22436">
+<a class="bigusername" href="member.php?u=10211">MadOtis</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MadOtis is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22436", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>
+						Posts: 17
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22436">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22436">
+			
+			The contents of include.jsp are simply:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;%@ page session=&quot;false&quot; %&gt;
+
+&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http&#58;//java.sun.com/jstl/core&quot; %&gt;
+&lt;%@ taglib prefix=&quot;fmt&quot; uri=&quot;http&#58;//java.sun.com/jstl/fmt&quot; %&gt;
+&lt;%@ taglib prefix=&quot;spring&quot; uri=&quot;/spring&quot; %&gt;</pre>
+</div>I started from the tutorial and have been adding functionality as I need it.<br />
+<br />
+Yeah, I caught the error in the constructor after I posted the original question.  I was experimenting to see if the commandName made a difference, then added the line in the constructor (as mentioned in another thread), but, still the same.<br />
+<br />
+I still have no clue how the bean is being named from the ID of the record coming back from Hibernate.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22436" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22436" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22436" /></a>
+<a href="newreply.php?do=newreply&amp;p=22436" rel="nofollow" id="qr_22436" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22436 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22436_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MadOtis</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10211">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10211" rel="nofollow">Send a private message to MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10211" rel="nofollow">Find all posts by MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10211">Add MadOtis to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22436 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22436 --><!-- post #22438 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22438" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22438" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22438&amp;postcount=4" target="new" rel="nofollow" id="postcount22438" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22438" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22438"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 23rd, 2005, 08:55 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22438">
+<a class="bigusername" href="member.php?u=10211">MadOtis</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MadOtis is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22438", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>
+						Posts: 17
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22438">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22438">
+			
+			I DO know that the 'formBackingObject' method is getting called properly.  I debugged it and the correct form is being populated with the correct objects/values.  It's somewhere between the .jsp page being rendered and the bind tag.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22438" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22438" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22438" /></a>
+<a href="newreply.php?do=newreply&amp;p=22438" rel="nofollow" id="qr_22438" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22438 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22438_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MadOtis</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10211">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10211" rel="nofollow">Send a private message to MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10211" rel="nofollow">Find all posts by MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10211">Add MadOtis to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22438 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22438 --><!-- post #22542 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22542" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22542" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22542&amp;postcount=5" target="new" rel="nofollow" id="postcount22542" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22542" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22542"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 24th, 2005, 07:22 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22542">
+<a class="bigusername" href="member.php?u=6515">katentim</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="katentim is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22542", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, Australia</div>
+<div>
+						Posts: 1,104
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22542">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22542">
+			
+			Can you post a small isolated test case?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22542" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22542" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22542" /></a>
+<a href="newreply.php?do=newreply&amp;p=22542" rel="nofollow" id="qr_22542" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22542 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22542_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">katentim</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6515">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6515" rel="nofollow">Send a private message to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=6515" rel="nofollow">Send email to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6515" rel="nofollow">Find all posts by katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6515">Add katentim to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22542 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22542 --><!-- post #22544 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22544" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22544" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22544&amp;postcount=6" target="new" rel="nofollow" id="postcount22544" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22544" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22544"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 24th, 2005, 07:28 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22544">
+<a class="bigusername" href="member.php?u=10211">MadOtis</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MadOtis is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22544", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>
+						Posts: 17
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22544">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22544">
+			
+			I'm very sorry.  I'm not sure what information you need as part of the 'isolated test case'.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22544" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22544" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22544" /></a>
+<a href="newreply.php?do=newreply&amp;p=22544" rel="nofollow" id="qr_22544" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22544 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22544_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MadOtis</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10211">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10211" rel="nofollow">Send a private message to MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10211" rel="nofollow">Find all posts by MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10211">Add MadOtis to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22544 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22544 --><!-- post #22546 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22546" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22546" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22546&amp;postcount=7" target="new" rel="nofollow" id="postcount22546" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22546" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22546"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 24th, 2005, 07:51 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22546">
+<a class="bigusername" href="member.php?u=6515">katentim</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="katentim is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22546", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, Australia</div>
+<div>
+						Posts: 1,104
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22546">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22546">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				I'm very sorry. I'm not sure what information you need as part of the 'isolated test case'.
+			
+		</td>
+</tr>
+</table>
+</div>Just the smallest code possible that exibits the behaviour.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22546" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22546" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22546" /></a>
+<a href="newreply.php?do=newreply&amp;p=22546" rel="nofollow" id="qr_22546" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22546 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22546_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">katentim</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6515">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6515" rel="nofollow">Send a private message to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=6515" rel="nofollow">Send email to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6515" rel="nofollow">Find all posts by katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6515">Add katentim to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22546 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22546 --><!-- post #22575 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22575" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22575" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22575&amp;postcount=8" target="new" rel="nofollow" id="postcount22575" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22575" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22575"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 24th, 2005, 02:41 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22575">
+<a class="bigusername" href="member.php?u=10211">MadOtis</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="MadOtis is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22575", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>
+						Posts: 17
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22575">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22575">
+			
+			Gotcha... I'm working on it.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22575" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22575" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22575" /></a>
+<a href="newreply.php?do=newreply&amp;p=22575" rel="nofollow" id="qr_22575" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22575 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22575_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">MadOtis</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10211">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10211" rel="nofollow">Send a private message to MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10211" rel="nofollow">Find all posts by MadOtis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10211">Add MadOtis to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22575 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22575 --><!-- post #22916 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit22916" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post22916" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=22916&amp;postcount=9" target="new" rel="nofollow" id="postcount22916" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=22916" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post22916"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 27th, 2005, 01:36 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_22916">
+<a class="bigusername" href="member.php?u=9957">phani</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="phani is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_22916", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_22916">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_22916">
+			
+			commandName is nothing but a bean id - so has to be unique.<br />
+<br />
+See if it works.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				-P
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=22916" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=22916" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_22916" /></a>
+<a href="newreply.php?do=newreply&amp;p=22916" rel="nofollow" id="qr_22916" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 22916 popup menu -->
+<div class="vbmenu_popup" id="postmenu_22916_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">phani</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9957">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9957" rel="nofollow">Send a private message to phani</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9957" rel="nofollow">Find all posts by phani</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9957">Add phani to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 22916 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #22916 --><!-- post #23816 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit23816" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post23816" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=23816&amp;postcount=10" target="new" rel="nofollow" id="postcount23816" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=23816" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post23816"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 7th, 2005, 11:44 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_23816">
+<a class="bigusername" href="member.php?u=10603">Tardis</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Tardis is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_23816", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 5
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_23816">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_23816">
+			
+			Did you solve this? I am using very similiar code and get the same error message.<br />
+<br />
+&quot;javax.servlet.jsp.JspTagException: Neither Errors instance nor plain target object for bean name 'customer' available as request attribute&quot;
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=23816" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=23816" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_23816" /></a>
+<a href="newreply.php?do=newreply&amp;p=23816" rel="nofollow" id="qr_23816" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 23816 popup menu -->
+<div class="vbmenu_popup" id="postmenu_23816_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Tardis</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10603">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10603" rel="nofollow">Send a private message to Tardis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10603" rel="nofollow">Find all posts by Tardis</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10603">Add Tardis to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 23816 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #23816 --><div id="lastpost"></div></div><div id="posts"><!-- post #23913 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit23913" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post23913" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=23913&amp;postcount=11" target="new" rel="nofollow" id="postcount23913" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=23913" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post23913"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 8th, 2005, 02:55 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_23913">
+<a class="bigusername" href="member.php?u=10625">juxt</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="juxt is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_23913", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 1
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_23913">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>it's the little 'd' in the class...</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_23913">
+			
+			remove the line :    setCommandName(&quot;eventdetail&quot;); <br />
+<br />
+from your form controller ... you're using eventDetail inside the jsp, note the capital D, but in your controller you're setting it to small d ... if you just let the commandName property in the xml load it you should be fine
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=23913" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=23913" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_23913" /></a>
+<a href="newreply.php?do=newreply&amp;p=23913" rel="nofollow" id="qr_23913" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 23913 popup menu -->
+<div class="vbmenu_popup" id="postmenu_23913_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">juxt</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10625">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10625" rel="nofollow">Send a private message to juxt</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10625" rel="nofollow">Find all posts by juxt</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10625">Add juxt to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 23913 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #23913 --><!-- post #23931 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit23931" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post23931" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=23931&amp;postcount=12" target="new" rel="nofollow" id="postcount23931" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=23931" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post23931"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 8th, 2005, 06:56 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_23931">
+<a class="bigusername" href="member.php?u=6515">katentim</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="katentim is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_23931", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, Australia</div>
+<div>
+						Posts: 1,104
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_23931">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_23931">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				you set the command name in the constructor (incorrectly)
+			
+		</td>
+</tr>
+</table>
+</div><div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Yeah, I caught the error in the constructor after I posted the original question
+			
+		</td>
+</tr>
+</table>
+</div>remove the line : setCommandName(&quot;eventdetail&quot;);
+			
+		</td>
+</tr>
+</table>
+</div>This doesn't seem to be the problem.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=23931" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=23931" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_23931" /></a>
+<a href="newreply.php?do=newreply&amp;p=23931" rel="nofollow" id="qr_23931" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 23931 popup menu -->
+<div class="vbmenu_popup" id="postmenu_23931_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">katentim</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6515">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6515" rel="nofollow">Send a private message to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=6515" rel="nofollow">Send email to katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6515" rel="nofollow">Find all posts by katentim</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6515">Add katentim to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 23931 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #23931 --><!-- post #24000 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit24000" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post24000" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=24000&amp;postcount=13" target="new" rel="nofollow" id="postcount24000" name="13"><strong>13</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=24000" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post24000"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 9th, 2005, 11:30 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_24000">
+<a class="bigusername" href="member.php?u=9957">phani</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="phani is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_24000", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_24000">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_24000">
+			
+			Make sure that JSP refers to the commandName ( bind tags) as specified in the bean configuration. Invalid bean names/ids in JSPs cause this error.<br />
+<br />
+Also,  I see a bean name conflict i.e., both the bean id and the commandName are same. Make them distinct and you are all set.<br />
+<br />
+<br />
+So here are few things for you to do:<br />
+<br />
+remove from the constructor: setCommandName(&quot;eventdetail&quot;);  <br />
+- This is already set using the properties in the configuration xml.<br />
+<br />
+Either change the bean id 'eventDetail' to 'eventDetailController' and modify the corresponding handler mapping configuration in the xml if any.<br />
+<br />
+or<br />
+<br />
+set the commandName to 'eventDetailForm' and change your jsp to refer to this form name on your c:out(s) i.e., eventDetailForm.description .
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				-P
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=24000" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=24000" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_24000" /></a>
+<a href="newreply.php?do=newreply&amp;p=24000" rel="nofollow" id="qr_24000" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 24000 popup menu -->
+<div class="vbmenu_popup" id="postmenu_24000_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">phani</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9957">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9957" rel="nofollow">Send a private message to phani</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9957" rel="nofollow">Find all posts by phani</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9957">Add phani to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 24000 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #24000 --><div id="lastpost"></div></div></body></html>

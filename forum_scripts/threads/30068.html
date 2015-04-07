@@ -1,0 +1,775 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #80442 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit80442" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post80442" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=80442&amp;postcount=1" target="new" rel="nofollow" id="postcount80442" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=80442" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post80442"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 9th, 2006, 10:19 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_80442">
+<a class="bigusername" href="member.php?u=16014">langds</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="langds is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_80442", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2006</div>
+<div>Location: ChengDu,China</div>
+<div>
+						Posts: 15
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '16014', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to langds" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_80442">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon5.gif" alt="Question" border="0" />
+<strong>ConversionService extension Injection for XmlFlowRegistryFactoryBean Problems</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_80442">
+			
+			hello, I want to add a Converter that convert Nunmer to String, so I've write one class to extends DefaultConversionService named &quot;ExtensionConversionService&quot;, the following is the source code of its:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 322px;
+		text-align: left;
+		overflow: auto">public class ExtensionConversionService extends DefaultConversionService {
+	protected final Log logger = LogFactory.getLog(getClass());
+	
+	private List converters;
+	
+	/**
+	 * Creates a new Extension conversion service, installing the default
+	 * converters.
+	 */
+	public ExtensionConversionService(List converters) {
+		<b>super();</b>
+		
+		if (! CollectionUtils.isEmpty(converters)) {
+			for (Iterator converterIter = converters.iterator(); converterIter.hasNext(); ) {
+				addConverter((Converter) converterIter.next());
+			}
+		}
+	}
+}</pre>
+</div>   at the begining, it works good, but when I use a subflow-state,the state contains a mapping that have &quot;from&quot; and &quot;to&quot; attribute, it leads swf to error, the following is the exception:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">[06-10-10 9:50:11:275 CST] 732bb8ce WebGroup      E SRVE0026E: &#65339;Servlet &#38169;&#35823;&#65341;&#65293;&#65339;&#65341;&#65306;java.lang.NullPointerException
+	at org.springframework.binding.convert.support.GenericConversionService.getConversionExecutor(GenericConversionService.java:131)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseTypeConverter(XmlFlowBuilder.java:874)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseAttributeMapper(XmlFlowBuilder.java:863)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseInputMapper(XmlFlowBuilder.java:839)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseFlowAttributeMapper(XmlFlowBuilder.java:833)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseAndAddSubflowState(XmlFlowBuilder.java:614)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseAndAddStateDefinitions(XmlFlowBuilder.java:580)
+	at org.springframework.webflow.builder.XmlFlowBuilder.buildStates(XmlFlowBuilder.java:379)
+	at org.springframework.webflow.builder.FlowAssembler.assembleFlow(FlowAssembler.java:121)
+	at org.springframework.webflow.registry.RefreshableFlowHolder.assembleFlow(RefreshableFlowHolder.java:118)
+	at org.springframework.webflow.registry.RefreshableFlowHolder.getFlow(RefreshableFlowHolder.java:86)
+	at org.springframework.webflow.registry.FlowRegistryImpl.getFlow(FlowRegistryImpl.java:167)
+	at org.springframework.webflow.registry.DefaultFlowServiceLocator.getSubflow(DefaultFlowServiceLocator.java:76)
+	at org.springframework.webflow.builder.LocalFlowServiceLocator.getSubflow(LocalFlowServiceLocator.java:78)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseSubflow(XmlFlowBuilder.java:681)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseAndAddSubflowState(XmlFlowBuilder.java:614)
+	at org.springframework.webflow.builder.XmlFlowBuilder.parseAndAddStateDefinitions(XmlFlowBuilder.java:580)
+	at org.springframework.webflow.builder.XmlFlowBuilder.buildStates(XmlFlowBuilder.java:379)
+	at org.springframework.webflow.builder.FlowAssembler.assembleFlow(FlowAssembler.java:121)
+	at org.springframework.webflow.registry.RefreshableFlowHolder.assembleFlow(RefreshableFlowHolder.java:118)
+	at org.springframework.webflow.registry.RefreshableFlowHolder.getFlow(RefreshableFlowHolder.java:86)
+	at org.springframework.webflow.registry.FlowRegistryImpl.getFlow(FlowRegistryImpl.java:167)
+	at org.springframework.webflow.execution.repository.support.AbstractFlowExecutionRepository.createFlowExecution(AbstractFlowExecutionRepository.java:102)
+	at org.springframework.webflow.execution.repository.support.RebindingFlowExecutionRepository.createFlowExecution(RebindingFlowExecutionRepository.java:47)
+	at org.springframework.webflow.executor.jsf.FlowPhaseListener.restoreFlowExecution(FlowPhaseListener.java:182)
+	at org.springframework.webflow.executor.jsf.FlowPhaseListener.beforePhase(FlowPhaseListener.java:141)
+	at org.springframework.web.jsf.DelegatingPhaseListenerMulticaster.beforePhase(DelegatingPhaseListenerMulticaster.java:75)
+	at org.apache.myfaces.lifecycle.LifecycleImpl.informPhaseListenersBefore(LifecycleImpl.java:520)
+	at org.apache.myfaces.lifecycle.LifecycleImpl.restoreView(LifecycleImpl.java:105)
+	at org.apache.myfaces.lifecycle.LifecycleImpl.execute(LifecycleImpl.java:66)
+	at javax.faces.webapp.FacesServlet.service(FacesServlet.java:106)
+	at com.ibm.ws.webcontainer.servlet.StrictServletInstance.doService(StrictServletInstance.java:110)
+	at com.ibm.ws.webcontainer.servlet.StrictLifecycleServlet._service(StrictLifecycleServlet.java:174)
+	at com.ibm.ws.webcontainer.servlet.IdleServletState.service(StrictLifecycleServlet.java:313)
+	at com.ibm.ws.webcontainer.servlet.StrictLifecycleServlet.service(StrictLifecycleServlet.java:116)
+	at com.ibm.ws.webcontainer.servlet.ServletInstance.service(ServletInstance.java:283)
+	at com.ibm.ws.webcontainer.servlet.ValidServletReferenceState.dispatch(ValidServletReferenceState.java:42)
+	at com.ibm.ws.webcontainer.servlet.ServletInstanceReference.dispatch(ServletInstanceReference.java:40)
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.doFilter(WebAppFilterChain.java:76)
+	at com.ccb.ocrm.web.filter.UserAuditFilter.doFilter(Unknown Source)
+	at com.ibm.ws.webcontainer.filter.FilterInstanceWrapper.doFilter(FilterInstanceWrapper.java:132)
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.doFilter(WebAppFilterChain.java:71)
+	at com.ccb.ocrm.web.filter.SessionBridgeFilter.doFilter(Unknown Source)
+	at com.ibm.ws.webcontainer.filter.FilterInstanceWrapper.doFilter(FilterInstanceWrapper.java:132)
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.doFilter(WebAppFilterChain.java:71)
+	at com.ccb.ocrm.web.filter.PortalAutoLoginFilter.doFilter(Unknown Source)
+	at com.ibm.ws.webcontainer.filter.FilterInstanceWrapper.doFilter(FilterInstanceWrapper.java:132)
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.doFilter(WebAppFilterChain.java:71)
+	at com.ccb.framework.core.web.filter.EncodingFilter.doFilter(EncodingFilter.java:64)
+	at com.ibm.ws.webcontainer.filter.FilterInstanceWrapper.doFilter(FilterInstanceWrapper.java:132)
+	at com.ibm.ws.webcontainer.filter.WebAppFilterChain.doFilter(WebAppFilterChain.java:71)
+	at com.ibm.ws.webcontainer.webapp.WebAppRequestDispatcher.handleWebAppDispatch(WebAppRequestDispatcher.java:974)
+	at com.ibm.ws.webcontainer.webapp.WebAppRequestDispatcher.dispatch(WebAppRequestDispatcher.java:564)
+	at com.ibm.ws.webcontainer.webapp.WebAppRequestDispatcher.forward(WebAppRequestDispatcher.java:200)
+	at com.ibm.ws.webcontainer.srt.WebAppInvoker.doForward(WebAppInvoker.java:119)
+	at com.ibm.ws.webcontainer.srt.WebAppInvoker.handleInvocationHook(WebAppInvoker.java:276)
+	at com.ibm.ws.webcontainer.cache.invocation.CachedInvocation.handleInvocation(CachedInvocation.java:71)
+	at com.ibm.ws.webcontainer.srp.ServletRequestProcessor.dispatchByURI(ServletRequestProcessor.java:182)
+	at com.ibm.ws.webcontainer.oselistener.OSEListenerDispatcher.service(OSEListener.java:334)
+	at com.ibm.ws.webcontainer.http.HttpConnection.handleRequest(HttpConnection.java:56)
+	at com.ibm.ws.http.HttpConnection.readAndHandleRequest(HttpConnection.java:618)
+	at com.ibm.ws.http.HttpConnection.run(HttpConnection.java:439)
+	at com.ibm.ws.util.ThreadPool$Worker.run(ThreadPool.java:672)</pre>
+</div>my spring configration is :<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">	&lt;bean name=&quot;flowLocator&quot; class=&quot;org.springframework.webflow.registry.XmlFlowRegistryFactoryBean&quot;&gt;
+		&lt;property name=&quot;flowLocations&quot;&gt;
+			&lt;list&gt;
+				&lt;value&gt;/WEB-INF/flows/*.xml&lt;/value&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+<font color="Green"><b><i>		&lt;property name=&quot;conversionService&quot;&gt;
+			&lt;ref bean=&quot;conversionService&quot;/&gt;
+		&lt;/property&gt;</i></b></font>
+	&lt;/bean&gt;
+	
+<font color="green"><b><i>	&lt;!-- my extension conversion service --&gt;
+	&lt;bean name=&quot;conversionService&quot; class=&quot;com.ccb.framework.webflow.binding.convert.ExtensionConversionService&quot;&gt;
+		&lt;constructor-arg&gt;
+			&lt;list&gt;
+				&lt;ref bean=&quot;numberToTextConverter&quot;/&gt;
+			&lt;/list&gt;
+		&lt;/constructor-arg&gt;
+	&lt;/bean&gt;</i></b></font>
+	
+	&lt;!-- Number-&gt;String converter --&gt;
+	&lt;bean name=&quot;numberToTextConverter&quot; class=&quot;com.ccb.framework.webflow.binding.convert.NumberToText&quot;&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean name=&quot;flowExecutionRepositoryFactory&quot; class=&quot;org.springframework.webflow.execution.repository.support.DefaultFlowExecutionRepositoryFactory&quot;&gt;
+		&lt;constructor-arg ref=&quot;flowLocator&quot;/&gt;
+		&lt;property name=&quot;listenerLoader&quot;&gt;
+			&lt;ref bean=&quot;simpleFlowExecutionListenerLoader&quot;/&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>but I wonderful, if I add my convertor regist code to &quot;org.springframework.binding.convert.support.Gener  icConversionService&quot; immediate, it can works good.<br />
+    why?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=80442" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=80442" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_80442" /></a>
+<a href="newreply.php?do=newreply&amp;p=80442" rel="nofollow" id="qr_80442" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 80442 popup menu -->
+<div class="vbmenu_popup" id="postmenu_80442_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">langds</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=16014">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=16014" rel="nofollow">Send a private message to langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=16014" rel="nofollow">Send email to langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.blogjava.net/langds">Visit langds's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=16014" rel="nofollow">Find all posts by langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=16014">Add langds to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 80442 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #80442 --><!-- post #80537 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit80537" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post80537" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=80537&amp;postcount=2" target="new" rel="nofollow" id="postcount80537" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=80537" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post80537"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 10th, 2006, 09:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_80537">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_80537", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_80537">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_80537">
+			
+			The reason for the NPE is that the sourceClass argument passed to the GenericConversionService.getConversionExecutor() method is null. It's null because the conversion service cannot find a sourceClass using the alias you provided in the &quot;from&quot; value in the mapping.<br />
+<br />
+You should register an alias for the source type of your converter, i.e. by adding this to the loop in your ExtensionConversionService:<br />
+addDefaultAlias(Number.class);<br />
+<br />
+You can than do from=&quot;number&quot; in your mapping definition.<br />
+<br />
+The code should be fixed to generate a clearer exception. Also, should we automatically register default aliases for the sources types of added converters?<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=80537" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=80537" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_80537" /></a>
+<a href="newreply.php?do=newreply&amp;p=80537" rel="nofollow" id="qr_80537" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 80537 popup menu -->
+<div class="vbmenu_popup" id="postmenu_80537_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 80537 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #80537 --><!-- post #80539 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit80539" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post80539" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=80539&amp;postcount=3" target="new" rel="nofollow" id="postcount80539" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=80539" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post80539"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 10th, 2006, 09:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_80539">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_80539", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_80539">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_80539">
+			
+			Submitted JIRA issue:<br />
+<a href="http://opensource.atlassian.com/projects/spring/browse/SWF-186" target="_blank" rel="nofollow">http://opensource.atlassian.com/proj...browse/SWF-186</a><br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=80539" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=80539" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_80539" /></a>
+<a href="newreply.php?do=newreply&amp;p=80539" rel="nofollow" id="qr_80539" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 80539 popup menu -->
+<div class="vbmenu_popup" id="postmenu_80539_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 80539 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #80539 --><!-- post #80634 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit80634" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post80634" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=80634&amp;postcount=4" target="new" rel="nofollow" id="postcount80634" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=80634" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post80634"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 10th, 2006, 09:57 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_80634">
+<a class="bigusername" href="member.php?u=16014">langds</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="langds is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_80634", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2006</div>
+<div>Location: ChengDu,China</div>
+<div>
+						Posts: 15
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '16014', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to langds" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_80634">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon5.gif" alt="Question" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_80634">
+			
+			Hi Erwin,<br />
+    Thanks for your reply. But I think I have not description my problem clearly. <br />
+     My flow XML definition is:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 226px;
+		text-align: left;
+		overflow: auto">     &lt;!-- to view and view engine search result --&gt;
+     &lt;subflow-state id=&quot;viewCustomerList&quot; flow=&quot;PersonSearchEngineCustomerList&quot;&gt;
+	&lt;attribute-mapper&gt;
+		&lt;input-mapper&gt;
+<b><font color="SeaGreen">			&lt;!-- param&#65306;the engine id --&gt;
+			&lt;mapping source=&quot;${requestParameters.engineObjectId}&quot; target=&quot;searchEngineObjectId&quot; from=&quot;string&quot; to=&quot;integer&quot;&gt;</font></b>
+
+			&lt;mapping source=&quot;${externalContext.sessionMap.USER_OBJECT}&quot; target=&quot;userObject&quot;/&gt;
+		&lt;/input-mapper&gt;
+	&lt;/attribute-mapper&gt;
+		
+	&lt;transition on=&quot;end&quot; to=&quot;querySearchEngine&quot;/&gt;
+      &lt;/subflow-state&gt;</pre>
+</div>     Please, See the code place of green, the alias of &quot;string&quot; and &quot;integer&quot; have bean regist at DefaultConversionService, so I wonderful why sourceClass of the alias couldn't be find, I have bean add some log, I found that XmlFlowBuilder get the ConversionService instance from LocalFlowServiceLocator neither DefaultConversionService instance nor ExtensionConversionService instance, in fact, it is GenericConversionService.<br />
+<br />
+     So, no wonder my ExtensionConversionService hadn't be injection in to LocalFlowServiceLocator.<br />
+<br />
+     why??<br />
+<br />
+     regards.~
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by langds; Oct 10th, 2006 at <span class="time">10:02 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=80634" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=80634" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_80634" /></a>
+<a href="newreply.php?do=newreply&amp;p=80634" rel="nofollow" id="qr_80634" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 80634 popup menu -->
+<div class="vbmenu_popup" id="postmenu_80634_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">langds</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=16014">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=16014" rel="nofollow">Send a private message to langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=16014" rel="nofollow">Send email to langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.blogjava.net/langds">Visit langds's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=16014" rel="nofollow">Find all posts by langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=16014">Add langds to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 80634 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #80634 --><!-- post #80701 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit80701" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post80701" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=80701&amp;postcount=5" target="new" rel="nofollow" id="postcount80701" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=80701" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post80701"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Oct 11th, 2006, 05:54 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_80701">
+<a class="bigusername" href="member.php?u=16014">langds</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="langds is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_80701", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2006</div>
+<div>Location: ChengDu,China</div>
+<div>
+						Posts: 15
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '16014', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to langds" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_80701">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon6.gif" alt="Cool" border="0" />
+<strong>I resolved this, It is a bug.</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_80701">
+			
+			Hi, <br />
+    I'v resolved this problem.<br />
+<br />
+    It sames like a bug, in GenericConversionService.getClassByAlias(String alias).<br />
+    the following is cause of the problem: the GenericConversionService of SWF have a &quot;parent&quot; proterty that refence to my ExtensionConversionService instance, that in order to extensibility. <br />
+    I think, When client invoke GenericConversionService.getClassByAlias(), firstly, GenericConversionService get the source class from aliasMap of itself, if the result is not null then return the result, if the result is null, it should try to get the source class from 'parent' service, then return the result.<br />
+   but, in fact, in the getClassByAlias() method of the GenericConversionService, it hasn't to call &quot;parent.getClassByAlias(alias)&quot;, the result is: it couldn't found any source class, that lead the getConversionExecutor() method throws NPE.<br />
+<br />
+    the following is the getClassByAlias() sourcecode of the original:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">	public Class getClassByAlias(String alias) {
+		Object clazz = aliasMap.get(alias);
+		if (clazz != null) {
+			Assert.isInstanceOf(Class.class, clazz, &quot;Not a Class alias '&quot; + alias + &quot;': &quot;);
+		}
+		return (Class)clazz;
+	}</pre>
+</div>     I changed it into :<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 226px;
+		text-align: left;
+		overflow: auto">	public Class getClassByAlias(String alias) {
+<font size="5"><font color="DarkGreen"><b>		Object clazz = aliasMap.get(alias);
+		
+		//to try parent service
+		if (clazz == null &amp;&amp; parent != null) {
+			clazz = parent.getClassByAlias(alias);
+		}
+		</b></font></font>
+		if (clazz != null) {
+			Assert.isInstanceOf(Class.class, clazz, &quot;Not a Class alias '&quot; + alias + &quot;': &quot;);
+		}
+		return (Class)clazz;
+	}</pre>
+</div>    now, it can works goodly.<br />
+<br />
+    Please think about this problem, and update SWF source code. thanks.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=80701" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=80701" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_80701" /></a>
+<a href="newreply.php?do=newreply&amp;p=80701" rel="nofollow" id="qr_80701" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 80701 popup menu -->
+<div class="vbmenu_popup" id="postmenu_80701_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">langds</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=16014">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=16014" rel="nofollow">Send a private message to langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=16014" rel="nofollow">Send email to langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.blogjava.net/langds">Visit langds's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=16014" rel="nofollow">Find all posts by langds</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=16014">Add langds to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 80701 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #80701 --><div id="lastpost"></div></div></body></html>

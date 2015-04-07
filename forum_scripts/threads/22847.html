@@ -1,0 +1,2696 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #52903 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit52903" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post52903" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=52903&amp;postcount=1" target="new" rel="nofollow" id="postcount52903" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=52903" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post52903"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 1st, 2006, 11:10 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_52903">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_52903", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_52903">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Problems using EasyMock to mock a Validator</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_52903">
+			
+			I have a form controller that extends SimpleFormController and which has a Validator injected into it. I'm unit-testing this controller by using EasyMock 2.0 to mock the validator (which already has its own test case). I have succeeded in writing tests for the 'happy paths' (i.e. when there are no validation errors).<br />
+<br />
+However I'm having trouble testing how the controller behaves when there's a field validation error. My problem is I don't know how to tell the mock validator to simulate one (a real Validator does this by adding errors to the Errors object). I know that Spring's SimpleFormController (or one of its superclasses) invokes the method <b>Validator#validate(Object object, Errors errors)</b>. In my test case, I can tell my mock validator to expect this call as follows:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">    ...
+    Person person = new Person();
+    ...
+    Errors errors = new BindException(person, &quot;person&quot;);
+    mockValidator.validate(person, errors);
+    EasyMock.replay(mockValidator);
+    ...</pre>
+</div>... but I can't figure out how to tell the mock validator to reject one of the fields in the Person object (a real Validator does this by adding errors to the Errors object). I've read the EasyMock site and there's nothing about simulating a change to an object passed as a parameter. I will also ask on the EasyMock mailing list, but I thought someone familiar with Spring's &quot;Errors&quot; interface might know the answer.<br />
+<br />
+TIA,<br />
+<br />
+Andrew
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=52903" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=52903" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_52903" /></a>
+<a href="newreply.php?do=newreply&amp;p=52903" rel="nofollow" id="qr_52903" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 52903 popup menu -->
+<div class="vbmenu_popup" id="postmenu_52903_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 52903 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #52903 --><!-- post #52904 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit52904" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post52904" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=52904&amp;postcount=2" target="new" rel="nofollow" id="postcount52904" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=52904" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post52904"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 1st, 2006, 11:22 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_52904">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_52904", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_52904">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon3.gif" alt="Lightbulb" border="0" />
+<strong>Hacky workaround</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_52904">
+			
+			In case anyone else is having this problem, it is possible to work around it by creating your own implementation of Validator that does exactly what you tell it to. But I'd prefer to use EasyMock if possible, to avoid having to maintain that extra class.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=52904" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=52904" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_52904" /></a>
+<a href="newreply.php?do=newreply&amp;p=52904" rel="nofollow" id="qr_52904" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 52904 popup menu -->
+<div class="vbmenu_popup" id="postmenu_52904_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 52904 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #52904 --><!-- post #52909 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit52909" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post52909" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=52909&amp;postcount=3" target="new" rel="nofollow" id="postcount52909" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=52909" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post52909"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 1st, 2006, 11:39 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_52909">
+<a class="bigusername" href="member.php?u=10326">lumpynose</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="lumpynose is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_52909", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: California, US</div>
+<div>
+						Posts: 735
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_52909">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_52909">
+			
+			I'm a newbie at unit testing but from what I've been reading it looks to me like the thing to use is not EasyMock but JMock.  <a href="http://www.jmock.org/" target="_blank" rel="nofollow">http://www.jmock.org/</a><br />
+<br />
+Especially read the &quot;Mock Roles, Not Objects&quot; paper, <a href="http://www.jmock.org/oopsla2004.pdf" target="_blank" rel="nofollow">http://www.jmock.org/oopsla2004.pdf</a> from the documentation section of that site, <a href="http://www.jmock.org/docs.html" target="_blank" rel="nofollow">http://www.jmock.org/docs.html</a><br />
+<br />
+I'm looking forward to giving jmock a spin on my next project.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=52909" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=52909" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_52909" /></a>
+<a href="newreply.php?do=newreply&amp;p=52909" rel="nofollow" id="qr_52909" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 52909 popup menu -->
+<div class="vbmenu_popup" id="postmenu_52909_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">lumpynose</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10326">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10326" rel="nofollow">Send a private message to lumpynose</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=10326" rel="nofollow">Send email to lumpynose</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10326" rel="nofollow">Find all posts by lumpynose</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10326">Add lumpynose to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 52909 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #52909 --><!-- post #53055 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53055" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53055" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53055&amp;postcount=4" target="new" rel="nofollow" id="postcount53055" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53055" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53055"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 2nd, 2006, 05:39 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53055">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53055", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53055">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>jMock isn't all roses</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53055">
+			
+			I read that white paper, very interesting.<br />
+<br />
+Anyway, it seems jMock isn't the be all and end all (as they themselves admit in their comparison of jMock with EasyMock). The killer for me is having to extend jMock's test case. I have my own battery of nifty superclasses for my unit tests, and I can't afford to chuck these away.<br />
+<br />
+Also, one of the drawbacks cited about EasyMock is no longer true in 2.0, namely that you can't define per-argument matchers when setting up expected calls on the mocks (now, you can; it's no longer a single matcher for all arguments).
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53055" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53055" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53055" /></a>
+<a href="newreply.php?do=newreply&amp;p=53055" rel="nofollow" id="qr_53055" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53055 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53055_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53055 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53055 --><!-- post #53112 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53112" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53112" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53112&amp;postcount=5" target="new" rel="nofollow" id="postcount53112" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53112" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53112"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 3rd, 2006, 05:26 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53112">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53112", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53112">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53112">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>andrews</strong>
+</div>
+<div style="font-style:italic">In case anyone else is having this problem, it is possible to work around it by creating your own implementation of Validator that does exactly what you tell it to. But I'd prefer to use EasyMock if possible, to avoid having to maintain that extra class.</div>
+</td>
+</tr>
+</table>
+</div>Mock objects should not exhibit any behaviour, other than returning values.<br />
+<br />
+Using JMock or EasyMock is not really the issue as neither would really help (although you could strong arm them into doing it).<br />
+<br />
+If you need to *do something* in the method, then I would argue mock objects are not the appropriate mechanism, and as you say, providing your own implementation is the right thing <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /><br />
+<br />
+Just my opinion.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53112" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53112" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53112" /></a>
+<a href="newreply.php?do=newreply&amp;p=53112" rel="nofollow" id="qr_53112" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53112 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53112_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53112 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53112 --><!-- post #53265 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53265" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53265" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53265&amp;postcount=6" target="new" rel="nofollow" id="postcount53265" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53265" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53265"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 5th, 2006, 05:27 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53265">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53265", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53265">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Post" border="0" />
+<strong>Mocks should be able to modify mutable method parameters</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53265">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Mock objects should not exhibit any behaviour, other than returning values.
+			
+		</td>
+</tr>
+</table>
+</div>I think mocks should be able to do more than just return values. To play their full role in a test, they should be able to fully behave as an implementation of the interface being mocked, whether that involves:<ul><li>returning a specified value</li>
+<li>throwing a specified Throwable</li>
+<li>making a specified change to a mutable method parameter</li>
+</ul>The fact that EasyMock can't do the third of these is IMHO a limitation of EasyMock, not a reflection of what mocks should be able to do. The Validator interface is a perfect example: the code being tested (e.g. a web tier controller) invokes the Validator and expects it to either modify the Errors parameter or not, depending on whether there are any validation errors. If it's not possible to configure the mock to behave as though there were such errors, then none of the execution paths involving failed validation are testable.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53265" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53265" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53265" /></a>
+<a href="newreply.php?do=newreply&amp;p=53265" rel="nofollow" id="qr_53265" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53265 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53265_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53265 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53265 --><!-- post #53325 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53325" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53325" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53325&amp;postcount=7" target="new" rel="nofollow" id="postcount53325" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53325" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53325"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 6th, 2006, 05:18 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53325">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53325", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53325">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53325">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>andrews</strong>
+</div>
+<div style="font-style:italic"><ul><li>returning a specified value</li>
+<li>throwing a specified Throwable</li>
+<li>making a specified change to a mutable method parameter</li>
+</ul></div>
+</td>
+</tr>
+</table>
+</div>Not sure I agree with you on the last point <img src="images/smilies/wink.gif" border="0" alt="" title="Wink" class="inlineimg" />  To my mind, the mock &quot;contract&quot; is simply to do the first two points.<br />
+<br />
+The confusion I think is the concept of a mock being a proper implementation of your interface, they aren't.  They are simply a set of expectations and return values (or exceptions).<br />
+<br />
+If you require logic in a mock, that almost by definition means you cannot use a mock.<br />
+<br />
+All of this is my opinion (of course) but I find the logic/no logic a good discriminator as to when to use stubs and when to use mocks <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /><br />
+<br />
+BTW; this are really good resources which probably disprove everything I have said <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />: <br />
+<a href="http://www.martinfowler.com/articles/mocksArentStubs.html" target="_blank" rel="nofollow">http://www.martinfowler.com/articles...rentStubs.html</a><br />
+<a href="http://www.connextra.com/aboutUs/mockobjects.pdf" target="_blank" rel="nofollow">http://www.connextra.com/aboutUs/mockobjects.pdf</a><br />
+<a href="http://www.mockobjects.com/" target="_blank" rel="nofollow">http://www.mockobjects.com/</a>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53325" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53325" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53325" /></a>
+<a href="newreply.php?do=newreply&amp;p=53325" rel="nofollow" id="qr_53325" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53325 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53325_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53325 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53325 --><!-- post #53520 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53520" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53520" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53520&amp;postcount=8" target="new" rel="nofollow" id="postcount53520" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53520" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53520"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 6th, 2006, 06:49 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53520">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53520", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53520">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon7.gif" alt="Smile" border="0" />
+<strong>The last, and totally convincing, word on this topic!</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53520">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				To my mind, the mock &quot;contract&quot; is simply to do the first two points.
+			
+		</td>
+</tr>
+</table>
+</div>Well I'm afraid your mind requires some adjustment! <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /> The contract of Spring's Validator is that it adds any validation errors to the Errors object it was given as a method parameter; it doesn't return any values or throw any exceptions. Anything that mocks a Validator needs to be able to mock that parameter-modifying behaviour. If a particular mocking tool can't do this, it's a shortcoming of that tool, not evidence that a mock shouldn't be capable of this. Otherwise how could you ever mock a Validator, or any other object whose contract involves modifying something it was passed?<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				The confusion I think is the concept of a mock being a proper implementation of your interface, they aren't. They are simply a set of expectations and return values (or exceptions).
+			
+		</td>
+</tr>
+</table>
+</div>I totally agree, and if you read my posts, you won't see anything to the contrary. What I don't seem to have convinced you of so far is that expectations don't just include return values and exceptions, they also include (e.g. in the case of a Validator) what modifications should occur to any mutable method parameters. To give a concrete example, here's the code I'm trying to test:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">Validator validator = new ValidatorImpl();
+Errors errors = new BindException(myObject, &quot;TheObjectName&quot;);
+validator.validate(myObject, errors); // note, no return values or exceptions
+if (errors.hasErrors()) {
+  // signal the end of the world
+}
+else {
+  // everything's OK, back to your seats everyone
+}</pre>
+</div>Note that the Validator's sole contract is to add any validation errors to the Errors object that was passed to its validate() method.<br />
+<br />
+Testing the &quot;happy path&quot; (no validation errors) is easy: by default, a mock won't change an object it's given. When the production code calls errors.hasErrors(), no errors are reported, and the happy path executes correctly.<br />
+<br />
+Testing the &quot;sad path&quot; (one or more validation errors) is impossible, because one can't (at least using EasyMock) instruct the mock that when its validate() method is called, it should pretend there were some validation errors. Note this is all about setting up the mock to simulate what a real Validator might do in all cases, it's not about having the mock implement any real validation. Modification of method arguments is just as much part of an interface contract as what values are returned or what exceptions are thrown.<br />
+<br />
+If you're still not convinced, try this: write your own code that uses a Validator, then try to simulate a validation error in a unit test. This should amply demonstrate the problem.<br />
+<br />
+Fyi, I have logged a JIRA issue about including a MockValidator class in Spring's &quot;mock&quot; package: <a href="http://opensource2.atlassian.com/projects/spring/browse/SPR-1763" target="_blank" rel="nofollow">http://opensource2.atlassian.com/pro...rowse/SPR-1763</a><br />
+<br />
+Regards,<br />
+<br />
+Andrew
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53520" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53520" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53520" /></a>
+<a href="newreply.php?do=newreply&amp;p=53520" rel="nofollow" id="qr_53520" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53520 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53520_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53520 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53520 --><!-- post #53572 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53572" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53572" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53572&amp;postcount=9" target="new" rel="nofollow" id="postcount53572" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53572" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53572"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 7th, 2006, 04:04 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53572">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53572", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53572">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53572">
+			
+			I see the confusion.<br />
+<br />
+You are effectively trying to unit test your mock object.  This is the root of our fundamental difference.  Mock objects *shouldn't* be unit tested.  <br />
+<br />
+In your code:<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 162px;
+		text-align: left;
+		overflow: auto">Validator validator = new ValidatorImpl();
+Errors errors = new BindException(myObject, &quot;TheObjectName&quot;);
+validator.validate(myObject, errors); // note, no return values or exceptions
+if (errors.hasErrors()) {
+  // signal the end of the world
+}
+else {
+  // everything's OK, back to your seats everyone
+}</pre>
+</div>
+</td>
+</tr>
+</table>
+</div>You are unit testing your implementation of the Validator (ValidatorImpl).  There is nothing &quot;mock&quot; about it, it is a first class citizen.<br />
+<br />
+A &quot;traditional&quot; mock object would be something like:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">  MyObject myObject = new MyObjectImpl();
+  Mock mockDAO = mock(DAO.class);
+  mockDAO.expects(once()).method(&quot;getMyObject&quot;).will(returnValue(myObject));
+  DAO dao = (DAO) mockDAO.proxy();
+
+  ClassYouWantToTest myClass = new ClassYouWantToTest(dao);
+  assertEquals(&quot;myObject&quot;, myObject, myClass.getMyObject());
+  mock</pre>
+</div>You are not unit testing the DAO, the DAO is a mock.  You *are* unit testing code that works with the DAO.  So you might mock a DAO which throws an exception, another one which mocks the object not being found.  The point is you are *not* testing the mock, you are using the mock to pretend to be your code.<br />
+<br />
+HTH <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53572" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53572" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53572" /></a>
+<a href="newreply.php?do=newreply&amp;p=53572" rel="nofollow" id="qr_53572" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53572 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53572_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53572 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53572 --><!-- post #53578 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53578" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post53578" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53578&amp;postcount=10" target="new" rel="nofollow" id="postcount53578" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53578" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53578"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 7th, 2006, 04:15 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53578">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53578", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53578">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53578">
+			
+			Just reread and noticed that you are trying to unit test that code; I thought that *as* your unit test.  Apologies <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /><br />
+<br />
+How will you swap the real/stub implementation of the validator at unittest/runtime?  Because you are instantiating it in your production code, how will that work?<br />
+<br />
+I suggest you either move the validation logic into a protected method which you override during unit testing:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">  protected void validate(final Errors errors) {
+    Validator validator = new TheRealValidator();
+    validator.validate(errors);
+  }</pre>
+</div>or inject your validator.  <br />
+<br />
+Either way, I still think mock objects should not contain logic <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />  For your particular use case, how would a mock object which allows you to do what you want be any simpler than simple constructing your own implementation of a validator:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">  public class MyValidator implements Validator {
+    public void validate(final Object o, final Errors errors...) {
+      errors.rejectValue(....);
+    }
+  }</pre>
+</div>HTH <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />
+</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by Colin Yates; Mar 7th, 2006 at <span class="time">05:10 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53578" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53578" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53578" /></a>
+<a href="newreply.php?do=newreply&amp;p=53578" rel="nofollow" id="qr_53578" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53578 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53578_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53578 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53578 --><div id="lastpost"></div></div><div id="posts"><!-- post #53613 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53613" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53613" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53613&amp;postcount=11" target="new" rel="nofollow" id="postcount53613" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53613" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53613"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 7th, 2006, 07:35 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53613">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53613", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53613">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon6.gif" alt="Cool" border="0" />
+<strong>Getting down to semantics - is parameter modification &quot;logic&quot; or part of the contract</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53613">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>yatesco</strong>
+</div>
+<div style="font-style:italic">How will you swap the real/stub implementation of the validator at unittest/runtime?  Because you are instantiating it in your production code, how will that work?</div>
+</td>
+</tr>
+</table>
+</div>Sorry for the bad (and fictitious) example ... in the real code, the Validator instance is of course injected.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				I still think mock objects should not contain logic <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />
+</td>
+</tr>
+</table>
+</div>And I still think observing the complete contract of an interface is NOT logic. Our irreconcilable difference is that you think modifying method parameters isn't part of such a contract, that it must be &quot;logic&quot;. And I keep pointing to the example of the Validator interface, which most definitely has a contract despite returning no values and throwing no exceptions (this contract being &quot;add any errors to the given Errors instance&quot;), and you have yet to provide a convincing rebuttal.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				For your particular use case, how would a mock object which allows you to do what you want be any simpler than simple constructing your own implementation of a validator:
+			
+		</td>
+</tr>
+</table>
+</div>The code you gave is in fact just the kind of mock I'm talking about, provided of course there is some back-door way of telling it exactly what errors I want it to report. The class I have already attached to the JIRA issue provides this facility (and a few others).<br />
+<br />
+Regards,<br />
+<br />
+Andrew
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53613" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53613" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53613" /></a>
+<a href="newreply.php?do=newreply&amp;p=53613" rel="nofollow" id="qr_53613" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53613 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53613_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53613 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53613 --><!-- post #53623 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit53623" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post53623" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=53623&amp;postcount=12" target="new" rel="nofollow" id="postcount53623" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=53623" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post53623"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 7th, 2006, 07:55 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_53623">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_53623", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_53623">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_53623">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>andrews</strong>
+</div>
+<div style="font-style:italic">And I still think observing the complete contract of an interface is NOT logic. Our irreconcilable difference is that you think modifying method parameters isn't part of such a contract, that it must be &quot;logic&quot;. And I keep pointing to the example of the Validator interface, which most definitely has a contract despite returning no values and throwing no exceptions (this contract being &quot;add any errors to the given Errors instance&quot;), and you have yet to provide a convincing rebuttal.</div>
+</td>
+</tr>
+</table>
+</div>Maybe you are right.  <br />
+<br />
+The fundamental problem is that the only way to modify the parameters is to do it via code.  Maybe writing logic to simply modify the parameters is OK, but this is the only time a mock should contain code.<br />
+<br />
+The point I am trying to make (and obviously not doing so <img src="images/smilies/wink.gif" border="0" alt="" title="Wink" class="inlineimg" />) is that mock objects should not contain business logic.<br />
+<br />
+To put it another way, a mock object is a set of expectations and return values.  The sticky point, as you say, is that manipulating the method parameters can also be viewed as a return value, but there are no elegant ways to achieve this, so maybe using code would be OK.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=53623" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=53623" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_53623" /></a>
+<a href="newreply.php?do=newreply&amp;p=53623" rel="nofollow" id="qr_53623" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 53623 popup menu -->
+<div class="vbmenu_popup" id="postmenu_53623_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 53623 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #53623 --><!-- post #71978 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit71978" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post71978" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=71978&amp;postcount=13" target="new" rel="nofollow" id="postcount71978" name="13"><strong>13</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=71978" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post71978"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 6th, 2006, 08:47 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_71978">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_71978", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_71978">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon3.gif" alt="Lightbulb" border="0" />
+<strong>Finally ... EasyMock 2.2 solves the problem!</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_71978">
+			
+			At last, EasyMock allows test cases to tell mocks how they should modify their mutable method parameters. This makes it possible to mock Spring's Validator interface without writing one's own MockValidator class.<br />
+<br />
+I've made a comment on the JIRA issue to this effect, along with an example of how to do it.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Andrew Swan<br />
+<i>&quot;Now is the EJB of our discontent made glorious Spring&quot;<br />
+</i>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=71978" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=71978" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_71978" /></a>
+<a href="newreply.php?do=newreply&amp;p=71978" rel="nofollow" id="qr_71978" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 71978 popup menu -->
+<div class="vbmenu_popup" id="postmenu_71978_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 71978 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #71978 --><!-- post #71981 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit71981" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post71981" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=71981&amp;postcount=14" target="new" rel="nofollow" id="postcount71981" name="14"><strong>14</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=71981" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post71981"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 6th, 2006, 09:23 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_71981">
+<a class="bigusername" href="member.php?u=15145">gmazza</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="gmazza is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_71981", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>Location: Arlington, VA, USA</div>
+<div>
+						Posts: 194
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_71981">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_71981">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>yatesco</strong>
+</div>
+<div style="font-style:italic">For your particular use case, how would a mock object which allows you to do what you want be any simpler than simple constructing your own implementation of a validator</div>
+</td>
+</tr>
+</table>
+</div>Agreed.  But I wonder if the confusion may be because the original poster is actually doing integration testing at this stage (testing interaction between Validator and Controller), rather than just strictly unit testing.  For integration testing, you wouldn't want either part that is being tested to be replaced with a mock object.<br />
+<br />
+Glen
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=71981" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=71981" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_71981" /></a>
+<a href="newreply.php?do=newreply&amp;p=71981" rel="nofollow" id="qr_71981" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 71981 popup menu -->
+<div class="vbmenu_popup" id="postmenu_71981_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">gmazza</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=15145">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=15145" rel="nofollow">Send a private message to gmazza</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=15145" rel="nofollow">Send email to gmazza</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.jroller.com/gmazza">Visit gmazza's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=15145" rel="nofollow">Find all posts by gmazza</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=15145">Add gmazza to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 71981 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #71981 --><!-- post #71985 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit71985" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post71985" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=71985&amp;postcount=15" target="new" rel="nofollow" id="postcount71985" name="15"><strong>15</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=71985" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post71985"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 6th, 2006, 10:12 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_71985">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_71985", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_71985">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon6.gif" alt="Cool" border="0" />
+<strong>Unit testing!</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_71985">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>gmazza</strong>
+</div>
+<div style="font-style:italic">... I wonder if the confusion may be because the original poster is actually doing integration testing at this stage (testing interaction between Validator and Controller), rather than just strictly unit testing. For integration testing, you wouldn't want either part that is being tested to be replaced with a mock object.</div>
+</td>
+</tr>
+</table>
+</div>As the OP, I can tell you that I'm definitely unit testing! <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /> In fact, I'm unit testing one of my Controllers that has a dependency on a Validator (injected via the Controller's constructor). My original problem (which has been solved by the latest release of EasyMock) was how to mock the Validator (whose contract is to add any validation errors to the Errors object that's passed to the validate() method). I'm not (and never have been) using my real Validator implementation in this test, so it's a genuine unit test.<br />
+<br />
+For anyone that doesn't understand the original problem or how the new EasyMock feature solves it, I invite you to try this exercise for yourself:<ol style="list-style-type: decimal"><li>Write a controller that depends on a Validator (most SimpleFormControllers do)</li>
+<li>Write a test case that proves your controller behaves correctly in cases where the Validator reports errors in your command object (which is an entirely plausible thing for a real Validator to do). Part of doing this is creating a mock Validator that can be instructed to report such errors.</li>
+</ol>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Andrew Swan<br />
+<i>&quot;Now is the EJB of our discontent made glorious Spring&quot;<br />
+</i>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=71985" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=71985" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_71985" /></a>
+<a href="newreply.php?do=newreply&amp;p=71985" rel="nofollow" id="qr_71985" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 71985 popup menu -->
+<div class="vbmenu_popup" id="postmenu_71985_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 71985 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #71985 --><!-- post #164776 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit164776" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post164776" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=164776&amp;postcount=16" target="new" rel="nofollow" id="postcount164776" name="16"><strong>16</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=164776" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post164776"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 12th, 2008, 09:58 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_164776">
+<a class="bigusername" href="member.php?u=20703">leojhartiv</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="leojhartiv is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_164776", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2006</div>
+<div>
+						Posts: 93
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_164776">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_164776">
+			
+			I have a problem similar to what your discussing, but it goes a step further.  How do I unit test a Validator that invokes another Validator in one of its methods?  For example:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 322px;
+		text-align: left;
+		overflow: auto">
+public class ElectronicFormsElectionFormValidator implements Validator {
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public boolean supports(Class clazz) {
+		return clazz.equals(ElectronicFormsElectionForm.class);
+	}
+
+	public void validate(Object arg0, Errors arg1) {
+		// Do nothing by default
+	}
+
+        //Gets called in a spring web flow view-state
+	public void validateShowReviewAndSubmit(Object target, Errors errors) {
+		ValidationUtils.invokeValidator(new RequiresAgreementValidator(),
+				target, errors);
+	}
+
+}</pre>
+</div>The only code in my validateShowReviewAndSubmit() method is a call to invoke another validator.  The RequiresAgreementValidator has its own unit test, but I want to basically test this section of code.  My thoughts were to mock  RequiresAgreementValidator to pass and fail and then check the errors object.  How would you guys handle this?<br />
+<br />
+Thanks!
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=164776" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=164776" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_164776" /></a>
+<a href="newreply.php?do=newreply&amp;p=164776" rel="nofollow" id="qr_164776" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 164776 popup menu -->
+<div class="vbmenu_popup" id="postmenu_164776_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">leojhartiv</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=20703">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=20703" rel="nofollow">Send a private message to leojhartiv</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=20703" rel="nofollow">Find all posts by leojhartiv</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=20703">Add leojhartiv to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 164776 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #164776 --><!-- post #164820 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit164820" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post164820" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=164820&amp;postcount=17" target="new" rel="nofollow" id="postcount164820" name="17"><strong>17</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=164820" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post164820"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 12th, 2008, 01:04 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_164820">
+<a class="bigusername" href="member.php?u=10326">lumpynose</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="lumpynose is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_164820", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: California, US</div>
+<div>
+						Posts: 735
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_164820">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_164820">
+			
+			It seems strange to me that validateShowReviewAndSubmit does nothing but call RequiresAgreementValidator.  Are you planning on adding more code to validateShowReviewAndSubmit?  If so, perhaps you could pull out the code from  RequiresAgreementValidator and put it in a helper/utility class of your making, and have both validateShowReviewAndSubmit and RequiresAgreementValidator use it.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=164820" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=164820" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_164820" /></a>
+<a href="newreply.php?do=newreply&amp;p=164820" rel="nofollow" id="qr_164820" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 164820 popup menu -->
+<div class="vbmenu_popup" id="postmenu_164820_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">lumpynose</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10326">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10326" rel="nofollow">Send a private message to lumpynose</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=10326" rel="nofollow">Send email to lumpynose</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10326" rel="nofollow">Find all posts by lumpynose</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10326">Add lumpynose to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 164820 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #164820 --><!-- post #164840 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit164840" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post164840" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=164840&amp;postcount=18" target="new" rel="nofollow" id="postcount164840" name="18"><strong>18</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=164840" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post164840"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 12th, 2008, 02:44 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_164840">
+<a class="bigusername" href="member.php?u=20703">leojhartiv</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="leojhartiv is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_164840", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2006</div>
+<div>
+						Posts: 93
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_164840">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_164840">
+			
+			This is just a simple example of Validator delegation, but if it helps, here's why:  ElectronicFormsElectionForm is a composite object which implements RequiresAgreement.  RequiresAgreementValidator knows how to validate anything that implements RequiresAgreement.  I do this to remove code redundancy, etc.<br />
+<br />
+validateShowReviewAndSubmit() corresponds to a showReviewAndSubmit view-state in SWF.  In this instance, the only thing in the showReviewAndSubmit view that needs validation is handled in the RequiresAgreementValidator, but other flows/view-states might expand on this.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=164840" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=164840" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_164840" /></a>
+<a href="newreply.php?do=newreply&amp;p=164840" rel="nofollow" id="qr_164840" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 164840 popup menu -->
+<div class="vbmenu_popup" id="postmenu_164840_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">leojhartiv</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=20703">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=20703" rel="nofollow">Send a private message to leojhartiv</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=20703" rel="nofollow">Find all posts by leojhartiv</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=20703">Add leojhartiv to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 164840 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #164840 --><!-- post #190251 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit190251" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post190251" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=190251&amp;postcount=19" target="new" rel="nofollow" id="postcount190251" name="19"><strong>19</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=190251" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post190251"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2008, 06:32 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_190251">
+<a class="bigusername" href="member.php?u=40553">ffbeltran</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ffbeltran is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_190251", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2008</div>
+<div>
+						Posts: 2
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_190251">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Modify mutable method parameters</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_190251">
+			
+			I need to modify mutable method parameters.<br />
+For example, I have a login class that I want to mock it but I can't change it:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">public class Login {
+  // ...
+  public void Login(List errors, Credencials credencials) {
+    if(notValid(credencials))
+      errors.add(...);
+    }
+  // ...
+}</pre>
+</div>And I have other class that I want test it, for example a servlet:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 210px;
+		text-align: left;
+		overflow: auto">public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  // Request parameters and inicialize credencials
+
+  // Call login
+  List erros = new ArrayList();
+  login.login(errors, credencials);
+
+  if(erros.isEmpty()) {
+    // Login succed
+  }
+  // Login error
+}</pre>
+</div>I want to modify mutable 'login' method parameters (errors list) of 'Login'<br />
+class in the mock object<br />
+<br />
+Lot of thanks
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=190251" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=190251" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_190251" /></a>
+<a href="newreply.php?do=newreply&amp;p=190251" rel="nofollow" id="qr_190251" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 190251 popup menu -->
+<div class="vbmenu_popup" id="postmenu_190251_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ffbeltran</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=40553">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=40553" rel="nofollow">Send a private message to ffbeltran</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=40553" rel="nofollow">Find all posts by ffbeltran</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=40553">Add ffbeltran to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 190251 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #190251 --><!-- post #190381 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit190381" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post190381" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=190381&amp;postcount=20" target="new" rel="nofollow" id="postcount190381" name="20"><strong>20</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=190381" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post190381"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 8th, 2008, 07:15 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_190381">
+<a class="bigusername" href="member.php?u=10261">andrews</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="andrews is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_190381", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: May 2005</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 436
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_190381">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon3.gif" alt="Lightbulb" border="0" />
+<strong>&quot;It's easy if you use EasyMock&quot; (c)</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_190381">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>ffbeltran</strong>
+<a href="showthread.php?p=190251#post190251" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">I need to modify mutable method parameters.</div>
+</td>
+</tr>
+</table>
+</div>Your problem is identical to the one I had (but I guess you knew that because you replied to the same thread <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" /> ).<br />
+<br />
+You didn't say what mocking library you're using, but if you're using EasyMock, the solution is as I have outlined in the JIRA issue:<br />
+<br />
+<a href="http://jira.springframework.org/browse/SPR-1763">http://jira.springframework.org/browse/SPR-1763</a>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Andrew Swan<br />
+<i>&quot;Now is the EJB of our discontent made glorious Spring&quot;<br />
+</i>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=190381" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=190381" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_190381" /></a>
+<a href="newreply.php?do=newreply&amp;p=190381" rel="nofollow" id="qr_190381" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 190381 popup menu -->
+<div class="vbmenu_popup" id="postmenu_190381_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">andrews</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10261">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10261" rel="nofollow">Send a private message to andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10261" rel="nofollow">Find all posts by andrews</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10261">Add andrews to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 190381 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #190381 --><div id="lastpost"></div></div><div id="posts"><!-- post #190448 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit190448" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post190448" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=190448&amp;postcount=21" target="new" rel="nofollow" id="postcount190448" name="21"><strong>21</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=190448" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post190448"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 9th, 2008, 05:16 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_190448">
+<a class="bigusername" href="member.php?u=40553">ffbeltran</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ffbeltran is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_190448", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jul 2008</div>
+<div>
+						Posts: 2
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_190448">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Thanks</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_190448">
+			
+			I use Mocquer but EasyMock it's good for me.<br />
+<br />
+Thanks<br />
+<br />
+Note: I make it with Mocquer too<br />
+<br />
+Class that i want to mock<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">public class Login {
+  // ...
+  public void login(List errors, Credencials credencials) {
+    if(notValid(credencials))
+      errors.add(...);
+    }
+  // ...
+}</pre>
+</div>Mock implementation<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">public class AuthenticateMocquerTest extends TestCase {
+
+    private MockControl control;
+    private Login login;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        control = MockControl.createControl(Login.class);
+        login = (Login) control.getMock();
+    }
+    public void testIncorrectAuthenticate() {
+        List errors = new ArrayList();
+        // ... setting up the mocks' expectations
+        login.login(errors);
+        control.setMatcher(new ArgumentsMatcher() {
+            public boolean matches(Object[] expected, Object[] actual) {
+                if(!(actual[0] instanceof List))
+                    return false;                
+                List errors = (List) actual[0];
+                errors.add(&quot;error 1&quot;);
+                errors.add(&quot;error 2&quot;);
+                return true;
+            }
+        });
+        control.setVoidCallable(Range.ONE);
+        control.replay();
+        // continue setting up the mocks ... 
+        //assertions
+    }
+}</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by ffbeltran; Jul 10th, 2008 at <span class="time">03:42 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=190448" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=190448" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_190448" /></a>
+<a href="newreply.php?do=newreply&amp;p=190448" rel="nofollow" id="qr_190448" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 190448 popup menu -->
+<div class="vbmenu_popup" id="postmenu_190448_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ffbeltran</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=40553">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=40553" rel="nofollow">Send a private message to ffbeltran</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=40553" rel="nofollow">Find all posts by ffbeltran</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=40553">Add ffbeltran to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 190448 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #190448 --><div id="lastpost"></div></div></body></html>

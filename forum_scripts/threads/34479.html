@@ -1,0 +1,825 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #99760 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit99760" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post99760" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=99760&amp;postcount=1" target="new" rel="nofollow" id="postcount99760" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=99760" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post99760"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 5th, 2007, 04:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_99760">
+<a class="bigusername" href="member.php?u=6886">wpcfan</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="wpcfan is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_99760", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_99760">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>how to pass a parameter between subflows</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_99760">
+			
+			Hi All,<br />
+<br />
+I am new to the SWF, and I am now running into some problems with passing parameters between subflows. Please take a look at the following code. What I wanna do is:<br />
+<br />
+After a &quot;TestPlan&quot; is added via addTestPlan subflow, we should return to the &quot;displayTestPlan&quot; subflow. But I need to give the id of the TestPlan to the &quot;displayTestPlan&quot; subflow. However, I always got exceptions:<br />
+<br />
+Can anybody help?<br />
+<br />
+Thanks,<br />
+-Peng<br />
+<br />
+parent flow<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;flow xmlns=&quot;http://www.springframework.org/schema/webflow&quot;
+      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+      xsi:schemaLocation=&quot;http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd&quot;&gt;
+
+	&lt;start-state idref=&quot;searchTestPlan&quot;/&gt;
+
+	&lt;view-state id=&quot;searchTestPlan&quot; view=&quot;TestPlanList&quot;&gt;
+		&lt;render-actions&gt;
+			&lt;action bean=&quot;searchTestPlanFormAction&quot; method=&quot;setupForm&quot;/&gt;
+			&lt;action bean=&quot;searchTestPlanFormAction&quot; method=&quot;searchTestPlan&quot;/&gt;
+		&lt;/render-actions&gt;
+		&lt;transition on=&quot;search&quot; to=&quot;makeSearch&quot;&gt;
+			&lt;action bean=&quot;searchTestPlanFormAction&quot; method=&quot;bindAndValidate&quot;/&gt;
+		&lt;/transition&gt;
+		&lt;transition on=&quot;view&quot; to=&quot;browseDetails&quot;/&gt;
+		&lt;transition on=&quot;add&quot; to=&quot;addTestPlan&quot; /&gt;	
+	&lt;/view-state&gt;
+	
+	&lt;action-state id=&quot;makeSearch&quot;&gt;
+		&lt;action bean=&quot;searchTestPlanFormAction&quot; method=&quot;searchTestPlan&quot;/&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;searchTestPlan&quot;/&gt;
+	&lt;/action-state&gt;
+	
+	&lt;subflow-state id=&quot;browseDetails&quot; flow=&quot;testplan-view-flow&quot;&gt;
+		&lt;attribute-mapper&gt;
+			&lt;input-mapper&gt;
+				&lt;mapping source=&quot;requestParameters.id&quot; target=&quot;id&quot; from=&quot;string&quot; to=&quot;long&quot;/&gt;
+			&lt;/input-mapper&gt;
+		&lt;/attribute-mapper&gt;
+		&lt;transition on=&quot;finish&quot; to=&quot;searchTestPlan&quot;/&gt;
+	&lt;/subflow-state&gt;
+	
+	&lt;subflow-state flow=&quot;testplan-edit-flow&quot; id=&quot;addTestPlan&quot;&gt;
+		&lt;attribute-mapper&gt;
+			&lt;output-mapper&gt;
+				&lt;mapping source=&quot;testPlan.id&quot; target=&quot;flowScope.testPlanId&quot; /&gt;
+			&lt;/output-mapper&gt;
+		&lt;/attribute-mapper&gt;
+		&lt;transition on=&quot;finish&quot; to=&quot;displayTestPlan&quot; /&gt;
+	&lt;/subflow-state&gt;
+	
+	&lt;subflow-state id=&quot;displayTestPlan&quot; flow=&quot;testplan-view-flow&quot;&gt;
+		&lt;attribute-mapper&gt;
+			&lt;input-mapper&gt;
+				&lt;mapping source=&quot;flowScope.testPlanId&quot; target=&quot;id&quot;/&gt;
+			&lt;/input-mapper&gt;
+		&lt;/attribute-mapper&gt;
+		&lt;transition on=&quot;finish&quot; to=&quot;searchTestPlan&quot;/&gt;
+	&lt;/subflow-state&gt;
+	
+&lt;/flow&gt;</pre>
+</div><br />
+subflow 1<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;flow xmlns=&quot;http://www.springframework.org/schema/webflow&quot;
+      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+      xsi:schemaLocation=&quot;http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd&quot;&gt;
+
+	&lt;input-mapper&gt;
+		&lt;input-attribute name=&quot;id&quot; required=&quot;false&quot;/&gt;
+	&lt;/input-mapper&gt;
+	
+	&lt;start-state idref=&quot;editTestPlan&quot;/&gt;
+
+	&lt;view-state id=&quot;editTestPlan&quot; view=&quot;TestPlanForm&quot;&gt;
+		&lt;render-actions&gt;
+			&lt;action bean=&quot;testPlanFormAction&quot; method=&quot;setupReferenceData&quot;/&gt;
+			&lt;action bean=&quot;testPlanFormAction&quot; method=&quot;setupForm&quot;/&gt;
+		&lt;/render-actions&gt;
+		&lt;transition on=&quot;save&quot; to=&quot;saveTestPlan&quot;&gt;
+			&lt;action bean=&quot;testPlanFormAction&quot; method=&quot;bindAndValidate&quot; /&gt;
+		&lt;/transition&gt;
+		&lt;transition on=&quot;delete&quot; to=&quot;searchTestPlan&quot; &gt;
+			&lt;action bean=&quot;testPlanFormAction&quot; method=&quot;deleteTestPlan&quot;/&gt;
+		&lt;/transition&gt;
+		&lt;transition on=&quot;back&quot; to=&quot;finish&quot; /&gt;
+	&lt;/view-state&gt;
+	
+	&lt;action-state id=&quot;saveTestPlan&quot;&gt;
+		&lt;action bean=&quot;testPlanFormAction&quot; method=&quot;saveTestPlan&quot;/&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;finish&quot;/&gt;
+	&lt;/action-state&gt;
+	
+	&lt;subflow-state flow=&quot;testplan-search-flow&quot; id=&quot;searchTestPlan&quot;/&gt;
+	
+	&lt;end-state id=&quot;finish&quot;/&gt;
+	
+	&lt;output-mapper&gt;
+		&lt;output-attribute name=&quot;testPlanId&quot;/&gt;
+	&lt;/output-mapper&gt;
+&lt;/flow&gt;</pre>
+</div><br />
+subflow2<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;flow xmlns=&quot;http://www.springframework.org/schema/webflow&quot;
+      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+      xsi:schemaLocation=&quot;http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd&quot;&gt;
+
+	&lt;input-mapper&gt;
+		&lt;input-attribute name=&quot;id&quot; required=&quot;true&quot;/&gt;
+	&lt;/input-mapper&gt;
+	
+	&lt;start-state idref=&quot;displayTestPlan&quot;/&gt;
+	
+	&lt;view-state id=&quot;displayTestPlan&quot; view=&quot;TestPlanView&quot;&gt;
+		&lt;render-actions&gt;
+			&lt;bean-action bean=&quot;automation&quot; method=&quot;getTestPlan&quot;&gt;				
+				&lt;method-arguments&gt;
+					&lt;argument expression=&quot;flowScope.id&quot; /&gt;
+				&lt;/method-arguments&gt;
+				&lt;method-result name=&quot;testPlan&quot; /&gt;
+			&lt;/bean-action&gt;
+		&lt;/render-actions&gt;
+		&lt;transition on=&quot;back&quot; to=&quot;searchTestPlan&quot; /&gt;
+		&lt;transition on=&quot;edit&quot; to=&quot;editTestPlan&quot; /&gt;
+		&lt;transition on=&quot;editSuite&quot; to=&quot;editTestSuite&quot;/&gt;
+		&lt;transition on=&quot;addNewSuite&quot; to=&quot;addNewSuite&quot;/&gt;
+	&lt;/view-state&gt;
+	
+	&lt;subflow-state id=&quot;editTestPlan&quot; flow=&quot;testplan-edit-flow&quot;&gt;
+		&lt;attribute-mapper&gt;
+			&lt;input-mapper&gt;
+				&lt;mapping source=&quot;requestParameters.id&quot; target=&quot;id&quot; from=&quot;string&quot; to=&quot;long&quot;/&gt;
+			&lt;/input-mapper&gt;
+		&lt;/attribute-mapper&gt;
+		&lt;transition on=&quot;finish&quot; to=&quot;displayTestPlan&quot;/&gt;
+	&lt;/subflow-state&gt;
+	
+	&lt;subflow-state flow=&quot;testsuite-edit-flow&quot; id=&quot;editTestSuite&quot;&gt;
+		&lt;attribute-mapper&gt;
+			&lt;input-mapper&gt;
+				&lt;mapping source=&quot;flowScope.id&quot; target=&quot;testPlanId&quot; /&gt;
+				&lt;mapping source=&quot;requestParameters.id&quot; target=&quot;id&quot; from=&quot;string&quot; to=&quot;long&quot;/&gt;
+			&lt;/input-mapper&gt;
+		&lt;/attribute-mapper&gt;
+		&lt;transition on=&quot;finish&quot; to=&quot;displayTestPlan&quot;/&gt;
+	&lt;/subflow-state&gt;
+	
+	&lt;subflow-state flow=&quot;testsuite-edit-flow&quot; id=&quot;addNewSuite&quot;&gt;
+		&lt;attribute-mapper&gt;
+			&lt;input-mapper&gt;
+				&lt;mapping source=&quot;flowScope.id&quot; target=&quot;testPlanId&quot; /&gt;
+			&lt;/input-mapper&gt;
+		&lt;/attribute-mapper&gt;
+		&lt;transition on=&quot;finish&quot; to=&quot;displayTestPlan&quot;/&gt;
+	&lt;/subflow-state&gt;
+	
+	&lt;end-state id=&quot;finish&quot;/&gt;
+&lt;/flow&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by wpcfan; Feb 5th, 2007 at <span class="time">06:22 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=99760" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=99760" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_99760" /></a>
+<a href="newreply.php?do=newreply&amp;p=99760" rel="nofollow" id="qr_99760" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 99760 popup menu -->
+<div class="vbmenu_popup" id="postmenu_99760_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">wpcfan</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6886">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6886" rel="nofollow">Send a private message to wpcfan</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6886" rel="nofollow">Find all posts by wpcfan</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6886">Add wpcfan to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 99760 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #99760 --><!-- post #99762 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit99762" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post99762" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=99762&amp;postcount=2" target="new" rel="nofollow" id="postcount99762" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=99762" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post99762"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 5th, 2007, 04:35 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_99762">
+<a class="bigusername" href="member.php?u=6886">wpcfan</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="wpcfan is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_99762", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_99762">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_99762">
+			
+			Exception<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">Automation ERROR [http-8080-Processor24] [action].invoke(253) | Servlet.service() for servlet action threw exception
+ognl.OgnlException: source is null for getProperty(null, &quot;id&quot;)
+	at ognl.OgnlRuntime.getProperty(OgnlRuntime.java:1611)
+	at ognl.ASTProperty.getValueBody(ASTProperty.java:96)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:170)
+	at ognl.SimpleNode.getValue(SimpleNode.java:210)
+	at ognl.ASTChain.getValueBody(ASTChain.java:109)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:170)
+	at ognl.SimpleNode.getValue(SimpleNode.java:210)
+	at ognl.Ognl.getValue(Ognl.java:333)
+	at ognl.Ognl.getValue(Ognl.java:310)
+	at org.springframework.binding.expression.support.OgnlExpression.evaluate(OgnlExpression.java:74)
+	at org.springframework.binding.mapping.Mapping.map(Mapping.java:96)
+	at org.springframework.binding.mapping.DefaultAttributeMapper.map(DefaultAttributeMapper.java:74)
+	at org.springframework.webflow.engine.support.AbstractFlowAttributeMapper.mapFlowOutput(AbstractFlowAttributeMapper.java:70)
+	at org.springframework.webflow.engine.SubflowState.mapSubflowOutput(SubflowState.java:164)
+	at org.springframework.webflow.engine.SubflowState.onEvent(SubflowState.java:150)
+	at org.springframework.webflow.engine.Flow.onEvent(Flow.java:572)
+	at org.springframework.webflow.engine.impl.RequestControlContextImpl.signalEvent(RequestControlContextImpl.java:207)
+	at org.springframework.webflow.engine.EndState.doEnter(EndState.java:146)
+	at org.springframework.webflow.engine.State.enter(State.java:200)
+	at org.springframework.webflow.engine.Transition.execute(Transition.java:229)
+	at org.springframework.webflow.engine.TransitionableState.onEvent(TransitionableState.java:112)
+	at org.springframework.webflow.engine.Flow.onEvent(Flow.java:572)
+	at org.springframework.webflow.engine.impl.RequestControlContextImpl.signalEvent(RequestControlContextImpl.java:207)
+	at org.springframework.webflow.engine.ActionState.doEnter(ActionState.java:185)
+	at org.springframework.webflow.engine.State.enter(State.java:200)
+	at org.springframework.webflow.engine.Transition.execute(Transition.java:229)
+	at org.springframework.webflow.engine.TransitionableState.onEvent(TransitionableState.java:112)
+	at org.springframework.webflow.engine.Flow.onEvent(Flow.java:572)
+	at org.springframework.webflow.engine.impl.RequestControlContextImpl.signalEvent(RequestControlContextImpl.java:207)
+	at org.springframework.webflow.engine.impl.FlowExecutionImpl.signalEvent(FlowExecutionImpl.java:214)
+	at org.springframework.webflow.executor.FlowExecutorImpl.resume(FlowExecutorImpl.java:238)
+	at org.springframework.webflow.executor.support.FlowRequestHandler.handleFlowRequest(FlowRequestHandler.java:115)
+	at org.springframework.webflow.executor.mvc.FlowController.handleRequestInternal(FlowController.java:170)
+	at org.springframework.web.servlet.mvc.AbstractController.handleRequest(AbstractController.java:153)
+	at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:45)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:820)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:396)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:360)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:709)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:252)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)
+	at com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.displaytag.filter.ResponseOverrideFilter.doFilter(ResponseOverrideFilter.java:125)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:173)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:77)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:264)
+	at org.acegisecurity.intercept.web.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:107)
+	at org.acegisecurity.intercept.web.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:72)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.ui.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:110)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.providers.anonymous.AnonymousProcessingFilter.doFilter(AnonymousProcessingFilter.java:125)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.ui.rememberme.RememberMeProcessingFilter.doFilter(RememberMeProcessingFilter.java:142)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:81)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.ui.AbstractProcessingFilter.doFilter(AbstractProcessingFilter.java:217)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.ui.logout.LogoutFilter.doFilter(LogoutFilter.java:106)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter(HttpSessionContextIntegrationFilter.java:229)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:274)
+	at org.acegisecurity.util.FilterChainProxy.doFilter(FilterChainProxy.java:148)
+	at org.acegisecurity.util.FilterToBeanProxy.doFilter(FilterToBeanProxy.java:98)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)
+	at org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)
+	at org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)
+	at org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)
+	at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)
+	at java.lang.Thread.run(Thread.java:619)</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by wpcfan; Feb 5th, 2007 at <span class="time">06:23 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=99762" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=99762" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_99762" /></a>
+<a href="newreply.php?do=newreply&amp;p=99762" rel="nofollow" id="qr_99762" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 99762 popup menu -->
+<div class="vbmenu_popup" id="postmenu_99762_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">wpcfan</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6886">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6886" rel="nofollow">Send a private message to wpcfan</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6886" rel="nofollow">Find all posts by wpcfan</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6886">Add wpcfan to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 99762 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #99762 --><!-- post #99796 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit99796" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post99796" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=99796&amp;postcount=3" target="new" rel="nofollow" id="postcount99796" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=99796" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post99796"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 5th, 2007, 07:00 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_99796">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_99796", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_99796">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_99796">
+			
+			One thing I notice is that your parent flow has:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;output-mapper&gt;
+   &lt;mapping source=&quot;testPlan.id&quot; target=&quot;flowScope.testPlanId&quot; /&gt;
+&lt;/output-mapper&gt;</pre>
+</div>While the subflow has:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;output-mapper&gt;
+   &lt;output-attribute name=&quot;testPlanId&quot;/&gt;
+&lt;/output-mapper&gt;</pre>
+</div>That probably also explains the exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				source is null for getProperty(null, &quot;id&quot;)
+			
+		</td>
+</tr>
+</table>
+</div>Since the &quot;testPlan&quot; object in the subflow output map is null.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by klr8; Feb 5th, 2007 at <span class="time">11:50 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=99796" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=99796" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_99796" /></a>
+<a href="newreply.php?do=newreply&amp;p=99796" rel="nofollow" id="qr_99796" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 99796 popup menu -->
+<div class="vbmenu_popup" id="postmenu_99796_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 99796 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #99796 --><!-- post #100007 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit100007" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post100007" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=100007&amp;postcount=4" target="new" rel="nofollow" id="postcount100007" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=100007" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post100007"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 6th, 2007, 08:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_100007">
+<a class="bigusername" href="member.php?u=6886">wpcfan</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="wpcfan is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_100007", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_100007">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_100007">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>klr8</strong>
+<a href="showthread.php?p=99796#post99796" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">One thing I notice is that your parent flow has:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;output-mapper&gt;
+   &lt;mapping source=&quot;testPlan.id&quot; target=&quot;flowScope.testPlanId&quot; /&gt;
+&lt;/output-mapper&gt;</pre>
+</div>While the subflow has:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;output-mapper&gt;
+   &lt;output-attribute name=&quot;testPlanId&quot;/&gt;
+&lt;/output-mapper&gt;</pre>
+</div>That probably also explains the exception:<br />
+<br />
+<br />
+<br />
+Since the &quot;testPlan&quot; object in the subflow output map is null.<br />
+<br />
+Erwin</div>
+</td>
+</tr>
+</table>
+</div>Thanks, I got it
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=100007" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=100007" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_100007" /></a>
+<a href="newreply.php?do=newreply&amp;p=100007" rel="nofollow" id="qr_100007" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 100007 popup menu -->
+<div class="vbmenu_popup" id="postmenu_100007_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">wpcfan</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6886">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6886" rel="nofollow">Send a private message to wpcfan</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6886" rel="nofollow">Find all posts by wpcfan</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6886">Add wpcfan to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 100007 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #100007 --><div id="lastpost"></div></div></body></html>

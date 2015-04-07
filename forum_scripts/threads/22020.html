@@ -1,0 +1,395 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #49501 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit49501" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post49501" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=49501&amp;postcount=1" target="new" rel="nofollow" id="postcount49501" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=49501" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post49501"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 3rd, 2006, 09:14 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_49501">
+<a class="bigusername" href="member.php?u=12432">NicolasPeeters</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="NicolasPeeters is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_49501", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Oct 2005</div>
+<div>Location: Amsterdam</div>
+<div>
+						Posts: 81
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_49501">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Use of SWF and Commons Validator</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_49501">
+			
+			This post abou thte integration of SWF and commons Validator... Didn't know where to put it.<br />
+<br />
+Has anybody been using Commons Validator (Springmodules) successfully with SWF? I am using my domain object as formBackingObject and that seems not be accepted by Commons Validator... Any clues?<br />
+<br />
+Context configuration<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 354px;
+		text-align: left;
+		overflow: auto">	&lt;bean id=&quot;searchAction&quot; class=&quot;com.test.webapp.flows.SearchAction&quot;&gt;
+	&lt;property name=&quot;formObjectName&quot; value=&quot;project&quot;/&gt;
+	&lt;property name=&quot;formObjectClass&quot; value=&quot;com.test.webapp.domain.ProjectCredential&quot;/&gt;
+	&lt;property name=&quot;formObjectScopeAsString&quot; value=&quot;request&quot;/&gt;
+	&lt;property name=&quot;searchService&quot;&gt;&lt;ref bean=&quot;searchService&quot; /&gt;&lt;/property&gt;
+	&lt;property name=&quot;validator&quot; ref=&quot;beanValidator&quot; /&gt;
+&lt;/bean&gt;
+
+
+&lt;bean id=&quot;validatorFactory&quot; class=&quot;org.springmodules.commons.validator.DefaultValidatorFactory&quot;&gt;
+	&lt;property name=&quot;validationConfigLocations&quot;&gt;
+	&lt;list&gt;
+		&lt;value&gt;classpath:/validator-rules.xml&lt;/value&gt;
+		&lt;value&gt;classpath:/validation.xml&lt;/value&gt;
+	&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;beanValidator&quot; class=&quot;org.springmodules.commons.validator.DefaultBeanValidator&quot;&gt;
+	&lt;property name=&quot;validatorFactory&quot; ref=&quot;validatorFactory&quot; /&gt;
+&lt;/bean&gt;</pre>
+</div>I get the following stacktrace:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 274px;
+		text-align: left;
+		overflow: auto">org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'searchAction' defined in class path resource [action-servlet.xml]: Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: Validator [org.springmodules.commons.validator.DefaultBeanValidator@187e184] does not support form object class [class com.test.domain.ProjectCredential]
+java.lang.IllegalArgumentException: Validator [org.springmodules.commons.validator.DefaultBeanValidator@187e184] does not support form object class [class com.test.domain.ProjectCredential]
+	at org.springframework.webflow.action.FormAction.initAction(FormAction.java:448)
+	at org.springframework.webflow.action.AbstractAction.afterPropertiesSet(AbstractAction.java:78)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1059)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:363)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:147)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:275)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:320)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.&lt;init&gt;(ClassPathXmlApplicationContext.java:87)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.&lt;init&gt;(ClassPathXmlApplicationContext.java:72)
+	at org.springframework.test.AbstractSpringContextTests.loadContextLocations(AbstractSpringContextTests.java:121)
+	at org.springframework.test.AbstractDependencyInjectionSpringContextTests.loadContextLocations(AbstractDependencyInjectionSpringContextTests.java:210)
+	at org.springframework.test.AbstractSpringContextTests.getContext(AbstractSpringContextTests.java:101)
+	at org.springframework.test.AbstractDependencyInjectionSpringContextTests.setUp(AbstractDependencyInjectionSpringContextTests.java:178)</pre>
+</div>Thanks a lot!<br />
+<br />
+Nicolas
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=49501" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=49501" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_49501" /></a>
+<a href="newreply.php?do=newreply&amp;p=49501" rel="nofollow" id="qr_49501" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 49501 popup menu -->
+<div class="vbmenu_popup" id="postmenu_49501_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">NicolasPeeters</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=12432">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=12432" rel="nofollow">Send a private message to NicolasPeeters</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=12432" rel="nofollow">Send email to NicolasPeeters</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=12432" rel="nofollow">Find all posts by NicolasPeeters</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=12432">Add NicolasPeeters to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 49501 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #49501 --><!-- post #49527 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit49527" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post49527" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=49527&amp;postcount=2" target="new" rel="nofollow" id="postcount49527" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=49527" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post49527"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 3rd, 2006, 11:13 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_49527">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_49527", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_49527">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_49527">
+			
+			Nicolas,<br />
+<br />
+It's clear your configured DefaultBeanValidator's supports(clazz) method is returning false, which is why this exception is being thrown. So basically, your validator is saying it can't validate your kind of form object.  Now why it's saying this I don't know, but it looks completely like a validator setup issue, not a SWF issue, and I see nothing preventing integration between commons-validator and SWF...<br />
+<br />
+I'd check the logic in DefaultBeanValidator.supports and see if you can figure out why it's returning false for your ProjectCredential form object.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=49527" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=49527" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_49527" /></a>
+<a href="newreply.php?do=newreply&amp;p=49527" rel="nofollow" id="qr_49527" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 49527 popup menu -->
+<div class="vbmenu_popup" id="postmenu_49527_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 49527 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #49527 --><!-- post #49533 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit49533" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post49533" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=49533&amp;postcount=3" target="new" rel="nofollow" id="postcount49533" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=49533" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post49533"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 3rd, 2006, 12:05 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_49533">
+<a class="bigusername" href="member.php?u=12432">NicolasPeeters</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="NicolasPeeters is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_49533", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Oct 2005</div>
+<div>Location: Amsterdam</div>
+<div>
+						Posts: 81
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_49533">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_49533">
+			
+			Well, thank you very much Keith! This is another solved issue. I'll post a detailed resolution on the thread I had in the Spring modules, as this is a Springmodules issue, really.<br />
+<br />
+My full answer here: <a href="http://forum.springframework.org/showpost.php?p=49532&amp;postcount=6">http://forum.springframework.org/sho...32&amp;postcount=6</a><br />
+<br />
+Thanks a lot for the amazing support.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=49533" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=49533" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_49533" /></a>
+<a href="newreply.php?do=newreply&amp;p=49533" rel="nofollow" id="qr_49533" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 49533 popup menu -->
+<div class="vbmenu_popup" id="postmenu_49533_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">NicolasPeeters</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=12432">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=12432" rel="nofollow">Send a private message to NicolasPeeters</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=12432" rel="nofollow">Send email to NicolasPeeters</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=12432" rel="nofollow">Find all posts by NicolasPeeters</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=12432">Add NicolasPeeters to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 49533 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #49533 --><div id="lastpost"></div></div></body></html>

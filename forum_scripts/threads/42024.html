@@ -1,0 +1,999 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #134390 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit134390" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post134390" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=134390&amp;postcount=1" target="new" rel="nofollow" id="postcount134390" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=134390" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post134390"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 29th, 2007, 05:54 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_134390">
+<a class="bigusername" href="member.php?u=27472">ridwanhabbal</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ridwanhabbal is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_134390", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 9
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_134390">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Transaction doesn't rollback when an exception is thrown in controller</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_134390">
+			
+			Hi, <br />
+<br />
+I use Spring MVC with Hibernate as ORM server. I use spring for AOP and <div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</pre>
+</div>My AOP is: <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">
+	&lt;aop:config&gt;
+		&lt;!--
+			This definition creates auto-proxy infrastructure based on the given pointcut,
+			expressed in AspectJ pointcut language. Here: applying the advice named
+			&quot;txAdvice&quot; to all methods on classes containing Service.
+		--&gt;
+		&lt;aop:advisor pointcut=&quot;execution(* *..*Service.*(..))&quot; advice-ref=&quot;txAdvice&quot;/&gt;
+		&lt;aop:advisor pointcut=&quot;within(com.hhhh.rrrr.service..*)&quot; advice-ref=&quot;txAdvice&quot;/&gt;
+		&lt;!--
+			This definition creates auto-proxy infrastructure based on the given pointcut,
+			expressed in AspectJ pointcut language. Here: applying the advice named
+			&quot;emailAdvice&quot; to insertOrder(Order) method of PetStoreImpl
+		--&gt;
+		
+	&lt;/aop:config&gt;
+
+	&lt;!--
+		Transaction advice definition, based on method name patterns.
+		Defaults to PROPAGATION_REQUIRED for all methods whose name starts with
+		&quot;insert&quot; or &quot;update&quot;, and to PROPAGATION_REQUIRED with read-only hint
+		for all other methods.
+	--&gt;
+	&lt;tx:advice id=&quot;txAdvice&quot;&gt;
+		&lt;tx:attributes&gt;
+			&lt;tx:method name=&quot;insert*&quot;/&gt;
+			&lt;tx:method name=&quot;update*&quot;/&gt;
+			&lt;tx:method name=&quot;save*&quot;/&gt;
+			&lt;tx:method name=&quot;add*&quot;/&gt;
+			&lt;tx:method name=&quot;store*&quot;/&gt;
+			&lt;tx:method name=&quot;delete*&quot;/&gt;
+			&lt;tx:method name=&quot;remove*&quot;/&gt;
+			&lt;tx:method name=&quot;send*&quot;/&gt;
+			&lt;tx:method name=&quot;startMatchingProcess*&quot;/&gt;
+			&lt;tx:method name=&quot;get&quot;/&gt;
+		&lt;/tx:attributes&gt;
+	&lt;/tx:advice&gt;
+
+&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.orm.hibernate3.HibernateTransactionManager&quot;&gt;
+		&lt;property name=&quot;sessionFactory&quot; ref=&quot;sessionFactory&quot;/&gt;
+	&lt;/bean&gt;</pre>
+</div>Things work out fine&gt; I can save, update, and delete, however, if i get an exception, it doesn't rollback. If some object got saved b4 exception, then it's still saved. any clue? <br />
+<br />
+thanks in advance
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=134390" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=134390" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_134390" /></a>
+<a href="newreply.php?do=newreply&amp;p=134390" rel="nofollow" id="qr_134390" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 134390 popup menu -->
+<div class="vbmenu_popup" id="postmenu_134390_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ridwanhabbal</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27472">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27472" rel="nofollow">Send a private message to ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27472" rel="nofollow">Find all posts by ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27472">Add ridwanhabbal to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 134390 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #134390 --><!-- post #134419 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit134419" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post134419" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=134419&amp;postcount=2" target="new" rel="nofollow" id="postcount134419" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=134419" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post134419"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jul 29th, 2007, 04:13 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_134419">
+<a class="bigusername" href="member.php?u=19733">karldmoore</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="karldmoore is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_134419", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2006</div>
+<div>
+						Posts: 8,425
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_134419">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_134419">
+			
+			You say in the title, that the transaction doesn't rollback when an exception is thrown in the controller.  The transaction is configured against the service so it would make sense that this has commited when it returns to the controller.  Hence throwing an exception in the controller is going to have no effect.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Senior Java Developer<br />
+<a href="http://twitter.com/karldmoore" target="_blank">http://twitter.com/karldmoore</a>
+</div>
+<!-- / sig -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by karldmoore; Aug 27th, 2007 at <span class="time">03:55 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=134419" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=134419" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_134419" /></a>
+<a href="newreply.php?do=newreply&amp;p=134419" rel="nofollow" id="qr_134419" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 134419 popup menu -->
+<div class="vbmenu_popup" id="postmenu_134419_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">karldmoore</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=19733">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=19733" rel="nofollow">Send a private message to karldmoore</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=19733" rel="nofollow">Send email to karldmoore</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=19733" rel="nofollow">Find all posts by karldmoore</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=19733">Add karldmoore to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 134419 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #134419 --><!-- post #138712 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit138712" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post138712" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=138712&amp;postcount=3" target="new" rel="nofollow" id="postcount138712" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=138712" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post138712"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 26th, 2007, 09:18 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_138712">
+<a class="bigusername" href="member.php?u=27472">ridwanhabbal</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ridwanhabbal is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_138712", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 9
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_138712">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_138712">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>karldmoore</strong>
+<a href="showthread.php?p=134419#post134419" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">You say in the title, that the transaction doesn't rollback when an exception is thrown in the controller.  The transaction is configured against the service so it would make sense that this has commited when it returns to the controller.  Hence throwing an exception in the controller is going to have no effect.</div>
+</td>
+</tr>
+</table>
+</div>ok, I'm not much in AOP, however, i was hoping that: I just open a session only when i call something from DB, so i didn't put configuration for controller. If i had a AOP configuration to open session every time i access a controller then i would be opening a connection to DB even when it's not needed. Many controllers do muh stuff without accessing DB. As a result I put my AOP config for services that do access DB. as for org.springframework.orm.hibernate3.support.OpenSes  sionInViewFilter this is the one which is responsible for commiting if not exception take place in either controller or service. if any exception in either controller or service took place then org.springframework.orm.hibernate3.support.OpenSes  sionInViewFilter won't commit. And TransactionManager would rollback the whole request. But simply I don't get that. MAybe there is something I'm missing, if you know somebetter way to do so (rollback if exception took place in either controller or service but not opening session for every controller call, just when some methods on services are called) please tell me! would please help me?
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by ridwanhabbal; Nov 18th, 2007 at <span class="time">10:18 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=138712" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=138712" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_138712" /></a>
+<a href="newreply.php?do=newreply&amp;p=138712" rel="nofollow" id="qr_138712" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 138712 popup menu -->
+<div class="vbmenu_popup" id="postmenu_138712_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ridwanhabbal</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27472">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27472" rel="nofollow">Send a private message to ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27472" rel="nofollow">Find all posts by ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27472">Add ridwanhabbal to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 138712 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #138712 --><!-- post #138765 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit138765" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post138765" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=138765&amp;postcount=4" target="new" rel="nofollow" id="postcount138765" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=138765" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post138765"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 27th, 2007, 02:41 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_138765">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_138765", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_138765">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_138765">
+			
+			Why should a rollback occur when an exception is thrown in the Controller? In IMHO that is (business) logic that should reside in the Service layer and not in the Controller.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=138765" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=138765" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_138765" /></a>
+<a href="newreply.php?do=newreply&amp;p=138765" rel="nofollow" id="qr_138765" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 138765 popup menu -->
+<div class="vbmenu_popup" id="postmenu_138765_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 138765 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #138765 --><!-- post #138791 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit138791" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post138791" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=138791&amp;postcount=5" target="new" rel="nofollow" id="postcount138791" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=138791" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post138791"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 27th, 2007, 08:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_138791">
+<a class="bigusername" href="member.php?u=27472">ridwanhabbal</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ridwanhabbal is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_138791", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 9
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_138791">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_138791">
+			
+			Yes, business logic resides in the service layer, however, the service supports many actions not just a single action! in other words, in the controller i may call a method on some sercvice that inserts an object, then call another different service that inserts another different object. These two different objects are inserted by the end-user and passed the params as strings to the controller, and in the controller i bind them and create new objects. Then I call some service that may prepare for endering. I don't think it's good to but every few lines i type in controller in a service, since it's just a 3-4 calls of defferent sevices, so i would have a lot of services do nothing more than calling other services. so if i got an exception for some reason in the third of 4th service call it should roll back all what happened till that point. Even if i used a service to do all that stuff, then the commit will take place after every call of each service called in that service<br />
+Please tell me how to solve the problem i have!
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by ridwanhabbal; Aug 27th, 2007 at <span class="time">08:43 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=138791" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=138791" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_138791" /></a>
+<a href="newreply.php?do=newreply&amp;p=138791" rel="nofollow" id="qr_138791" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 138791 popup menu -->
+<div class="vbmenu_popup" id="postmenu_138791_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ridwanhabbal</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27472">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27472" rel="nofollow">Send a private message to ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27472" rel="nofollow">Find all posts by ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27472">Add ridwanhabbal to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 138791 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #138791 --><!-- post #138794 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit138794" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post138794" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=138794&amp;postcount=6" target="new" rel="nofollow" id="postcount138794" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=138794" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post138794"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 27th, 2007, 09:10 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_138794">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_138794", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_138794">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_138794">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Even if i used a service to do all that stuff, then the commit will take place after every call of each service called in that service
+			
+		</td>
+</tr>
+</table>
+</div>No it won't... A commit will take place after the method which started the transaction is finished. So just 1 single commit will happen and if something fails everything will be rolledback.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=138794" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=138794" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_138794" /></a>
+<a href="newreply.php?do=newreply&amp;p=138794" rel="nofollow" id="qr_138794" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 138794 popup menu -->
+<div class="vbmenu_popup" id="postmenu_138794_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 138794 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #138794 --><!-- post #138891 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit138891" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post138891" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=138891&amp;postcount=7" target="new" rel="nofollow" id="postcount138891" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=138891" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post138891"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 27th, 2007, 03:20 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_138891">
+<a class="bigusername" href="member.php?u=9843">noon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="noon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_138891", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: Finland</div>
+<div>
+						Posts: 314
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_138891">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_138891">
+			
+			Here's a similar issue of Hibernate's OpenSessionInViewFilter.<br />
+<br />
+<a href="http://forum.springframework.org/showthread.php?t=19109">http://forum.springframework.org/showthread.php?t=19109</a>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				if a trainstation is where the train stops, what's a workstation...
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=138891" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=138891" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_138891" /></a>
+<a href="newreply.php?do=newreply&amp;p=138891" rel="nofollow" id="qr_138891" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 138891 popup menu -->
+<div class="vbmenu_popup" id="postmenu_138891_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">noon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9843">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9843" rel="nofollow">Send a private message to noon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://noons-java.blogspot.com/">Visit noon's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9843" rel="nofollow">Find all posts by noon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9843">Add noon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 138891 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #138891 --><!-- post #151632 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit151632" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post151632" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=151632&amp;postcount=8" target="new" rel="nofollow" id="postcount151632" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=151632" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post151632"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Nov 18th, 2007, 10:52 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_151632">
+<a class="bigusername" href="member.php?u=27472">ridwanhabbal</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="ridwanhabbal is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_151632", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 9
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_151632">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_151632">
+			
+			Hey!<br />
+I did remove all service config and added one for controller.handleReduest(Request, Response) It now works out fine, and whenever an exception is thrown, inside a service or in controller, it does rollback. <br />
+<br />
+Yet, two question are still there:<br />
+1. many actions are not doing any DML, they are merely select from DB. So no need to do transaction then. The way I do now (configuration for the whole controller) means even when there is no need for transaction, AOP provides transaction management. doesn't that exhauste the system resources and isn't there a better way to conserve resources? or transaction is lazily constructed? i mean only when there is a DML, only then transaction will take place!<br />
+<br />
+2. the second question, In addition to doing transaction management &quot;scope&quot; for the controller, I do also want to keep it for Servcie layer scope. Sometimes I may call services from WS (webservice) or some other places not just MVC. I simply added AOP config for services without removing config for controller. I was hoping that transaction would be nested. But i got the problem once again. In other words, when an exception is thrown in controller, the whole transaction doesn't rollback. <br />
+<br />
+Any clue?
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by ridwanhabbal; Nov 18th, 2007 at <span class="time">10:55 AM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=151632" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=151632" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_151632" /></a>
+<a href="newreply.php?do=newreply&amp;p=151632" rel="nofollow" id="qr_151632" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 151632 popup menu -->
+<div class="vbmenu_popup" id="postmenu_151632_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">ridwanhabbal</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27472">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27472" rel="nofollow">Send a private message to ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27472" rel="nofollow">Find all posts by ridwanhabbal</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27472">Add ridwanhabbal to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 151632 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #151632 --><div id="lastpost"></div></div></body></html>

@@ -1,0 +1,889 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #107709 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit107709" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post107709" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=107709&amp;postcount=1" target="new" rel="nofollow" id="postcount107709" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=107709" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post107709"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 16th, 2007, 11:52 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_107709">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_107709", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_107709">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon5.gif" alt="Question" border="0" />
+<strong>problem and doubt: very weird behaviour in onsubmit in a class type SimpleFormControl</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_107709">
+			
+			Hello guys<br />
+<br />
+this experience is very weird for me, pls check it<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">public class EditarProveedoresController extends SimpleFormController{
+	
+	private ConcreteProveedorImpl concreteProveedorImpl;
+	<b>private String[] tipo = new String[]{&quot;Seleccionar&quot;,&quot;Juridico&quot;,&quot;Informal&quot;};</b>
+	
+	public void setConcreteProveedorImpl(ConcreteProveedorImpl concreteProveedorImpl) {
+		this.concreteProveedorImpl = concreteProveedorImpl;
+	}
+	
+	public EditarProveedoresController(){
+		setCommandName(&quot;proveedorCommand&quot;);
+		setCommandClass(Proveedor.class);
+		setFormView(&quot;editarProveedor&quot;);
+		setSuccessView(&quot;inicio&quot;);
+	}
+	
+	protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+		Map&lt;String,Object&gt; data = new HashMap&lt;String,Object&gt;();
+		try{
+			<b>data.put(&quot;listaProveedores&quot;,this.concreteProveedorImpl.getAllProveedoresBO());
+			data.put(&quot;tipos&quot;,tipo);</b>
+			data.put(&quot;MiErrorMessage&quot;,&quot;ESCOJA UN PROVEEDOR DE LA LISTA&quot;);
+		}
+		catch(MyListEmptyException mlee){
+			data.put(&quot;MiErrorMessage&quot;,&quot;NO HAY PROVEEDORES PARA SELECCIONAR&quot;);
+		}
+		catch(MyGlobalException mce){
+			data.put(&quot;MiErrorMessage&quot;,&quot;ERROR INEXPICABLE - COMUNIQUESE CON SU JEFE DE SISTEMAS&quot;);
+		}
+		return data;
+	}
+
+	protected ModelAndView onSubmit(Object command, BindException errors) throws Exception{		
+		String forward=&quot;inicio&quot;;
+		ModelAndView mav = null;
+		try{
+			Proveedor proveedor = (Proveedor) command;
+			this.concreteProveedorImpl.actualizarProveedorBO(proveedor);
+		}
+		catch(MyRucException mre){
+			errors.reject(&quot;ERROR&quot;, &quot;EL NUMERO DE RUC INGRESADO YA EXISTE EN OTRO PROVEEDOR&quot;);
+			forward=&quot;crearProveedor&quot;;
+		}
+		catch(MyUpdateException mre){
+			errors.reject(&quot;ERROR&quot;, &quot;OCURRIO UN ERROR EN LA ACTUALIZACION&quot;);
+			forward=&quot;crearProveedor&quot;;
+		}		
+		catch(MyGlobalException mce){
+			errors.reject(&quot;ERROR&quot;, &quot;ERROR INEXPICABLE - COMUNIQUESE CON SU JEFE DE SISTEMAS&quot;);
+			forward=&quot;crearProveedor&quot;;
+		}		 
+		finally{
+			mav = new ModelAndView(forward,errors.getModel());	
+			<b>//porque lo pierdo - lista en blanco won!
+			mav.addObject(&quot;listaProveedores&quot;,this.concreteProveedorImpl.getAllProveedoresBO());
+			mav.addObject(&quot;tipos&quot;,tipo);</b>
+		}
+		return mav;
+	}</pre>
+</div>this is the case:<br />
+this controller is used for update a class Object class Proveedor/Provider<br />
+<br />
+so in the <b>referenceData</b>, i create a variable with  a list of my all providers, and for each provider it can be only a type (Juridico&quot;,&quot;Informal&quot;)(the other list) (selected in a html select element)<br />
+<br />
+now, with ajax, i show a miniform according of the provedider selected in the html select <br />
+<br />
+now this is the part funny, if try to updadte with a number document alredy repeated by other provider, a exception is thrown ,<b>MyRucException</b> , so i must repeat this in <b>onSubmit</b><br />
+<br />
+mav = new ModelAndView(forward,errors.getModel());	<br />
+<b>			mav.addObject(&quot;listaProveedores&quot;,this.concreteProv  eedorImpl.getAllProveedoresBO());<br />
+mav.addObject(&quot;tipos&quot;,tipo);<br />
+</b><br />
+<br />
+if i dont make this, i see the html &quot;select&quot; for instance empty (the list already created in <b>referenceData</b> is losted ), so i must re-enter in to the object<br />
+<br />
+ok my <b>doubt and problem</b> is that the list of my all providers <br />
+<b>mav.addObject(&quot;listaProveedores&quot;,this.concreteProv  eedorImpl.getAllProveedoresBO());</b><br />
+not appear anymore!!!!, why???? <img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" /> <br />
+<br />
+inclusive i can see in the console in elcipse that the call is done!!!<br />
+something like this<br />
+<b><br />
+Hibernate: select proveedor0_.idProveedor as idProvee1_1_, proveedor0_.nombre as  ... ..<br />
+</b><br />
+<br />
+and this is the simple part of the html select code<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 226px;
+		text-align: left;
+		overflow: auto">&lt;table&gt;
+	&lt;tr&gt;
+		&lt;td&gt;Elija/choice&lt;/td&gt; 
+		&lt;td&gt;
+			&lt;select name=&quot;idProveedor&quot; id=&quot;idProveedor&quot; onchange=&quot;getProveedorProveedorById()&quot; &gt;
+				&lt;option value=&quot;Empty&quot;&gt;Seleccionar&lt;/option&gt;
+				&lt;c:forEach items=&quot;${listaProveedores}&quot; var=&quot;proveedor&quot; &gt;
+					&lt;option value=&quot;&lt;c:out value=&quot;${proveedor.idProveedor}&quot;/&gt;&quot;&gt;&lt;c:out value=&quot;${proveedor.nombre}&quot;/&gt;&lt;/option&gt;						
+				&lt;/c:forEach&gt;
+			&lt;/select&gt;
+		&lt;/td&gt;			
+	&lt;/tr&gt;
+&lt;/table&gt;</pre>
+</div>what is wrong?????????? , is there here a trick?????<br />
+<img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" /> <img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" /> <img src="images/smilies/confused.gif" border="0" alt="" title="Confused" class="inlineimg" /> <br />
+<br />
+thanks for advanced
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=107709" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=107709" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_107709" /></a>
+<a href="newreply.php?do=newreply&amp;p=107709" rel="nofollow" id="qr_107709" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 107709 popup menu -->
+<div class="vbmenu_popup" id="postmenu_107709_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 107709 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #107709 --><!-- post #108041 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit108041" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post108041" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=108041&amp;postcount=2" target="new" rel="nofollow" id="postcount108041" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=108041" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post108041"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 19th, 2007, 07:33 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_108041">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_108041", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_108041">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_108041">
+			
+			some ideas friends????<br />
+<br />
+i am confuse, come guys a little of help<br />
+<br />
+thanks
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=108041" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=108041" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_108041" /></a>
+<a href="newreply.php?do=newreply&amp;p=108041" rel="nofollow" id="qr_108041" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 108041 popup menu -->
+<div class="vbmenu_popup" id="postmenu_108041_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 108041 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #108041 --><!-- post #108045 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit108045" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post108045" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=108045&amp;postcount=3" target="new" rel="nofollow" id="postcount108045" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=108045" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post108045"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 19th, 2007, 07:58 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_108045">
+<a class="bigusername" href="member.php?u=17263">Marten Deinum</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Marten Deinum is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_108045", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2006</div>
+<div>Location: The Netherlands</div>
+<div>
+						Posts: 10,010
+					</div>
+<div> <a href="#" onclick="imwindow('skype', '17263', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/marten.deinum" alt="Send a message via Skype&trade; to Marten Deinum" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_108045">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_108045">
+			
+			In your jsp you aren't using Spring bind tags, that is the first thing I notice. Also I think your way of error handling is quite err confusing at least it is for me.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Marten Deinum<ul><li>Senior Java Consultant</li>
+<li>SpringSource Certified Trainer</li>
+</ul><a href="http://www.conspect.nl" target="_blank">Conspect ICT diensten</a><br />
+<a href="http://mdeinum.wordpress.com" target="_blank">Blog</a><br />
+<a href="http://nl.linkedin.com/in/mdeinum" target="_blank">LinkedIn</a><br />
+<font size="1">Use the <u><b><font color="Red">[ code ]</font></b></u> tags, young padawan</font>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=108045" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=108045" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_108045" /></a>
+<a href="newreply.php?do=newreply&amp;p=108045" rel="nofollow" id="qr_108045" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 108045 popup menu -->
+<div class="vbmenu_popup" id="postmenu_108045_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Marten Deinum</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=17263">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=17263" rel="nofollow">Send a private message to Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=17263" rel="nofollow">Find all posts by Marten Deinum</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=17263">Add Marten Deinum to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 108045 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #108045 --><!-- post #108098 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit108098" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post108098" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=108098&amp;postcount=4" target="new" rel="nofollow" id="postcount108098" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=108098" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post108098"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 19th, 2007, 11:07 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_108098">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_108098", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_108098">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_108098">
+			
+			hi mdeinum<br />
+<br />
+thanks for the reply<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				In your jsp you aren't using Spring bind tags, that is the first thing I notice.
+			
+		</td>
+</tr>
+</table>
+</div>pls remember this part<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+		Map&lt;String,Object&gt; data = new HashMap&lt;String,Object&gt;();
+		try{
+			data.put(&quot;listaProveedores&quot;,this.concreteProveedorImpl.getAllProveedoresBO());
+			data.put(&quot;tipos&quot;,tipo);</pre>
+</div>is really necessary have the variable <b>${listaProveedores}</b> inside of spring tags??<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;spring:bind path=&quot;proveedorCommand.*&quot;&gt;
+  &lt;c:forEach var=&quot;error&quot; items=&quot;${status.errorMessages}&quot; varStatus=&quot;loopStatus&quot;&gt;
+  	&lt;c:if test=&quot;${loopStatus.count=='1'}&quot;&gt;
+	  	&lt;c:set var=&quot;permission&quot; value=&quot;true&quot;/&gt;
+  	&lt;/c:if&gt;    
+    &lt;b&gt;&lt;font color=RED&gt;
+      &lt;br/&gt;&lt;c:out value=&quot;${error}&quot;/&gt;
+    &lt;/font&gt;&lt;/b&gt;
+  &lt;/c:forEach&gt;
+&lt;/spring:bind&gt;
+&lt;c:out value=&quot;${MiErrorMessage}&quot;/&gt;
+	&lt;br/&gt;
+	&lt;br/&gt;
+	&lt;br/&gt;			
+	&lt;br/&gt;
+	&lt;br/&gt;
+	&lt;br/&gt;			
+<b>&lt;spring:bind path=&quot;proveedorCommand&quot;&gt;	
+&lt;table&gt;
+	&lt;tr&gt;
+		&lt;td&gt;Elija&lt;/td&gt;
+		&lt;td&gt;
+			&lt;select name=&quot;idProveedor&quot; id=&quot;idProveedor&quot; onchange=&quot;getProveedorProveedorById()&quot; &gt;
+				&lt;option value=&quot;Empty&quot;&gt;Seleccionar&lt;/option&gt;
+				&lt;c:forEach items=&quot;${listaProveedores}&quot; var=&quot;proveedor&quot; &gt;
+					&lt;option value=&quot;&lt;c:out value=&quot;${proveedor.idProveedor}&quot;/&gt;&quot;&gt;&lt;c:out value=&quot;${proveedor.nombre}&quot;/&gt;&lt;/option&gt;						
+				&lt;/c:forEach&gt;
+			&lt;/select&gt;
+		&lt;/td&gt;			
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/spring:bind&gt;</b>
+&lt;span id=&quot;detailsproveedor&quot; style=&quot;display:none;&quot;&gt; &lt;--- changed to block with ajax/js
+	&lt;spring:nestedPath path=&quot;proveedorCommand&quot;&gt;
+	&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+	&lt;table&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;fmt:message key=&quot;idProveedorLabel&quot;/&gt;&lt;/td&gt;
+			&lt;spring:bind path=&quot;idProveedor&quot;&gt;
+			&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;&lt;c:out value=&quot;${status.expression}&quot;/&gt;&quot; value=&quot;&lt;c:out value=&quot;${status.value}&quot;/&gt;&quot; id=&quot;idProveedorF&quot; readonly=&quot;true&quot;  size=&quot;50&quot;/&gt;&lt;/td&gt;
+			&lt;/spring:bind&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+.... <b>more</b></pre>
+</div>well if the above bold part is correct, it still doesnt work<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Also I think your way of error handling is quite err confusing at least it is for me.
+			
+		</td>
+</tr>
+</table>
+</div>well , let me explain<br />
+<br />
+this is for update &quot;providers&quot; , each of they have a number field (think your number password for instance), if some provider, maybe &quot;you&quot; has the number like 123123 and other provider like me with number 123456<br />
+<br />
+so if in the jsp form some user try to change your number to 123456 (my number) in the onSumbit method with hibernate it must detect that the desired number already exists in other user, and then throw <b>MyRucException</b><br />
+<br />
+until here it works<br />
+now in the onSumbit method<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">catch(MyRucException mre){
+			errors.reject(&quot;ERROR&quot;, &quot;EL NUMERO DE RUC INGRESADO YA EXISTE EN OTRO PROVEEDOR&quot;);
+			forward=&quot;crearProveedor&quot;;  &lt;----- <b>change to see the error message in original jsp form</b>
+		}
+		finally{
+			mav = new ModelAndView(forward,errors.getModel());	
+			//porque lo pierdo - lista en blanco won!
+			mav.addObject(&quot;listaProveedores&quot;,this.concreteProveedorImpl.getAllProveedoresBO());
+			mav.addObject(&quot;tipos&quot;,tipo);
+		}
+		return mav;</pre>
+</div>the catch part work, and i see the error message to the original jsp form (if some error apart of the Validator class is detected , i see these errors messages in the original jsp, <b>not forward to a error.jsp page</b>)<br />
+<br />
+if i avoid the finally part, i lost both list (each are for select html element)<br />
+<br />
+with the finally part, only works or appear again in the jsp form <br />
+<b>mav.addObject(&quot;tipos&quot;,tipo);</b> for the second select html <br />
+<br />
+i hope that its resolve some doubt<br />
+<br />
+pls, help!!!<br />
+<br />
+regards and thanks for advanced
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=108098" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=108098" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_108098" /></a>
+<a href="newreply.php?do=newreply&amp;p=108098" rel="nofollow" id="qr_108098" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 108098 popup menu -->
+<div class="vbmenu_popup" id="postmenu_108098_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 108098 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #108098 --><!-- post #108284 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit108284" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post108284" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=108284&amp;postcount=5" target="new" rel="nofollow" id="postcount108284" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=108284" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post108284"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Mar 20th, 2007, 07:16 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_108284">
+<a class="bigusername" href="member.php?u=18521">dr_pompeii</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="dr_pompeii is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_108284", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2006</div>
+<div>Location: Arequipa-Peru / South America</div>
+<div>
+						Posts: 1,732
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '18521', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to dr_pompeii" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_108284">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_108284">
+			
+			any ideas friends????<br />
+<br />
+regards
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				- Manuel Jordan<br />
+<br />
+<font size="1"><b>Kill Your Pride, Share Your Knowledge With All</b></font><br />
+<font size="1"><b>The Fear Of The LORD Is The Beginning Of Knowledge, But Fools Despise Wisdom And Discipline. <i>Proverbs 1:7</i></b></font><br />
+<font size="1">Use <font color="RoyalBlue">[ c o d e ] [ / c o d e ] </font>tags </font><br />
+<br />
+<a href="http://manueljordan.wordpress.com/" target="_blank" rel="nofollow">Blog</a><br />
+<a href="http://pe.linkedin.com/in/manueljordan0079" target="_blank" rel="nofollow">LinkedIn</a><br />
+<br />
+<font size="1"><br />
+<b>Technical Reviewer of Apress</b><br />
+</font><ul><li>Pro SpringSource dm Server</li>
+<li>Spring Enterprise Recipes: A Problem-Solution Approach</li>
+<li>Spring Recipes: A Problem-Solution Approach, <b>Second Edition</b></li>
+<li>Pro Spring Integration</li>
+<li>Pro Spring Batch</li>
+</ul>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=108284" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=108284" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_108284" /></a>
+<a href="newreply.php?do=newreply&amp;p=108284" rel="nofollow" id="qr_108284" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 108284 popup menu -->
+<div class="vbmenu_popup" id="postmenu_108284_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">dr_pompeii</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=18521">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=18521" rel="nofollow">Send a private message to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=18521" rel="nofollow">Send email to dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://manueljordan.wordpress.com/">Visit dr_pompeii's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=18521" rel="nofollow">Find all posts by dr_pompeii</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=18521">Add dr_pompeii to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 108284 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #108284 --><div id="lastpost"></div></div></body></html>

@@ -1,0 +1,1540 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #18879 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18879" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18879" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18879&amp;postcount=1" target="new" rel="nofollow" id="postcount18879" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18879" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18879"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 15th, 2005, 11:12 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_18879">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18879", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18879">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>struts &amp; tiles plugin &amp; webflow</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18879">
+			
+			Hi guys,<br />
+I'm trying arround with webflow and want to integrate into an existing struts/tiles application. One issue I had was that the tiles plugin does not allow any requestprocessors which do not extend from TilesRequestProcessor (ASF bug 22828). That wasn't that hard to solve, I simply copied your bindingRequestProcessor and make it extend the tilesrequestprocessor. Not very nice and futureproof but it works for now.<br />
+<br />
+Now I face another tiles exception and I don't have a clue how to recover from this:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">314142 &#91;P1-2&#93; WARN  xyz - /register.html&#58; 
+javax.servlet.jsp.JspException&#58; ServletException in '/WEB-INF/jsp/register_step1.jspf'&#58; The errors instance must be set on this action form in order to access form properties
+	at org.apache.struts.taglib.tiles.InsertTag$InsertHandler.doEndTag&#40;InsertTag.java&#58;921&#41;
+	at org.apache.struts.taglib.tiles.InsertTag.doEndTag&#40;InsertTag.java&#58;460&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspx_meth_tiles_insert_3&#40;DefaultLayout_jsp.java&#58;609&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspx_meth_html_html_0&#40;DefaultLayout_jsp.java&#58;305&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspService&#40;DefaultLayout_jsp.java&#58;116&#41;
+	at org.apache.jasper.runtime.HttpJspBase.service&#40;HttpJspBase.java&#58;94&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.apache.jasper.servlet.JspServletWrapper.service&#40;JspServletWrapper.java&#58;324&#41;
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile&#40;JspServlet.java&#58;292&#41;
+	at org.apache.jasper.servlet.JspServlet.service&#40;JspServlet.java&#58;236&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;496&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.dispatch&#40;Dispatcher.java&#58;263&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.forward&#40;Dispatcher.java&#58;157&#41;
+	at org.apache.struts.action.RequestProcessor.doForward&#40;RequestProcessor.java&#58;1056&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.doForward&#40;TilesRequestProcessor.java&#58;261&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.processTilesDefinition&#40;TilesRequestProcessor.java&#58;237&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.processForwardConfig&#40;TilesRequestProcessor.java&#58;300&#41;
+	at com.xyz.tst.webapp.struts.CustomBindingRequestProcessor.process&#40;CustomBindingRequestProcessor.java&#58;131&#41;
+	at org.apache.struts.action.ActionServlet.process&#40;ActionServlet.java&#58;1164&#41;
+	at org.apache.struts.action.ActionServlet.doGet&#40;ActionServlet.java&#58;397&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;595&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler$CachedChain.doFilter&#40;WebApplicationHandler.java&#58;822&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;300&#41;
+	at net.sf.acegisecurity.intercept.web.FilterSecurityInterceptor.invoke&#40;FilterSecurityInterceptor.java&#58;84&#41;
+	at net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter.doFilter&#40;SecurityEnforcementFilter.java&#58;181&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.ui.AbstractProcessingFilter.doFilter&#40;AbstractProcessingFilter.java&#58;372&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter&#40;HttpSessionContextIntegrationFilter.java&#58;217&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy.doFilter&#40;FilterChainProxy.java&#58;179&#41;
+	at net.sf.acegisecurity.util.FilterToBeanProxy.doFilter&#40;FilterToBeanProxy.java&#58;125&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler$CachedChain.doFilter&#40;WebApplicationHandler.java&#58;813&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;494&#41;
+	at org.mortbay.jetty.servlet.ServletHandler.handle&#40;ServletHandler.java&#58;569&#41;
+	at org.mortbay.http.HttpContext.handle&#40;HttpContext.java&#58;1482&#41;
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle&#40;WebApplicationContext.java&#58;624&#41;
+	at org.mortbay.http.HttpContext.handle&#40;HttpContext.java&#58;1434&#41;
+	at org.mortbay.http.HttpServer.service&#40;HttpServer.java&#58;896&#41;
+	at org.mortbay.http.HttpConnection.service&#40;HttpConnection.java&#58;814&#41;
+	at org.mortbay.http.HttpConnection.handleNext&#40;HttpConnection.java&#58;981&#41;
+	at org.mortbay.http.HttpConnection.handle&#40;HttpConnection.java&#58;831&#41;
+	at org.mortbay.http.SocketListener.handleConnection&#40;SocketListener.java&#58;244&#41;
+	at org.mortbay.util.ThreadedServer.handle&#40;ThreadedServer.java&#58;366&#41;
+	at org.mortbay.util.ThreadPool$PoolThread.run&#40;ThreadPool.java&#58;534&#41;</pre>
+</div>As there a lot of config files I'm not sure which one are relevant for you. Basically this happend after loading the first view. That means the following steps in the workflow were executed, and the first view in the wizard (step1) started to display (until the exception):<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">	&lt;action-state id=&quot;setupForm&quot;&gt;
+		&lt;action bean=&quot;registerFormAction&quot;/&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;formView&quot;/&gt;
+	&lt;/action-state&gt;
+	
+	&lt;!--
+		Display the input form view.
+	--&gt;
+	&lt;view-state id=&quot;formView&quot; view=&quot;page.register.step1&quot;&gt;
+		&lt;transition on=&quot;submit&quot; to=&quot;bindAndValidateForm&quot;/&gt;
+	&lt;/view-state&gt;</pre>
+</div>My struts-config looks like:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE struts-config PUBLIC
+    &quot;-//Apache Software Foundation//DTD Struts Configuration 1.1//EN&quot;
+    &quot;http&#58;//jakarta.apache.org/struts/dtds/struts-config_1_1.dtd&quot;&gt;
+
+&lt;struts-config&gt;
+
+	&lt;!-- ======================================== Form Bean Definitions --&gt;
+	&lt;form-beans&gt;
+		&lt;!-- A single action form adapter for your entire app is all you need, if you
+		 wish to take advantage of Spring's POJO-based data binding and validation. --&gt;
+		&lt;form-bean name=&quot;actionForm&quot; type=&quot;org.springframework.web.struts.BindingActionForm&quot;/&gt;
+	&lt;/form-beans&gt;
+
+	&lt;!-- =================================== Global Exception Definitions --&gt;
+	&lt;global-exceptions&gt;
+		&lt;exception key=&quot;error.required&quot;
+			type=&quot;org.springframework.dao.DataAccessException&quot;
+			path=&quot;page.error.dataAccessFailure&quot; /&gt;
+	&lt;/global-exceptions&gt;
+
+	&lt;!-- =================================== Global Forward Definitions --&gt;
+
+	&lt;global-forwards&gt;&lt;/global-forwards&gt;
+
+	&lt;!-- =================================== Action Mapping Definitions --&gt;
+
+	&lt;action-mappings&gt;
+
+		
+		&lt;!-- flow actions --&gt;
+		&lt;action path=&quot;/register&quot;
+			type=&quot;org.springframework.web.flow.struts.FlowAction&quot;
+			name=&quot;actionForm&quot; scope=&quot;request&quot; 
+			className=&quot;org.springframework.web.flow.struts.FlowActionMapping&quot;&gt;
+			&lt;set-property property=&quot;flowId&quot; value=&quot;registerFlow&quot; /&gt;
+		&lt;/action&gt;
+		
+	&lt;/action-mappings&gt;
+
+&lt;!-- A custom request processor is neccessary for deferred, POJO-based binding and validation
+		 No more Action Form proliferation! &#58;-&#41; --&gt;
+    &lt;!-- controller processorClass=&quot;org.springframework.web.struts.BindingRequestProcessor&quot;/ --&gt;
+     &lt;controller processorClass=&quot;com.example.app.webapp.struts.CustomBindingRequestProcessor&quot;/&gt;
+
+	&lt;!-- ================================ Message Resources Definitions --&gt;
+
+	&lt;message-resources parameter=&quot;messages&quot; /&gt;
+
+	&lt;!-- ======================================= Plug Ins Configuration --&gt;
+
+	&lt;!-- plugin neccessary for making Commons BeanUtils aware of the BindingActionForm adapter --&gt;
+    &lt;plug-in className=&quot;org.springframework.web.struts.BindingPlugin&quot;/&gt;
+
+	&lt;plug-in
+		className=&quot;org.springframework.web.struts.ContextLoaderPlugIn&quot;&gt;
+	&lt;/plug-in&gt;
+
+	&lt;!-- plug-in className=&quot;org.apache.struts.validator.ValidatorPlugIn&quot;&gt;
+		&lt;set-property property=&quot;pathnames&quot;
+			value=&quot;/WEB-INF/validator-rules.xml,
+                   /WEB-INF/validation.xml&quot; /&gt;
+	&lt;/plug-in --&gt;
+
+	&lt;plug-in className=&quot;org.apache.struts.tiles.TilesPlugin&quot;&gt;
+		&lt;set-property property=&quot;definitions-config&quot;
+			value=&quot;/WEB-INF/tiles-defs.xml&quot; /&gt;
+		&lt;set-property property=&quot;definitions-debug&quot; value=&quot;0&quot; /&gt;
+		&lt;set-property property=&quot;definitions-parser-details&quot; value=&quot;1&quot; /&gt;
+		&lt;set-property property=&quot;definitions-parser-validate&quot;
+			value=&quot;true&quot; /&gt;
+	&lt;/plug-in&gt;
+&lt;/struts-config&gt;</pre>
+</div>In my Action I set the POJO formobject as follows:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 258px;
+		text-align: left;
+		overflow: auto">    public RegisterFormAction&#40;&#41; &#123;
+        super&#40;&#41;;
+    	// use you could also do this in the application context XML ofcourse
+		setFormObjectName&#40;&quot;RegisterActionForm&quot;&#41;;
+		setFormObjectClass&#40;RegisterFlowActionForm.class&#41;;
+		setValidator&#40;new RegisterFormValidator&#40;&#41;&#41;;
+    &#125;
+
+	public Event calculateAge&#40;RequestContext context&#41; throws Exception &#123;
+		// pull the date from the model
+		RegisterFlowActionForm flowForm = &#40;RegisterFlowActionForm&#41;context.getRequestScope&#40;&#41;.get&#40;&quot;RegisterActionForm&quot;&#41;;
+		// put it in the model for display by the view
+		//context.getRequestScope&#40;&#41;.setAttribute&#40;AGE_NAME, ageStr&#41;;
+		return success&#40;&#41;;
+	&#125;</pre>
+</div><br />
+As it is a little bit unclear to me how the object is mapped to the actionForm definition in the struts-config and the settings in the Action class I changed the name from &quot;RegisterActionForm&quot; to &quot;actionForm&quot; but this resulted into a<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">60467 &#91;P1-9&#93; ERROR org.apache.struts.taglib.tiles.InsertTag  - ServletException in '/WEB-INF/jsp/register_step1.jspf'&#58; null
+org.apache.jasper.JasperException
+	at org.apache.jasper.servlet.JspServletWrapper.service&#40;JspServletWrapper.java&#58;372&#41;
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile&#40;JspServlet.java&#58;292&#41;</pre>
+</div>So, that's all I have. It's not simple to explain as I have yet started with the webflow. Can't you use my description?<br />
+<br />
+Thanks,<br />
+ Markus
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=18879" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=18879" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_18879" /></a>
+<a href="newreply.php?do=newreply&amp;p=18879" rel="nofollow" id="qr_18879" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18879 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18879_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18879 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18879 --><!-- post #18894 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18894" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18894" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18894&amp;postcount=2" target="new" rel="nofollow" id="postcount18894" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18894" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18894"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 15th, 2005, 12:25 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_18894">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18894", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18894">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18894">
+			
+			Yeah its unfortunate you have to subclass RequestProcessor to customize it.<br />
+<br />
+Hmmmm... the error you're getting is coming from the BindingActionForm class - the Errors instance it adapts to the ActionForm model is not set, so it's complaining.  It is expected that it be set before the ActionForward is returned when a ViewState is entered -- see the code in FlowAction that does it:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 210px;
+		text-align: left;
+		overflow: auto">protected FlowExecutionListener createActionFormAdapter&#40;final HttpServletRequest request, final ActionForm form&#41; &#123;
+  return new FlowExecutionListenerAdapter&#40;&#41; &#123;
+    public void requestProcessed&#40;RequestContext context, Event triggeringEvent&#41; &#123;
+      if &#40;context.isFlowExecutionActive&#40;&#41;&#41; &#123;
+        if &#40;form instanceof BindingActionForm&#41; &#123;
+          BindingActionForm bindingForm = &#40;BindingActionForm&#41;form;
+          bindingForm.setErrors&#40;&#40;Errors&#41;context.getRequestScope&#40;&#41;.getAttribute&#40;FormObjectAccessor.FORM_OBJECT_ATTRIBUTE_NAME, Errors.class&#41;&#41;;
+          bindingForm.setRequest&#40;request&#41;;
+        &#125;
+      &#125;
+   &#125;;
+&#125;</pre>
+</div>Hmm... this looks incorrect, actually, looking at it.  Essentially what the above code is doing is exporting a Spring Errors instance in the model for use by the BindingActionForm after the flow request is processed.  This allows Struts to delegate to the Spring data binding and validation subsystem.<br />
+<br />
+However, I see two problems: 1st there is no fallback if the instance is not set, and second, it looks like the FORM_OBJECT_ATTRIBUTE_NAME property is just wrong -- it should be FORM_OBJECT_ERRORS_ATTRIBUTE_NAME.  That looks like a bug.<br />
+<br />
+I'll look at correcting this promptly.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=18894" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=18894" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_18894" /></a>
+<a href="newreply.php?do=newreply&amp;p=18894" rel="nofollow" id="qr_18894" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18894 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18894_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18894 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18894 --><!-- post #18926 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18926" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18926" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18926&amp;postcount=3" target="new" rel="nofollow" id="postcount18926" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18926" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18926"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 15th, 2005, 08:35 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_18926">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18926", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18926">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18926">
+			
+			I just committed a fix for this problem: can you try it out in about 24 hrs?  You'll need to checkout the spring project from CVS and build the 'webflow.jar' target to create the spring-webflow.jar with the fix.  It'll also be in PR3, but it'd be great to see if this problem is resolved in a Struts/Tiles environment.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=18926" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=18926" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_18926" /></a>
+<a href="newreply.php?do=newreply&amp;p=18926" rel="nofollow" id="qr_18926" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18926 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18926_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18926 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18926 --><!-- post #19091 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19091" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19091" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19091&amp;postcount=4" target="new" rel="nofollow" id="postcount19091" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19091" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19091"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 18th, 2005, 12:00 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19091">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19091", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19091">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19091">
+			
+			Hi keith,<br />
+Your fix solved the problem that I previously had.<br />
+<br />
+But it leaves me with another one. I get this error:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">1226663 &#91;P1-8&#93; ERROR org.apache.struts.taglib.tiles.InsertTag  - ServletException in '/WEB-INF/jsp/register_step3.jspf'&#58; null
+org.apache.jasper.JasperException
+	at org.apache.jasper.servlet.JspServletWrapper.service&#40;JspServletWrapper.java&#58;372&#41;
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile&#40;JspServlet.java&#58;292&#41;
+	at org.apache.jasper.servlet.JspServlet.service&#40;JspServlet.java&#58;236&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;496&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.dispatch&#40;Dispatcher.java&#58;263&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.include&#40;Dispatcher.java&#58;149&#41;
+	at org.apache.jasper.runtime.JspRuntimeLibrary.include&#40;JspRuntimeLibrary.java&#58;966&#41;
+	at org.apache.jasper.runtime.PageContextImpl.include&#40;PageContextImpl.java&#58;581&#41;
+	at org.apache.struts.tiles.TilesUtilImpl.doInclude&#40;TilesUtilImpl.java&#58;101&#41;
+	at org.apache.struts.tiles.TilesUtil.doInclude&#40;TilesUtil.java&#58;137&#41;
+	at org.apache.struts.taglib.tiles.InsertTag.doInclude&#40;InsertTag.java&#58;758&#41;
+	at org.apache.struts.taglib.tiles.InsertTag$InsertHandler.doEndTag&#40;InsertTag.java&#58;890&#41;
+	at org.apache.struts.taglib.tiles.InsertTag.doEndTag&#40;InsertTag.java&#58;460&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspx_meth_tiles_insert_3&#40;DefaultLayout_jsp.java&#58;613&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspx_meth_html_html_0&#40;DefaultLayout_jsp.java&#58;308&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspService&#40;DefaultLayout_jsp.java&#58;119&#41;
+	at org.apache.jasper.runtime.HttpJspBase.service&#40;HttpJspBase.java&#58;94&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.apache.jasper.servlet.JspServletWrapper.service&#40;JspServletWrapper.java&#58;324&#41;
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile&#40;JspServlet.java&#58;292&#41;
+	at org.apache.jasper.servlet.JspServlet.service&#40;JspServlet.java&#58;236&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;496&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.dispatch&#40;Dispatcher.java&#58;263&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.forward&#40;Dispatcher.java&#58;157&#41;
+	at org.apache.struts.action.RequestProcessor.doForward&#40;RequestProcessor.java&#58;1056&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.doForward&#40;TilesRequestProcessor.java&#58;261&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.processTilesDefinition&#40;TilesRequestProcessor.java&#58;237&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.processForwardConfig&#40;TilesRequestProcessor.java&#58;300&#41;
+	at com.zys.xyz.webapp.struts.CustomBindingRequestProcessor.process&#40;CustomBindingRequestProcessor.java&#58;131&#41;
+	at org.apache.struts.action.ActionServlet.process&#40;ActionServlet.java&#58;1164&#41;
+	at org.apache.struts.action.ActionServlet.doPost&#40;ActionServlet.java&#58;415&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;615&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler$CachedChain.doFilter&#40;WebApplicationHandler.java&#58;822&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;300&#41;
+	at net.sf.acegisecurity.intercept.web.FilterSecurityInterceptor.invoke&#40;FilterSecurityInterceptor.java&#58;84&#41;
+	at net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter.doFilter&#40;SecurityEnforcementFilter.java&#58;181&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.ui.AbstractProcessingFilter.doFilter&#40;AbstractProcessingFilter.java&#58;372&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter&#40;HttpSessionContextIntegrationFilter.java&#58;217&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy.doFilter&#40;FilterChainProxy.java&#58;179&#41;
+	at net.sf.acegisecurity.util.FilterToBeanProxy.doFilter&#40;FilterToBeanProxy.java&#58;125&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler$CachedChain.doFilter&#40;WebApplicationHandler.java&#58;813&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;494&#41;
+	at org.mortbay.jetty.servlet.ServletHandler.handle&#40;ServletHandler.java&#58;569&#41;
+	at org.mortbay.http.HttpContext.handle&#40;HttpContext.java&#58;1482&#41;
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle&#40;WebApplicationContext.java&#58;624&#41;
+	at org.mortbay.http.HttpContext.handle&#40;HttpContext.java&#58;1434&#41;
+	at org.mortbay.http.HttpServer.service&#40;HttpServer.java&#58;896&#41;
+	at org.mortbay.http.HttpConnection.service&#40;HttpConnection.java&#58;814&#41;
+	at org.mortbay.http.HttpConnection.handleNext&#40;HttpConnection.java&#58;981&#41;
+	at org.mortbay.http.HttpConnection.handle&#40;HttpConnection.java&#58;831&#41;
+	at org.mortbay.http.SocketListener.handleConnection&#40;SocketListener.java&#58;244&#41;
+	at org.mortbay.util.ThreadedServer.handle&#40;ThreadedServer.java&#58;366&#41;
+	at org.mortbay.util.ThreadPool$PoolThread.run&#40;ThreadPool.java&#58;534&#41;
+1238040 &#91;P1-8&#93; WARN  xyz  - /register.html&#58; 
+javax.servlet.jsp.JspException&#58; ServletException in '/WEB-INF/jsp/register_step3.jspf'&#58; null
+	at org.apache.struts.taglib.tiles.InsertTag$InsertHandler.doEndTag&#40;InsertTag.java&#58;921&#41;
+	at org.apache.struts.taglib.tiles.InsertTag.doEndTag&#40;InsertTag.java&#58;460&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspx_meth_tiles_insert_3&#40;DefaultLayout_jsp.java&#58;613&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspx_meth_html_html_0&#40;DefaultLayout_jsp.java&#58;308&#41;
+	at org.apache.jsp.WEB_002dINF.jsp.layouts.DefaultLayout_jsp._jspService&#40;DefaultLayout_jsp.java&#58;119&#41;
+	at org.apache.jasper.runtime.HttpJspBase.service&#40;HttpJspBase.java&#58;94&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.apache.jasper.servlet.JspServletWrapper.service&#40;JspServletWrapper.java&#58;324&#41;
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile&#40;JspServlet.java&#58;292&#41;
+	at org.apache.jasper.servlet.JspServlet.service&#40;JspServlet.java&#58;236&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;496&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.dispatch&#40;Dispatcher.java&#58;263&#41;
+	at org.mortbay.jetty.servlet.Dispatcher.forward&#40;Dispatcher.java&#58;157&#41;
+	at org.apache.struts.action.RequestProcessor.doForward&#40;RequestProcessor.java&#58;1056&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.doForward&#40;TilesRequestProcessor.java&#58;261&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.processTilesDefinition&#40;TilesRequestProcessor.java&#58;237&#41;
+	at org.apache.struts.tiles.TilesRequestProcessor.processForwardConfig&#40;TilesRequestProcessor.java&#58;300&#41;
+	at com.zys.xyz.webapp.struts.CustomBindingRequestProcessor.process&#40;CustomBindingRequestProcessor.java&#58;131&#41;
+	at org.apache.struts.action.ActionServlet.process&#40;ActionServlet.java&#58;1164&#41;
+	at org.apache.struts.action.ActionServlet.doPost&#40;ActionServlet.java&#58;415&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;615&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;688&#41;
+	at org.mortbay.jetty.servlet.ServletHolder.handle&#40;ServletHolder.java&#58;427&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler$CachedChain.doFilter&#40;WebApplicationHandler.java&#58;822&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;300&#41;
+	at net.sf.acegisecurity.intercept.web.FilterSecurityInterceptor.invoke&#40;FilterSecurityInterceptor.java&#58;84&#41;
+	at net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter.doFilter&#40;SecurityEnforcementFilter.java&#58;181&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.ui.AbstractProcessingFilter.doFilter&#40;AbstractProcessingFilter.java&#58;372&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter&#40;HttpSessionContextIntegrationFilter.java&#58;217&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter&#40;FilterChainProxy.java&#58;311&#41;
+	at net.sf.acegisecurity.util.FilterChainProxy.doFilter&#40;FilterChainProxy.java&#58;179&#41;
+	at net.sf.acegisecurity.util.FilterToBeanProxy.doFilter&#40;FilterToBeanProxy.java&#58;125&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler$CachedChain.doFilter&#40;WebApplicationHandler.java&#58;813&#41;
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch&#40;WebApplicationHandler.java&#58;494&#41;
+	at org.mortbay.jetty.servlet.ServletHandler.handle&#40;ServletHandler.java&#58;569&#41;
+	at org.mortbay.http.HttpContext.handle&#40;HttpContext.java&#58;1482&#41;
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle&#40;WebApplicationContext.java&#58;624&#41;
+	at org.mortbay.http.HttpContext.handle&#40;HttpContext.java&#58;1434&#41;
+	at org.mortbay.http.HttpServer.service&#40;HttpServer.java&#58;896&#41;
+	at org.mortbay.http.HttpConnection.service&#40;HttpConnection.java&#58;814&#41;
+	at org.mortbay.http.HttpConnection.handleNext&#40;HttpConnection.java&#58;981&#41;
+	at org.mortbay.http.HttpConnection.handle&#40;HttpConnection.java&#58;831&#41;
+	at org.mortbay.http.SocketListener.handleConnection&#40;SocketListener.java&#58;244&#41;
+	at org.mortbay.util.ThreadedServer.handle&#40;ThreadedServer.java&#58;366&#41;
+	at org.mortbay.util.ThreadPool$PoolThread.run&#40;ThreadPool.java&#58;534&#41;</pre>
+</div>The odd thing was that this exception does sometimes disappear if I used an exception breakpoint on the ServletException.<br />
+<br />
+After investigating I found that the exception is thrown in the Tiles InsertTag line 890 (Struts 1.2). <br />
+This seems related to the known tiles bug/enhancement <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=21972" target="_blank" rel="nofollow">http://issues.apache.org/bugzilla/show_bug.cgi?id=21972</a><br />
+<br />
+There seem to be some flushing issues. Before using webflow I never experienced this error. Even with the combination struts/tiles/struts-validator/webflow I don't have this issue (I removed the bindingcontrollers and stuff from the struts-config). So I think it has something to do with how things are handled by the struts/validator adapter. It makes the struts/tiles combination unusable. A possible workaround would be to precompile the jsps I think. But that would contradict our &quot;rapid and easy JSP changes&quot; developement philosophy.<br />
+<br />
+I would love to use the more flexible spring validator as the struts validator is not flexible enough for the flow I have in mind.<br />
+<br />
+Any thoughts towards this?<br />
+BTW, thanks for doing this work. Webflow really looks like a promising piece of software.<br />
+<br />
+Markus
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19091" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19091" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19091" /></a>
+<a href="newreply.php?do=newreply&amp;p=19091" rel="nofollow" id="qr_19091" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19091 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19091_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19091 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19091 --><!-- post #19097 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19097" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19097" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19097&amp;postcount=5" target="new" rel="nofollow" id="postcount19097" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19097" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19097"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 18th, 2005, 01:06 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_19097">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19097", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19097">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19097">
+			
+			Ok, so you're saying it works except when you use the BindingActionForm adapter? <br />
+<br />
+What a wonderful error message tiles is providing!
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19097" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19097" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19097" /></a>
+<a href="newreply.php?do=newreply&amp;p=19097" rel="nofollow" id="qr_19097" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19097 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19097_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19097 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19097 --><!-- post #19207 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19207" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19207" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19207&amp;postcount=6" target="new" rel="nofollow" id="postcount19207" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19207" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19207"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 19th, 2005, 12:48 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19207">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19207", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19207">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19207">
+			
+			yup. I think it works. But I'm fighting with a lot of issues in the moment. But this is caused more by my lack of knowledge about webflow. I will inform you about my progress ;-)
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19207" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19207" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19207" /></a>
+<a href="newreply.php?do=newreply&amp;p=19207" rel="nofollow" id="qr_19207" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19207 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19207_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19207 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19207 --><!-- post #19217 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19217" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19217" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19217&amp;postcount=7" target="new" rel="nofollow" id="postcount19217" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19217" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19217"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 19th, 2005, 02:54 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19217">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19217", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19217">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19217">
+			
+			what I forgot: Currently the bindingformadapter works for me. I have no clue why it does know.<br />
+After having the problems I switched to a strutsvalidator/webflow combination which works fine. Then I deleted the jetty jsp cache and tried the version with the bindingformadapter again and it works fine now. Don't ask me why. <br />
+So your adapter seems to work even in a struts/tiles environment. Not sure if there is a &quot;hidden cache&quot; so the jsps must not compile again. Or, and that's what I hope, clearing the JSP cache (and adding flush=false to the tiles:insert tag) resolved the issue for me. <br />
+Time (or the next jsps I have to touch) will tell what' s the issue with this.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19217" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19217" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19217" /></a>
+<a href="newreply.php?do=newreply&amp;p=19217" rel="nofollow" id="qr_19217" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19217 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19217_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19217 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19217 --><!-- post #19314 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19314" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19314" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19314&amp;postcount=8" target="new" rel="nofollow" id="postcount19314" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19314" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19314"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 20th, 2005, 10:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19314">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19314", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19314">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19314">
+			
+			Me again. I encountered an mismatch between the ways the validator of struts put errors in the request and the bindingformadaptor from webflow does.<br />
+<br />
+I faced the problem when I tried to display the errormessage generated from a webflow validator in my jsp with the following statement (which worked perfectly with the struts validator):<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 290px;
+		text-align: left;
+		overflow: auto">&lt;%-- Error Messages --%&gt;
+&lt;logic&#58;messagesPresent&gt;
+    &lt;div class=&quot;error&quot;&gt;
+        &lt;html&#58;messages id=&quot;error&quot;&gt;
+            $&#123;error&#125;&lt;br/&gt;
+         &lt;/html&#58;messages&gt;
+    &lt;/div&gt;
+&lt;/logic&#58;messagesPresent&gt;
+
+&lt;%-- Success Messages --%&gt;
+&lt;logic&#58;messagesPresent message=&quot;true&quot;&gt;
+    &lt;div class=&quot;message&quot;&gt;
+        &lt;html&#58;messages id=&quot;message&quot; message=&quot;true&quot;&gt;
+            $&#123;message&#125;&lt;br/&gt;
+        &lt;/html&#58;messages&gt;
+    &lt;/div&gt;
+&lt;/logic&#58;messagesPresent&gt;</pre>
+</div>Nothing is displayed dispact the fact that there is an actionerror in the request. I did a quick System.out on request.getAttribute(org.apache.struts.Globals.ERR  OR_KEY)<br />
+and found the following difference:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">struts validator&#58;
+&#123;lastName=&#91;errors.required&#91;Lastname, null, null, null&#93;&#93;&#125;
+
+webflow validator&#58;
+&#123;lastName=&#91;Lastname must not be null&#91;&#93;&#93;&#125;</pre>
+</div>In the latest CVS you removed the error handling from the birthday example. How would you do the errorhandling especially if you don't want to loose the ability to mark the wrong fields in the form?<br />
+<br />
+Thanks,<br />
+ Markus
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19314" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19314" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19314" /></a>
+<a href="newreply.php?do=newreply&amp;p=19314" rel="nofollow" id="qr_19314" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19314 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19314_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19314 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19314 --><!-- post #19336 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19336" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19336" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19336&amp;postcount=9" target="new" rel="nofollow" id="postcount19336" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19336" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19336"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 20th, 2005, 01:21 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_19336">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19336", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19336">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19336">
+			
+			Markus,<br />
+<br />
+I checked Birthdate and the errors handling is still there:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;TR&gt;
+  &lt;TD colspan=&quot;2&quot;&gt;
+   &lt;html&#58;errors/&gt;
+  &lt;/TD&gt;
+&lt;/TR&gt;</pre>
+</div>I'd recommend turning on the debug log level for the org.springframwork.web.struts.BindingActionForm class.  It will show you exactly the process it is going through to resolve error message key to use with the ActionError.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19336" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19336" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19336" /></a>
+<a href="newreply.php?do=newreply&amp;p=19336" rel="nofollow" id="qr_19336" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19336 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19336_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19336 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19336 --><!-- post #19485 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19485" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post19485" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19485&amp;postcount=10" target="new" rel="nofollow" id="postcount19485" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19485" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19485"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 21st, 2005, 12:53 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19485">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19485", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19485">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19485">
+			
+			sorry keith for bothering. I had overlooked it completely. I was fixed on finding something more verbose.<br />
+<br />
+I had also solved my problem why the errors aren't displayed by the struts tags. Using freetext instead of keys in the error descriptions(as I tried because I was too lazy to look for a key and then had to search the bug for hours) causes problems. Struts will not show the errormessage because it could not resolve it in its properties. That is working for me:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">errors.reject&#40;&quot;street&quot;,&quot;register.mustExist&quot;&#41;;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=19485" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=19485" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_19485" /></a>
+<a href="newreply.php?do=newreply&amp;p=19485" rel="nofollow" id="qr_19485" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19485 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19485_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19485 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19485 --><div id="lastpost"></div></div></body></html>

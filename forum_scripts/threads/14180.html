@@ -1,0 +1,918 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #18659 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18659" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18659" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18659&amp;postcount=1" target="new" rel="nofollow" id="postcount18659" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18659" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18659"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 13th, 2005, 04:51 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_18659">
+<a class="bigusername" href="member.php?u=9029">noise</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="noise is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18659", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>Location: Lahaina, HI</div>
+<div>
+						Posts: 8
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18659">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Non-standard SQL in Acegi Sec?</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18659">
+			
+			My client didn't want me using an ORDB, so I'm doing regular DAO to an Oracle database.  I'm guessing the following issue would not exist if I had used Hibernate, but I had to hack up the Acegi Sec SQL to get it to run on their system =\  I'm not too good with Oracle, so Unfortunately I also had to gimp out the &quot;LEFT JOIN&quot; used to do parent associations in the ACL_OBJECT_IDENTITY's.<br />
+<br />
+Basically, the &quot;LEFT JOIN&quot; statement, and any table aliases declared with an &quot;AS&quot; bugged it out.  Simply switching any &quot;[table name] AS [table alias]&quot; to just &quot;[table name] [table alias]&quot; took care of the first major problem I encountered.  <br />
+<br />
+For the join, I removed it (which killed parent associations) and told the SQL to always return NULL for the parent.  Obviously, this isn't good in the long run, but we aren't currently using that functionality anyway, so it works for my client.<br />
+<br />
+After throwing &quot;ORA-00933: SQL command not properly ended,&quot; I found this in the stack trace:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">at net.sf.acegisecurity.acl.basic.jdbc.JdbcDaoImpl.getAcls&#40;JdbcDaoImpl.java&#58;121&#41;</pre>
+</div>So, I changed the SQL at line 63 to:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">public static final String DEF_OBJECT_PROPERTIES_QUERY = 
+                &quot;SELECT &quot; +
+                    &quot;CHILD.id, CHILD.object_identity, CHILD.acl_class, NULL PARENT_OBJECT_IDENTITY &quot; +
+                &quot;FROM &quot; +
+                    &quot;acl_object_identity CHILD &quot; +
+                &quot;WHERE &quot; +
+                    &quot;CHILD.object_identity = ?</pre>
+</div>Unfortunately this crashed several tests, but I didn't have much of a choice so I just ignored them :?<br />
+<br />
+It seems this is a fairly obscure issue as I didn't find any reference on the forums.  Maybe I'm just being silly ;-)<br />
+<br />
+Anyway, Ben, let me know if you need/want anything else from me concerning this issue, and I will be glad to help as I can.<br />
+<br />
+Regards,<br />
+David
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				\&quot;In the past, I was the future.\&quot;<br />
+  - Tes
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18659 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18659_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">noise</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9029">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9029" rel="nofollow">Send a private message to noise</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.mxsinc.com">Visit noise's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9029" rel="nofollow">Find all posts by noise</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9029">Add noise to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18659 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18659 --><!-- post #18668 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18668" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18668" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18668&amp;postcount=2" target="new" rel="nofollow" id="postcount18668" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18668" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18668"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 13th, 2005, 06:28 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_18668">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18668", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18668">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18668">
+			
+			Thanks for sharing your experiences David. I'm not sure what we can really do about it. If you have some SQL code that works cross-platform, though, I'd be pleased to add it to the CVS.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18668 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18668_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18668 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18668 --><!-- post #18669 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18669" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18669" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18669&amp;postcount=3" target="new" rel="nofollow" id="postcount18669" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18669" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18669"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 13th, 2005, 07:38 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_18669">
+<a class="bigusername" href="member.php?u=9029">noise</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="noise is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18669", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>Location: Lahaina, HI</div>
+<div>
+						Posts: 8
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18669">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18669">
+			
+			Once I figure out cross-platform SQL for the &quot;LEFT OUTER JOIN&quot; in Oracle, I'll post some code.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				\&quot;In the past, I was the future.\&quot;<br />
+  - Tes
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18669 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18669_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">noise</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9029">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9029" rel="nofollow">Send a private message to noise</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.mxsinc.com">Visit noise's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9029" rel="nofollow">Find all posts by noise</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9029">Add noise to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18669 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18669 --><!-- post #18700 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit18700" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post18700" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=18700&amp;postcount=4" target="new" rel="nofollow" id="postcount18700" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=18700" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post18700"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 14th, 2005, 04:41 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_18700">
+<a class="bigusername" href="member.php?u=9811">gareth</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="gareth is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_18700", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: Bristol, UK</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_18700">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_18700">
+			
+			The SQL query for Oracle is:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">SELECT CHILD.id, CHILD.object_identity, CHILD.acl_class, PARENT.object_identity as PARENT_OBJECT_IDENTITY FROM acl_object_identity CHILD, acl_object_identity PARENT WHERE CHILD.parent_object=PARENT.id&#40;+&#41; AND CHILD.object_identity = ?</pre>
+</div>Hope this helps
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 18700 popup menu -->
+<div class="vbmenu_popup" id="postmenu_18700_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">gareth</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9811">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9811" rel="nofollow">Send a private message to gareth</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9811" rel="nofollow">Find all posts by gareth</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9811">Add gareth to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 18700 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #18700 --><!-- post #19271 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19271" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19271" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19271&amp;postcount=5" target="new" rel="nofollow" id="postcount19271" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19271" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19271"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 20th, 2005, 07:11 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19271">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19271", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19271">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19271">
+			
+			I changed line 63 of JdbcDaoImpl to use that SQL, but I got an exception when running JdbcDaoImplTests. Could you please test your SQL code with the test case, and if it passes, I will apply it.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19271 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19271_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19271 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19271 --><!-- post #19508 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit19508" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post19508" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=19508&amp;postcount=6" target="new" rel="nofollow" id="postcount19508" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=19508" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post19508"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 21st, 2005, 04:08 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_19508">
+<a class="bigusername" href="member.php?u=9811">gareth</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="gareth is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_19508", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: Bristol, UK</div>
+<div>
+						Posts: 3
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_19508">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_19508">
+			
+			Sorry should have clarified.  This is the query for oracle only, you won't be able to get a cross-platform sql statement as the ANSI join syntax was only added to Oracle from version 9.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 19508 popup menu -->
+<div class="vbmenu_popup" id="postmenu_19508_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">gareth</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9811">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9811" rel="nofollow">Send a private message to gareth</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9811" rel="nofollow">Find all posts by gareth</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9811">Add gareth to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 19508 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #19508 --><!-- post #20001 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit20001" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post20001" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=20001&amp;postcount=7" target="new" rel="nofollow" id="postcount20001" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=20001" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post20001"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Apr 26th, 2005, 08:44 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_20001">
+<a class="bigusername" href="member.php?u=9029">noise</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="noise is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_20001", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>Location: Lahaina, HI</div>
+<div>
+						Posts: 8
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_20001">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>...</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_20001">
+			
+			Thanks for the Oracle SQL gareth; it works great for my client.  Unfortunately, your other statement holds true, as I have been unable to find a generic SQL string.  Darn those silly database vendors and their battling standards.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				\&quot;In the past, I was the future.\&quot;<br />
+  - Tes
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 20001 popup menu -->
+<div class="vbmenu_popup" id="postmenu_20001_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">noise</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9029">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9029" rel="nofollow">Send a private message to noise</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.mxsinc.com">Visit noise's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9029" rel="nofollow">Find all posts by noise</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9029">Add noise to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 20001 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #20001 --><!-- post #34199 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit34199" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post34199" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=34199&amp;postcount=8" target="new" rel="nofollow" id="postcount34199" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=34199" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post34199"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 15th, 2005, 04:05 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_34199">
+<a class="bigusername" href="member.php?u=10947">mpe</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="mpe is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_34199", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2005</div>
+<div>
+						Posts: 4
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_34199">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_34199">
+			
+			We came across this problem also. You can set the sql for oracle with JdbcExtendedDaoImpl's bean setters. The next problem however is that the PreparedStatements for inserting new ACL's need 4 params, first of which is set to null, and assumes that id column in the DB is autogenerated.<br />
+<br />
+You could probably solve this with Oracle trigger also, but we solved it by adding a column named &quot;dummy&quot; to acl_object_identity and acl_permission tables (for the null param), and defining the bean like this:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 386px;
+		text-align: left;
+		overflow: auto">	&lt;bean id=&quot;basicAclExtendedDaoOracle&quot; class=&quot;net.sf.acegisecurity.acl.basic.jdbc.JdbcExtendedDaoImpl&quot;&gt;
+		&lt;property name=&quot;dataSource&quot;&gt;&lt;ref bean=&quot;lvsDataSource&quot;/&gt;&lt;/property&gt;
+		&lt;property name=&quot;objectPropertiesQuery&quot;&gt;
+			&lt;value&gt;&lt;!&#91;CDATA&#91;
+				SELECT CHILD.ID, CHILD.OBJECT_IDENTITY, CHILD.ACL_CLASS, PARENT.OBJECT_IDENTITY as PARENT_OBJECT_IDENTITY 
+				FROM acl_object_identity CHILD 
+				LEFT OUTER JOIN acl_object_identity PARENT 
+				ON CHILD.parent_object=PARENT.id WHERE CHILD.object_identity = ?
+			&#93;&#93;&gt;&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;aclObjectIdentityInsertStatement&quot;&gt;
+			&lt;value&gt;&lt;!&#91;CDATA&#91;
+				INSERT INTO acl_object_identity &#40;id, dummy, object_identity, parent_object, acl_class&#41; 
+				VALUES &#40;hibernate_sequence.nextval, ?, ?, ?, ?&#41;
+			&#93;&#93;&gt;&lt;/value&gt;
+		&lt;/property&gt;		
+		&lt;property name=&quot;aclPermissionInsertStatement&quot;&gt;
+			&lt;value&gt;&lt;!&#91;CDATA&#91;
+		         INSERT INTO acl_permission &#40;id, dummy, acl_object_identity, recipient, mask&#41; 
+		         VALUES &#40;hibernate_sequence.nextval, ?, ?, ?, ?&#41;		
+			&#93;&#93;&gt;&lt;/value&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>We use hibernate for other DAO's so we used the same sequence as hibernate for generating the id.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 34199 popup menu -->
+<div class="vbmenu_popup" id="postmenu_34199_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">mpe</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=10947">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=10947" rel="nofollow">Send a private message to mpe</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=10947" rel="nofollow">Find all posts by mpe</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=10947">Add mpe to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 34199 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #34199 --><div id="lastpost"></div></div></body></html>

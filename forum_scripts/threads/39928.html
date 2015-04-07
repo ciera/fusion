@@ -1,0 +1,1856 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #125556 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125556" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125556" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125556&amp;postcount=1" target="new" rel="nofollow" id="postcount125556" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125556" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125556"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 11:07 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125556">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125556", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125556">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>actionListener does not work</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125556">
+			
+			Hello dear community.<br />
+I'm trying to write login dialog using SWF, JSF and icefaces<br />
+I have a problem with resolving action listener method of my been.<br />
+<br />
+here are my configuration files:<br />
+webflow-config.xml<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;flow:executor id=&quot;flowExecutor&quot; registry-ref=&quot;flowRegistry&quot;&gt;
+		&lt;flow:execution-attributes&gt;
+			&lt;flow:alwaysRedirectOnPause value=&quot;false&quot; /&gt;
+		&lt;/flow:execution-attributes&gt;
+	&lt;/flow:executor&gt;
+
+	&lt;!-- Creates the registry of flow definitions for this application --&gt;
+	&lt;flow:registry id=&quot;flowRegistry&quot;&gt;
+		&lt;flow:location path=&quot;/WEB-INF/flows/login-flow.xml&quot; /&gt;
+	&lt;/flow:registry&gt;</pre>
+</div>faces-config.xml<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;faces-config&gt;
+	&lt;application&gt;
+		&lt;navigation-handler&gt;org.springframework.webflow.executor.jsf.FlowNavigationHandler&lt;/navigation-handler&gt;
+		&lt;variable-resolver&gt;org.springframework.webflow.executor.jsf.DelegatingFlowVariableResolver&lt;/variable-resolver&gt;
+	&lt;/application&gt;
+	
+	&lt;lifecycle&gt;
+		&lt;phase-listener&gt;org.springframework.webflow.executor.jsf.FlowPhaseListener&lt;/phase-listener&gt;
+	&lt;/lifecycle&gt;
+&lt;/faces-config&gt;</pre>
+</div>managed-beans.xml<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;beans&gt;
+	&lt;bean id=&quot;uiLogin&quot; class=&quot;ua.com.palma.web.ui.UiLoginImpl&quot; singleton=&quot;false&quot;&gt;
+		&lt;property name=&quot;personService&quot;&gt;
+			&lt;ref bean=&quot;personService&quot; /&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;loginService&quot;&gt;
+			&lt;ref bean=&quot;loginService&quot; /&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div>login.jspx<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 338px;
+		text-align: left;
+		overflow: auto">&lt;ice:form xmlns:h=&quot;http://java.sun.com/jsf/html&quot;
+	xmlns:f=&quot;http://java.sun.com/jsf/core&quot;
+	xmlns:ice=&quot;http://www.icesoft.com/icefaces/component&quot;&gt;
+
+	&lt;ice:panelGrid columns=&quot;2&quot;&gt;
+		&lt;ice:outputText styleClass=&quot;propertyLabel&quot; value=&quot;Login:&quot; /&gt;
+		&lt;ice:inputText value=&quot;#{uiLogin.login}&quot; partialSubmit=&quot;false&quot; /&gt;
+
+		&lt;ice:outputText styleClass=&quot;propertyLabel&quot; value=&quot;Password:&quot; /&gt;
+		&lt;ice:inputSecret value=&quot;#{uiLogin.password}&quot; partialSubmit=&quot;false&quot;
+			redisplay=&quot;true&quot; /&gt;
+
+		&lt;ice:outputText styleClass=&quot;propertyLabel&quot; value=&quot;Role:&quot; /&gt;
+		&lt;ice:selectOneMenu value=&quot;#{uiLogin.role}&quot; partialSubmit=&quot;false&quot;&gt;
+			&lt;f:selectItems value=&quot;#{uiLogin.availableRoles}&quot; /&gt;
+		&lt;/ice:selectOneMenu&gt;
+		&lt;ice:commandButton type=&quot;submit&quot; value=&quot;Submit&quot;
+			actionListener=&quot;#{uiLogin.submitButtonListener}&quot; /&gt;
+	&lt;/ice:panelGrid&gt;
+&lt;/ice:form&gt;</pre>
+</div>UiLoginImpl.java<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">public void submitButtonListener(ActionEvent e) {
+		String result = Constants.LOGIN_FAILURE;
+		try {
+			getLoginService().authorize(this);
+			result = Constants.LOGIN_SUCCESS;
+		} catch (AuthException authException) {
+			result = Constants.LOGIN_FAILURE;
+		}
+		//return result;
+	}</pre>
+</div>when i click in my submit button a have an exception:<br />
+<br />
+2007-06-11 17:46:12 StandardWrapperValve[Blocking Servlet]: Servlet.service() for servlet Blocking Servlet threw exception<br />
+javax.faces.el.PropertyNotFoundException: Base is null: uiLogin<br />
+	at org.apache.myfaces.el.ValueBindingImpl.resolveToBa  seAndProperty(ValueBindingImpl.java:463)<br />
+	at org.apache.myfaces.el.ValueBindingImpl.getType(Val  ueBindingImpl.java:175)<br />
+	at com.icesoft.faces.renderkit.dom_html_basic.DomBasi  cInputRenderer.getConvertedValue(DomBasicInputRend  erer.java:89)<br />
+	at javax.faces.component.UIInput.getConvertedValue(UI  Input.java:396)<br />
+	at javax.faces.component.UIInput.validate(UIInput.jav  a:350)<br />
+	at javax.faces.component.UIInput.processValidators(UI  Input.java:184)<br />
+	at javax.faces.component.UIComponentBase.processValid  ators(UIComponentBase.java:627)<br />
+	at javax.faces.component.UIForm.processValidators(UIF  orm.java:73)<br />
+	at javax.faces.component.UIComponentBase.processValid  ators(UIComponentBase.java:627)<br />
+	at javax.faces.component.UIViewRoot.processValidators  (UIViewRoot.java:149)<br />
+	at org.apache.myfaces.lifecycle.ProcessValidationsExe  cutor.execute(ProcessValidationsExecutor.java:32)<br />
+	at org.apache.myfaces.lifecycle.LifecycleImpl.execute  Phase(LifecycleImpl.java:95)<br />
+	at org.apache.myfaces.lifecycle.LifecycleImpl.execute  (LifecycleImpl.java:70)<br />
+	at com.icesoft.faces.webapp.xmlhttp.BlockingServlet.r  enderCycle(BlockingServlet.java:456)<br />
+	at com.icesoft.faces.webapp.xmlhttp.BlockingServlet.r  eceiveUpdates(BlockingServlet.java:444)<br />
+	at com.icesoft.faces.webapp.xmlhttp.BlockingServlet.e  xecuteRequest(BlockingServlet.java:314)<br />
+	at com.icesoft.faces.webapp.xmlhttp.BlockingServlet.s  ervice(BlockingServlet.java:186)<br />
+	at javax.servlet.http.HttpServlet.service(HttpServlet  .java:802)<br />
+	at org.apache.catalina.core.ApplicationFilterChain.in  ternalDoFilter(ApplicationFilterChain.java:237)<br />
+	at org.apache.catalina.core.ApplicationFilterChain.do  Filter(ApplicationFilterChain.java:157)<br />
+	at org.apache.catalina.core.StandardWrapperValve.invo  ke(StandardWrapperValve.java:214)<br />
+	at org.apache.catalina.core.StandardValveContext.invo  keNext(StandardValveContext.java:104)<br />
+	at org.apache.catalina.core.StandardPipeline.invoke(S  tandardPipeline.java:520)<br />
+	at org.apache.catalina.core.StandardContextValve.invo  keInternal(StandardContextValve.java:198)<br />
+	at org.apache.catalina.core.StandardContextValve.invo  ke(StandardContextValve.java:152)<br />
+	at org.apache.catalina.core.StandardValveContext.invo  keNext(StandardValveContext.java:104)<br />
+	at org.apache.catalina.core.StandardPipeline.invoke(S  tandardPipeline.java:520)<br />
+	at org.apache.catalina.core.StandardHostValve.invoke(  StandardHostValve.java:137)<br />
+	at org.apache.catalina.core.StandardValveContext.invo  keNext(StandardValveContext.java:104)<br />
+	at org.apache.catalina.valves.ErrorReportValve.invoke  (ErrorReportValve.java:118)<br />
+	at org.apache.catalina.core.StandardValveContext.invo  keNext(StandardValveContext.java:102)<br />
+	at org.apache.catalina.core.StandardPipeline.invoke(S  tandardPipeline.java:520)<br />
+	at org.apache.catalina.core.StandardEngineValve.invok  e(StandardEngineValve.java:109)<br />
+	at org.apache.catalina.core.StandardValveContext.invo  keNext(StandardValveContext.java:104)<br />
+	at org.apache.catalina.core.StandardPipeline.invoke(S  tandardPipeline.java:520)<br />
+	at org.apache.catalina.core.ContainerBase.invoke(Cont  ainerBase.java:929)<br />
+	at org.apache.coyote.tomcat5.CoyoteAdapter.service(Co  yoteAdapter.java:160)<br />
+	at org.apache.coyote.http11.Http11Processor.process(H  ttp11Processor.java:799)<br />
+	at org.apache.coyote.http11.Http11Protocol$Http11Conn  ectionHandler.processConnection(Http11Protocol.jav  a:705)<br />
+	at org.apache.tomcat.util.net.TcpWorkerThread.runIt(P  oolTcpEndpoint.java:577)<br />
+	at org.apache.tomcat.util.threads.ThreadPool$ControlR  unnable.run(ThreadPool.java:683)<br />
+	at java.lang.Thread.run(Thread.java:595)<br />
+<br />
+please help me to resolve this problem
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125556" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125556" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125556" /></a>
+<a href="newreply.php?do=newreply&amp;p=125556" rel="nofollow" id="qr_125556" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125556 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125556_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125556 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125556 --><!-- post #125569 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125569" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125569" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125569&amp;postcount=2" target="new" rel="nofollow" id="postcount125569" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125569" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125569"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 12:04 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125569">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125569", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125569">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125569">
+			
+			besides, when may aplication starts in my log file i have exception:<br />
+{11:06:07, 19:03:56,171} ERROR [main] session.ManagerBase           : - IOException while loading persisted sessions: java.io.WriteAbortedException: writing aborted; java.io.NotSerializableException: java.lang.Object<br />
+java.io.WriteAbortedException: writing aborted; java.io.NotSerializableException: java.lang.Object<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1309)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1832)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.readObject(ObjectInputSt  ream.java:348)<br />
+	at org.apache.catalina.session.StandardSession.readOb  ject(StandardSession.java:1342)<br />
+	at org.apache.catalina.session.StandardSession.readOb  jectData(StandardSession.java:885)<br />
+	at org.apache.catalina.session.StandardManager.doLoad  (StandardManager.java:416)<br />
+	at org.apache.catalina.session.StandardManager.load(S  tandardManager.java:343)<br />
+	at org.apache.catalina.session.StandardManager.start(  StandardManager.java:657)<br />
+	at org.apache.catalina.core.ContainerBase.setManager(  ContainerBase.java:499)<br />
+	at org.apache.catalina.startup.ContextConfig.managerC  onfig(ContextConfig.java:315)<br />
+	at org.apache.catalina.startup.ContextConfig.start(Co  ntextConfig.java:635)<br />
+	at org.apache.catalina.startup.ContextConfig.lifecycl  eEvent(ContextConfig.java:216)<br />
+	at org.apache.catalina.util.LifecycleSupport.fireLife  cycleEvent(LifecycleSupport.java:119)<br />
+	at org.apache.catalina.core.StandardContext.start(Sta  ndardContext.java:4290)<br />
+	at org.apache.catalina.core.ContainerBase.addChildInt  ernal(ContainerBase.java:823)<br />
+	at org.apache.catalina.core.ContainerBase.addChild(Co  ntainerBase.java:807)<br />
+	at org.apache.catalina.core.StandardHost.addChild(Sta  ndardHost.java:595)<br />
+	at org.apache.catalina.core.StandardHostDeployer.inst  all(StandardHostDeployer.java:277)<br />
+	at org.apache.catalina.core.StandardHost.install(Stan  dardHost.java:832)<br />
+	at org.apache.catalina.startup.HostConfig.deployWARs(  HostConfig.java:625)<br />
+	at org.apache.catalina.startup.HostConfig.deployApps(  HostConfig.java:431)<br />
+	at org.apache.catalina.startup.HostConfig.start(HostC  onfig.java:983)<br />
+	at org.apache.catalina.startup.HostConfig.lifecycleEv  ent(HostConfig.java:349)<br />
+	at org.apache.catalina.util.LifecycleSupport.fireLife  cycleEvent(LifecycleSupport.java:119)<br />
+	at org.apache.catalina.core.ContainerBase.start(Conta  inerBase.java:1091)<br />
+	at org.apache.catalina.core.StandardHost.start(Standa  rdHost.java:789)<br />
+	at org.apache.catalina.core.ContainerBase.start(Conta  inerBase.java:1083)<br />
+	at org.apache.catalina.core.StandardEngine.start(Stan  dardEngine.java:478)<br />
+	at org.apache.catalina.core.StandardService.start(Sta  ndardService.java:480)<br />
+	at org.apache.catalina.core.StandardServer.start(Stan  dardServer.java:2313)<br />
+	at org.apache.catalina.startup.Catalina.start(Catalin  a.java:556)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at java.lang.reflect.Method.invoke(Method.java:585)<br />
+	at org.apache.catalina.startup.Bootstrap.start(Bootst  rap.java:287)<br />
+	at org.apache.catalina.startup.Bootstrap.main(Bootstr  ap.java:425)<br />
+Caused by: java.io.NotSerializableException: java.lang.Object<br />
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutp  utStream.java:1081)<br />
+	at java.io.ObjectOutputStream.defaultWriteFields(Obje  ctOutputStream.java:1375)<br />
+	at java.io.ObjectOutputStream.writeSerialData(ObjectO  utputStream.java:1347)<br />
+	at java.io.ObjectOutputStream.writeOrdinaryObject(Obj  ectOutputStream.java:1290)<br />
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutp  utStream.java:1079)<br />
+	at java.io.ObjectOutputStream.writeObject(ObjectOutpu  tStream.java:302)<br />
+	at org.apache.catalina.session.StandardSession.writeO  bject(StandardSession.java:1415)<br />
+	at org.apache.catalina.session.StandardSession.writeO  bjectData(StandardSession.java:902)<br />
+	at org.apache.catalina.session.StandardManager.doUnlo  ad(StandardManager.java:539)<br />
+	at org.apache.catalina.session.StandardManager.unload  (StandardManager.java:485)<br />
+	at org.apache.catalina.session.StandardManager.stop(S  tandardManager.java:687)<br />
+	at org.apache.catalina.core.StandardContext.stop(Stan  dardContext.java:4496)<br />
+	at org.apache.catalina.core.ContainerBase.removeChild  (ContainerBase.java:952)<br />
+	at org.apache.catalina.core.StandardHostDeployer.remo  ve(StandardHostDeployer.java:670)<br />
+	at org.apache.catalina.core.StandardHost.remove(Stand  ardHost.java:946)<br />
+	at org.apache.catalina.startup.HostConfig.undeployApp  s(HostConfig.java:1028)<br />
+	at org.apache.catalina.startup.HostConfig.stop(HostCo  nfig.java:1005)<br />
+	at org.apache.catalina.startup.HostConfig.lifecycleEv  ent(HostConfig.java:351)<br />
+	at org.apache.catalina.util.LifecycleSupport.fireLife  cycleEvent(LifecycleSupport.java:119)<br />
+	at org.apache.catalina.core.ContainerBase.stop(Contai  nerBase.java:1123)<br />
+	at org.apache.catalina.core.ContainerBase.stop(Contai  nerBase.java:1135)<br />
+	at org.apache.catalina.core.StandardEngine.stop(Stand  ardEngine.java:483)<br />
+	at org.apache.catalina.core.StandardService.stop(Stan  dardService.java:542)<br />
+	at org.apache.catalina.core.StandardServer.stop(Stand  ardServer.java:2347)<br />
+	at org.apache.catalina.startup.Catalina.stop(Catalina  .java:605)<br />
+	at org.apache.catalina.startup.Catalina.start(Catalin  a.java:580)
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125569" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125569" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125569" /></a>
+<a href="newreply.php?do=newreply&amp;p=125569" rel="nofollow" id="qr_125569" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125569 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125569_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125569 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125569 --><!-- post #125580 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125580" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125580" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125580&amp;postcount=3" target="new" rel="nofollow" id="postcount125580" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125580" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125580"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 12:29 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125580">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125580", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125580">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125580">
+			
+			In order to resolve beans from the ApplicationContext via JSF expressions like this one:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">actionListener=&quot;#{uiLogin.submitButtonListener}&quot;</pre>
+</div>You need to also have the following VariableResolver definition in your faces-config:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">&lt;variable-resolver&gt;org.springframework.web.jsf.DelegatingVariableResolver&lt;/variable-resolver&gt;</pre>
+</div>Also, defining the &quot;uiLogin&quot; bean with prototype scope as you have is not necessarily the best idea.  It will probably not exhibit the behavior you are expecting.  I would recommend scoping it to the request, either via the new Spring 2.0 scope, or by defining the bean in faces-config instead.<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125580" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125580" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125580" /></a>
+<a href="newreply.php?do=newreply&amp;p=125580" rel="nofollow" id="qr_125580" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125580 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125580_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125580 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125580 --><!-- post #125593 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125593" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125593" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125593&amp;postcount=4" target="new" rel="nofollow" id="postcount125593" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125593" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125593"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 01:05 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125593">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125593", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125593">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125593">
+			
+			Hello Jeremy.<br />
+Now i have this exception:<br />
+{11:06:07, 19:50:39,968} ERROR [main] session.ManagerBase           : - IOException while loading persisted sessions: java.io.EOFException<br />
+java.io.EOFException<br />
+	at java.io.ObjectInputStream$BlockDataInputStream.pee  kByte(ObjectInputStream.java:2498)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1273)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.defaultReadObject(Object  InputStream.java:479)<br />
+	at org.apache.xerces.dom.AttrImpl.readObject(Unknown Source)<br />
+	at sun.reflect.GeneratedMethodAccessor47.invoke(Unkno  wn Source)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at java.lang.reflect.Method.invoke(Method.java:585)<br />
+	at java.io.ObjectStreamClass.invokeReadObject(ObjectS  treamClass.java:946)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1809)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.readArray(ObjectInputStr  eam.java:1634)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1299)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1832)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1832)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1832)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.defaultReadObject(Object  InputStream.java:479)<br />
+	at org.apache.xerces.dom.ParentNode.readObject(Unknow  n Source)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at java.lang.reflect.Method.invoke(Method.java:585)<br />
+	at java.io.ObjectStreamClass.invokeReadObject(ObjectS  treamClass.java:946)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1809)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.readSerialData(ObjectInp  utStream.java:1832)<br />
+	at java.io.ObjectInputStream.readOrdinaryObject(Objec  tInputStream.java:1719)<br />
+	at java.io.ObjectInputStream.readObject0(ObjectInputS  tream.java:1305)<br />
+	at java.io.ObjectInputStream.defaultReadFields(Object  InputStream.java:1908)<br />
+	at java.io.ObjectInputStream.defaultReadObject(Object  InputStream.java:479)<br />
+	at org.apache.xerces.dom.ParentNode.readObject(Unknow  n Source)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Nativ  e Method)<br />
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Native  MethodAccessorImpl.java:39)<br />
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(De  legatingMethodAccessorImpl.java:25)<br />
+	at java.lang.reflect.Method.invoke(Method.java:585)<br />
+	at java.io.ObjectStreamClass.invokeReadObject(ObjectS  treamClass.java:946)<br />
+....<br />
+<br />
+And what is new Spring 2.0 scope. How can i apply it to my been?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125593" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125593" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125593" /></a>
+<a href="newreply.php?do=newreply&amp;p=125593" rel="nofollow" id="qr_125593" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125593 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125593_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125593 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125593 --><!-- post #125598 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125598" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125598" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125598&amp;postcount=5" target="new" rel="nofollow" id="postcount125598" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125598" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125598"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 01:14 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125598">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125598", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125598">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125598">
+			
+			For information on the available bean scopes in Spring 2.x, see the reference manual here:<br />
+<a href="http://static.springframework.org/spring/docs/2.0.x/reference/beans.html#beans-factory-scopes">http://static.springframework.org/sp...factory-scopes</a><br />
+<br />
+As for your exception, I really don't have enough information to go on to be certain, but it looks to me to be more related to Tomcat than anything.  When exactly is it occurring?<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125598" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125598" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125598" /></a>
+<a href="newreply.php?do=newreply&amp;p=125598" rel="nofollow" id="qr_125598" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125598 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125598_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125598 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125598 --><!-- post #125604 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125604" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125604" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125604&amp;postcount=6" target="new" rel="nofollow" id="postcount125604" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125604" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125604"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 01:19 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125604">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125604", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125604">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125604">
+			
+			It occures when my application starting. I even dont open any page
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125604" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125604" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125604" /></a>
+<a href="newreply.php?do=newreply&amp;p=125604" rel="nofollow" id="qr_125604" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125604 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125604_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125604 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125604 --><!-- post #125664 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125664" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125664" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125664&amp;postcount=7" target="new" rel="nofollow" id="postcount125664" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125664" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125664"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 05:42 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125664">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125664", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125664">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125664">
+			
+			Last exception posted by me is not appear any more. but my action listener does not work.<br />
+it seems  to me that my flow goes to end by clicking on submit button.<br />
+<br />
+here is my configuration now:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;uiLogin&quot; class=&quot;ua.com.palma.web.ui.UiLoginImpl&quot; scope=&quot;request&quot;&gt;
+		&lt;property name=&quot;personService&quot;&gt;
+			&lt;ref bean=&quot;personService&quot; /&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;loginService&quot;&gt;
+			&lt;ref bean=&quot;loginService&quot; /&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</pre>
+</div>in faces-config.xml i added <br />
+&lt;variable-resolver&gt;org.springframework.web.jsf.DelegatingVar  iableResolver&lt;/variable-resolver&gt;<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;application&gt;
+		&lt;navigation-handler&gt;org.springframework.webflow.executor.jsf.FlowNavigationHandler&lt;/navigation-handler&gt;
+		&lt;variable-resolver&gt;org.springframework.webflow.executor.jsf.DelegatingFlowVariableResolver&lt;/variable-resolver&gt;
+		&lt;variable-resolver&gt;org.springframework.web.jsf.DelegatingVariableResolver&lt;/variable-resolver&gt;
+	&lt;/application&gt;</pre>
+</div>webflow-config.xml<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">&lt;flow:executor id=&quot;flowExecutor&quot; registry-ref=&quot;flowRegistry&quot;&gt;
+		&lt;flow:execution-attributes&gt;
+			&lt;flow:alwaysRedirectOnPause value=&quot;false&quot; /&gt;
+		&lt;/flow:execution-attributes&gt;
+	&lt;/flow:executor&gt;
+
+	&lt;!-- Creates the registry of flow definitions for this application --&gt;
+	&lt;flow:registry id=&quot;flowRegistry&quot;&gt;
+		&lt;flow:location path=&quot;/WEB-INF/flows/login-flow.xml&quot; /&gt;
+	&lt;/flow:registry&gt;</pre>
+</div>login-flow.xml<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;view-state id=&quot;enterLogin&quot; view=&quot;/login.jspx&quot;&gt;
+		&lt;transition on=&quot;submit&quot; to=&quot;enterIntro&quot; /&gt;
+	&lt;/view-state&gt;</pre>
+</div>login.jspx<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">&lt;ice:commandButton type=&quot;submit&quot; value=&quot;Submit&quot;
+			actionListener=&quot;#{uiLogin.submitButtonListener}&quot; /&gt;</pre>
+</div>when  i click on this button, i don't enter in method<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">public void submitButtonListener(ActionEvent e) {
+		String result = Constants.LOGIN_FAILURE;
+		try {
+			getLoginService().authorize(this);
+			result = Constants.LOGIN_SUCCESS;
+		} catch (AuthException authException) {
+			result = Constants.LOGIN_FAILURE;
+		}
+		//return result;
+	}</pre>
+</div>but my page with login dialog refreshes.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125664" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125664" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125664" /></a>
+<a href="newreply.php?do=newreply&amp;p=125664" rel="nofollow" id="qr_125664" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125664 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125664_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125664 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125664 --><!-- post #125672 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125672" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125672" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125672&amp;postcount=8" target="new" rel="nofollow" id="postcount125672" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125672" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125672"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 11th, 2007, 07:03 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125672">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125672", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125672">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125672">
+			
+			ActionListeners do not signal navigation by themselves.  You have to actually signal some sort of outcome, either by hardcoding it in the action attribute of the commandButton, or binding to an Action method in the bean.  In this case you would opt for the latter since navigation is conditional based on the result.<br />
+<br />
+You could change your ActionListener method to an action, but I personally prefer to keep just one action method per bean, with multiple ActionListeners that can choose whether or not to set an outcome.<br />
+<br />
+Following this logic, you would make the result a property of your bean instead of a local variable.<br />
+<br />
+Something like the following:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 338px;
+		text-align: left;
+		overflow: auto">public class MyBean
+{
+  private String result = &quot;&quot;;
+  
+  public void submitButtonListener(ActionEvent e) {
+    try {
+      getLoginService().authorize(this);
+      setResult(Constants.LOGIN_SUCCESS);
+    } catch (AuthException authException) {
+      setResult(Constants.LOGIN_FAILURE);
+    }
+  }
+
+  public String signalEvent()
+  {
+    return getResult();
+  }
+
+  ...
+}</pre>
+</div>Then your commandButton would look as follows:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">&lt;ice:commandButton type=&quot;submit&quot; value=&quot;Submit&quot;
+			actionListener=&quot;#{uiLogin.submitButtonListener}&quot; 
+                        action=&quot;#{uiLogin.signalEvent}&quot;/&gt;</pre>
+</div>Of course, this is more of the traditional way of doing things in JSF, and you would just be letting SWF handle the view selection.  But it is certainly possible to leverage the more declarative style of SWF even further by externalizing the call to the LoginService in a bean invoking action state.  In that case you could eliminate both the ActionListener and Action methods entirely, just hardcoding an event in the commandButton's action attribute and letting SWF do the rest.   <br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125672" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125672" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125672" /></a>
+<a href="newreply.php?do=newreply&amp;p=125672" rel="nofollow" id="qr_125672" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125672 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125672_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125672 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125672 --><!-- post #125739 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125739" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125739" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125739&amp;postcount=9" target="new" rel="nofollow" id="postcount125739" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125739" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125739"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 12th, 2007, 05:22 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125739">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125739", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125739">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125739">
+			
+			Hello.<br />
+Jeremy, I've done as you said, but my application does not enter neither uiLogin.submitButtonListener nor uiLogin.signalEvent in debug mode when i'm clicking on Submit button.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125739" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125739" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125739" /></a>
+<a href="newreply.php?do=newreply&amp;p=125739" rel="nofollow" id="qr_125739" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125739 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125739_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125739 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125739 --><!-- post #125758 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125758" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post125758" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125758&amp;postcount=10" target="new" rel="nofollow" id="postcount125758" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125758" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125758"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 12th, 2007, 07:39 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125758">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125758", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125758">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125758">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+<div>
+					Originally Posted by <strong>sdo.daemon</strong>
+<a href="showthread.php?p=125739#post125739" rel="nofollow"><img class="inlineimg" src="images/buttons/viewpost.gif" border="0" alt="View Post" /></a>
+</div>
+<div style="font-style:italic">Hello.<br />
+Jeremy, I've done as you said, but my application does not enter neither uiLogin.submitButtonListener nor uiLogin.signalEvent in debug mode when i'm clicking on Submit button.</div>
+</td>
+</tr>
+</table>
+</div>That sounds odd...I would expect that you would see some additional stack trace in such a scenario.  <br />
+<br />
+Have you verified whether your been is getting instantiated?  Are you getting any sort of relevant logging output from Spring?  <br />
+<br />
+Do you have the RequestContextListener configured in web.xml?<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125758" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125758" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125758" /></a>
+<a href="newreply.php?do=newreply&amp;p=125758" rel="nofollow" id="qr_125758" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125758 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125758_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125758 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125758 --><div id="lastpost"></div></div><div id="posts"><!-- post #125765 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125765" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post125765" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125765&amp;postcount=11" target="new" rel="nofollow" id="postcount125765" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125765" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125765"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 12th, 2007, 07:52 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125765">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125765", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125765">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125765">
+			
+			Hello<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				I would expect that you would see some additional stack trace in such a scenario
+			
+		</td>
+</tr>
+</table>
+</div>I don't see any exception in my log file.<br />
+<br />
+here is my log4j configuration file:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 194px;
+		text-align: left;
+		overflow: auto">log4j.debug=TRUE
+log4j.rootLogger=INFO, R
+
+log4j.appender.R=org.apache.log4j.RollingFileAppender
+log4j.appender.R.File=C:/Program Files/Apache Software Foundation/Tomcat 5.0/logs/myTreasury.log
+log4j.appender.R.MaxFileSize=100KB
+log4j.appender.R.MaxBackupIndex=5
+log4j.appender.R.layout=org.apache.log4j.PatternLayout
+log4j.appender.R.layout.ConversionPattern=%d{{dd:MM:yy, HH:mm:ss,SSS}} %5p [%t] %-30c{2}: - %m%n
+#Hibernate SQL log
+log4j.logger.org.hibernate.SQL=DEBUG</pre>
+</div><div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Do you have the RequestContextListener configured in web.xml?
+			
+		</td>
+</tr>
+</table>
+</div>Yes of course. <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 354px;
+		text-align: left;
+		overflow: auto">&lt;listener&gt;
+		&lt;listener-class&gt;
+			org.springframework.web.context.ContextLoaderListener
+		&lt;/listener-class&gt;
+	&lt;/listener&gt;
+
+	&lt;listener&gt;
+		&lt;listener-class&gt;
+			org.springframework.web.context.request.RequestContextListener
+		&lt;/listener-class&gt;
+	&lt;/listener&gt;
+	&lt;listener&gt;
+		&lt;listener-class&gt;
+			org.apache.myfaces.webapp.StartupServletContextListener
+		&lt;/listener-class&gt;
+	&lt;/listener&gt;
+	&lt;listener&gt;
+		&lt;listener-class&gt;
+			com.icesoft.faces.util.event.servlet.ContextEventRepeater
+		&lt;/listener-class&gt;
+	&lt;/listener&gt;</pre>
+</div>maybe the sequence of declaring listeners important?
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125765" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125765" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125765" /></a>
+<a href="newreply.php?do=newreply&amp;p=125765" rel="nofollow" id="qr_125765" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125765 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125765_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125765 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125765 --><!-- post #125767 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit125767" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post125767" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=125767&amp;postcount=12" target="new" rel="nofollow" id="postcount125767" name="12"><strong>12</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=125767" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post125767"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jun 12th, 2007, 08:01 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_125767">
+<a class="bigusername" href="member.php?u=27015">sdo.daemon</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sdo.daemon is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_125767", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Jun 2007</div>
+<div>
+						Posts: 28
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_125767">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_125767">
+			
+			as for <div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Have you verified whether your been is getting instantiated? Are you getting any sort of relevant logging output from Spring?
+			
+		</td>
+</tr>
+</table>
+</div>I moved my uiLogin been to faces-config.xml, now it looks like this:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE faces-config PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN&quot; &quot;http://java.sun.com/dtd/web-facesconfig_1_1.dtd&quot;&gt;
+
+&lt;faces-config&gt;
+	&lt;application&gt;
+		&lt;navigation-handler&gt;
+			org.springframework.webflow.executor.jsf.FlowNavigationHandler
+		&lt;/navigation-handler&gt;
+		&lt;variable-resolver&gt;
+			org.springframework.web.jsf.DelegatingVariableResolver
+		&lt;/variable-resolver&gt;
+		&lt;variable-resolver&gt;
+			org.springframework.webflow.executor.jsf.DelegatingFlowVariableResolver
+		&lt;/variable-resolver&gt;
+		&lt;property-resolver&gt;
+			org.springframework.webflow.executor.jsf.FlowPropertyResolver
+		&lt;/property-resolver&gt;
+	&lt;/application&gt;
+
+	&lt;lifecycle&gt;
+		&lt;phase-listener&gt;
+			org.springframework.webflow.executor.jsf.FlowPhaseListener
+		&lt;/phase-listener&gt;
+	&lt;/lifecycle&gt;
+
+	<b>&lt;managed-bean&gt;
+		&lt;managed-bean-name&gt;uiLogin&lt;/managed-bean-name&gt;
+		&lt;managed-bean-class&gt;
+			ua.com.palma.web.ui.UiLoginImpl
+		&lt;/managed-bean-class&gt;
+		&lt;managed-bean-scope&gt;request&lt;/managed-bean-scope&gt;
+		&lt;managed-property&gt;
+			&lt;property-name&gt;personService&lt;/property-name&gt;
+			&lt;value&gt;#{personService}&lt;/value&gt;
+		&lt;/managed-property&gt;
+		&lt;managed-property&gt;
+			&lt;property-name&gt;loginService&lt;/property-name&gt;
+			&lt;value&gt;#{loginService}&lt;/value&gt;
+		&lt;/managed-property&gt;
+	&lt;/managed-bean&gt;</b>
+&lt;/faces-config&gt;</pre>
+</div>and i don't see any mentioning about my been in log file. but i see it works, be course when my login page opening the list box is filled and in log file i see hibernate queries. Everything is ok, but action listener does not work.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=125767" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=125767" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_125767" /></a>
+<a href="newreply.php?do=newreply&amp;p=125767" rel="nofollow" id="qr_125767" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 125767 popup menu -->
+<div class="vbmenu_popup" id="postmenu_125767_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sdo.daemon</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=27015">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=27015" rel="nofollow">Send a private message to sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=27015" rel="nofollow">Find all posts by sdo.daemon</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=27015">Add sdo.daemon to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 125767 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #125767 --><div id="lastpost"></div></div></body></html>

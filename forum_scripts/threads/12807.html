@@ -1,0 +1,551 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #13199 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit13199" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post13199" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=13199&amp;postcount=1" target="new" rel="nofollow" id="postcount13199" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=13199" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post13199"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 4th, 2005, 10:14 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_13199">
+<a class="bigusername" href="member.php?u=9023">currane</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="currane is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_13199", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>Location: Dublin, Ireland</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_13199">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Velocity ResourceNotFoundException -&gt; Want HTTP 404</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_13199">
+			
+			I'm using spring velocity view support and currently, when someone gets a broken link, it generates the following errors and results in a HTTP 500 response code. <br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 370px;
+		text-align: left;
+		overflow: auto">2005-02-04 15&#58;35&#58;06,625 &#91;        PoolThread-1&#93;         velocity.app.VelocityEngine  - ERROR ResourceManager &#58; unable to find resource 'why.vm' in any resource loader.
+2005-02-04 15&#58;35&#58;06,625 &#91;        PoolThread-1&#93;       web.servlet.DispatcherServlet  - ERROR Could not complete request
+org.springframework.context.ApplicationContextException&#58; Cannot find Velocity template for URL &#91;why.vm&#93;&#58; Did you specify the correct resource loader path?; nested exception is org.apache.velocity.exception.ResourceNotFoundException&#58; Unable to find resource 'why.vm'
+org.apache.velocity.exception.ResourceNotFoundException&#58; Unable to find resource 'why.vm'
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource&#40;ResourceManagerImpl.java&#58;458&#41;
+	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource&#40;ResourceManagerImpl.java&#58;341&#41;
+	at org.apache.velocity.runtime.RuntimeInstance.getTemplate&#40;RuntimeInstance.java&#58;831&#41;
+	at org.apache.velocity.runtime.RuntimeInstance.getTemplate&#40;RuntimeInstance.java&#58;813&#41;
+	at org.apache.velocity.app.VelocityEngine.getTemplate&#40;VelocityEngine.java&#58;470&#41;
+	at org.springframework.web.servlet.view.velocity.VelocityView.getTemplate&#40;VelocityView.java&#58;537&#41;
+	at org.springframework.web.servlet.view.velocity.VelocityView.getTemplate&#40;VelocityView.java&#58;522&#41;
+	at org.springframework.web.servlet.view.velocity.VelocityView.checkTemplate&#40;VelocityView.java&#58;291&#41;
+	at org.springframework.web.servlet.view.velocity.VelocityView.initApplicationContext&#40;VelocityView.java&#58;256&#41;
+	at org.springframework.context.support.ApplicationObjectSupport.setApplicationContext&#40;ApplicationObjectSupport.java&#58;89&#41;
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.prepareView&#40;AbstractCachingViewResolver.java&#58;135&#41;
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.resolveViewName&#40;AbstractCachingViewResolver.java&#58;78&#41;
+	at org.springframework.web.servlet.DispatcherServlet.render&#40;DispatcherServlet.java&#58;819&#41;
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch&#40;DispatcherServlet.java&#58;616&#41;
+	at org.springframework.web.servlet.DispatcherServlet.doService&#40;DispatcherServlet.java&#58;543&#41;
+	at org.springframework.web.servlet.FrameworkServlet.serviceWrapper&#40;FrameworkServlet.java&#58;390&#41;
+	at org.springframework.web.servlet.FrameworkServlet.doGet&#40;FrameworkServlet.java&#58;341&#41;
+	at javax.servlet.http.HttpServlet.service&#40;HttpServlet.java&#58;740&#41;</pre>
+</div>I would like to have a HTTP 404 result in this case, and preferably not get so many (or any) errors in the log.<br />
+<br />
+I have tried using a HandlerExceptionResolver, but the dispatcher servlet does not use these for errors during the render step, only for errors during the handler. <br />
+<br />
+I could use a filter or error page outside the dispatcher servlet, but I would prefer to have control over this behaviour inside spring, and reduce the amount of errors logged for this if possible (maybe reduce to WARN).<br />
+<br />
+I think maybe VelocityView could be changed to return null if the template didn't exist (as specified by AbstractCachingViewResolver#resolveViewName() )? <br />
+<br />
+If the resolver did return null, it looks like DispatcherServlet.render() will throw a servlet exception. To solve that I could add a view resolver to the chain just for handling resourcenotfound situations, though that seems a bit messy.<br />
+<br />
+Also, a bad template name could actually be an error, if it was returned from my code or config. e.g. if the view was returned by UrlFilenameViewController, then i'd want a 404, but if it was returned by a custom controller, 404 might not be appropriate.<br />
+<br />
+Any ideas on the best way to deal with this?<br />
+<br />
+eoin.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=13199" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=13199" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_13199" /></a>
+<a href="newreply.php?do=newreply&amp;p=13199" rel="nofollow" id="qr_13199" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 13199 popup menu -->
+<div class="vbmenu_popup" id="postmenu_13199_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">currane</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9023">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9023" rel="nofollow">Send a private message to currane</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://peelmeagrape.net/">Visit currane's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9023" rel="nofollow">Find all posts by currane</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9023">Add currane to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 13199 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #13199 --><!-- post #13760 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit13760" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post13760" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=13760&amp;postcount=2" target="new" rel="nofollow" id="postcount13760" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=13760" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post13760"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 13th, 2005, 09:26 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_13760">
+<a class="bigusername" href="member.php?u=6374">Rod Johnson</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Rod Johnson is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_13760", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: San Mateo, CA</div>
+<div>
+						Posts: 1,266
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_13760">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_13760">
+			
+			I'm not convinced that the present behaviour is wrong. If a resource isn't found it <i>is</i> normally an error condition.<br />
+<br />
+What if you subclass VelocityView and override getTemplate()? Then you should be able to do what you want in your case, without any changes to the normal behaviour.<br />
+<br />
+Rgds<br />
+Rod
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Rod Johnson - GM, SpringSource Division, VMware<br />
+<a href="http://www.springsource.com" target="_blank">http://www.springsource.com</a><br />
+Spring From the Source
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=13760" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=13760" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_13760" /></a>
+<a href="newreply.php?do=newreply&amp;p=13760" rel="nofollow" id="qr_13760" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 13760 popup menu -->
+<div class="vbmenu_popup" id="postmenu_13760_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Rod Johnson</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6374">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6374" rel="nofollow">Send a private message to Rod Johnson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Rod Johnson's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6374" rel="nofollow">Find all posts by Rod Johnson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6374">Add Rod Johnson to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 13760 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #13760 --><!-- post #13766 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit13766" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post13766" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=13766&amp;postcount=3" target="new" rel="nofollow" id="postcount13766" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=13766" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post13766"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 13th, 2005, 10:15 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_13766">
+<a class="bigusername" href="member.php?u=9023">currane</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="currane is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_13766", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>Location: Dublin, Ireland</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_13766">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_13766">
+			
+			You're right - it is an error if my code has a bad view name in it. However, I use a UrlFilenameViewController, and with this it means that if someone requests a broken link on my site they get a HTTP 500 instead of 404 (and log4j emails me an error message).<br />
+<br />
+What I have done is actually to subclass VelocityViewResolver.loadView and added in a check:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">        if&#40;!velocityConfigurer.getVelocityEngine&#40;&#41;.templateExists&#40;view + &quot;.vm&quot;&#41;&#41;
+            return null;</pre>
+</div>I then have a second view resolver, NotFoundLayoutViewResolver (I implement Ordered on the view resolvers), which gives back a fixed 'notfound.vm' template.<br />
+<br />
+This is all working fine now. It seems a bit clunky though.  Maybe overriding getTemplate somehow would be a better way to acheive what i've done with the view resolvers.<br />
+<br />
+Note that changing the resolver to return null doesn't change the current behaviour due to the following in DispatcherServlet:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">			if &#40;view == null&#41; &#123;
+				throw new ServletException&#40;&quot;Could not resolve view with name '&quot; + mv.getViewName&#40;&#41; +
+						&quot;' in servlet with name '&quot; + getServletName&#40;&#41; + &quot;'&quot;&#41;;
+			&#125;</pre>
+</div>However, I think this is all really just a problem with the UrlFilenameViewController - maybe it should resolve it's view directly instead of leaving it to the dispatcher servlet. i.e., maybe i should instead subclass UrlFilenameViewController to do page not found checking - that would still give me error messages if i mistype a view name in my code somewhere, but not give errors for broken links.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=13766" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=13766" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_13766" /></a>
+<a href="newreply.php?do=newreply&amp;p=13766" rel="nofollow" id="qr_13766" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 13766 popup menu -->
+<div class="vbmenu_popup" id="postmenu_13766_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">currane</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9023">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9023" rel="nofollow">Send a private message to currane</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://peelmeagrape.net/">Visit currane's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9023" rel="nofollow">Find all posts by currane</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9023">Add currane to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 13766 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #13766 --><!-- post #14359 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit14359" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post14359" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=14359&amp;postcount=4" target="new" rel="nofollow" id="postcount14359" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=14359" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post14359"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Feb 22nd, 2005, 08:49 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_14359">
+<a class="bigusername" href="member.php?u=9023">currane</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="currane is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_14359", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2005</div>
+<div>Location: Dublin, Ireland</div>
+<div>
+						Posts: 6
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_14359">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Fixed with custom UriBasedViewController</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_14359">
+			
+			I've got this working in a cleaner way now.  I have kept my view resolver returning null if view is not found, and written a custom UriBasedViewController:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 354px;
+		text-align: left;
+		overflow: auto">public class UrlBasedViewController
+    implements Controller
+&#123;
+    private ViewResolver viewResolver;
+    private LocaleResolver localeResolver;
+    private String notfoundViewName;
+
+    public ModelAndView handleRequest&#40;HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse&#41; throws Exception
+    &#123;
+	Locale locale = this.localeResolver.resolveLocale&#40;httpServletRequest&#41;;
+        String viewName = ControllerHelper.getViewName&#40;httpServletRequest&#41;;
+        View view = viewResolver.resolveViewName&#40;viewName, locale&#41;;
+        if&#40;view!=null&#41;
+            return new ModelAndView&#40;view&#41;;
+        else
+        &#123;
+            View notfoundview = viewResolver.resolveViewName&#40;notfoundViewName, locale&#41;;
+            httpServletResponse.setStatus&#40;HttpResponse.__404_Not_Found&#41;;
+            return new ModelAndView&#40;notfoundview&#41;;
+        &#125;
+    &#125;</pre>
+</div>The ControllerHelper code is the same as in the spring web.servlet.mvc.UrlFilenameViewController .<br />
+<br />
+This solution at least fits in better with the 'It's an error if your controller returns an unresolvable view&quot; rule.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Eoin Curran<br />
+<a href="http://peelmeagrape.net/" target="_blank">http://peelmeagrape.net/</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=14359" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=14359" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_14359" /></a>
+<a href="newreply.php?do=newreply&amp;p=14359" rel="nofollow" id="qr_14359" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 14359 popup menu -->
+<div class="vbmenu_popup" id="postmenu_14359_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">currane</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9023">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=9023" rel="nofollow">Send a private message to currane</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://peelmeagrape.net/">Visit currane's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9023" rel="nofollow">Find all posts by currane</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9023">Add currane to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 14359 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #14359 --><div id="lastpost"></div></div></body></html>

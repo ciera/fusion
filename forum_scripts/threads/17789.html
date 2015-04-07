@@ -1,0 +1,1371 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #32727 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit32727" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post32727" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=32727&amp;postcount=1" target="new" rel="nofollow" id="postcount32727" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=32727" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post32727"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 31st, 2005, 02:25 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_32727">
+<a class="bigusername" href="member.php?u=6766">cnelson</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="cnelson is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_32727", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 66
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '6766', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to cnelson" border="0" /></a> <a href="#" onclick="imwindow('msn', '6766', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to cnelson" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6766', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to cnelson" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_32727">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Form object strangely end up as a request parameter</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_32727">
+			
+			I have a FormAction which is cancellable.  When the user cancels, a transition to the end-state occurs.  This is all well and good.  The end-state's view is a RedirectView, which works, but has the strange side effect of including a reference to the form object as part of the request.<br />
+<br />
+After the redirect I see this on the request url:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">http&#58;//sw720usoi004t/rolbu/landing.html?%23formObject=com.foo.rol.billingutility.domain.ReportSource%401004e76
+&amp;flowSequence=ReportSourceForm
+&amp;source=com.foo.rol.billingutility.domain.ReportSource%401004e76
+&amp;stepNumber=1
+&amp;flowTimestamp=Wed+Aug+31+11%3A17%3A27+PDT+2005</pre>
+</div>I really expected to only see:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">http&#58;//sw720usoi004t/rolbu/landing.html</pre>
+</div>The <i>relavant</i> spring web flow xml looks like this:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 274px;
+		text-align: left;
+		overflow: auto">...
+
+&lt;view-state id=&quot;reportSourceForm&quot; view=&quot;reportSourceFormPage&quot;&gt;
+    &lt;entry&gt;
+        &lt;action bean=&quot;reportSourceAction&quot; method=&quot;referenceData&quot; /&gt;
+        &lt;action bean=&quot;reportSourceAction&quot; method=&quot;setupForm&quot; /&gt;
+    &lt;/entry&gt;
+    &lt;transition on=&quot;submit&quot; to=&quot;reportSourceSubmit&quot;&gt;
+        &lt;action bean=&quot;reportSourceAction&quot; method=&quot;bindAndValidate&quot; /&gt;
+    &lt;/transition&gt;
+    &lt;transition on=&quot;cancel&quot; to=&quot;finish&quot; /&gt;
+&lt;/view-state&gt;
+
+...
+
+&lt;end-state id=&quot;finish&quot; view=&quot;landingRedirect&quot; /&gt;</pre>
+</div>And the redirect view is defined as:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">landingRedirect.class=org.springframework.web.servlet.view.RedirectView
+landingRedirect.contextRelative=true
+landingRedirect.url=/landing.html</pre>
+</div>How do I get rid of those request paremeters?  I guess I'm asking, how do I clear the model so that it's not appended to the targetUrl?<br />
+<br />
+Thanks,<br />
+Christian
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=32727" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=32727" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_32727" /></a>
+<a href="newreply.php?do=newreply&amp;p=32727" rel="nofollow" id="qr_32727" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 32727 popup menu -->
+<div class="vbmenu_popup" id="postmenu_32727_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">cnelson</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6766">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6766" rel="nofollow">Send a private message to cnelson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6766" rel="nofollow">Find all posts by cnelson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6766">Add cnelson to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 32727 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #32727 --><!-- post #32760 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit32760" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post32760" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=32760&amp;postcount=2" target="new" rel="nofollow" id="postcount32760" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=32760" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post32760"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Aug 31st, 2005, 10:12 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_32760">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_32760", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_32760">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_32760">
+			
+			Redirecting should clear all your request parameters. Are you trying to redirect and at the same time store your form object within the request so it can be used in the view your are redirecting to? If you are , then you will get errors like what you are seeing. I suggest you refactor your lfow so that you don't need a redirect. I have pesonally ran into a lot of issues using redirects in my flows. Almost always, refactoring my flows not to use redirects resolved any wierd errors.<br />
+<br />
+Curtney
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=32760" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=32760" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_32760" /></a>
+<a href="newreply.php?do=newreply&amp;p=32760" rel="nofollow" id="qr_32760" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 32760 popup menu -->
+<div class="vbmenu_popup" id="postmenu_32760_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 32760 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #32760 --><!-- post #32821 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit32821" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post32821" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=32821&amp;postcount=3" target="new" rel="nofollow" id="postcount32821" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=32821" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post32821"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 1st, 2005, 10:47 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_32821">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_32821", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_32821">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_32821">
+			
+			By default the contents of the flow scope and request scope will be exposed to the view, even if that view is a RedirectView. The RedirectView will try to add all model attributes as request parameters in the redirect URL. That's what you're seeing and is standard Spring MVC behaviour.<br />
+<br />
+You can get 'controll' over this by using the 'redirect:' prefix in the end state itself:<br />
+<br />
+&lt;end-state id=&quot;foo&quot; view=&quot;redirect:bar?a=b&amp;c=${flowScope.some.prop}&quot;/&gt;<br />
+<br />
+As you can see you can completely controll the URL that will be generated in the redirect.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=32821" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=32821" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_32821" /></a>
+<a href="newreply.php?do=newreply&amp;p=32821" rel="nofollow" id="qr_32821" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 32821 popup menu -->
+<div class="vbmenu_popup" id="postmenu_32821_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 32821 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #32821 --><!-- post #33124 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33124" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post33124" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33124&amp;postcount=4" target="new" rel="nofollow" id="postcount33124" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33124" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33124"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 5th, 2005, 03:37 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33124">
+<a class="bigusername" href="member.php?u=6766">cnelson</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="cnelson is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33124", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 66
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '6766', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to cnelson" border="0" /></a> <a href="#" onclick="imwindow('msn', '6766', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to cnelson" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6766', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to cnelson" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33124">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33124">
+			
+			Three responses...<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				Redirecting should clear all your request parameters. Are you trying to redirect and at the same time store your form object within the request so it can be used in the view your are redirecting to? If you are , then you will get errors like what you are seeing. I suggest you refactor your lfow so that you don't need a redirect. I have pesonally ran into a lot of issues using redirects in my flows. Almost always, refactoring my flows not to use redirects resolved any wierd errors.
+			
+		</td>
+</tr>
+</table>
+</div><b>#1</b> There are valid use cases for redirects, and I believe mine is one of them.  Whent he flow is over, I want to bring the user back to a home page, and as part of that, update the location in the browser accordingly.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				You can get 'controll' over this by using the 'redirect:' prefix in the end state itself:<br />
+<br />
+&lt;end-state id=&quot;foo&quot; view=&quot;redirect:bar?a=b&amp;c=${flowScope.some.prop}&quot;/&gt;
+			
+		</td>
+</tr>
+</table>
+</div><b>#2</b> I have tried all of these, and I get the same exception each time:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">&lt;end-state id=&quot;finish&quot; view=&quot;redirect&#58;/landing.html&quot; /&gt;
+&lt;end-state id=&quot;finish&quot; view=&quot;redirect&#58;landing.html&quot; /&gt;
+&lt;end-state id=&quot;finish&quot; view=&quot;redirect&#58;landingPage&quot; /&gt;
+&lt;end-state id=&quot;finish&quot; view=&quot;redirect&#58;landingRedirect&quot; /&gt;</pre>
+</div>Exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">Could not resolve view with name 'redirect&#58;/landing.html' in servlet with name 'action'</pre>
+</div>Note the 'redirect:landing.html' changes each time to reflect the url specified.<br />
+<br />
+For starters, I can't seem to get this to work period.  I've checked the examples and it looks like I'm doing the same thing.  Any ideas?<br />
+<br />
+Secondly, I really don't want to embedd a url in the flow definition xml, since *all* of my urls are captured in the views.properties file and my action-servlet.xml configuration.  Is there an alternative?<br />
+<br />
+<b>#3 Alternate Solution</b>: I tried another solution, which was to add an action state that manually cleared out my flow scope.  The problem is that two of the variables in the flow scope are used by my flow execution listener in the sessionEnded callback, so they can't be removed.<br />
+<br />
+Really, if I could get Erwin's redirect to work with a vew name (or even a URL if I had to), this wouldn't be important.<br />
+<br />
+My gut says this is odd because it's the end-state... and I would think that often you'd want to be able to redirect out of a flow at its end and not necessarily pass what's still in the flow scope.  I must be missing something.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33124" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33124" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33124" /></a>
+<a href="newreply.php?do=newreply&amp;p=33124" rel="nofollow" id="qr_33124" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33124 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33124_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">cnelson</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6766">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6766" rel="nofollow">Send a private message to cnelson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6766" rel="nofollow">Find all posts by cnelson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6766">Add cnelson to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33124 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33124 --><!-- post #33173 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33173" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post33173" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33173&amp;postcount=5" target="new" rel="nofollow" id="postcount33173" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33173" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33173"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 6th, 2005, 04:18 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33173">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33173", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33173">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33173">
+			
+			The simplest way is to create your own view which extends RedirectView and overrides (I think) <div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto">protected void appendQueryProperties&#40;StringBuffer targetUrl,
+                                     Map model,
+                                     String encodingScheme&#41;
+                              throws UnsupportedEncodingException</pre>
+</div>Not the most elegant, but works for me.<br />
+<br />
+BTW, if you want the &quot;redirect:someUrl&quot; thing to work I expect you need to have a <div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">UrlBasedViewResolver</pre>
+</div> defined.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33173" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33173" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33173" /></a>
+<a href="newreply.php?do=newreply&amp;p=33173" rel="nofollow" id="qr_33173" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33173 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33173_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33173 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33173 --><!-- post #33281 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33281" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post33281" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33281&amp;postcount=6" target="new" rel="nofollow" id="postcount33281" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33281" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33281"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 7th, 2005, 03:48 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33281">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33281", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33281">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33281">
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				and I would think that often you'd want to be able to redirect out of a flow at its end and not necessarily pass what's still in the flow scope.
+			
+		</td>
+</tr>
+</table>
+</div>Absolutely, and this is a very common use case. I'm doing exactly this in a flow on a project I'm doing. Here is what I use:<br />
+<br />
+&lt;end-state id=&quot;endCancel&quot; view=&quot;redirect:${flowScope.backUrl}&quot;/&gt;<br />
+&lt;end-state id=&quot;endOk&quot; view=&quot;redirect:/showObjectDetails.do?id=${flowScope.object.id}&quot;/&gt;<br />
+<br />
+Make sure you have ognl.jar in your classpath so the expressions can be correctly evaluated.<br />
+Also, as yatesco points out, in case of Spring MVC the &quot;redirect:&quot; prefix stuff is handled by the Spring MVC UrlBasedViewResolver, so you'll need that or one of its subclasses. (check FlowController.toModelAndView(ViewDescriptor))<br />
+When using Struts, if you specify the &quot;redirect:&quot; prefix in your flow, the FlowAction will create an ActionForward with the redirect attribute set. (check FlowAction.toActionForward(ViewDescriptor, ActionMapping, HttpServletRequest))<br />
+<br />
+That being said, I suspect your problem to be the following: When you use the &quot;redirect&quot; prefix in your flow, SWF will create a ViewDescriptor with the redirect property set. This view descriptor will then be converted to a ModelAndView object by the FlowController.toModelAndView method. This method sees that the redirect property on the view discriptor is set and as a result prepends the &quot;redirect:&quot; prefix to the view name, basically assuming usage of the UrlBasedViewResolver. However, you seem to be using the ResourceBundleViewResolver which does not recognize (or need to recognize) the &quot;redirect:&quot; prefix so it tries to match the view name &quot;redirect:/landing.html&quot; as-is, which is not defined so it throws the exception that you see.<br />
+<br />
+One solution is to define a UrlBasedViewResolver in combination with the ResourceBundleViewResolver. Make sure the UrlBasedViewResolver is ordered after the other ones since it will resolve everything!<br />
+<br />
+Alternatively you could also use a 'custom' view descriptor creator, something like this:<br />
+<br />
+&lt;end-state id=&quot;...&quot; view=&quot;class:my.custom.MyViewDescriptorCreator&quot;/&gt;<br />
+<br />
+This is arguably a 'bug' in SWF, so you might want to report an issue in JIRA. Point to this thread for more info.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33281" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33281" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33281" /></a>
+<a href="newreply.php?do=newreply&amp;p=33281" rel="nofollow" id="qr_33281" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33281 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33281_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33281 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33281 --><!-- post #33362 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33362" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post33362" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33362&amp;postcount=7" target="new" rel="nofollow" id="postcount33362" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33362" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33362"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 7th, 2005, 12:40 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33362">
+<a class="bigusername" href="member.php?u=6766">cnelson</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="cnelson is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33362", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 66
+					</div>
+<div> <a href="#" onclick="imwindow('aim', '6766', 400, 200); return false;"><img src="images/misc/im_aim.gif" alt="Send a message via AIM to cnelson" border="0" /></a> <a href="#" onclick="imwindow('msn', '6766', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to cnelson" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6766', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to cnelson" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33362">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33362">
+			
+			Erwin and Yatesco,<br />
+<br />
+Thanks for the great responses...<br />
+<br />
+I decided to just subclass RedirectView to create a ParameterlessRedirectView which simply doesn't append the model.  It was the easiest thing to do that did the trick.  I may revisit at some point and try another, more correct, solution.  What I've got is succinct, which makes me happy.<br />
+<br />
+My views.properties has this entry now:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 66px;
+		text-align: left;
+		overflow: auto">landingRedirect.class=com.foo.rol.billingutility.web.view.ParameterlessRedirectView
+landingRedirect.contextRelative=true
+landingRedirect.url=/landing.html</pre>
+</div>I'm not sure what exactly is a bug, so I'm not sure how to log a useful entry.  I'll wing it... and reference this thread, as you recommend.<br />
+<br />
+Christian
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33362" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33362" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33362" /></a>
+<a href="newreply.php?do=newreply&amp;p=33362" rel="nofollow" id="qr_33362" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33362 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33362_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">cnelson</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6766">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6766" rel="nofollow">Send a private message to cnelson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6766" rel="nofollow">Find all posts by cnelson</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6766">Add cnelson to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33362 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33362 --><!-- post #33365 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33365" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post33365" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33365&amp;postcount=8" target="new" rel="nofollow" id="postcount33365" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33365" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33365"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 7th, 2005, 01:33 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33365">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33365", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33365">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33365">
+			
+			The 'bug' is that the redirect support in SWF is kind of assuming you're using a UrlBasedViewResolver when using Spring MVC.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33365" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33365" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33365" /></a>
+<a href="newreply.php?do=newreply&amp;p=33365" rel="nofollow" id="qr_33365" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33365 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33365_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33365 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33365 --><!-- post #33433 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33433" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post33433" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33433&amp;postcount=9" target="new" rel="nofollow" id="postcount33433" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33433" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33433"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 8th, 2005, 05:30 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33433">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33433", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33433">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33433">
+			
+			Is it worth adding an enhancement to RedirectView to specify which parameters you want included/excluded?<br />
+<br />
+Almost every project I work on has it's own implementation of such a view <img src="images/smilies/wink.gif" border="0" alt="" title="Wink" class="inlineimg" />
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33433" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33433" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33433" /></a>
+<a href="newreply.php?do=newreply&amp;p=33433" rel="nofollow" id="qr_33433" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33433 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33433_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33433 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33433 --><!-- post #33593 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33593" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post33593" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33593&amp;postcount=10" target="new" rel="nofollow" id="postcount33593" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33593" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33593"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 9th, 2005, 03:42 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33593">
+<a class="bigusername" href="member.php?u=7550">klr8</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="klr8 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33593", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Sep 2004</div>
+<div>Location: Leuven, Belgium</div>
+<div>
+						Posts: 1,846
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33593">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33593">
+			
+			I guess that could be useful. Post a RFE for SpringMVC in JIRA.<br />
+<br />
+Erwin
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33593" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33593" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33593" /></a>
+<a href="newreply.php?do=newreply&amp;p=33593" rel="nofollow" id="qr_33593" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33593 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33593_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">klr8</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7550">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.ervacon.com">Visit klr8's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7550" rel="nofollow">Find all posts by klr8</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7550">Add klr8 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33593 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33593 --><div id="lastpost"></div></div><div id="posts"><!-- post #33605 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit33605" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post33605" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=33605&amp;postcount=11" target="new" rel="nofollow" id="postcount33605" name="11"><strong>11</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=33605" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post33605"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Sep 9th, 2005, 05:08 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_33605">
+<a class="bigusername" href="member.php?u=7133">Colin Yates</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Colin Yates is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_33605", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 1,905
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_33605">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_33605">
+<a href="http://opensource2.atlassian.com/projects/spring/browse/SPR-1294" target="_blank" rel="nofollow">http://opensource2.atlassian.com/pro...rowse/SPR-1294</a>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=33605" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=33605" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_33605" /></a>
+<a href="newreply.php?do=newreply&amp;p=33605" rel="nofollow" id="qr_33605" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 33605 popup menu -->
+<div class="vbmenu_popup" id="postmenu_33605_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Colin Yates</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7133">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7133" rel="nofollow">Send a private message to Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7133" rel="nofollow">Find all posts by Colin Yates</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7133">Add Colin Yates to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 33605 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #33605 --><div id="lastpost"></div></div></body></html>

@@ -1,0 +1,969 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #44257 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44257" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post44257" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44257&amp;postcount=1" target="new" rel="nofollow" id="postcount44257" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44257" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44257"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 16th, 2005, 04:19 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44257">
+<a class="bigusername" href="member.php?u=13649">sasikanthn</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sasikanthn is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44257", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2005</div>
+<div>
+						Posts: 49
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44257">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon5.gif" alt="Question" border="0" />
+<strong>BeanCreationException</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44257">
+			
+			Hi,<br />
+I am getting the following error , Please help me<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'memberEntryController' defined in ServletContext resource [/WEB-INF/reportingtool-servlet.xml]: Can't resolve reference to bean 'memberJdbc' while setting property 'insertMemberJdbc'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'memberJdbc' defined in ServletContext resource [/WEB-INF/reportingtool-servlet.xml]: Instantiation of bean failed; nested exception is org.springframework.beans.FatalBeanException: Could not instantiate class [com.db.home.InsertMemberJdbc]: no default constructor found; nested exception is java.lang.NoSuchMethodException: com.db.home.InsertMemberJdbc.&lt;init&gt;()
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'memberJdbc' defined in ServletContext resource [/WEB-INF/reportingtool-servlet.xml]: Instantiation of bean failed; nested exception is org.springframework.beans.FatalBeanException: Could not instantiate class [com.db.home.InsertMemberJdbc]: no default constructor found; nested exception is java.lang.NoSuchMethodException: com.db.home.InsertMemberJdbc.&lt;init&gt;()
+org.springframework.beans.FatalBeanException: Could not instantiate class [com.db.home.InsertMemberJdbc]: no default constructor found; nested exception is java.lang.NoSuchMethodException: com.db.home.InsertMemberJdbc.&lt;init&gt;()
+java.lang.NoSuchMethodException: com.db.home.InsertMemberJdbc.&lt;init&gt;()
+	at java.lang.Class.getConstructor0(Unknown Source)
+	at java.lang.Class.getDeclaredConstructor(Unknown Source)
+	at org.springframework.beans.BeanUtils.instantiateClass</pre>
+</div>This is my MemberEntryController .java<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">public class MemberEntryController extends SimpleFormController {
+
+protected final Log logger = LogFactory.getLog(getClass());
+    InsertMemberJdbc insertMember;
+	ProjectManagerJdbc jdbc;
+	public void setInsertMemberJdbc(InsertMemberJdbc jdbc)
+	{
+		this.insertMember=jdbc;
+	}
+	
+	public void setProjectManagerJdbc(ProjectManagerJdbc jdbc) {
+		this.jdbc = jdbc;
+	}
+
+	public ModelAndView onSubmit(Object command) throws ServletException {
+		TeamMember teamMember = new TeamMember();
+		int empNo=((TeamMember)command).getEmpNo();
+		String empName=((TeamMember)command).getEmpName();
+		String projectName = ((TeamMember)command).getProjectName();
+		int projectManagerId = ((TeamMember)command).getProjectManagerId();
+		int clusterManagerId = ((TeamMember)command).getClustureManagerId();
+		String location = ((TeamMember)command).getLocation();
+		String psaGrade = ((TeamMember)command).getPsaGrade();
+		insertMember.insert(empNo,empName,projectManagerId,clusterManagerId,location,psaGrade,projectName);
+		
+		logger.info(&quot;Success fully Inserted&quot;);
+		return new ModelAndView(&quot;home&quot;);
+	}
+
+	protected Object formBackingObject(HttpServletRequest request)
+			throws ServletException {
+		TeamMember teamMember = new TeamMember();
+		List list = new ArrayList();
+		try {
+			list = jdbc.getProjectManager();
+		} catch (Exception e) {
+			logger.error(&quot;Error in project MAnager  *******&quot;, e);
+			e.printStackTrace();
+		}
+		Iterator itr = list.iterator();
+		while(itr.hasNext()){
+			teamMember = (TeamMember)itr.next();
+			logger.info(&quot;ProjectManagerName---------&quot;
+					+ teamMember.getProjectManagerName());
+			logger
+					.info(&quot;ProjectManagerID-----------&quot;
+							+ teamMember.getProjectManagerId());
+		}
+		
+		return teamMember;
+	}
+}</pre>
+</div>InsertMemberJdbc.java<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">public class InsertMemberJdbc extends SqlUpdate  {
+	protected final Log logger = LogFactory.getLog(getClass());	
+   
+	public InsertMemberJdbc(DataSource ds)
+	{
+		setDataSource(ds);
+		logger.info(&quot;Before Insert&quot;);
+		setSql(&quot;insert into EMPLOYEE(EMP_NO,EMP_NAME,PROJECT_MANAGER,CLUSTER_MANAGER,LOCATION,PSA,PROJECT_NAME) values(?,?,?,?,?,?,?)&quot;);
+		logger.info(&quot;After Insert&quot;);
+		declareParameter(new SqlParameter(Types.NUMERIC));
+		declareParameter(new SqlParameter(Types.VARCHAR ));
+		declareParameter(new SqlParameter(Types.NUMERIC));
+		declareParameter(new SqlParameter(Types.NUMERIC));
+		declareParameter(new SqlParameter(Types.VARCHAR));
+		declareParameter(new SqlParameter(Types.VARCHAR));
+		declareParameter(new SqlParameter(Types.VARCHAR));
+		//declareParameter(new SqlParameter(Types.VARCHAR));
+	
+	}
+	public int insert(int emp_no,String emp_name,int project_manager,int cluster_manager,String location,String psa,String project_name)
+	{
+		Object[] params=new Object []{
+						new Integer(emp_no),
+						new String(emp_name),
+						new Integer(project_manager),
+						new Integer(cluster_manager),
+						new String(location),
+						new String(psa),
+						new String(project_name)};
+		
+		return update(params);
+	}</pre>
+</div>and ---servlet.xml<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 290px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;memberEntryController&quot; class=&quot;com.home.MemberEntryController&quot;&gt;
+		&lt;property name=&quot;commandName&quot;&gt;&lt;value&gt;teamMember&lt;/value&gt;&lt;/property&gt;
+        &lt;property name=&quot;commandClass&quot;&gt;&lt;value&gt;com.home.TeamMember&lt;/value&gt;&lt;/property&gt;  
+        &lt;property name=&quot;formView&quot;&gt;&lt;value&gt;NewMemberEntry&lt;/value&gt;&lt;/property&gt; 
+        &lt;property name=&quot;successView&quot;&gt;&lt;value&gt;NewMemberEntry.htm&lt;/value&gt;&lt;/property&gt;  
+         &lt;property name=&quot;projectManagerJdbc&quot;&gt;
+        	&lt;ref bean=&quot;managerJdbc&quot;/&gt;
+        &lt;/property&gt;
+        &lt;property name=&quot;insertMemberJdbc&quot;&gt;
+        	&lt;ref bean=&quot;memberJdbc&quot;/&gt;
+       	&lt;/property&gt;
+    &lt;/bean&gt;
+ &lt;bean id=&quot;memberJdbc&quot; class=&quot;com.db.home.InsertMemberJdbc&quot;&gt;
+    	&lt;property name=&quot;dataSource&quot;&gt;
+			&lt;ref bean=&quot;dataSource&quot;/&gt;			    		
+   		&lt;/property&gt;
+    &lt;/bean&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Regards,<br />
+Sasikanth
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44257" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44257" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44257" /></a>
+<a href="newreply.php?do=newreply&amp;p=44257" rel="nofollow" id="qr_44257" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44257 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44257_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sasikanthn</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=13649">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=13649" rel="nofollow">Send a private message to sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=13649" rel="nofollow">Find all posts by sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=13649">Add sasikanthn to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44257 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44257 --><!-- post #44262 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44262" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post44262" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44262&amp;postcount=2" target="new" rel="nofollow" id="postcount44262" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44262" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44262"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 16th, 2005, 05:22 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44262">
+<a class="bigusername" href="member.php?u=7136">Andreas Senft</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Andreas Senft is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44262", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 2,715
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44262">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44262">
+			
+			You specify to inject the datasource via a setter-method. However, your bean requires it to be specified in the constructor.<br />
+Since no default constructor is defined, the bean cannot be instantiated.<br />
+<br />
+A solution would be to inject the datasource as constructor argument:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;memberJdbc&quot; class=&quot;com.db.home.InsertMemberJdbc&quot;&gt;
+  &lt;constructor-arg index=&quot;0&quot;&gt;
+    &lt;ref bean=&quot;dataSource&quot;/&gt;                        
+  &lt;/constructor-arg&gt;
+&lt;/bean&gt;</pre>
+</div><br />
+Regards,<br />
+Andreas
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44262" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44262" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44262" /></a>
+<a href="newreply.php?do=newreply&amp;p=44262" rel="nofollow" id="qr_44262" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44262 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44262_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Andreas Senft</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7136">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7136" rel="nofollow">Send a private message to Andreas Senft</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7136" rel="nofollow">Find all posts by Andreas Senft</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7136">Add Andreas Senft to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44262 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44262 --><!-- post #44263 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44263" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post44263" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44263&amp;postcount=3" target="new" rel="nofollow" id="postcount44263" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44263" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44263"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 16th, 2005, 05:30 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44263">
+<a class="bigusername" href="member.php?u=13649">sasikanthn</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sasikanthn is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44263", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2005</div>
+<div>
+						Posts: 49
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44263">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44263">
+			
+			Hi Andreas,<br />
+I changed the servlet.xml to<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">&lt;bean id=&quot;memberJdbc&quot; class=&quot;com.db.home.InsertMemberJdbc&quot;&gt;
+  &lt;constructor-arg index=&quot;0&quot;&gt;
+    &lt;ref bean=&quot;dataSource&quot;/&gt;                        
+  &lt;/constructor-arg&gt;
+&lt;/bean&gt;</pre>
+</div>But it is not working. I am getting the below error after changing<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'memberEntryController' defined in ServletContext resource [/WEB-INF/reportingtool-servlet.xml]: Can't resolve reference to bean 'memberJdbc' while setting property 'insertMemberJdbc'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'memberJdbc' defined in ServletContext resource [/WEB-INF/reportingtool-servlet.xml]: Initialization of bean failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: dataSource is required
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'memberJdbc' defined in ServletContext resource [/WEB-INF/reportingtool-servlet.xml]: Initialization of bean failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: dataSource is required
+org.springframework.dao.InvalidDataAccessApiUsageException: dataSource is required
+	at org.springframework.jdbc.object.RdbmsOperation.compile(RdbmsOperation.java:300)
+	at org.springframework.jdbc.object.RdbmsOperation.afterPropertiesSet(RdbmsOperation.java:281)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1059)</pre>
+</div>
+</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Regards,<br />
+Sasikanth
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44263" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44263" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44263" /></a>
+<a href="newreply.php?do=newreply&amp;p=44263" rel="nofollow" id="qr_44263" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44263 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44263_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sasikanthn</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=13649">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=13649" rel="nofollow">Send a private message to sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=13649" rel="nofollow">Find all posts by sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=13649">Add sasikanthn to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44263 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44263 --><!-- post #44279 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44279" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post44279" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44279&amp;postcount=4" target="new" rel="nofollow" id="postcount44279" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44279" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44279"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 16th, 2005, 07:47 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44279">
+<a class="bigusername" href="member.php?u=7136">Andreas Senft</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Andreas Senft is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44279", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 2,715
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44279">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44279">
+			
+			Well, the configuration is ok. Based on your code I cannot explain this second error.<br />
+<br />
+Are you sure the invocation of setDataSource() in your constructor is not accidentially commented out? Maybe you could explicitly try to invoke super.setDataSource().<br />
+<br />
+If that does not help, I propose to debug the constructor to see what happens to the datasource.<br />
+<br />
+Regards,<br />
+Andreas
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44279" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44279" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44279" /></a>
+<a href="newreply.php?do=newreply&amp;p=44279" rel="nofollow" id="qr_44279" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44279 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44279_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Andreas Senft</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7136">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7136" rel="nofollow">Send a private message to Andreas Senft</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7136" rel="nofollow">Find all posts by Andreas Senft</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7136">Add Andreas Senft to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44279 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44279 --><!-- post #44427 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44427" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post44427" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44427&amp;postcount=5" target="new" rel="nofollow" id="postcount44427" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44427" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44427"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 18th, 2005, 11:29 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44427">
+<a class="bigusername" href="member.php?u=13649">sasikanthn</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sasikanthn is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44427", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2005</div>
+<div>
+						Posts: 49
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44427">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44427">
+			
+			Hi,<br />
+After invoked super.setDataSource(). After that it is working fine.<br />
+Thanks for ur help.<br />
+Can u please explain in detail why i should set explicitly.<br />
+Regards<br />
+Sasikanth
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Regards,<br />
+Sasikanth
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44427" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44427" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44427" /></a>
+<a href="newreply.php?do=newreply&amp;p=44427" rel="nofollow" id="qr_44427" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44427 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44427_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sasikanthn</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=13649">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=13649" rel="nofollow">Send a private message to sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=13649" rel="nofollow">Find all posts by sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=13649">Add sasikanthn to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44427 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44427 --><!-- post #44440 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44440" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post44440" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44440&amp;postcount=6" target="new" rel="nofollow" id="postcount44440" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44440" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44440"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 19th, 2005, 01:53 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44440">
+<a class="bigusername" href="member.php?u=7136">Andreas Senft</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Andreas Senft is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44440", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>
+						Posts: 2,715
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44440">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44440">
+			
+			I suspect you have the setter &quot;setDataSource&quot; redefined in your class, so that the datasource doesn't get set in the superclass. That explains why the &quot;super&quot; invocation works.<br />
+<br />
+Regards,<br />
+Andreas
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44440" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44440" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44440" /></a>
+<a href="newreply.php?do=newreply&amp;p=44440" rel="nofollow" id="qr_44440" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44440 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44440_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Andreas Senft</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=7136">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=7136" rel="nofollow">Send a private message to Andreas Senft</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=7136" rel="nofollow">Find all posts by Andreas Senft</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=7136">Add Andreas Senft to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44440 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44440 --><!-- post #44449 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit44449" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post44449" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=44449&amp;postcount=7" target="new" rel="nofollow" id="postcount44449" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=44449" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post44449"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 19th, 2005, 04:25 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_44449">
+<a class="bigusername" href="member.php?u=13649">sasikanthn</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="sasikanthn is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_44449", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2005</div>
+<div>
+						Posts: 49
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_44449">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_44449">
+			
+			Yes, suppouse if the setter &quot;setDataSource&quot; is not defined then i configured in servlet.xml as<br />
+&lt;constructor-arg index=&quot;0&quot;&gt;<br />
+    &lt;ref bean=&quot;dataSource&quot;/&gt;                        <br />
+  &lt;/constructor-arg&gt;<br />
+Then it works fine or not. This one is constuctor injection.<br />
+<br />
+If we set the datasource by setter method then it is setter Injection.<br />
+I am very new to spring i.e the reason for lots of queries.<br />
+Anyway thank you  very much Andreas.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Regards,<br />
+Sasikanth
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=44449" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=44449" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_44449" /></a>
+<a href="newreply.php?do=newreply&amp;p=44449" rel="nofollow" id="qr_44449" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 44449 popup menu -->
+<div class="vbmenu_popup" id="postmenu_44449_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">sasikanthn</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=13649">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=13649" rel="nofollow">Send a private message to sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=13649" rel="nofollow">Find all posts by sasikanthn</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=13649">Add sasikanthn to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 44449 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #44449 --><div id="lastpost"></div></div></body></html>

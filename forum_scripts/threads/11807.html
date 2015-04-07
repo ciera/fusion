@@ -1,0 +1,1354 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #9438 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9438" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9438" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9438&amp;postcount=1" target="new" rel="nofollow" id="postcount9438" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9438" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9438"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 3rd, 2004, 09:37 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9438">
+<a class="bigusername" href="member.php?u=8434">Savrak</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Savrak is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9438", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>
+						Posts: 11
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9438">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Problem in deploying Contacts in BEA WLS 8.1</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9438">
+			
+			Hi,<br />
+<br />
+First of all, thank you for theses great pieces of work, I mean: Spring and Acegi Security. I have been trying and promoting the use of Spring and Acegi Security for new J2EE developments in my company.<br />
+<br />
+I have played around with Acegi Contacts app on Tomcat ( 5.0.28 ), changing authentication provider, etc: it works fine.<br />
+<br />
+On BEA WebLogic 8.1, I so far have not succeeded in deploying the original Contacts app. I have come accross several problems, including:<ul><li>- I had to update to Spring 1.1.2 to avoid an exception related to htmlEscape from TransformTag in Spring Taglib.</li>
+</ul><ul><li>- The beans declared in [contacts-servlet.xml] that reference 'contactManager' wouldn't be loaded correctly.  The error message from the server is something like this &quot;Can't resolve reference to bean 'contactManager' while setting property 'contactManager'&quot;. <br />
+See (1) for further details.</li>
+</ul><ul><li>- As a temporary solution, I move all of the beans related to 'contactManager' from [contacts-servlet.xml] to [applicationContext.xml]. The deployment process goes one step further. However I now have &quot;Could not load user defined filter: net.sf.acegisecurity.util.FilterToBeanProxy.&quot; <br />
+See (2) for further details. </li>
+</ul><br />
+Have I missed something?<br />
+<br />
+Thank you in advance for your help.<br />
+Cheers,<br />
+<br />
+-- Savrak<br />
+<br />
+<br />
+PS: <br />
+<br />
+Code / message excerpts:<br />
+<br />
+(1)<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">####&lt;3 déc. 2004 14.21. h CET&gt; &lt;Error&gt; &lt;HTTP&gt; &lt;T008766&gt; &lt;serverWorkshop&gt; &lt;main&gt; &lt;&lt;WLS Kernel&gt;&gt; &lt;&gt; &lt;BEA-101216&gt; &lt;Servlet&#58; &quot;contacts&quot; failed to preload on startup in Web application&#58; &quot;contacts&quot;.
+javax.servlet.ServletException&#58; Error creating bean with name 'publicIndexController' defined in resource &#91;/WEB-INF/contacts-servlet.xml&#93; of ServletContext&#58; Can't resolve reference to bean 'contactManager' while setting property 'contactManager'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException&#58; No bean named 'contactManager' is defined&#58; org.springframework.beans.factory.support.DefaultListableBeanFactory defining beans &#91;publicIndexController,secureIndexController,secureDeleteController,urlMapping,addValidator,secureAddForm,viewResolver&#93;; Root of BeanFactory hierarchy
+	at weblogic.servlet.internal.ServletStubImpl.createServlet&#40;ServletStubImpl.java&#58;884&#41;
+	at weblogic.servlet.internal.ServletStubImpl.createInstances&#40;ServletStubImpl.java&#58;848&#41;
+...</pre>
+</div><br />
+(2)<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 130px;
+		text-align: left;
+		overflow: auto">####&lt;3 déc. 2004 14.50. h CET&gt; &lt;Error&gt; &lt;HTTP&gt; &lt;T008766&gt; &lt;serverWorkshop&gt; &lt;main&gt; &lt;&lt;WLS Kernel&gt;&gt; &lt;&gt; &lt;BEA-101165&gt; &lt;Could not load user defined filter&#58; net.sf.acegisecurity.util.FilterToBeanProxy.
+java.lang.IllegalStateException&#58; No WebApplicationContext found&#58; no ContextLoaderListener registered?
+	at org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext&#40;WebApplicationContextUtils.java&#58;83&#41;
+	at net.sf.acegisecurity.util.FilterToBeanProxy.getContext&#40;FilterToBeanProxy.java&#58;158&#41;
+	at net.sf.acegisecurity.util.FilterToBeanProxy.init&#40;FilterToBeanProxy.java&#58;98&#41;
+	at weblogic.servlet.internal.WebAppServletContext$FilterInitAction.run&#40;WebAppServletContext.java&#58;6379&#41;
+	at weblogic.security.acl.internal.AuthenticatedSubject.doAs&#40;AuthenticatedSubject.java&#58;317&#41;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9438 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9438_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Savrak</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8434">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8434" rel="nofollow">Send a private message to Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8434" rel="nofollow">Find all posts by Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8434">Add Savrak to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9438 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9438 --><!-- post #9465 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9465" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9465" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9465&amp;postcount=2" target="new" rel="nofollow" id="postcount9465" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9465" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9465"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 3rd, 2004, 03:57 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9465">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9465", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9465">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9465">
+			
+			Could you post your web.xml? Also, Contacts has been significantly refactored in the last month, so you might like to try it from CVS.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9465 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9465_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9465 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9465 --><!-- post #9541 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9541" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9541" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9541&amp;postcount=3" target="new" rel="nofollow" id="postcount9541" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9541" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9541"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 6th, 2004, 03:34 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9541">
+<a class="bigusername" href="member.php?u=8434">Savrak</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Savrak is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9541", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>
+						Posts: 11
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9541">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9541">
+			
+			Here is the [web.xml]  (I have removed the caucho servlet).<br />
+In the mean time, I'll give a try to Contacts from CVS.<br />
+<br />
+-- Savrak<br />
+<br />
+<br />
+[web.xml]<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC '-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN' 'http&#58;//java.sun.com/dtd/web-app_2_3.dtd'&gt;
+
+&lt;!--
+  - Contacts web application
+  - $Id&#58; web.xml,v 1.9 2004/08/03 07&#58;18&#58;33 benalex Exp $
+  - File will be copied into WAR's WEB-INF directory if NOT using container adapter
+  --&gt;
+
+&lt;web-app&gt;
+
+    &lt;display-name&gt;Contacts Sample Application&lt;/display-name&gt;
+
+	&lt;description&gt;
+    	Example of an application secured using Acegi Security System for Spring.
+    &lt;/description&gt;
+
+	&lt;!--
+	  - Location of the XML file that defines the root application context
+	  - Applied by ContextLoaderListener.
+	  --&gt;
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;/WEB-INF/applicationContext.xml&lt;/param-value&gt;
+	&lt;/context-param&gt;
+
+   &lt;filter&gt;
+        &lt;filter-name&gt;Acegi Channel Processing Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;targetClass&lt;/param-name&gt;
+            &lt;param-value&gt;net.sf.acegisecurity.securechannel.ChannelProcessingFilter&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;Acegi Authentication Processing Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;targetClass&lt;/param-name&gt;
+            &lt;param-value&gt;net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilter&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;Acegi HTTP BASIC Authorization Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;targetClass&lt;/param-name&gt;
+            &lt;param-value&gt;net.sf.acegisecurity.ui.basicauth.BasicProcessingFilter&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;Acegi Security System for Spring Auto Integration Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;targetClass&lt;/param-name&gt;
+            &lt;param-value&gt;net.sf.acegisecurity.ui.AutoIntegrationFilter&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;Acegi HTTP Request Security Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;net.sf.acegisecurity.util.FilterToBeanProxy&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;targetClass&lt;/param-name&gt;
+            &lt;param-value&gt;net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+
+	&lt;!-- Remove the comments from the following &lt;filter-mapping&gt; if you'd
+	     like to ensure secure URLs are only available over HTTPS --&gt;
+    &lt;!--
+    &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi Channel Processing Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+    --&gt;
+
+    &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi Authentication Processing Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi HTTP BASIC Authorization Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi Security System for Spring Auto Integration Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;filter-mapping&gt;
+      &lt;filter-name&gt;Acegi HTTP Request Security Filter&lt;/filter-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+	&lt;!--
+	  - Loads the root application context of this web app at startup,
+	  - by default from &quot;/WEB-INF/applicationContext.xml&quot;.
+	  - Use WebApplicationContextUtils.getWebApplicationContext&#40;servletContext&#41;
+	  - to access it anywhere in the web application, outside of the framework.
+    --&gt;
+	&lt;listener&gt;
+		&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+	&lt;/listener&gt;
+
+  &lt;!--
+    - Servlet that dispatches request to registered handlers &#40;Controller implementations&#41;.
+    - Has its own application context, by default defined in &quot;&#123;servlet-name&#125;-servlet.xml&quot;,
+    - i.e. &quot;contacts-servlet.xml&quot;.
+    -
+    - A web app can contain any number of such servlets.
+    - Note that this web app does not have a shared root application context,
+    - therefore the DispatcherServlet contexts do not have a common parent.
+    --&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;contacts&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+
+
+  &lt;!--
+    - Maps the contacts dispatcher to /*.
+    -
+   --&gt;
+	&lt;servlet-mapping&gt;
+    	&lt;servlet-name&gt;contacts&lt;/servlet-name&gt;
+    	&lt;url-pattern&gt;*.htm&lt;/url-pattern&gt;
+ 	&lt;/servlet-mapping&gt;
+
+
+ 	&lt;welcome-file-list&gt;
+		&lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+	&lt;/welcome-file-list&gt;
+
+  	&lt;taglib&gt;
+      &lt;taglib-uri&gt;/spring&lt;/taglib-uri&gt;
+      &lt;taglib-location&gt;/WEB-INF/spring.tld&lt;/taglib-location&gt;
+  	&lt;/taglib&gt;
+
+&lt;/web-app&gt;</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9541 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9541_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Savrak</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8434">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8434" rel="nofollow">Send a private message to Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8434" rel="nofollow">Find all posts by Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8434">Add Savrak to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9541 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9541 --><!-- post #9597 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9597" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9597" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9597&amp;postcount=4" target="new" rel="nofollow" id="postcount9597" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9597" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9597"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 6th, 2004, 05:23 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9597">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9597", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9597">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9597">
+			
+			A strange issue. Do you have any Spring or Acegi Security JARs in a different server classloader? Also try out the CVS version, as it should work and I'd prefer to debug the newer release if possible.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9597 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9597_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9597 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9597 --><!-- post #9626 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9626" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9626" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9626&amp;postcount=5" target="new" rel="nofollow" id="postcount9626" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9626" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9626"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 7th, 2004, 05:19 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9626">
+<a class="bigusername" href="member.php?u=8434">Savrak</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Savrak is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9626", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>
+						Posts: 11
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9626">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9626">
+			
+			- I  checked the CLASSPATH, but  it seems to be OK. I include the output from BEA (1) at the end of this message.<br />
+- I tried to connect yesterday and today to the CVS using one of these commands:<br />
+<font size="2"><br />
+D:\bin\TortoiseCVS&gt;cvs -d<img src="images/smilies/tongue.gif" border="0" alt="" title="Razz" class="inlineimg" />server:anonymous@cvs.sourceforge.net:/cvsroot/acegisecurity login<br />
+<br />
+D:\bin\TortoiseCVS&gt;cvs -d<img src="images/smilies/tongue.gif" border="0" alt="" title="Razz" class="inlineimg" />server:anonymous@cvs-pserver.sourceforge.net:80/cvsroot/acegisecurity login<br />
+<br />
+D:\bin\TortoiseCVS&gt;cvs -d<img src="images/smilies/tongue.gif" border="0" alt="" title="Razz" class="inlineimg" />server:anonymous@cvs-pserver.sourceforge.net:443/cvsroot/acegisecurity login<br />
+</font><br />
+All of them failed.<br />
+Would it be possible you put the latest version of Acegi in a ZIP for download on the web site?<br />
+<br />
+Thanks.<br />
+<br />
+-- Savrak<br />
+<br />
+PS: (1)<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 498px;
+		text-align: left;
+		overflow: auto">Using java memory arguments&#58; -Xms256m -Xmx256m -XX&#58;CompileThreshold=8000 -XX&#58;Per
+mSize=32m  -XX&#58;MaxPermSize=128m
+WLS Production Mode=
+=== Debugging ===
+This window is necessary for debugging code using WebLogic Workshop
+.
+.
+CLASSPATH=D&#58;\bin\bea\WEBLOG~1\server\lib\weblogic_knex_patch.jar;D&#58;\bin\bea\WEBL
+OG~1\common\lib\log4j.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\debugging.jar;D&#58;\bin\be
+a\WEBLOG~1\server\lib\knex.jar;D&#58;\bin\bea\WEBLOG~1\javelin\lib\javelin.jar;D&#58;\bi
+n\bea\WEBLOG~1\server\lib\wlw-lang.jar;D&#58;\bin\bea\JDK141~1\lib\tools.jar;D&#58;\bin\
+bea\WEBLOG~1\server\lib\weblogic_sp.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\weblogic.
+jar;D&#58;\bin\bea\WEBLOG~1\server\lib\ojdbc14.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\an
+t\ant.jar;D&#58;\bin\bea\JDK141~1\jre\lib\rt.jar;;D&#58;\bin\bea\WEBLOG~1\common\eval\po
+intbase\lib\pbserver44.jar;D&#58;\bin\bea\WEBLOG~1\common\eval\pointbase\lib\pbclien
+t44.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\webserviceclient.jar;D&#58;\bin\bea\WEBLOG~1\
+server\lib\webserviceclient+ssl.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\xbean.jar;D&#58;\
+bin\bea\WEBLOG~1\server\lib\wlxbean.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\xqrl.jar;
+D&#58;\bin\bea\WEBLOG~1\server\lib\netui\netui-compiler.jar;D&#58;\bin\bea\WEBLOG~1\serv
+er\lib\wli.jar;D&#58;\bin\bea\WEBLOG~1\server\lib\fop.jar;D&#58;\bin\bea\WEBLOG~1\integr
+ation\adapters\sample\lib\sample-eis.jar;
+.
+PATH=D&#58;\bin\bea\WEBLOG~1\server\bin;D&#58;\bin\bea\WEBLOG~1\server\bin;D&#58;\bin\bea\JD
+K141~1\jre\bin;D&#58;\bin\bea\JDK141~1\bin;D&#58;\bin\j2sdk1.4.2_05\bin;C&#58;\WINDOWS\syste
+m32;C&#58;\WINDOWS;C&#58;\WINDOWS\System32\Wbem;C&#58;\Program Files\ATI Technologies\ATI 
+Control Panel;C&#58;\Program Files\Attachmate\E!E2K\;H&#58;\Notes\Data;C&#58;\Program Files\Fi
+chiers communs\Roxio Shared\DLLShared;D&#58;\bin\bea\WEBLOG~1\server\bin\oci920_8
+.
+***************************************************
+*  To start WebLogic Server, use a username and   *
+*  password assigned to an admin-level user.  For *
+*  server administration, use the WebLogic Server *
+*  console at http&#58;\\hostname&#58;port\console        *
+***************************************************
+starting weblogic with Java version&#58;
+java version &quot;1.4.1_05&quot;
+Java&#40;TM&#41; 2 Runtime Environment, Standard Edition &#40;build 1.4.1_05-b01&#41;
+Java HotSpot&#40;TM&#41; Client VM &#40;build 1.4.1_05-b01, mixed mode&#41;
+Starting WLS with line&#58;
+D&#58;\bin\bea\JDK141~1\bin\java -client -Xdebug -Xnoagent -Xrunjdwp&#58;transport=dt_so
+cket,address=8453,server=y,suspend=n -Djava.compiler=NONE  -Xms256m -Xmx256m -XX
+&#58;CompileThreshold=8000 -XX&#58;PermSize=32m  -XX&#58;MaxPermSize=128m  -Xverify&#58;none -ea
+ -da&#58;com.bea... -da&#58;javelin... -da&#58;weblogic... -Dplatform.home=D&#58;\bin\bea\WEBLOG
+~1 -Dwls.home=D&#58;\bin\bea\WEBLOG~1\server -Dwli.home=D&#58;\bin\bea\WEBLOG~1\integrat
+ion  -Dlog4j.configuration=file&#58;D&#58;\bin\bea\WEBLOG~1\common\lib\workshopLogCfg.xm
+l -Dweblogic.management.discover=true  -Dweblogic.security.SSL.ignoreHostnameVer
+ify=false -Dwlw.iterativeDev=true -Dwlw.testConsole=true -Dwlw.logErrorsToConsol
+e=true -Dweblogic.Name=serverWorkshop -Dweblogic.ProductionModeEnabled= -Djava.s
+ecurity.policy=D&#58;\bin\bea\WEBLOG~1\server\lib\weblogic.policy   weblogic.Server
+&lt;7 dÚc. 2004 09.23. h CET&gt; &lt;Info&gt; &lt;WebLogicServer&gt; &lt;BEA-000377&gt; &lt;Starting WebLog
+ic Server with Java HotSpot&#40;TM&#41; Client VM Version 1.4.1_05-b01 from Sun Microsys
+tems Inc.&gt;
+&lt;7 dÚc. 2004 09.23. h CET&gt; &lt;Info&gt; &lt;Configuration Management&gt; &lt;BEA-150016&gt; &lt;This
+server is being started as the administration server.&gt;
+...</pre>
+</div>
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9626 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9626_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Savrak</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8434">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8434" rel="nofollow">Send a private message to Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8434" rel="nofollow">Find all posts by Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8434">Add Savrak to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9626 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9626 --><!-- post #9693 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9693" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9693" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9693&amp;postcount=6" target="new" rel="nofollow" id="postcount9693" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9693" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9693"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 7th, 2004, 07:43 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9693">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9693", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9693">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9693">
+			
+			Did any of those classpath locations contain a spring*.jar or acegi*.jar? That might explain the error a little more. <br />
+<br />
+Re SourceForge, their CVS servers are widely known to have problems. They're doing an upgrade at present. There is no ZIP download available, only the full CVS tarball which isn't useful directly.<br />
+<br />
+I plan on releasing 0.7.0 very soon, so if you can wait for that, it might be easiest.<br />
+<br />
+The root cause of your problem is not an Acegi Security error. The exception is coming from FilterToBeanProxy which simply uses WebApplicationContextUtils.getRequiredWebApplicati  onContext(). The WebApplicationContextUtils needs to find the application context, which it usually can because of your &lt;listener&gt; registration in web.xml.<br />
+<br />
+Perhaps try using ContextLoaderServlet (see Spring documentation) instead of ContextLoaderListener.  Also see <a href="http://forum.springframework.org/showthread.php?t=11034&amp;highlight=contextloaderservlet">http://forum.springframework.org/sho...oaderserv  let</a> and <a href="http://forum.springframework.org/showthread.php?t=11032&amp;highlight=contextloaderservlet">http://forum.springframework.org/sho...oaderserv  let</a> and <a href="http://forum.springframework.org/showthread.php?t=10933&amp;highlight=contextloaderservlet">http://forum.springframework.org/sho...oaderserv  let</a>.
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by robyn; May 14th, 2006 at <span class="time">06:40 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9693 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9693_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9693 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9693 --><!-- post #9832 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9832" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9832" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9832&amp;postcount=7" target="new" rel="nofollow" id="postcount9832" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9832" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9832"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 9th, 2004, 12:54 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9832">
+<a class="bigusername" href="member.php?u=8434">Savrak</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Savrak is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9832", true); </script>
+</div>
+<div class="smallfont">Junior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>
+						Posts: 11
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9832">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9832">
+			
+			I have contacted BEA support and I have some good news:<br />
+- Contacts 0.6.1 indeed does not work with BEA WebLogic 8.1 SP2<br />
+- but does work (as is) with BEA WebLogic 8.1 <b>SP3</b><br />
+.... gees...<br />
+It seems WebLogic 8.1 SP2 does not handle correctly the use of both Filters and Spring's Listener (or ContextLoaderServlet which I also tested).<br />
+<br />
+Thanks for your help and sorry for the inconvenience.<br />
+<br />
+Eager to try out Acegi 0.7 + LDAP stuff.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9832 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9832_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Savrak</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8434">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8434" rel="nofollow">Send a private message to Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8434" rel="nofollow">Find all posts by Savrak</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8434">Add Savrak to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9832 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9832 --><!-- post #9835 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit9835" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post9835" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=9835&amp;postcount=8" target="new" rel="nofollow" id="postcount9835" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=9835" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post9835"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 9th, 2004, 02:51 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_9835">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_9835", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_9835">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_9835">
+			
+			Excellent! Thanks for letting us know it is a known issue what that particular version. Hope you find the project suits your needs now you can run it.
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 9835 popup menu -->
+<div class="vbmenu_popup" id="postmenu_9835_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 9835 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #9835 --><!-- post #43146 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit43146" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post43146" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=43146&amp;postcount=9" target="new" rel="nofollow" id="postcount43146" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=43146" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post43146"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 6th, 2005, 10:40 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_43146">
+<a class="bigusername" href="member.php?u=8207">twoencore</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="twoencore is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_43146", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: MD</div>
+<div>
+						Posts: 86
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '8207', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to twoencore" border="0" /></a> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_43146">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>?? Fix?</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_43146">
+			
+			what did you have to do to get it working in WebLogic 8.1 SP2????<br />
+i can't upgrade to SP3 right now..<br />
+thanks
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				/^\\ Pharaoh /^\\<br />
+<a href="http://pharaohofkush.blogspot.com/" target="_blank">http://pharaohofkush.blogspot.com/</a><br />
+<br />
+Jeryl Cook
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 43146 popup menu -->
+<div class="vbmenu_popup" id="postmenu_43146_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">twoencore</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8207">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8207" rel="nofollow">Send a private message to twoencore</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://pharaohofkush.blogspot.com/">Visit twoencore's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8207" rel="nofollow">Find all posts by twoencore</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8207">Add twoencore to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 43146 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #43146 --><!-- post #43227 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit43227" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post43227" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=43227&amp;postcount=10" target="new" rel="nofollow" id="postcount43227" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=43227" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post43227"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Dec 7th, 2005, 01:09 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_43227">
+<a class="bigusername" href="member.php?u=6608">Ben Alex</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Ben Alex is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_43227", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Sydney, Australia</div>
+<div>
+						Posts: 2,753
+					</div>
+<div> <a href="#" onclick="imwindow('msn', '6608', 400, 200); return false;"><img src="images/misc/im_msn.gif" alt="Send a message via MSN to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('yahoo', '6608', 400, 200); return false;"><img src="images/misc/im_yahoo.gif" alt="Send a message via Yahoo to Ben Alex" border="0" /></a> <a href="#" onclick="imwindow('skype', '6608', 400, 285); return false;"><img src="http://mystatus.skype.com/smallicon/benalexau" alt="Send a message via Skype&trade; to Ben Alex" border="0" /></a></div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_43227">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_43227">
+			
+			With SP2, you must use ContextLoaderServlet.
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Ben Alex<br />
+Project Lead, <a href="http://www.springsource.org/roo" target="_blank">Spring Roo</a><br />
+<a href="http://www.springsource.com/" target="_blank">SpringSource</a> - a division of <a href="http://www.vmware.com/" target="_blank">VMware</a><br />
+twitter @<a href="http://twitter.com/benalexau" target="_blank">benalexau</a>
+</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 43227 popup menu -->
+<div class="vbmenu_popup" id="postmenu_43227_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Ben Alex</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6608">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://www.springsource.com">Visit Ben Alex's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6608" rel="nofollow">Find all posts by Ben Alex</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6608">Add Ben Alex to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 43227 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #43227 --><div id="lastpost"></div></div></body></html>

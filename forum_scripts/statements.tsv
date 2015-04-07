@@ -1,0 +1,24 @@
+1	1	A defined software process is only important when you are working with people who are less skilled.
+2	1	A good software developer will often choose to work alone on a project in order to get it done faster.
+3	1	When you have a team of good programmers who work well together, a software process will usually get in the way.
+4	1	My code should take advantage of the implementation details in other code.
+5	1	It is expected that clients will describe their requirements accurately before a team begins programming.
+6	1	As a software developer, most of my time will be spent designing and implementing new algorithms and data structures.
+7	1	Most of the time when I start a new programming task in industry, I will be working on a new project.
+8	1	Developers do not need to know the high-level context of the system; this allows them to concentrate on their task.
+9	1	A software project is successful only if it ships with very few known defects.
+10	1	Software engineering is about producing lots of documentation on the requirements and implementation of the project.
+11	1	Process, requirements, and team-management are important to business majors, not software developers.
+12	1	The majority of the cost of a successful software project will be in the initial implementation effort.
+13	0	A defined software process is important for any team of programmers, regardless of skill.
+14	0	A good software developer will often choose to work in a team in order to finish a project faster.
+15	0	When you have a team of good programmers who work well together, a software process can increase their ability to produce quality software.
+16	0	My code should rely only on the specification of other code.
+17	0	It is expected that clients will reevaluate and change requirements while a team is programming.
+18	0	As a software developer, most of my time will be spent determining how my code should interact with other people’s code.
+19	0	Most of the time when I start a new programming task in industry, I will be modifying existing code.
+20	0	Developers need to know the high-level context of the system in addition to the details for their task.
+21	0	A successful software project can be shipped with many known defects.
+22	0	Software engineering is about how to produce software in an efficient and cost-effective manner.
+23	0	Process, requirements, and team-management are just as important to software developers as programming is.
+24	0	The majority of the cost of a successful software project will occur after its initial deployment.

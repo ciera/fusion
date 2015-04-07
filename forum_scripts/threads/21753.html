@@ -1,0 +1,1399 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #48128 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48128" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48128" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48128&amp;postcount=1" target="new" rel="nofollow" id="postcount48128" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48128" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48128"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 25th, 2006, 09:38 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_48128">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48128", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48128">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>flow id is required</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48128">
+			
+			Hi guys,<br />
+I have a difficult task to accomplish: updating from PR3 to RC1 in a struts application. And nearly everything has changed. So I tried my best but I still can't get it working. <br />
+<br />
+My struts-config:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 178px;
+		text-align: left;
+		overflow: auto">         &lt;form-bean name=&quot;actionForm&quot; type=&quot;org.springframework.web.struts.SpringBindingActionForm&quot;/&gt;
+
+     &lt;action path=&quot;/register&quot;
+            type=&quot;org.springframework.web.struts.DelegatingActionProxy&quot;
+            name=&quot;actionForm&quot;
+            scope=&quot;request&quot;&gt;
+            &lt;forward name=&quot;start&quot; path=&quot;/register.html&quot; redirect=&quot;true&quot;/&gt;
+            &lt;forward name=&quot;stop&quot; path=&quot;page.register.stop&quot;/&gt;
+            &lt;forward name=&quot;ended&quot; path=&quot;page.register.step4&quot;/&gt;
+        &lt;/action&gt;</pre>
+</div>The beans:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 370px;
+		text-align: left;
+		overflow: auto">    &lt;bean name=&quot;/register&quot; class=&quot;org.springframework.webflow.manager.struts.FlowAction&quot;&gt;
+         &lt;property name=&quot;flowExecutionManager&quot;&gt;&lt;ref bean=&quot;registerFlowExecutionManager&quot;/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+ &lt;bean id=&quot;registerFlowExecutionManager&quot; class=&quot;org.springframework.webflow.manager.FlowExecutionManagerImpl&quot;&gt;
+       &lt;constructor-arg ref=&quot;flowRegistry&quot;/&gt;
+        &lt;property name=&quot;listenerLoader&quot;&gt;
+         &lt;bean class=&quot;org.springframework.webflow.manager.struts.StrutsFlowExecutionListenerLoader&quot;&gt;
+             &lt;property name=&quot;listener&quot;&gt;
+                  &lt;ref bean=&quot;registerWizardListener&quot;/&gt;
+             &lt;/property&gt;
+         &lt;/bean&gt;
+       &lt;/property&gt;
+    &lt;/bean&gt;
+
+  &lt;bean id=&quot;registerWizardListener&quot; class=&quot;com.test.webapp.struts.actions.RegisterWizardListener&quot;&gt;
+              &lt;property name=&quot;prospectManager&quot;&gt;&lt;ref bean=&quot;prospectManager_service&quot;/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id=&quot;flowRegistry&quot; class=&quot;org.springframework.webflow.registry.XmlFlowRegistryFactoryBean&quot;&gt;
+                &lt;property name=&quot;flowLocations&quot;&gt;&lt;value&gt;/WEB-INF/flows/registerFlow.xml&lt;/value&gt;&lt;/property&gt;
+        &lt;/bean&gt;</pre>
+</div>After requesting the /register url I get the following exception:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 146px;
+		text-align: left;
+		overflow: auto">java.lang.IllegalArgumentException: The flow id is required
+	at org.springframework.util.Assert.hasText(Assert.java:142)
+	at org.springframework.webflow.registry.FlowRegistryImpl.getFlow(FlowRegistryImpl.java:155)
+	at org.springframework.webflow.manager.FlowExecutionManagerImpl.launch(FlowExecutionManagerImpl.java:209)
+	at org.springframework.webflow.manager.support.FlowExecutionManagerHelper.handleFlowRequest(FlowExecutionManagerHelper.java:101)
+	at org.springframework.webflow.manager.struts.FlowAction.execute(FlowAction.java:215)
+	at org.springframework.web.struts.DelegatingActionProxy.execute(DelegatingActionProxy.java:106)
+	at org.apache.struts.action.RequestProcessor.processActionPerform(RequestProcessor.java:421)</pre>
+</div>Any idea what's missing? For sure it is something stupid, but I currently don't have a clue what could be wrong. Where should I put the flowId?<br />
+<br />
+Thanks,<br />
+ Markus
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48128" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48128" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48128" /></a>
+<a href="newreply.php?do=newreply&amp;p=48128" rel="nofollow" id="qr_48128" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48128 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48128_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48128 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48128 --><!-- post #48177 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48177" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48177" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48177&amp;postcount=2" target="new" rel="nofollow" id="postcount48177" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48177" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48177"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 25th, 2006, 01:45 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_48177">
+<a class="bigusername" href="member.php?u=8585">curtney</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="curtney is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48177", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Dec 2004</div>
+<div>Location: CA</div>
+<div>
+						Posts: 208
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48177">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48177">
+			
+			Greetings!<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				at org.springframework.webflow.registry.FlowRegistryI  mpl.getFlow(FlowRegistryImpl.java:155)
+			
+		</td>
+</tr>
+</table>
+</div>Look into how you are registering/setting up your flows.<br />
+<br />
+<div style="margin:20px; margin-top:5px; ">
+<div class="smallfont" style="margin-bottom:2px">Quote:</div>
+<table cellpadding="6" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="alt2" style="border:1px inset">
+			
+				&lt;bean id=&quot;flowRegistry&quot; class=&quot;org.springframework.webflow.registry.XmlFlo  wRegistryFactoryBean&quot;&gt;<br />
+                &lt;property name=&quot;flowLocations&quot;&gt;&lt;value&gt;/WEB-INF/flows/registerFlow.xml&lt;/value&gt;&lt;/property&gt;<br />
+        &lt;/bean&gt;
+			
+		</td>
+</tr>
+</table>
+</div>Check out the Phonebook example, I believe it shows how to setup flow define  via xml.<br />
+<br />
+Also, post your registerFlow.xml.<br />
+<br />
+<br />
+<br />
+Hopes this helps.<br />
+<br />
+<br />
+_Curtney
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Curtney Jacobs
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48177" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48177" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48177" /></a>
+<a href="newreply.php?do=newreply&amp;p=48177" rel="nofollow" id="qr_48177" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48177 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48177_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">curtney</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8585">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8585" rel="nofollow">Send a private message to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="sendmessage.php?do=mailmember&amp;u=8585" rel="nofollow">Send email to curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8585" rel="nofollow">Find all posts by curtney</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8585">Add curtney to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48177 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48177 --><!-- post #48318 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48318" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48318" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48318&amp;postcount=3" target="new" rel="nofollow" id="postcount48318" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48318" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48318"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 25th, 2006, 11:23 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_48318">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48318", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48318">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48318">
+			
+			Markus,<br />
+<br />
+Hi, you need to parameterize your FlowAction with the _flowId to launch--e.g register.do?_flowId=registerFlow.  See the updated birthdate sample for an example.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48318" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48318" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48318" /></a>
+<a href="newreply.php?do=newreply&amp;p=48318" rel="nofollow" id="qr_48318" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48318 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48318_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48318 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48318 --><!-- post #48355 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48355" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48355" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48355&amp;postcount=4" target="new" rel="nofollow" id="postcount48355" name="4"><strong>4</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48355" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48355"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 05:48 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_48355">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48355", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48355">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48355">
+			
+			Hi Keith, <br />
+thanks, that did the trick. I have a bunch of questions regarding RC1. The most important is regarding the error/message handling and struts. Somehow the mapping mechanism does not work any longer as it used to work when using the custom RequestProcessor in struts. In PR3 we had the following code in the SWF validator to put a message into the global message space <br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">errors.reject(&quot;org.apache.struts.action.GLOBAL_MESSAGE&quot;,&quot;error.someKey&quot;);</pre>
+</div>and could use this code in the jsp to retrieve the messages from there:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 98px;
+		text-align: left;
+		overflow: auto">   &lt;logic:messagesPresent property=&quot;org.apache.struts.action.GLOBAL_MESSAGE&quot;&gt;
+	       &lt;html:messages id=&quot;error&quot; property=&quot;org.apache.struts.action.GLOBAL_MESSAGE&quot;&gt;
+            &lt;c:out value=&quot;${error}&quot;/&gt;&lt;br/&gt;
+	       &lt;/html:messages&gt;
+	&lt;/logic:messagesPresent&gt;</pre>
+</div>The custom Binding processor converted everything correctly. But the new SpringBindingAction bean seems to do something differently.<br />
+It converts the error we produce using:<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">  errors.rejectValue(fieldName,&quot;error.somekey&quot;);</pre>
+</div>but not the messages.<br />
+<br />
+In our app we need this combined approach of using messages and errors. Any thoughts on this?<br />
+<br />
+Thanks,<br />
+ Markus
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48355" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48355" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48355" /></a>
+<a href="newreply.php?do=newreply&amp;p=48355" rel="nofollow" id="qr_48355" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48355 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48355_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48355 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48355 --><!-- post #48417 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48417" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48417" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48417&amp;postcount=5" target="new" rel="nofollow" id="postcount48417" name="5"><strong>5</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48417" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48417"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 10:37 AM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_48417">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48417", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48417">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48417">
+			
+			Markus,<br />
+<br />
+It should work with both &quot;object errors&quot; and &quot;field errors&quot;.  Perhaps we are not doing something right there, to support object errors.  Can you possibly help debug?<br />
+<br />
+Make sure you're using at Spring 1.2.6 with the latest 1.0 RC1 snapshot.  See the logic in &quot;getActionMessages()&quot; within SpringBindingActionForm--notice how object errors are handled, added as a &quot;global message&quot;.  Do you see anything we're doing wrong there?<br />
+<br />
+Thanks,<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48417" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48417" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48417" /></a>
+<a href="newreply.php?do=newreply&amp;p=48417" rel="nofollow" id="qr_48417" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48417 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48417_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48417 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48417 --><!-- post #48435 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48435" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48435" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48435&amp;postcount=6" target="new" rel="nofollow" id="postcount48435" name="6"><strong>6</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48435" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48435"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 12:45 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_48435">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48435", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48435">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon4.gif" alt="Exclamation" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48435">
+			
+			Markus and all other Struts users,<br />
+<br />
+I have just enhanced the birthdate sample to demonstrate the following:<br />
+1. Struts integration with a multi-step wizard with multiple form views (and piecemeal validation per form).<br />
+2. Use of object (aka global) validation errors and field errors in combination with standard struts tags.<br />
+<br />
+The sample works nicely--I have not been able to re-create the issue you are having, or the issue related to SpringBindingActionForm binding.  Here is the setup for my test:<br />
+<br />
+Spring 1.2.6<br />
+Struts 1.2.8<br />
+Spring Web Flow 1.0 RC1 snapshot (today).<br />
+<br />
+I'll also try this with a few additional configs--for example, over Struts 1.1.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48435" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48435" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48435" /></a>
+<a href="newreply.php?do=newreply&amp;p=48435" rel="nofollow" id="qr_48435" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48435 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48435_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48435 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48435 --><!-- post #48446 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48446" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48446" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48446&amp;postcount=7" target="new" rel="nofollow" id="postcount48446" name="7"><strong>7</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48446" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48446"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 01:24 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_48446">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48446", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48446">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48446">
+			
+			Update:  this does not work under Struts 1.1.  It appears Struts 1.1 does not work with SpringBindingActionForm's use of ActionMessages after all.<br />
+<br />
+I presume this is the error you got:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 322px;
+		text-align: left;
+		overflow: auto">javax.servlet.jsp.JspException: Cannot process ActionErrors instance of class org.apache.struts.action.ActionMessages
+	org.apache.struts.util.RequestUtils.getActionErrors(RequestUtils.java:2007)
+	org.apache.struts.taglib.html.ErrorsTag.doStartTag(ErrorsTag.java:186)
+	org.apache.jsp.WEB_002dINF.jsp.cardForm_jsp._jspx_meth_html_errors_0(org.apache.jsp.WEB_002dINF.jsp.cardForm_jsp:194)
+	org.apache.jsp.WEB_002dINF.jsp.cardForm_jsp._jspx_meth_html_form_0(org.apache.jsp.WEB_002dINF.jsp.cardForm_jsp:135)
+	org.apache.jsp.WEB_002dINF.jsp.cardForm_jsp._jspService(org.apache.jsp.WEB_002dINF.jsp.cardForm_jsp:94)
+	org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:97)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:322)
+	org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:314)
+	org.apache.jasper.servlet.JspServlet.service(JspServlet.java:264)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	org.apache.struts.action.RequestProcessor.doForward(RequestProcessor.java:1069)
+	org.apache.struts.action.RequestProcessor.processForwardConfig(RequestProcessor.java:455)
+	org.apache.struts.action.RequestProcessor.process(RequestProcessor.java:279)
+	org.apache.struts.action.ActionServlet.process(ActionServlet.java:1482)
+	org.apache.struts.action.ActionServlet.doPost(ActionServlet.java:525)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:709)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:802)</pre>
+</div>The simplest thing is to go to Struts 1.2.x, we'll see what it takes to get 1.1 working.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48446" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48446" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48446" /></a>
+<a href="newreply.php?do=newreply&amp;p=48446" rel="nofollow" id="qr_48446" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48446 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48446_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48446 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48446 --><!-- post #48477 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48477" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48477" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48477&amp;postcount=8" target="new" rel="nofollow" id="postcount48477" name="8"><strong>8</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48477" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48477"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 03:42 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_48477">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48477", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48477">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48477">
+			
+			Hi Keith,<br />
+thanks for your work. In the meantime I figured out another issue using struts 1.1 (updating to 1.2 is currently not an option).<br />
+<br />
+I can't compile the following line in the SpringBindingActionForm, as the constructor does not exist (Object, boolean):<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">new ActionMessage(objectError.getDefaultMessage(), false);</pre>
+</div>I replaced it with an (Object,BooleanObject), not sure about the side effects but that wasn't the error I hunted. <br />
+I managed to resolve my original issue by updating the findEffectiveMessageKey(ObjectError) method in the SpringBindingAction.<br />
+<br />
+The debug entry above the last return value states:<br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 82px;
+		text-align: left;
+		overflow: auto"> if (logger.isDebugEnabled()) {
+            logger.debug(&quot;Could not find a suitable message error code, returning default message&quot;);
+        }
+        return null;</pre>
+</div>I replaced it with a <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">        return error.getDefaultMessage();</pre>
+</div>which is mentioned in the comment and solved my problems ;-)<br />
+Looks to me like a bug. <br />
+<br />
+BTW, I did not have the exception you mentioned until now (I think the code which is compiled against 1.2 like the ActionMessage constructor mentioned above wasn't executed until now).<br />
+<br />
+Cheers,<br />
+ Markus
+		</div>
+<!-- / message -->
+<!-- edit note -->
+<div class="smallfont">
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<em>
+					
+						Last edited by jocsch; Jan 26th, 2006 at <span class="time">03:54 PM</span>.
+					
+					
+				</em>
+</div>
+<!-- / edit note -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48477" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48477" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48477" /></a>
+<a href="newreply.php?do=newreply&amp;p=48477" rel="nofollow" id="qr_48477" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48477 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48477_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48477 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48477 --><!-- post #48483 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48483" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post48483" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48483&amp;postcount=9" target="new" rel="nofollow" id="postcount48483" name="9"><strong>9</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48483" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48483"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 04:17 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_48483">
+<a class="bigusername" href="member.php?u=8128">jocsch</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jocsch is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48483", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Nov 2004</div>
+<div>Location: Düsseldorf, Germany</div>
+<div>
+						Posts: 62
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48483">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48483">
+			
+			OK. After this research I thought: what if this return null wasn't an error but my usage of the spring error.reject method? <br />
+I changed from <br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">  errors.reject(ActionMessages.GLOBAL_MESSAGE,errorKey);</pre>
+</div>to<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">   errors.reject(errorKey,errorKey);</pre>
+</div>and everything works fine. Simple solution...<br />
+<br />
+I still dont have the issue with 1.1 you mentioned.<br />
+<br />
+Markus
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48483" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48483" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48483" /></a>
+<a href="newreply.php?do=newreply&amp;p=48483" rel="nofollow" id="qr_48483" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48483 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48483_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jocsch</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=8128">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=8128" rel="nofollow">Send a private message to jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=8128" rel="nofollow">Find all posts by jocsch</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=8128">Add jocsch to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48483 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48483 --><!-- post #48492 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit48492" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post48492" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=48492&amp;postcount=10" target="new" rel="nofollow" id="postcount48492" name="10"><strong>10</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=48492" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post48492"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				Jan 26th, 2006, 05:36 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td class="alt2"><a href="member.php?u=6371"><img src="image.php?u=6371&amp;dateline=1288973702" width="56" height="77" alt="Keith Donald's Avatar" border="0" /></a></td>
+<td nowrap="nowrap">
+<div id="postmenu_48492">
+<a class="bigusername" href="member.php?u=6371">Keith Donald</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="Keith Donald is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_48492", true); </script>
+</div>
+<div class="smallfont">Web App Development Lead</div>
+<div class="smallfont">Spring Team</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Aug 2004</div>
+<div>Location: Melbourne, FL</div>
+<div>
+						Posts: 2,555
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_48492">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_48492">
+			
+			Well, yes, SpringBindingActionForm requires Struts 1.2 to COMPILE, but it uses that API optionally at runtime (so it will work under 1.1 at runtime).<br />
+<br />
+So your problem is resolved now--so it seems there is no issue with you.  However, I haven't been able to get birthdate to run on my attempts with Struts 1.1 yet--about to try that again.<br />
+<br />
+Keith
+		</div>
+<!-- / message -->
+<!-- sig -->
+<div>
+				__________________<br />
+				Keith Donald<br />
+Core Spring Development Team
+			</div>
+<!-- / sig -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=48492" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=48492" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_48492" /></a>
+<a href="newreply.php?do=newreply&amp;p=48492" rel="nofollow" id="qr_48492" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 48492 popup menu -->
+<div class="vbmenu_popup" id="postmenu_48492_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">Keith Donald</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=6371">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=6371" rel="nofollow">Send a private message to Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="http://blog.springsource.com">Visit Keith Donald's homepage!</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=6371" rel="nofollow">Find all posts by Keith Donald</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=6371">Add Keith Donald to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 48492 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #48492 --><div id="lastpost"></div></div></body></html>

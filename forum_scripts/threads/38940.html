@@ -1,0 +1,404 @@
+<html><body><link rel="stylesheet" type="text/css" href="style.css"/><div id="posts"><!-- post #120825 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit120825" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post120825" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=120825&amp;postcount=1" target="new" rel="nofollow" id="postcount120825" name="1"><strong>1</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=120825" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post120825"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 18th, 2007, 05:14 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_120825">
+<a class="bigusername" href="member.php?u=15148">raydawg</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="raydawg is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_120825", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>
+						Posts: 64
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_120825">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+<strong>Struts and webflow confusion</strong>
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_120825">
+			
+			Hi, this is my first app trying to incorporate webflows and im trying to keep it familiar to myself by using struts as well since Ive used it before.  I think my concept on how these two work together is messed up though, for instance I have this <br />
+<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 114px;
+		text-align: left;
+		overflow: auto">&lt;!-- Call controller to attempt to retreive student information --&gt;
+	&lt;action-state id=&quot;validateStudentLogin&quot;&gt;
+		&lt;action bean=&quot;loginAction&quot;/&gt;
+		&lt;transition on=&quot;success&quot; to=&quot;displayLogin&quot; /&gt;
+		&lt;transition on=&quot;error&quot; to=&quot;enterLogin&quot; /&gt;
+	&lt;/action-state&gt;</pre>
+</div>My loginAction bean looks like this<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 50px;
+		text-align: left;
+		overflow: auto">&lt;!-- Controller class definitions --&gt;
+	&lt;bean id=&quot;loginAction&quot; class=&quot;edu.ucr.c3.rsvp.controller.students.Login&quot;/&gt;</pre>
+</div>and then my controller class looks like this<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 210px;
+		text-align: left;
+		overflow: auto">public class Login extends RSVPAction  {
+	
+	public ActionForward executeRSVPApp(ActionMapping mapping, ActionForm form,
+			HttpServletRequest req,	HttpServletResponse resp, HttpSession sess) throws Exception {
+				
+		ActionForward forward = null;
+	
+                ....some database logic, etc....
+
+		return forward;
+	}//executeFRSApp
+}</pre>
+</div>My RSVPAction looks like this<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 290px;
+		text-align: left;
+		overflow: auto">public abstract class RSVPAction extends FlowAction {
+	
+	public RSVPAction() {
+		super();
+	}
+	
+	/**
+	 * Do a security check and only call the executeFRSApp method if
+	 * it passes.
+	 */
+	public final ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		
+		.....some code.....
+		return forward;
+	}//execute
+}</pre>
+</div>whenever I get to the point to execute that action I throw an exception<br />
+<div style="margin:20px; margin-top:5px">
+<div class="smallfont" style="margin-bottom:2px">Code:</div>
+<pre class="alt2" dir="ltr" style="
+		margin: 0px;
+		padding: 6px;
+		border: 1px inset;
+		width: 800px;
+		height: 34px;
+		text-align: left;
+		overflow: auto">org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'loginAction' must be of type [org.springframework.webflow.execution.Action], but was actually of type [edu.ucr.c3.rsvp.controller.students.Login]</pre>
+</div>im not sure where Im going wrong because the Login class is FlowAction type.  its frustrating that something that seems so simple just wont work lol.  can anyone please tell me where im going wrong at so I can get this working?<br />
+Thanks<br />
+-Ray
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=120825" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=120825" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_120825" /></a>
+<a href="newreply.php?do=newreply&amp;p=120825" rel="nofollow" id="qr_120825" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 120825 popup menu -->
+<div class="vbmenu_popup" id="postmenu_120825_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">raydawg</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=15148">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=15148" rel="nofollow">Send a private message to raydawg</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=15148" rel="nofollow">Find all posts by raydawg</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=15148">Add raydawg to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 120825 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #120825 --><!-- post #120836 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit120836" style="padding:0px 0px 6px 0px">
+<!-- this is not the last post shown on the page -->
+<table class="tborder" id="post120836" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=120836&amp;postcount=2" target="new" rel="nofollow" id="postcount120836" name="2"><strong>2</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=120836" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post120836"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 18th, 2007, 06:06 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_120836">
+<a class="bigusername" href="member.php?u=9974">jeremyg484</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="jeremyg484 is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_120836", true); </script>
+</div>
+<div class="smallfont">Senior Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Apr 2005</div>
+<div>Location: San Francisco, CA</div>
+<div>
+						Posts: 1,105
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_120836">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_120836">
+			
+			It seems you are confusing a Struts action with an SWF action.  FlowAction is SWF's integration point for Struts that is meant to launch or resume a flow.  It is a Struts action and is to be configured in your struts-config.  The action specified in your action-state on the other hand is an SWF action, and as you currently have it defined it must be an implementation of org.springframework.webflow.execution.Action as the error message states.  There are of course other ways to implement an SWF action that do not require this interface...see the documentation for details.<br />
+<br />
+Speaking of documentation, have you looked at the excellent Practical Examples section?  There is a great guided walkthrough of the Struts+SWF sample application (along with all of the other sample apps) included there:<br />
+<a href="http://static.springframework.org/spring-webflow/docs/1.0.x/reference/practical.html#birthdate-sample">http://static.springframework.org/sp...rthdate-sample</a><br />
+Check it out, as I think it may go a long way in making things clearer.<br />
+<br />
+-Jeremy
+		</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=120836" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=120836" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_120836" /></a>
+<a href="newreply.php?do=newreply&amp;p=120836" rel="nofollow" id="qr_120836" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 120836 popup menu -->
+<div class="vbmenu_popup" id="postmenu_120836_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">jeremyg484</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=9974">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=9974" rel="nofollow">Find all posts by jeremyg484</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=9974">Add jeremyg484 to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 120836 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #120836 --><!-- post #120840 -->
+<!-- open content container -->
+<div align="center">
+<div class="page" style="width:100%; text-align:left">
+<div style="padding:0px 0px 0px 0px" align="left">
+<div id="edit120840" style="padding:0px 0px 6px 0px">
+<table class="tborder" id="post120840" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+<tr>
+<td class="thead">
+<div class="normal" style="float:right">
+			&nbsp;
+			#<a href="showpost.php?p=120840&amp;postcount=3" target="new" rel="nofollow" id="postcount120840" name="3"><strong>3</strong></a> &nbsp;
+			
+			
+			<a href="report.php?p=120840" rel="nofollow"><img class="inlineimg" src="images/buttons/report.gif" alt="Report Post" border="0" /></a> &nbsp;
+			
+			
+		</div>
+<div class="normal">
+<!-- status icon and date -->
+<a name="post120840"><img class="inlineimg" src="images/statusicon/post_old.gif" alt="Old" border="0" /></a>
+			
+				May 18th, 2007, 06:28 PM
+			
+			
+			<!-- / status icon and date -->
+</div>
+</td>
+</tr>
+<tr>
+<td class="alt2" style="padding:0px">
+<!-- user info -->
+<table cellpadding="0" cellspacing="6" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="postmenu_120840">
+<a class="bigusername" href="member.php?u=15148">raydawg</a>
+<img class="inlineimg" src="images/statusicon/user_offline.gif" alt="raydawg is offline" border="0" />
+<script type="text/javascript"> vbmenu_register("postmenu_120840", true); </script>
+</div>
+<div class="smallfont">Member</div>
+</td>
+<td width="100%">&nbsp;</td>
+<td valign="top" nowrap="nowrap">
+<div class="smallfont">
+<div>Join Date: Feb 2006</div>
+<div>
+						Posts: 64
+					</div>
+<div> </div>
+</div>
+</td>
+</tr>
+</table>
+<!-- / user info -->
+</td>
+</tr>
+<tr>
+<td class="alt1" id="td_post_120840">
+<!-- message, attachments, sig -->
+<!-- icon and title -->
+<div class="smallfont">
+<img class="inlineimg" src="images/icons/icon1.gif" alt="Default" border="0" />
+</div>
+<hr size="1" style="color:#D1D1E1; background-color:#D1D1E1" />
+<!-- / icon and title -->
+<!-- message -->
+<div id="post_message_120840">
+			
+			Yea I think I do have it mixed up.  I have seen that example but it seems like what im trying to do isn't really covered in that example.  Im probably going to drop struts for now and just keep it simple doing pure webflows.  then once I have it working ill try and see how I can change things around to integrate struts.  baby steps...get a simple app working first...then try and get fancy <img src="images/smilies/smile.gif" border="0" alt="" title="Smile" class="inlineimg" />
+</div>
+<!-- / message -->
+<div style="margin-top: 10px" align="right">
+<!-- controls -->
+<a href="newreply.php?do=newreply&amp;p=120840" rel="nofollow"><img src="images/buttons/quote.gif" alt="Reply With Quote" border="0" /></a>
+<a href="newreply.php?do=newreply&amp;p=120840" rel="nofollow" onclick="return false"><img src="images/buttons/multiquote_off.gif" alt="Multi-Quote This Message" border="0" id="mq_120840" /></a>
+<a href="newreply.php?do=newreply&amp;p=120840" rel="nofollow" id="qr_120840" onclick="return false"><img src="images/buttons/quickreply.gif" alt="Quick reply to this message" border="0" /></a>
+<!-- / controls -->
+</div>
+<!-- message, attachments, sig -->
+</td>
+</tr>
+</table>
+<!-- post 120840 popup menu -->
+<div class="vbmenu_popup" id="postmenu_120840_menu" style="display:none;">
+<table cellpadding="4" cellspacing="1" border="0">
+<tr>
+<td class="thead">raydawg</td>
+</tr>
+<tr><td class="vbmenu_option"><a href="member.php?u=15148">View Public Profile</a></td></tr>
+<tr><td class="vbmenu_option"><a href="private.php?do=newpm&amp;u=15148" rel="nofollow">Send a private message to raydawg</a></td></tr>
+<tr><td class="vbmenu_option"><a href="search.php?do=finduser&amp;u=15148" rel="nofollow">Find all posts by raydawg</a></td></tr>
+<tr><td class="vbmenu_option"><a href="profile.php?do=addlist&amp;userlist=buddy&amp;u=15148">Add raydawg to Your Contacts</a></td></tr>
+</table>
+</div>
+<!-- / post 120840 popup menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- / close content container -->
+<!-- / post #120840 --><div id="lastpost"></div></div></body></html>
